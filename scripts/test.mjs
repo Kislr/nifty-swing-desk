@@ -11,11 +11,12 @@ const E = require(path.join(ROOT, 'engine.js'));
 let fails = 0; const assert = (c, m) => { if (!c) { fails++; console.error('FAIL:', m); } else console.log('ok  ', m); };
 
 // 1. NSE API payload (shape served by /api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData)
-const api = { data: [
+const api = { data: { timestamp: '16-Oct-2026 16:00:00', marketStatus: { marketStatus: 'Closed' }, data: [
   { priority: 1, symbol: 'NIFTY 50', open: 23065.1, dayHigh: 23149.85, dayLow: 22913.8, previousClose: 22997.35, lastPrice: 23106.5, change: 109.15, pChange: 0.47, totalTradedVolume: 299922266, totalTradedValue: 300481157847.69, yearHigh: 26373.2, yearLow: 22179.9, perChange30d: -0.48, lastUpdateTime: '2026-10-16 15:30:14' },
   { priority: 0, symbol: 'BHARTIARTL', open: 1866, dayHigh: 1909.7, dayLow: 1857.7, previousClose: 1854, lastPrice: 1898, change: 44, pChange: 2.37, totalTradedVolume: 19257193, totalTradedValue: 36437690306.88, yearHigh: 2174.5, yearLow: 1726.3, perChange30d: 2.89, lastUpdateTime: '2026-10-16 15:30:01' },
   { priority: 0, symbol: 'KOTAKBANK', open: 448.7, dayHigh: 450.85, dayLow: 444, previousClose: 447.95, lastPrice: 450.3, change: 2.35, pChange: 0.52, totalTradedVolume: 4411576, totalTradedValue: 1969900000, yearHigh: 453.2, yearLow: 345.5, perChange30d: 8.58, lastUpdateTime: '2026-10-16 15:30:01' },
-] };
+] } };
+assert(E.rowsFromNseApi({ data: api.data.data }).length === 3, 'flat payload shape also accepted');
 const rows = E.rowsFromNseApi(api); assert(rows.length === 3 && rows[0].isIndex, 'api rows parsed, index flagged');
 assert(Math.abs(rows[1].val - 3643.77) < 0.01, 'traded value converted to ₹ crore');
 const doc = E.toSnapshotDoc(rows, '2026-10-16', '15:30', 'nse-api'); assert(doc.count === 2 && doc.index.name === 'NIFTY 50', 'snapshot doc built');

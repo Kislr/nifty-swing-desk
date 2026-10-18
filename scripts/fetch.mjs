@@ -45,6 +45,8 @@ async function fetchIndex(indexName) {
       const json = JSON.parse(text);
       const rows = E.rowsFromNseApi(json);
       if (rows.filter(r => !r.isIndex).length < 10) throw new Error(`only ${rows.length} rows parsed`);
+      const meta = json && json.data && !Array.isArray(json.data) ? json.data : {};
+      if (meta.marketStatus) console.log(`market: ${meta.marketStatus.marketStatusMessage || meta.marketStatus.marketStatus} · ${meta.timestamp || ''}`);
       return rows;
     } catch (e) { lastErr = e; console.warn(`attempt ${attempt} failed: ${e.message}`); await sleep(2500 * attempt); }
   }
