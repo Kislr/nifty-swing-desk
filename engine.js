@@ -124,7 +124,9 @@
   }
   /* NSE NextApi marketWatchApi?functionName=getIndicesData payload → rows */
   function rowsFromNseApi(json) {
-    const data = (json && json.data) || []; const out = [];
+    // The payload is {data:{data:[...], timestamp, marketStatus, aduCount}}; older shapes put the array at json.data.
+    const findArr = (o, depth) => { if (!o || typeof o !== 'object' || depth > 4) return null; if (Array.isArray(o)) return (o.length && o[0] && typeof o[0] === 'object' && 'lastPrice' in o[0]) ? o : null; for (const k of Object.keys(o)) { const f = findArr(o[k], depth + 1); if (f) return f; } return null; };
+    const data = findArr(json, 0) || []; const out = [];
     for (const d of data) { if (!d || d.lastPrice == null) continue;
       const val = d.totalTradedValue != null ? (d.totalTradedValue > 1e6 ? d.totalTradedValue / 1e7 : d.totalTradedValue) : null; // rupees → ₹ crore
       out.push({ sym: String(d.symbol).toUpperCase(), open: d.open, high: d.dayHigh, low: d.dayLow, prev: d.previousClose, ltp: d.lastPrice, chg: d.change, pct: d.pChange,
