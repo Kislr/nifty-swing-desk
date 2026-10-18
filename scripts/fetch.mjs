@@ -113,7 +113,7 @@ try {
   await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
   const intraday = result.reg.intraday;
-  if (!intraday || config.alertIntraday) await telegram(text);
+  if (!intraday || config.alertIntraday || FORCE) await telegram(text);
 } catch (e) {
   console.error('FETCH FAILED:', e.message);
   await telegram(`Nifty Swing Desk: today's NSE fetch failed (${e.message}). NSE may be blocking the runner — run "npm run fetch" from your own machine, or upload the CSV on the site.`);
