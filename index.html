@@ -222,17 +222,19 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     </div>
   </section>
 
-  <section class="card">
-    <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span></h2>
-    <div class="sec-head"><span>Sector</span><span>Today avg %</span><span>30D avg</span><span>Breadth</span><span>Turnover</span></div>
-    <div class="sectors" id="sectors"></div>
-  </section>
 
   <section class="card">
     <h2>Signal queue <span class="sub" id="queueSub"></span></h2>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div class="tbl-wrap"><table id="queueTbl"><thead></thead><tbody></tbody></table></div>
     <div id="queueEmpty" class="empty" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span></h2>
+    <div class="sec-head"><span>Sector</span><span>Today avg %</span><span>30D avg</span><span>Breadth</span><span>Turnover</span></div>
+    <div class="sectors" id="sectors"></div>
+    <div id="secMore" style="margin-top:8px" hidden><button class="btn small" id="secMoreBtn"></button></div>
   </section>
 
   <section class="card" id="universeCard">

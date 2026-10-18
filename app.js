@@ -15,7 +15,7 @@ const S = {
   settings: { ...E.DEFAULTS }, custom: {}, repoSectors: {}, journal: [],
   meta: null, pending: null,
   tab: 'act', sector: null, open: null, closing: null,
-  uniSort: { key: 'pct', dir: -1 }, search: '', view: 'industries',
+  uniSort: { key: 'pct', dir: -1 }, search: '', view: 'industries', allSectors: false,
 };
 const sectorMap = () => Object.assign({}, S.repoSectors, S.custom); // repo industry map, overridden by this browser's assignments
 const sectorOf = sym => E.sectorOf(sym, sectorMap());
@@ -104,7 +104,10 @@ function renderSectors(board, signals) {
   if (!board) { el.innerHTML = '<div class="empty">Sectors rank by a blend of today\'s average move, 30-day momentum and breadth within the sector. The top three with a positive score are <b>leaders</b>; momentum signals only fire inside them.</div>'; return; }
   const counts = {}; const total = { act: 0, alert: 0, watch: 0 };
   for (const g of signals || []) { if (g.kind === 'avoid') continue; const c = counts[g.sector] || (counts[g.sector] = { act: 0, alert: 0, watch: 0 }); c[g.kind]++; total[g.kind]++; }
-  const list = board.list; const max = Math.max(0.5, ...list.map(s => Math.abs(s.avgPct || 0)));
+  const full = board.list; const cap = 12; const collapsed = S.view === 'industries' && !S.allSectors && full.length > cap;
+  const list = collapsed ? full.slice(0, cap).concat(S.sector && !full.slice(0, cap).some(x => x.sec === S.sector) ? full.filter(x => x.sec === S.sector) : []) : full;
+  const max = Math.max(0.5, ...full.map(s => Math.abs(s.avgPct || 0)));
+  const more = $('secMore'); more.hidden = !(S.view === 'industries' && full.length > cap); if (!more.hidden) { $('secMoreBtn').textContent = collapsed ? `Show all ${full.length} sectors` : `Show top ${cap} only`; $('secMoreBtn').onclick = () => { S.allSectors = !S.allSectors; render(); }; }
   const allRow = `<div class="sec-row all ${S.sector == null ? 'active' : ''}" data-sec="" role="button" tabindex="0">
       <span class="name">All sectors<span class="n">${list.reduce((a, s) => a + s.n, 0)}</span>${sigDots(total)}</span>
       <span class="muted small" style="grid-column:span 4">${S.sector ? 'click to clear the ' + esc(S.sector) + ' filter' : 'no filter — the queue shows every sector'}</span></div>`;
