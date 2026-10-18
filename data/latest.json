@@ -16,28 +16,286 @@
   "Cement"
  ],
  "laggards": [
-  "Pharma",
-  "NBFC & Finance",
-  "Healthcare"
+  "Financial Services",
+  "Construction",
+  "Pharma"
  ],
  "signals": [
+  {
+   "sym": "PERSISTENT",
+   "sector": "IT",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 90,
+   "entry": 5772.25,
+   "stop": 5396.25,
+   "target": 6712.25,
+   "qty": 13,
+   "trigger": "Reclaim 5,772.25 (today's high)",
+   "ltp": 5741,
+   "pct": -1.7,
+   "d30": 5.53,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 12%",
+    "+10 volume 4.4× average",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "CYIENT",
+   "sector": "IT",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 85,
+   "entry": 1228.05,
+   "stop": 1059.95,
+   "target": 1648.3,
+   "qty": 29,
+   "trigger": "Reclaim 1,228.05 (today's high)",
+   "ltp": 1189.9,
+   "pct": 0.01,
+   "d30": 12.84,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 3%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "COFORGE",
+   "sector": "IT",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 80,
+   "entry": 1957.75,
+   "stop": 1820.05,
+   "target": 2302,
+   "qty": 36,
+   "trigger": "Reclaim 1,957.75 (today's high)",
+   "ltp": 1951.9,
+   "pct": 0.91,
+   "d30": 10.48,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 6%",
+    "+5 bullish candle: hammer, strong close"
+   ]
+  },
+  {
+   "sym": "ICICIGI",
+   "sector": "Insurance",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 70,
+   "entry": 1708.2,
+   "stop": 1593.6,
+   "target": 1994.7,
+   "qty": 43,
+   "trigger": "Reclaim 1,708.20 (today's high)",
+   "ltp": 1680.1,
+   "pct": -0.67,
+   "d30": 16.67,
+   "reasons": [
+    "+10 relative strength top 2%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "CPPLUS",
+   "sector": "Capital Goods & Defence",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 70,
+   "entry": 4178.5,
+   "stop": 3896,
+   "target": 4884.75,
+   "qty": 17,
+   "trigger": "Reclaim 4,178.50 (today's high)",
+   "ltp": 4065,
+   "pct": -1.07,
+   "d30": 14.58,
+   "reasons": [
+    "+10 relative strength top 0%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "JINDALSAW",
+   "sector": "Capital Goods & Defence",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 70,
+   "entry": 313.45,
+   "stop": 276.75,
+   "target": 405.2,
+   "qty": 136,
+   "trigger": "Reclaim 313.45 (today's high)",
+   "ltp": 301.6,
+   "pct": 0.8,
+   "d30": 7.24,
+   "reasons": [
+    "+10 relative strength top 16%",
+    "+10 volume 2.6× average"
+   ]
+  },
+  {
+   "sym": "ELECON",
+   "sector": "Capital Goods & Defence",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 60,
+   "entry": 511.15,
+   "stop": 421.65,
+   "target": 734.9,
+   "qty": 55,
+   "trigger": "Reclaim 511.15 (today's high)",
+   "ltp": 479.2,
+   "pct": -2.81,
+   "d30": 17.64,
+   "reasons": [
+    "+10 relative strength top 1%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: shooting star, weak close"
+   ]
+  },
+  {
+   "sym": "ZENSARTECH",
+   "sector": "IT",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 60,
+   "entry": 516.2,
+   "stop": 446.75,
+   "target": 689.85,
+   "qty": 71,
+   "trigger": "Reclaim 516.20 (today's high)",
+   "ltp": 506,
+   "pct": 0.31,
+   "d30": 12.41,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 2%",
+    "-15 RSI 79 — extended"
+   ]
+  },
+  {
+   "sym": "LTTS",
+   "sector": "IT",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 60,
+   "entry": 3796.35,
+   "stop": 3329.35,
+   "target": 4963.85,
+   "qty": 10,
+   "trigger": "Reclaim 3,796.35 (today's high)",
+   "ltp": 3721,
+   "pct": 0.93,
+   "d30": 11.02,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 3%",
+    "-15 RSI 75 — extended"
+   ]
+  },
+  {
+   "sym": "PTCIL",
+   "sector": "Capital Goods & Defence",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 60,
+   "entry": 25250.5,
+   "stop": 24063.4,
+   "target": 28218.25,
+   "qty": 4,
+   "trigger": "Reclaim 25,250.50 (today's high)",
+   "ltp": 24600,
+   "pct": -1.78,
+   "d30": 9.33,
+   "reasons": [
+    "+10 relative strength top 6%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "FIRSTCRY",
+   "sector": "Consumer Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 60,
+   "entry": 184.85,
+   "stop": 164.6,
+   "target": 235.5,
+   "qty": 246,
+   "trigger": "Reclaim 184.85 (today's high)",
+   "ltp": 180,
+   "pct": -0.36,
+   "d30": 5.87,
+   "reasons": [
+    "+10 relative strength top 8%"
+   ]
+  },
+  {
+   "sym": "BHARTIHEXA",
+   "sector": "Telecom",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "score": 50,
+   "entry": 1669.8,
+   "stop": 1543.7,
+   "target": 1985.05,
+   "qty": 39,
+   "trigger": "Reclaim 1,669.80 (today's high)",
+   "ltp": 1615.9,
+   "pct": -2.1,
+   "d30": 9.23,
+   "reasons": [
+    "+10 relative strength top 5%",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
   {
    "sym": "INDHOTEL",
    "sector": "Aviation & Hotels",
    "kind": "alert",
    "setup": "52W breakout",
-   "score": 70,
+   "score": 100,
    "entry": 778.5,
-   "stop": 730.8,
-   "target": 897.75,
-   "qty": 104,
+   "stop": 740.6,
+   "target": 873.25,
+   "qty": 131,
    "trigger": "Close above 776.15",
    "ltp": 772.1,
    "pct": 4.13,
    "d30": 8.23,
    "reasons": [
     "+15 leading sector",
+    "+10 relative strength top 9%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 2.6× average",
     "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "SHYAMMETL",
+   "sector": "Capital Goods & Defence",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "score": 80,
+   "entry": 1226.65,
+   "stop": 1152.8,
+   "target": 1411.3,
+   "qty": 67,
+   "trigger": "Close above 1,223.00",
+   "ltp": 1200.1,
+   "pct": 3.73,
+   "d30": 14.51,
+   "reasons": [
+    "+10 relative strength top 3%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.6× average"
    ]
   },
   {
@@ -45,17 +303,58 @@
    "sector": "Consumer & Retail",
    "kind": "alert",
    "setup": "52W breakout",
-   "score": 55,
+   "score": 75,
    "entry": 350.6,
-   "stop": 337.5,
-   "target": 383.35,
-   "qty": 356,
+   "stop": 330.65,
+   "target": 400.5,
+   "qty": 250,
    "trigger": "Close above 349.55",
    "ltp": 345,
    "pct": 1.95,
    "d30": 5.96,
    "reasons": [
+    "+10 relative strength top 8%",
+    "+10 price > 20-day > 50-day average",
     "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "PVRINOX",
+   "sector": "Internet & Media",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "score": 70,
+   "entry": 1430.7,
+   "stop": 1324,
+   "target": 1697.45,
+   "qty": 46,
+   "trigger": "Close above 1,426.40",
+   "ltp": 1403,
+   "pct": 1.53,
+   "d30": 11.83,
+   "reasons": [
+    "+10 relative strength top 4%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "LAURUSLABS",
+   "sector": "Pharma",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "score": 60,
+   "entry": 2092.25,
+   "stop": 1991.55,
+   "target": 2344,
+   "qty": 49,
+   "trigger": "Close above 2,086.00",
+   "ltp": 2060.1,
+   "pct": 2.06,
+   "d30": 8.11,
+   "reasons": [
+    "-10 lagging sector",
+    "+10 relative strength top 10%",
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
@@ -63,65 +362,19 @@
    "sector": "Banks",
    "kind": "alert",
    "setup": "52W breakout",
-   "score": 50,
+   "score": 55,
    "entry": 454.55,
-   "stop": 440.35,
-   "target": 490.05,
-   "qty": 274,
+   "stop": 432.6,
+   "target": 509.45,
+   "qty": 227,
    "trigger": "Close above 453.20",
    "ltp": 447.4,
    "pct": -0.12,
    "d30": 7.81,
-   "reasons": []
-  },
-  {
-   "sym": "SHYAMMETL",
-   "sector": "Unmapped",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "score": 50,
-   "entry": 1226.65,
-   "stop": 1111.3,
-   "target": 1515.05,
-   "qty": 43,
-   "trigger": "Close above 1,223.00",
-   "ltp": 1200.1,
-   "pct": 3.73,
-   "d30": 14.51,
-   "reasons": []
-  },
-  {
-   "sym": "PVRINOX",
-   "sector": "Internet & Media",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "score": 50,
-   "entry": 1430.7,
-   "stop": 1369.5,
-   "target": 1583.7,
-   "qty": 81,
-   "trigger": "Close above 1,426.40",
-   "ltp": 1403,
-   "pct": 1.53,
-   "d30": 11.83,
-   "reasons": []
-  },
-  {
-   "sym": "LAURUSLABS",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "score": 40,
-   "entry": 2092.25,
-   "stop": 2006.3,
-   "target": 2307.15,
-   "qty": 58,
-   "trigger": "Close above 2,086.00",
-   "ltp": 2060.1,
-   "pct": 2.06,
-   "d30": 8.11,
    "reasons": [
-    "-10 lagging sector"
+    "+10 relative strength top 7%",
+    "+10 price > 20-day > 50-day average",
+    "-15 RSI 79 — extended"
    ]
   },
   {
@@ -129,7 +382,7 @@
    "sector": "IT",
    "kind": "watch",
    "setup": "Momentum — wait",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
@@ -139,43 +392,9 @@
    "pct": 8.48,
    "d30": 14.89,
    "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "TCS",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 2,350.00–2,375.70 on light volume",
-   "ltp": 2465,
-   "pct": 4.89,
-   "d30": 12.62,
-   "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "INFY",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,110.00–1,122.00 on light volume",
-   "ltp": 1161.2,
-   "pct": 4.61,
-   "d30": 9.55,
-   "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 1%",
+    "+10 volume 8.1× average"
    ]
   },
   {
@@ -183,7 +402,7 @@
    "sector": "IT",
    "kind": "watch",
    "setup": "Momentum — wait",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
@@ -193,25 +412,9 @@
    "pct": 5.95,
    "d30": 10.49,
    "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "PERSISTENT",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 5,492.00",
-   "ltp": 5741,
-   "pct": -1.7,
-   "d30": 5.53,
-   "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 4%",
+    "+10 volume 3.3× average"
    ]
   },
   {
@@ -219,7 +422,7 @@
    "sector": "IT",
    "kind": "watch",
    "setup": "Momentum — wait",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
@@ -229,61 +432,9 @@
    "pct": 2.37,
    "d30": 10.14,
    "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "TATAELXSI",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 3,682.10–3,700.00 on light volume",
-   "ltp": 3850.1,
-   "pct": 4.06,
-   "d30": 14.14,
-   "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "COFORGE",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 1,900.60",
-   "ltp": 1951.9,
-   "pct": 0.91,
-   "d30": 10.48,
-   "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "MPHASIS",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 2,455.10",
-   "ltp": 2500,
-   "pct": 1.91,
-   "d30": 7.91,
-   "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 5%",
+    "+10 volume 1.5× average"
    ]
   },
   {
@@ -291,7 +442,7 @@
    "sector": "IT",
    "kind": "watch",
    "setup": "Sector leader",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
@@ -301,79 +452,29 @@
    "pct": 1.81,
    "d30": 12.04,
    "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 4%",
+    "+10 volume 1.5× average"
    ]
   },
   {
-   "sym": "ZENSARTECH",
+   "sym": "BBOX",
    "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 495.15",
-   "ltp": 506,
-   "pct": 0.31,
-   "d30": 12.41,
-   "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "CYIENT",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 1,175.90",
-   "ltp": 1189.9,
-   "pct": 0.01,
-   "d30": 12.84,
-   "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "ITCHOTELS",
-   "sector": "Aviation & Hotels",
    "kind": "watch",
    "setup": "Momentum — wait",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback toward 158.00–158.68 on light volume",
-   "ltp": 162.4,
-   "pct": 2.34,
-   "d30": 5.87,
+   "trigger": "Pullback toward 874.60–880.20 on light volume",
+   "ltp": 909.15,
+   "pct": 3.29,
+   "d30": 19.12,
    "reasons": [
-    "+15 leading sector"
-   ]
-  },
-  {
-   "sym": "LTTS",
-   "sector": "IT",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "score": 65,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 3,650.00",
-   "ltp": 3721,
-   "pct": 0.93,
-   "d30": 11.02,
-   "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 1%",
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
@@ -381,7 +482,7 @@
    "sector": "Aviation & Hotels",
    "kind": "watch",
    "setup": "Sector leader",
-   "score": 65,
+   "score": 85,
    "entry": null,
    "stop": null,
    "target": null,
@@ -391,12 +492,175 @@
    "pct": 0.74,
    "d30": 9.75,
    "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "+10 relative strength top 5%",
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
-   "sym": "OFSS",
+   "sym": "ITCHOTELS",
+   "sector": "Aviation & Hotels",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 158.00–158.68 on light volume",
+   "ltp": 162.4,
+   "pct": 2.34,
+   "d30": 5.87,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 11%"
+   ]
+  },
+  {
+   "sym": "NUVOCO",
+   "sector": "Cement",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 331.40",
+   "ltp": 341,
+   "pct": 1.52,
+   "d30": 7.84,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 7%"
+   ]
+  },
+  {
+   "sym": "TCS",
    "sector": "IT",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 2,350.00–2,375.70 on light volume",
+   "ltp": 2465,
+   "pct": 4.89,
+   "d30": 12.62,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 3%",
+    "+10 volume 2.5× average",
+    "-15 RSI 81 — extended"
+   ]
+  },
+  {
+   "sym": "INFY",
+   "sector": "IT",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,110.00–1,122.00 on light volume",
+   "ltp": 1161.2,
+   "pct": 4.61,
+   "d30": 9.55,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 5%",
+    "+10 volume 2.1× average",
+    "-15 RSI 77 — extended"
+   ]
+  },
+  {
+   "sym": "TATAELXSI",
+   "sector": "IT",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 3,682.10–3,700.00 on light volume",
+   "ltp": 3850.1,
+   "pct": 4.06,
+   "d30": 14.14,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 2%",
+    "+10 volume 2.3× average",
+    "-15 RSI 79 — extended"
+   ]
+  },
+  {
+   "sym": "MPHASIS",
+   "sector": "IT",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 2,455.10",
+   "ltp": 2500,
+   "pct": 1.91,
+   "d30": 7.91,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 6%",
+    "+10 volume 2.4× average",
+    "-15 RSI 75 — extended"
+   ]
+  },
+  {
+   "sym": "HEXT",
+   "sector": "IT",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "score": 60,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 570.00",
+   "ltp": 583,
+   "pct": 1.25,
+   "d30": 11.53,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 4%",
+    "-15 RSI 85 — extended"
+   ]
+  },
+  {
+   "sym": "IRCTC",
+   "sector": "Internet & Media",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 468.05,
+   "pct": -0.28,
+   "d30": 3.33,
+   "reasons": [
+    "+10 relative strength top 19%",
+    "+10 volume 1.5× average"
+   ]
+  },
+  {
+   "sym": "INDIGO",
+   "sector": "Aviation & Hotels",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 65,
@@ -405,15 +669,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 10386,
-   "pct": 1.33,
-   "d30": -9.77,
+   "ltp": 4686.9,
+   "pct": -1.91,
+   "d30": -0.98,
    "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
    ]
   },
   {
-   "sym": "GRASIM",
+   "sym": "DALBHARAT",
    "sector": "Cement",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -423,11 +689,55 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2920,
-   "pct": 1.18,
-   "d30": -8.38,
+   "ltp": 1667,
+   "pct": 3.54,
+   "d30": -1.57,
    "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "-10 below both moving averages",
+    "+10 volume 4.1× average"
+   ]
+  },
+  {
+   "sym": "AMBUJACEM",
+   "sector": "Cement",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 55,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 360,
+   "pct": 2.59,
+   "d30": -5.52,
+   "reasons": [
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.7× average"
+   ]
+  },
+  {
+   "sym": "AFFLE",
+   "sector": "IT",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 55,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1432.6,
+   "pct": 0.29,
+   "d30": -6.67,
+   "reasons": [
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 2.5× average"
    ]
   },
   {
@@ -435,7 +745,7 @@
    "sector": "Cement",
    "kind": "avoid",
    "setup": "Downtrend",
-   "score": 65,
+   "score": 55,
    "entry": null,
    "stop": null,
    "target": null,
@@ -445,12 +755,15 @@
    "pct": 2.62,
    "d30": -6.45,
    "reasons": [
-    "+15 leading sector"
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.9× average"
    ]
   },
   {
-   "sym": "YESBANK",
-   "sector": "Banks",
+   "sym": "CGPOWER",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -459,14 +772,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 17.5,
-   "pct": -3.42,
-   "d30": -25.21,
-   "reasons": []
+   "ltp": 846,
+   "pct": 3.42,
+   "d30": -0.65,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 3.4× average"
+   ]
   },
   {
-   "sym": "LTF",
-   "sector": "Unmapped",
+   "sym": "PFC",
+   "sector": "NBFC & Finance",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -475,42 +791,13 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 253.85,
-   "pct": -3.11,
-   "d30": -14.09,
-   "reasons": []
-  },
-  {
-   "sym": "MARUTI",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 11489,
-   "pct": 0.38,
-   "d30": -5.56,
-   "reasons": []
-  },
-  {
-   "sym": "SBILIFE",
-   "sector": "Insurance",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1656.8,
-   "pct": -0.3,
-   "d30": -2.42,
-   "reasons": []
+   "ltp": 333.25,
+   "pct": -2.64,
+   "d30": -3.68,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
+   ]
   },
   {
    "sym": "CANBK",
@@ -526,11 +813,14 @@
    "ltp": 118.29,
    "pct": 1,
    "d30": -3.99,
-   "reasons": []
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
+   ]
   },
   {
-   "sym": "IDEA",
-   "sector": "Telecom",
+   "sym": "UNIONBANK",
+   "sector": "Banks",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -539,13 +829,54 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 12.59,
-   "pct": 0.56,
-   "d30": -11.71,
-   "reasons": []
+   "ltp": 171.68,
+   "pct": -0.58,
+   "d30": -3.66,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 2.0× average"
+   ]
   },
   {
-   "sym": "BEL",
+   "sym": "JSWSTEEL",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 50,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1216.3,
+   "pct": 1.32,
+   "d30": -2.61,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "BHARATFORG",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 50,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1835,
+   "pct": -0.94,
+   "d30": -2.65,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
+   ]
+  },
+  {
+   "sym": "ABB",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -555,138 +886,13 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 376.85,
-   "pct": -0.93,
-   "d30": -2.31,
-   "reasons": []
-  },
-  {
-   "sym": "ITC",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 263.5,
-   "pct": -0.15,
-   "d30": -0.25,
-   "reasons": []
-  },
-  {
-   "sym": "HDBFS",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 514,
-   "pct": -4.66,
-   "d30": -24.19,
-   "reasons": []
-  },
-  {
-   "sym": "NTPC",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 315.15,
-   "pct": 0.16,
-   "d30": -3.62,
-   "reasons": []
-  },
-  {
-   "sym": "POWERGRID",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 250.45,
-   "pct": 0.24,
-   "d30": -4.7,
-   "reasons": []
-  },
-  {
-   "sym": "NESTLEIND",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1265.5,
-   "pct": -0.81,
-   "d30": -8.6,
-   "reasons": []
-  },
-  {
-   "sym": "TITAN",
-   "sector": "Consumer & Retail",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 4444.8,
-   "pct": -0.25,
-   "d30": -9.45,
-   "reasons": []
-  },
-  {
-   "sym": "POLICYBZR",
-   "sector": "Internet & Media",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1070,
-   "pct": -0.87,
-   "d30": -41.44,
-   "reasons": []
-  },
-  {
-   "sym": "ONGC",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 222,
-   "pct": -1.18,
-   "d30": -6.25,
-   "reasons": []
+   "ltp": 6801,
+   "pct": -0.22,
+   "d30": -2.56,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
+   ]
   },
   {
    "sym": "HINDUNILVR",
@@ -705,8 +911,8 @@
    "reasons": []
   },
   {
-   "sym": "DMART",
-   "sector": "Consumer & Retail",
+   "sym": "ASIANPAINT",
+   "sector": "Durables & Building",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -715,14 +921,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 3342,
-   "pct": -1.08,
-   "d30": -10.16,
-   "reasons": []
+   "ltp": 2331.9,
+   "pct": -0.77,
+   "d30": -3.5,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 1.7× average"
+   ]
   },
   {
-   "sym": "VAML",
-   "sector": "Unmapped",
+   "sym": "RRKABEL",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -731,170 +940,13 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 372.1,
-   "pct": 3.49,
-   "d30": -9.09,
-   "reasons": []
-  },
-  {
-   "sym": "BAJAJ-AUTO",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 10405,
-   "pct": 0.19,
-   "d30": -10.25,
-   "reasons": []
-  },
-  {
-   "sym": "ICICIAMC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2809.3,
-   "pct": -1,
-   "d30": -8.98,
-   "reasons": []
-  },
-  {
-   "sym": "VEDL",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 246.1,
-   "pct": 0.08,
-   "d30": -3.87,
-   "reasons": []
-  },
-  {
-   "sym": "SWIGGY",
-   "sector": "Consumer & Retail",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 234.3,
-   "pct": 2.31,
-   "d30": -13.38,
-   "reasons": []
-  },
-  {
-   "sym": "ICICIPRULI",
-   "sector": "Insurance",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 445,
-   "pct": -0.89,
-   "d30": -5.32,
-   "reasons": []
-  },
-  {
-   "sym": "NATIONALUM",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 324.25,
-   "pct": 1.84,
-   "d30": -8.92,
-   "reasons": []
-  },
-  {
-   "sym": "IOC",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 130.38,
-   "pct": 1.2,
-   "d30": -3.24,
-   "reasons": []
-  },
-  {
-   "sym": "PFOCUS",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 290,
-   "pct": 4.52,
-   "d30": -9.5,
-   "reasons": []
-  },
-  {
-   "sym": "MFSL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1294.9,
-   "pct": 1.4,
-   "d30": -12.95,
-   "reasons": []
-  },
-  {
-   "sym": "ANANTRAJ",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 513,
-   "pct": -2.11,
-   "d30": -12.08,
-   "reasons": []
+   "ltp": 2370,
+   "pct": -8.98,
+   "d30": -1.14,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 2.7× average"
+   ]
   },
   {
    "sym": "TATACONSUM",
@@ -913,8 +965,8 @@
    "reasons": []
   },
   {
-   "sym": "TIINDIA",
-   "sector": "Auto Ancillary",
+   "sym": "CCL",
+   "sector": "FMCG",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -923,10 +975,13 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2197.3,
-   "pct": 0.58,
-   "d30": -14.39,
-   "reasons": []
+   "ltp": 1007.8,
+   "pct": -7.15,
+   "d30": -5.42,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 9.9× average"
+   ]
   },
   {
    "sym": "NHPC",
@@ -942,11 +997,14 @@
    "ltp": 71.44,
    "pct": -1.73,
    "d30": -5.26,
-   "reasons": []
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 2.4× average"
+   ]
   },
   {
-   "sym": "BRITANNIA",
-   "sector": "FMCG",
+   "sym": "CEATLTD",
+   "sector": "Auto",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -955,14 +1013,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 4764,
-   "pct": -1.77,
-   "d30": -4.71,
-   "reasons": []
+   "ltp": 3287,
+   "pct": 2.01,
+   "d30": -0.56,
+   "reasons": [
+    "-10 below both moving averages",
+    "+10 volume 3.9× average"
+   ]
   },
   {
-   "sym": "EMMVEE",
-   "sector": "Unmapped",
+   "sym": "NUVAMA",
+   "sector": "Capital Markets",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -971,698 +1032,13 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 277,
-   "pct": -1.81,
-   "d30": -13.89,
-   "reasons": []
-  },
-  {
-   "sym": "BANKBARODA",
-   "sector": "Banks",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 230.4,
-   "pct": 1.05,
-   "d30": -1.95,
-   "reasons": []
-  },
-  {
-   "sym": "NMDC",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 71.69,
-   "pct": 1.23,
-   "d30": -10.74,
-   "reasons": []
-  },
-  {
-   "sym": "GODREJCP",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 855,
-   "pct": -1.66,
-   "d30": -0.93,
-   "reasons": []
-  },
-  {
-   "sym": "PINELABS",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 165.5,
-   "pct": -1.56,
-   "d30": -10.88,
-   "reasons": []
-  },
-  {
-   "sym": "SJVN",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 53.28,
-   "pct": -3.81,
-   "d30": -16.83,
-   "reasons": []
-  },
-  {
-   "sym": "SAILIFE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1388.9,
-   "pct": -0.42,
-   "d30": -9.76,
-   "reasons": []
-  },
-  {
-   "sym": "IFCI",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 66.75,
-   "pct": -2.26,
-   "d30": -11.07,
-   "reasons": []
-  },
-  {
-   "sym": "EXIDEIND",
-   "sector": "Auto Ancillary",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 371,
-   "pct": -0.99,
-   "d30": -10.71,
-   "reasons": []
-  },
-  {
-   "sym": "KEC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 352.4,
-   "pct": -1.04,
-   "d30": -11.36,
-   "reasons": []
-  },
-  {
-   "sym": "IDFCFIRSTB",
-   "sector": "Banks",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 78.08,
-   "pct": -1.25,
-   "d30": -8.15,
-   "reasons": []
-  },
-  {
-   "sym": "TATACHEM",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 635,
-   "pct": 1.06,
-   "d30": -13.23,
-   "reasons": []
-  },
-  {
-   "sym": "COLPAL",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1770.9,
-   "pct": -0.57,
-   "d30": -4.79,
-   "reasons": []
-  },
-  {
-   "sym": "VMM",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 96,
-   "pct": -0.26,
-   "d30": -4.92,
-   "reasons": []
-  },
-  {
-   "sym": "SRF",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2472.1,
-   "pct": -0.83,
-   "d30": -0.32,
-   "reasons": []
-  },
-  {
-   "sym": "IRCTC",
-   "sector": "Internet & Media",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 468.05,
-   "pct": -0.28,
-   "d30": 3.33,
-   "reasons": []
-  },
-  {
-   "sym": "VOLTAS",
-   "sector": "Durables & Building",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1029.1,
-   "pct": -2.18,
-   "d30": -9.01,
-   "reasons": []
-  },
-  {
-   "sym": "INOXWIND",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 67.63,
-   "pct": -1.39,
-   "d30": -9.22,
-   "reasons": []
-  },
-  {
-   "sym": "VOGL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 31.01,
-   "pct": -1.74,
-   "d30": -11.35,
-   "reasons": []
-  },
-  {
-   "sym": "NEULANDLAB",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 19695,
-   "pct": -1.3,
-   "d30": -12.95,
-   "reasons": []
-  },
-  {
-   "sym": "ANTHEM",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 824.5,
-   "pct": -2.09,
-   "d30": -9.24,
-   "reasons": []
-  },
-  {
-   "sym": "GRSE",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2126.6,
-   "pct": 1.15,
-   "d30": -8.12,
-   "reasons": []
-  },
-  {
-   "sym": "JUBLFOOD",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 417.95,
-   "pct": -1.15,
-   "d30": -11.26,
-   "reasons": []
-  },
-  {
-   "sym": "ZEEL",
-   "sector": "Internet & Media",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 71.95,
-   "pct": -1.15,
-   "d30": -9.61,
-   "reasons": []
-  },
-  {
-   "sym": "PIIND",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2190,
-   "pct": -0.63,
-   "d30": -2.93,
-   "reasons": []
-  },
-  {
-   "sym": "COROMANDEL",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1755,
-   "pct": -0.58,
-   "d30": -9.43,
-   "reasons": []
-  },
-  {
-   "sym": "CANHLIFE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 132.39,
-   "pct": -1.74,
-   "d30": -13.99,
-   "reasons": []
-  },
-  {
-   "sym": "RPOWER",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 18.85,
-   "pct": 0.75,
-   "d30": -9.29,
-   "reasons": []
-  },
-  {
-   "sym": "NATCOPHARM",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 785.85,
-   "pct": 0.11,
-   "d30": -2.41,
-   "reasons": []
-  },
-  {
-   "sym": "TIMKEN",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2871.8,
-   "pct": -0.44,
-   "d30": -11.33,
-   "reasons": []
-  },
-  {
-   "sym": "TENNIND",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 457.8,
-   "pct": -0.61,
-   "d30": -10.59,
-   "reasons": []
-  },
-  {
-   "sym": "IEX",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 107.55,
-   "pct": -0.05,
-   "d30": -3.97,
-   "reasons": []
-  },
-  {
-   "sym": "RAINBOW",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1235,
-   "pct": -0.93,
-   "d30": -15.25,
-   "reasons": []
-  },
-  {
-   "sym": "CONCOR",
-   "sector": "Ports & Logistics",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 447.95,
-   "pct": 0.32,
-   "d30": -8.36,
-   "reasons": []
-  },
-  {
-   "sym": "RUBICON",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1509,
-   "pct": 2.16,
-   "d30": -14.59,
-   "reasons": []
-  },
-  {
-   "sym": "MRF",
-   "sector": "Auto Ancillary",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 122630,
-   "pct": 0.29,
-   "d30": -1.9,
-   "reasons": []
-  },
-  {
-   "sym": "TRITURBINE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 497.3,
-   "pct": -1.74,
-   "d30": -8.04,
-   "reasons": []
-  },
-  {
-   "sym": "OIL",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 445,
-   "pct": -0.09,
-   "d30": -8.74,
-   "reasons": []
-  },
-  {
-   "sym": "NBCC",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 75.51,
-   "pct": 0.05,
-   "d30": -7.25,
-   "reasons": []
-  },
-  {
-   "sym": "JWL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 205.36,
-   "pct": 1.65,
-   "d30": -10.19,
-   "reasons": []
-  },
-  {
-   "sym": "GMDCLTD",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 471,
-   "pct": 0.75,
-   "d30": -13.32,
-   "reasons": []
-  },
-  {
-   "sym": "CANFINHOME",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 733,
-   "pct": -0.27,
-   "d30": -5.05,
-   "reasons": []
-  },
-  {
-   "sym": "SIGNATURE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 727,
-   "pct": -0.18,
-   "d30": -3.39,
-   "reasons": []
-  },
-  {
-   "sym": "GRAVITA",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1481,
-   "pct": 0.03,
-   "d30": -8.73,
-   "reasons": []
+   "ltp": 1697,
+   "pct": -1.18,
+   "d30": -0.36,
+   "reasons": [
+    "+10 relative strength top 28%",
+    "-10 below both moving averages"
+   ]
   },
   {
    "sym": "DABUR",
@@ -1681,200 +1057,8 @@
    "reasons": []
   },
   {
-   "sym": "GPIL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 211.93,
-   "pct": 2.26,
-   "d30": -10.39,
-   "reasons": []
-  },
-  {
-   "sym": "CHOLAHLDNG",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1359.1,
-   "pct": -1.34,
-   "d30": -10.14,
-   "reasons": []
-  },
-  {
-   "sym": "BALKRISIND",
-   "sector": "Auto Ancillary",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2057,
-   "pct": 0.23,
-   "d30": -3.2,
-   "reasons": []
-  },
-  {
-   "sym": "GODFRYPHLP",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1852,
-   "pct": 0.79,
-   "d30": -4.24,
-   "reasons": []
-  },
-  {
-   "sym": "OLECTRA",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1064.9,
-   "pct": 0.75,
-   "d30": -8.83,
-   "reasons": []
-  },
-  {
-   "sym": "TORNTPOWER",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1223,
-   "pct": -1.26,
-   "d30": -5.58,
-   "reasons": []
-  },
-  {
-   "sym": "J&KBANK",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 134.41,
-   "pct": -2.21,
-   "d30": -8.97,
-   "reasons": []
-  },
-  {
-   "sym": "GLAXO",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2567.9,
-   "pct": 1.71,
-   "d30": -10.09,
-   "reasons": []
-  },
-  {
-   "sym": "PIRAMALFIN",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1941,
-   "pct": -1.71,
-   "d30": -11.82,
-   "reasons": []
-  },
-  {
-   "sym": "EIDPARRY",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 693.2,
-   "pct": -1.25,
-   "d30": -1.4,
-   "reasons": []
-  },
-  {
-   "sym": "CAPLIPOINT",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2305.7,
-   "pct": 0.17,
-   "d30": -10.74,
-   "reasons": []
-  },
-  {
-   "sym": "ONESOURCE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1406,
-   "pct": -1.9,
-   "d30": -11.94,
-   "reasons": []
-  },
-  {
    "sym": "BIRET",
-   "sector": "Unmapped",
+   "sector": "Realty",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -1889,8 +1073,8 @@
    "reasons": []
   },
   {
-   "sym": "TATAINVEST",
-   "sector": "Unmapped",
+   "sym": "ABBOTINDIA",
+   "sector": "Pharma",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -1899,238 +1083,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 613.65,
-   "pct": 0.44,
-   "d30": -10.02,
-   "reasons": []
-  },
-  {
-   "sym": "CREDITACC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1237.6,
-   "pct": -1.96,
-   "d30": -12.63,
-   "reasons": []
-  },
-  {
-   "sym": "RAILTEL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 254.55,
-   "pct": 0.41,
-   "d30": 0.87,
-   "reasons": []
-  },
-  {
-   "sym": "ENDURANCE",
-   "sector": "Auto Ancillary",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2410,
-   "pct": 0.09,
-   "d30": -8.31,
-   "reasons": []
-  },
-  {
-   "sym": "SCHAEFFLER",
-   "sector": "Auto Ancillary",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 3665,
-   "pct": 0.4,
-   "d30": -6,
-   "reasons": []
-  },
-  {
-   "sym": "ABSLAMC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 971.5,
-   "pct": -1.03,
-   "d30": -8.21,
-   "reasons": []
-  },
-  {
-   "sym": "SUNDARMFIN",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 4247,
-   "pct": 0.85,
-   "d30": -9.1,
-   "reasons": []
-  },
-  {
-   "sym": "IGL",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 143.03,
-   "pct": -1.45,
-   "d30": -3.86,
-   "reasons": []
-  },
-  {
-   "sym": "ABREL",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1116,
-   "pct": 0.38,
-   "d30": -9.52,
-   "reasons": []
-  },
-  {
-   "sym": "KIMS",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 685.2,
-   "pct": -0.5,
-   "d30": -10.62,
-   "reasons": []
-  },
-  {
-   "sym": "EMAMILTD",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 375.5,
-   "pct": 0.51,
-   "d30": 1.68,
-   "reasons": []
-  },
-  {
-   "sym": "SWANCORP",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 264.05,
-   "pct": 0.06,
-   "d30": -9.83,
-   "reasons": []
-  },
-  {
-   "sym": "JKTYRE",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 338.75,
-   "pct": 0.28,
-   "d30": -1.33,
-   "reasons": []
-  },
-  {
-   "sym": "CHAMBLFERT",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 388.85,
-   "pct": -0.37,
-   "d30": -4.95,
-   "reasons": []
-  },
-  {
-   "sym": "ZFCVINDIA",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2169.7,
+   "ltp": 26200,
    "pct": 0.5,
-   "d30": -11.85,
-   "reasons": []
+   "d30": 0.29,
+   "reasons": [
+    "-10 lagging sector",
+    "+10 relative strength top 25%"
+   ]
   },
   {
    "sym": "HEGAM",
-   "sector": "Unmapped",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -2142,86 +1105,6 @@
    "ltp": 224.05,
    "pct": -1.26,
    "d30": 4.19,
-   "reasons": []
-  },
-  {
-   "sym": "INDIACEM",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 301.75,
-   "pct": 1.46,
-   "d30": -9.83,
-   "reasons": []
-  },
-  {
-   "sym": "GODREJIND",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1044.1,
-   "pct": 1.32,
-   "d30": -8.13,
-   "reasons": []
-  },
-  {
-   "sym": "BRIGADE",
-   "sector": "Realty",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 575,
-   "pct": -1.11,
-   "d30": -8.27,
-   "reasons": []
-  },
-  {
-   "sym": "JBMA",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 540.4,
-   "pct": 1.04,
-   "d30": -8.13,
-   "reasons": []
-  },
-  {
-   "sym": "DEVYANI",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 121.83,
-   "pct": 0.21,
-   "d30": -10.87,
    "reasons": []
   },
   {
@@ -2241,120 +1124,8 @@
    "reasons": []
   },
   {
-   "sym": "SUMICHEM",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 405,
-   "pct": 0.04,
-   "d30": -10.8,
-   "reasons": []
-  },
-  {
-   "sym": "TRIDENT",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 22.3,
-   "pct": 0.95,
-   "d30": -3.75,
-   "reasons": []
-  },
-  {
-   "sym": "AADHARHFC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 447.05,
-   "pct": -1.11,
-   "d30": -2.54,
-   "reasons": []
-  },
-  {
-   "sym": "IOB",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 31.02,
-   "pct": 0.91,
-   "d30": -3.33,
-   "reasons": []
-  },
-  {
-   "sym": "CIEINDIA",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 378.1,
-   "pct": 0.4,
-   "d30": 0.61,
-   "reasons": []
-  },
-  {
-   "sym": "UTIAMC",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 870.75,
-   "pct": -0.41,
-   "d30": -2.73,
-   "reasons": []
-  },
-  {
-   "sym": "ITI",
-   "sector": "Unmapped",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "score": 50,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 245,
-   "pct": 0.98,
-   "d30": -4.11,
-   "reasons": []
-  },
-  {
    "sym": "DOMS",
-   "sector": "Unmapped",
+   "sector": "FMCG",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -2370,7 +1141,7 @@
   },
   {
    "sym": "BAGMANE",
-   "sector": "Unmapped",
+   "sector": "Realty",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 50,
@@ -2385,8 +1156,68 @@
    "reasons": []
   },
   {
-   "sym": "APOLLOHOSP",
-   "sector": "Healthcare",
+   "sym": "OFSS",
+   "sector": "IT",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 45,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 10386,
+   "pct": 1.33,
+   "d30": -9.77,
+   "reasons": [
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GRASIM",
+   "sector": "Cement",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 45,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2920,
+   "pct": 1.18,
+   "d30": -8.38,
+   "reasons": [
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "INDIACEM",
+   "sector": "Cement",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 45,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 301.75,
+   "pct": 1.46,
+   "d30": -9.83,
+   "reasons": [
+    "+15 leading sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATASTEEL",
+   "sector": "Metals & Mining",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2395,11 +1226,109 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 7890,
-   "pct": 0.01,
-   "d30": -9.27,
+   "ltp": 175.5,
+   "pct": -0.51,
+   "d30": -4.1,
    "reasons": [
-    "-10 lagging sector"
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
+   ]
+  },
+  {
+   "sym": "SBIN",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 962.6,
+   "pct": 0.27,
+   "d30": -2.9,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "LT",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3627.1,
+   "pct": -0.13,
+   "d30": -4.74,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "YESBANK",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 17.5,
+   "pct": -3.42,
+   "d30": -25.21,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.7× average"
+   ]
+  },
+  {
+   "sym": "DIXON",
+   "sector": "Durables & Building",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 12340,
+   "pct": -2.57,
+   "d30": -6.38,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.9× average"
+   ]
+  },
+  {
+   "sym": "SBILIFE",
+   "sector": "Insurance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1656.8,
+   "pct": -0.3,
+   "d30": -2.42,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.9× average"
    ]
   },
   {
@@ -2417,12 +1346,12 @@
    "pct": -1.26,
    "d30": -3.82,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "MAXHEALTH",
-   "sector": "Healthcare",
+   "sym": "BEL",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2431,15 +1360,69 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 846,
-   "pct": -1.4,
-   "d30": -17.46,
+   "ltp": 376.85,
+   "pct": -0.93,
+   "d30": -2.31,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "CHOLAFIN",
+   "sym": "ITC",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 263.5,
+   "pct": -0.15,
+   "d30": -0.25,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NTPC",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 315.15,
+   "pct": 0.16,
+   "d30": -3.62,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ADANIPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 195.85,
+   "pct": -0.33,
+   "d30": -3.21,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SHRIRAMFIN",
    "sector": "NBFC & Finance",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -2449,16 +1432,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1574.4,
-   "pct": -0.73,
-   "d30": -10.83,
+   "ltp": 939.95,
+   "pct": -0.41,
+   "d30": -3.99,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "LUPIN",
-   "sector": "Pharma",
+   "sym": "POWERGRID",
+   "sector": "Power",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2467,16 +1450,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1961.6,
-   "pct": -0.97,
-   "d30": -4.08,
+   "ltp": 250.45,
+   "pct": 0.24,
+   "d30": -4.7,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "MUTHOOTFIN",
-   "sector": "NBFC & Finance",
+   "sym": "ENRIN",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2485,16 +1468,36 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2598.3,
-   "pct": -0.07,
+   "ltp": 2889,
+   "pct": -2.3,
+   "d30": -4.13,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "ONGC",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 222,
+   "pct": -1.18,
    "d30": -6.25,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "FORTIS",
-   "sector": "Healthcare",
+   "sym": "ATHERENERG",
+   "sector": "Auto",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2503,16 +1506,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 736.5,
-   "pct": -1.31,
-   "d30": -15.37,
+   "ltp": 1470,
+   "pct": 0,
+   "d30": -6.22,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "ALKEM",
-   "sector": "Pharma",
+   "sym": "VEDL",
+   "sector": "Metals & Mining",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2521,16 +1524,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 5050,
-   "pct": -1.38,
-   "d30": -2.42,
+   "ltp": 246.1,
+   "pct": 0.08,
+   "d30": -3.87,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "BIOCON",
-   "sector": "Pharma",
+   "sym": "ICICIPRULI",
+   "sector": "Insurance",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2539,16 +1542,18 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 349.2,
-   "pct": -0.8,
-   "d30": -6.73,
+   "ltp": 445,
+   "pct": -0.89,
+   "d30": -5.32,
    "reasons": [
-    "-10 lagging sector"
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 2.2× average"
    ]
   },
   {
-   "sym": "ASTERDM",
-   "sector": "Healthcare",
+   "sym": "IOC",
+   "sector": "Oil & Gas",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2557,15 +1562,401 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 675,
-   "pct": -1.12,
-   "d30": -8.93,
+   "ltp": 130.38,
+   "pct": 1.2,
+   "d30": -3.24,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "M&MFIN",
+   "sym": "TMCV",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 420.5,
+   "pct": -0.54,
+   "d30": -0.88,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "PFOCUS",
+   "sector": "Internet & Media",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 290,
+   "pct": 4.52,
+   "d30": -9.5,
+   "reasons": [
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "ANANTRAJ",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 513,
+   "pct": -2.11,
+   "d30": -12.08,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.9× average"
+   ]
+  },
+  {
+   "sym": "GAIL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 168.1,
+   "pct": -0.74,
+   "d30": -1.49,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HINDCOPPER",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 458.95,
+   "pct": 1.3,
+   "d30": -4.7,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KALYANKJIL",
+   "sector": "Consumer & Retail",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 558,
+   "pct": -0.15,
+   "d30": -3.94,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BRITANNIA",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4764,
+   "pct": -1.77,
+   "d30": -4.71,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "LODHA",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1058.7,
+   "pct": -0.29,
+   "d30": -2.64,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HINDZINC",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 540,
+   "pct": 1.69,
+   "d30": -4.85,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SAIL",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 170.95,
+   "pct": 0.39,
+   "d30": -1.5,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "EMMVEE",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 277,
+   "pct": -1.81,
+   "d30": -13.89,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "KEI",
+   "sector": "Durables & Building",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4482.3,
+   "pct": -1.94,
+   "d30": -0.53,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MARICO",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 785,
+   "pct": -0.41,
+   "d30": -3.1,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATAPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 353.85,
+   "pct": 1.16,
+   "d30": -1.82,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BANKBARODA",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 230.4,
+   "pct": 1.05,
+   "d30": -1.95,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GODREJCP",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 855,
+   "pct": -1.66,
+   "d30": -0.93,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CDSL",
+   "sector": "Capital Markets",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1286.9,
+   "pct": -0.47,
+   "d30": -0.93,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SJVN",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 53.28,
+   "pct": -3.81,
+   "d30": -16.83,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 6.3× average"
+   ]
+  },
+  {
+   "sym": "AUBANK",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 989.4,
+   "pct": -1.33,
+   "d30": -4.24,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "THERMAX",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3327,
+   "pct": 1.63,
+   "d30": -5.93,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "BPCL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 293.5,
+   "pct": -0.07,
+   "d30": -3.25,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ABCAPITAL",
    "sector": "NBFC & Finance",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -2575,16 +1966,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 312.1,
-   "pct": -1.28,
-   "d30": -9.55,
+   "ltp": 379.4,
+   "pct": -0.75,
+   "d30": -0.5,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "SBICARD",
-   "sector": "NBFC & Finance",
+   "sym": "PIDILITIND",
+   "sector": "Durables & Building",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2593,16 +1984,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 564.2,
-   "pct": -1.57,
-   "d30": -8.72,
+   "ltp": 1502.8,
+   "pct": -0.15,
+   "d30": -2.66,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "MEDANTA",
-   "sector": "Healthcare",
+   "sym": "AMBER",
+   "sector": "Durables & Building",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2611,11 +2002,483 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1232,
-   "pct": -3.41,
-   "d30": -12.29,
+   "ltp": 6668,
+   "pct": -0.33,
+   "d30": -3.78,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BOSCHLTD",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 45560,
+   "pct": 1.17,
+   "d30": -4.2,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NAVINFLUOR",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 8153,
+   "pct": -1.15,
+   "d30": -0.09,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATACHEM",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 635,
+   "pct": 1.06,
+   "d30": -13.23,
+   "reasons": [
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "COLPAL",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1770.9,
+   "pct": -0.57,
+   "d30": -4.79,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CEMPRO",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1200,
+   "pct": -1.75,
+   "d30": -2.84,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages",
+    "+10 volume 1.7× average"
+   ]
+  },
+  {
+   "sym": "JPPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 15.01,
+   "pct": 0.74,
+   "d30": -2.6,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MAZDOCK",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2092,
+   "pct": -0.62,
+   "d30": -6.27,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GODREJPROP",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1603.3,
+   "pct": -0.84,
+   "d30": -3.72,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VMM",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 96,
+   "pct": -0.26,
+   "d30": -4.92,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SRF",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2472.1,
+   "pct": -0.83,
+   "d30": -0.32,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "OLAELEC",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 34.98,
+   "pct": -0.54,
+   "d30": -6.07,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SIEMENS",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3624,
+   "pct": -1.2,
+   "d30": -3.15,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "OBEROIRLTY",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1703,
+   "pct": -0.29,
+   "d30": -0.23,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BDL",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1114.7,
+   "pct": -1.03,
+   "d30": -1.88,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "DELHIVERY",
+   "sector": "Ports & Logistics",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 407.5,
+   "pct": -0.71,
+   "d30": -3.39,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "PIIND",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2190,
+   "pct": -0.63,
+   "d30": -2.93,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TIMKEN",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2871.8,
+   "pct": -0.44,
+   "d30": -11.33,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.0× average"
+   ]
+  },
+  {
+   "sym": "MRF",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 122630,
+   "pct": 0.29,
+   "d30": -1.9,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IRCON",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 107,
+   "pct": 0.63,
+   "d30": -1.39,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SCHNEIDER",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1157,
+   "pct": -0.6,
+   "d30": -3.47,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FLUOROCHEM",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4380,
+   "pct": -2.94,
+   "d30": -3.39,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SIGNATURE",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 727,
+   "pct": -0.18,
+   "d30": -3.39,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NLCINDIA",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 252.05,
+   "pct": 0.3,
+   "d30": -1.29,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ATGL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 577,
+   "pct": 0.03,
+   "d30": -1.62,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BALKRISIND",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2057,
+   "pct": 0.23,
+   "d30": -3.2,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GODFRYPHLP",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1852,
+   "pct": 0.79,
+   "d30": -4.24,
+   "reasons": [
+    "-10 below both moving averages"
    ]
   },
   {
@@ -2633,12 +2496,12 @@
    "pct": 0.09,
    "d30": -5.03,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
    ]
   },
   {
-   "sym": "ABBOTINDIA",
-   "sector": "Pharma",
+   "sym": "NSLNISP",
+   "sector": "Metals & Mining",
    "kind": "avoid",
    "setup": "Downtrend",
    "score": 40,
@@ -2647,13 +2510,3040 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 26200,
-   "pct": 0.5,
-   "d30": 0.29,
+   "ltp": 40.28,
+   "pct": 1.33,
+   "d30": -2.16,
    "reasons": [
-    "-10 lagging sector"
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TORNTPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1223,
+   "pct": -1.26,
+   "d30": -5.58,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HONASA",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 452.95,
+   "pct": 1.13,
+   "d30": -3.48,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "EIDPARRY",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 693.2,
+   "pct": -1.25,
+   "d30": -1.4,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "RAILTEL",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 254.55,
+   "pct": 0.41,
+   "d30": 0.87,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TBOTEK",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1623,
+   "pct": -0.3,
+   "d30": -0.51,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HONAUT",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 32115,
+   "pct": -0.82,
+   "d30": -5.25,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IGL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 143.03,
+   "pct": -1.45,
+   "d30": -3.86,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "EMAMILTD",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 375.5,
+   "pct": 0.51,
+   "d30": 1.68,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CLEAN",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 783.75,
+   "pct": -1.35,
+   "d30": -4.42,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "UBL",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1200,
+   "pct": -0.3,
+   "d30": -2.22,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CESC",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 135.92,
+   "pct": 0.05,
+   "d30": -4.06,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JKTYRE",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 338.75,
+   "pct": 0.28,
+   "d30": -1.33,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VTL",
+   "sector": "Textiles",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 531,
+   "pct": -1.48,
+   "d30": -7.13,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ELGIEQUIP",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 572,
+   "pct": 0.07,
+   "d30": -3.46,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SARDAEN",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 488,
+   "pct": 0.75,
+   "d30": -1.88,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ESCORTS",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2750,
+   "pct": 0.86,
+   "d30": -2.33,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AVANTIFEED",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 728,
+   "pct": -0.16,
+   "d30": -5.5,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MINDACORP",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 652.5,
+   "pct": 2.12,
+   "d30": -2.84,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NAVA",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 542.95,
+   "pct": 0.31,
+   "d30": -0.98,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BHARATCOAL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 31.66,
+   "pct": -0.94,
+   "d30": -1.77,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KIRLOSBROS",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1685.2,
+   "pct": -0.48,
+   "d30": -2.29,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TRIDENT",
+   "sector": "Textiles",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 22.3,
+   "pct": 0.95,
+   "d30": -3.75,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CIEINDIA",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 378.1,
+   "pct": 0.4,
+   "d30": 0.61,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ITI",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 245,
+   "pct": 0.98,
+   "d30": -4.11,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FACT",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 734,
+   "pct": -0.1,
+   "d30": -2,
+   "reasons": [
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "LTF",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 253.85,
+   "pct": -3.11,
+   "d30": -14.09,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.5× average"
+   ]
+  },
+  {
+   "sym": "MARUTI",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 11489,
+   "pct": 0.38,
+   "d30": -5.56,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "POWERINDIA",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 28990,
+   "pct": 0.76,
+   "d30": -4.01,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IDEA",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 12.59,
+   "pct": 0.56,
+   "d30": -11.71,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HDBFS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 514,
+   "pct": -4.66,
+   "d30": -24.19,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 7.4× average"
+   ]
+  },
+  {
+   "sym": "HINDALCO",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 908,
+   "pct": 1.58,
+   "d30": -6.65,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NESTLEIND",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1265.5,
+   "pct": -0.81,
+   "d30": -8.6,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GVT&D",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3959.1,
+   "pct": 0.26,
+   "d30": -7.22,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TITAN",
+   "sector": "Consumer & Retail",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4444.8,
+   "pct": -0.25,
+   "d30": -9.45,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CUMMINSIND",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4608,
+   "pct": -0.67,
+   "d30": -6.72,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "POLICYBZR",
+   "sector": "Internet & Media",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1070,
+   "pct": -0.87,
+   "d30": -41.44,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ADANIENT",
+   "sector": "Conglomerate",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2692,
+   "pct": -0.3,
+   "d30": -7.81,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "DMART",
+   "sector": "Consumer & Retail",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3342,
+   "pct": -1.08,
+   "d30": -10.16,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VAML",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 372.1,
+   "pct": 3.49,
+   "d30": -9.09,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BAJAJFINSV",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1729,
+   "pct": -0.17,
+   "d30": -5.88,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BAJAJ-AUTO",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 10405,
+   "pct": 0.19,
+   "d30": -10.25,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ICICIAMC",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2809.3,
+   "pct": -1,
+   "d30": -8.98,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "TMPV",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 286.85,
+   "pct": -0.07,
+   "d30": -4.7,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SWIGGY",
+   "sector": "Consumer & Retail",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 234.3,
+   "pct": 2.31,
+   "d30": -13.38,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NATIONALUM",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 324.25,
+   "pct": 1.84,
+   "d30": -8.92,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ASHOKLEY",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 148.91,
+   "pct": 0.49,
+   "d30": -4.85,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CHOLAFIN",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1574.4,
+   "pct": -0.73,
+   "d30": -10.83,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ACUTAAS",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3200,
+   "pct": 2.15,
+   "d30": -4.33,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "INDUSINDBK",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 877,
+   "pct": -0.95,
+   "d30": -7.34,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TIINDIA",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2197.3,
+   "pct": 0.58,
+   "d30": -14.39,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KAYNES",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3281,
+   "pct": 0.64,
+   "d30": -3.07,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HYUNDAI",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1987,
+   "pct": 0.1,
+   "d30": -7.8,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JINDALSTEL",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1045.2,
+   "pct": 1.48,
+   "d30": -5.24,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CIPLA",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1325.1,
+   "pct": -0.22,
+   "d30": -2.42,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NMDC",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 71.69,
+   "pct": 1.23,
+   "d30": -10.74,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MUTHOOTFIN",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2598.3,
+   "pct": -0.07,
+   "d30": -6.25,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "PINELABS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 165.5,
+   "pct": -1.56,
+   "d30": -10.88,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "SAILIFE",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1388.9,
+   "pct": -0.42,
+   "d30": -9.76,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "ALKEM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 5050,
+   "pct": -1.38,
+   "d30": -2.42,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "EXIDEIND",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 371,
+   "pct": -0.99,
+   "d30": -10.71,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IDFCFIRSTB",
+   "sector": "Banks",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 78.08,
+   "pct": -1.25,
+   "d30": -8.15,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "DATAPATTNS",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4077,
+   "pct": 0.94,
+   "d30": -5.66,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TEJASNET",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 474.35,
+   "pct": 1.3,
+   "d30": -7.86,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NAM-INDIA",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1065.3,
+   "pct": -2.16,
+   "d30": -5.22,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GRANULES",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 823,
+   "pct": 1.36,
+   "d30": -1.51,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GMRAIRPORT",
+   "sector": "Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 89.5,
+   "pct": -1.07,
+   "d30": -3.2,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BANKINDIA",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 132.36,
+   "pct": 1.5,
+   "d30": -3.95,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JSWENERGY",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 482.6,
+   "pct": 0.76,
+   "d30": -4.38,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VOLTAS",
+   "sector": "Durables & Building",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1029.1,
+   "pct": -2.18,
+   "d30": -9.01,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "INOXWIND",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 67.63,
+   "pct": -1.39,
+   "d30": -9.22,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "COCHINSHIP",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1248.8,
+   "pct": -0.41,
+   "d30": -5.32,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VOGL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 31.01,
+   "pct": -1.74,
+   "d30": -11.35,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VIJAYA",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1370.5,
+   "pct": -1.22,
+   "d30": -4.71,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.1× average"
+   ]
+  },
+  {
+   "sym": "GRSE",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2126.6,
+   "pct": 1.15,
+   "d30": -8.12,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "M&MFIN",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 312.1,
+   "pct": -1.28,
+   "d30": -9.55,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JUBLFOOD",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 417.95,
+   "pct": -1.15,
+   "d30": -11.26,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ZEEL",
+   "sector": "Internet & Media",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 71.95,
+   "pct": -1.15,
+   "d30": -9.61,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "COROMANDEL",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1755,
+   "pct": -0.58,
+   "d30": -9.43,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CANHLIFE",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 132.39,
+   "pct": -1.74,
+   "d30": -13.99,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.1× average"
+   ]
+  },
+  {
+   "sym": "SBICARD",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 564.2,
+   "pct": -1.57,
+   "d30": -8.72,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "RPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 18.85,
+   "pct": 0.75,
+   "d30": -9.29,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "PPLPHARMA",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 197.53,
+   "pct": 1.59,
+   "d30": -2.39,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NATCOPHARM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 785.85,
+   "pct": 0.11,
+   "d30": -2.41,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TITAGARH",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 749.95,
+   "pct": 0.19,
+   "d30": -7.77,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TENNIND",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 457.8,
+   "pct": -0.61,
+   "d30": -10.59,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IEX",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 107.55,
+   "pct": -0.05,
+   "d30": -3.97,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "RAINBOW",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1235,
+   "pct": -0.93,
+   "d30": -15.25,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "CONCOR",
+   "sector": "Ports & Logistics",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 447.95,
+   "pct": 0.32,
+   "d30": -8.36,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TRITURBINE",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 497.3,
+   "pct": -1.74,
+   "d30": -8.04,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "OIL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 445,
+   "pct": -0.09,
+   "d30": -8.74,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NBCC",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 75.51,
+   "pct": 0.05,
+   "d30": -7.25,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JWL",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 205.36,
+   "pct": 1.65,
+   "d30": -10.19,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GMDCLTD",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 471,
+   "pct": 0.75,
+   "d30": -13.32,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CANFINHOME",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 733,
+   "pct": -0.27,
+   "d30": -5.05,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GRAVITA",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1481,
+   "pct": 0.03,
+   "d30": -8.73,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AIAENG",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3720,
+   "pct": 1.11,
+   "d30": -2.25,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "VISL",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 29.48,
+   "pct": 0.55,
+   "d30": -5.39,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GPIL",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 211.93,
+   "pct": 2.26,
+   "d30": -10.39,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ARE&M",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 744.35,
+   "pct": 1.09,
+   "d30": -5.96,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "UNOMINDA",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1108,
+   "pct": -0.87,
+   "d30": -6.58,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "OLECTRA",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1064.9,
+   "pct": 0.75,
+   "d30": -8.83,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AAVAS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1190,
+   "pct": -0.32,
+   "d30": -7.21,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "CAPLIPOINT",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2305.7,
+   "pct": 0.17,
+   "d30": -10.74,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "AJANTPHARM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3320.2,
+   "pct": -1.17,
+   "d30": -5.38,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FIVESTAR",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 507,
+   "pct": -1.22,
+   "d30": -7.72,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ENDURANCE",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2410,
+   "pct": 0.09,
+   "d30": -8.31,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SCHAEFFLER",
+   "sector": "Auto Ancillary",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3665,
+   "pct": 0.4,
+   "d30": -6,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TECHNOE",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 955,
+   "pct": 1.04,
+   "d30": -1.65,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ABREL",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1116,
+   "pct": 0.38,
+   "d30": -9.52,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SWANCORP",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 264.05,
+   "pct": 0.06,
+   "d30": -9.83,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CHAMBLFERT",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 388.85,
+   "pct": -0.37,
+   "d30": -4.95,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ZFCVINDIA",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2169.7,
+   "pct": 0.5,
+   "d30": -11.85,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GODREJIND",
+   "sector": "Diversified",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1044.1,
+   "pct": 1.32,
+   "d30": -8.13,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BRIGADE",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 575,
+   "pct": -1.11,
+   "d30": -8.27,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JBMA",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 540.4,
+   "pct": 1.04,
+   "d30": -8.13,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "DEVYANI",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 121.83,
+   "pct": 0.21,
+   "d30": -10.87,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MMTC",
+   "sector": "Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 56.55,
+   "pct": -0.55,
+   "d30": -5.43,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SUMICHEM",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 405,
+   "pct": 0.04,
+   "d30": -10.8,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AADHARHFC",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 447.05,
+   "pct": -1.11,
+   "d30": -2.54,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IOB",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 31.02,
+   "pct": 0.91,
+   "d30": -3.33,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "UTIAMC",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 870.75,
+   "pct": -0.41,
+   "d30": -2.73,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TTML",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 33.51,
+   "pct": 0.15,
+   "d30": -4.86,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "APOLLOHOSP",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 7890,
+   "pct": 0.01,
+   "d30": -9.27,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MAXHEALTH",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 846,
+   "pct": -1.4,
+   "d30": -17.46,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SUNPHARMA",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1758.8,
+   "pct": -0.29,
+   "d30": -5.11,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GLENMARK",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2226.7,
+   "pct": -1.06,
+   "d30": -7.61,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MFSL",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1294.9,
+   "pct": 1.4,
+   "d30": -12.95,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "LUPIN",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1961.6,
+   "pct": -0.97,
+   "d30": -4.08,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TORNTPHARM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4558.9,
+   "pct": -0.55,
+   "d30": -5.27,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SAMMAANCAP",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 133.99,
+   "pct": -2.18,
+   "d30": -5.77,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IFCI",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 66.75,
+   "pct": -2.26,
+   "d30": -11.07,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FORTIS",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 736.5,
+   "pct": -1.31,
+   "d30": -15.37,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KEC",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 352.4,
+   "pct": -1.04,
+   "d30": -11.36,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "BIOCON",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 349.2,
+   "pct": -0.8,
+   "d30": -6.73,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NEULANDLAB",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 19695,
+   "pct": -1.3,
+   "d30": -12.95,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ANTHEM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 824.5,
+   "pct": -2.09,
+   "d30": -9.24,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ASTERDM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 675,
+   "pct": -1.12,
+   "d30": -8.93,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "APTUS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 221,
+   "pct": -1.43,
+   "d30": -7.88,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MEDANTA",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1232,
+   "pct": -3.41,
+   "d30": -12.29,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "RUBICON",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1509,
+   "pct": 2.16,
+   "d30": -14.59,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATACAP",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 323.2,
+   "pct": 0.58,
+   "d30": -5.91,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CHOLAHLDNG",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1359.1,
+   "pct": -1.34,
+   "d30": -10.14,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "J&KBANK",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 134.41,
+   "pct": -2.21,
+   "d30": -8.97,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NH",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1718,
+   "pct": -0.43,
+   "d30": -7.22,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "GLAXO",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2567.9,
+   "pct": 1.71,
+   "d30": -10.09,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "PIRAMALFIN",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1941,
+   "pct": -1.71,
+   "d30": -11.82,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ONESOURCE",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1406,
+   "pct": -1.9,
+   "d30": -11.94,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATAINVEST",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 613.65,
+   "pct": 0.44,
+   "d30": -10.02,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CREDITACC",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1237.6,
+   "pct": -1.96,
+   "d30": -12.63,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ABSLAMC",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 971.5,
+   "pct": -1.03,
+   "d30": -8.21,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SUNDARMFIN",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4247,
+   "pct": 0.85,
+   "d30": -9.1,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NCC",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 125.7,
+   "pct": 1.55,
+   "d30": -6.9,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KIMS",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 685.2,
+   "pct": -0.5,
+   "d30": -10.62,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IRB",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 17.63,
+   "pct": 0.34,
+   "d30": -7.45,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AFCONS",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 245.1,
+   "pct": -0.28,
+   "d30": -5.15,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "POLYMED",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1585.1,
+   "pct": 0.08,
+   "d30": -7.01,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HOMEFIRST",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1105,
+   "pct": -0.69,
+   "d30": -6.03,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CONCORDBIO",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1341.5,
+   "pct": -0.87,
+   "d30": -7.72,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
    ]
   }
  ],
- "digest": "Nifty Swing Desk — 2026-10-16 16:00\nTape: Mixed · breadth 258▲/241▼ · NIFTY 500 22,270.05 (+0.40%) · history 1/250 bars\nLeading sectors: IT, Aviation & Hotels, Cement\n\nACT NOW (0)\n• nothing — no trade is a valid outcome\n\nALERTS (6)\n• INDHOTEL [70] — Close above 776.15\n• NYKAA [55] — Close above 349.55\n• KOTAKBANK [50] — Close above 453.20\n• SHYAMMETL [50] — Close above 1,223.00\n• PVRINOX [50] — Close above 1,426.40\n• LAURUSLABS [40] — Close above 2,086.00\n\nWATCH (15)\n• TECHM [65] — Momentum — wait: Pullback toward 1,650.00–1,690.10 on light volume\n• TCS [65] — Momentum — wait: Pullback toward 2,350.00–2,375.70 on light volume\n• INFY [65] — Momentum — wait: Pullback toward 1,110.00–1,122.00 on light volume\n• WIPRO [65] — Momentum — wait: Pullback toward 170.00–174.05 on light volume\n• PERSISTENT [65] — Sector leader: Pullback that holds 5,492.00\n• HCLTECH [65] — Momentum — wait: Pullback toward 1,348.60–1,360.00 on light volume\n• TATAELXSI [65] — Momentum — wait: Pullback toward 3,682.10–3,700.00 on light volume\n• COFORGE [65] — Sector leader: Pullback that holds 1,900.60\n\nAvoid list: 139 names. Risk/trade ₹5,000. [score] = 0–100 setup quality.\nRules engine output, not advice. Decide on the close."
+ "digest": "Nifty Swing Desk — 2026-10-16 16:00\nTape: Mixed · breadth 258▲/241▼ · NIFTY 500 22,270.05 (+0.40%) · history 244/250 bars\nLeading sectors: IT, Aviation & Hotels, Cement\n\nACT NOW (12)\n• PERSISTENT [90] — Pullback buy: entry 5,772.25, stop 5,396.25, target 6,712.25, qty 13\n• CYIENT [85] — Pullback buy: entry 1,228.05, stop 1,059.95, target 1,648.30, qty 29\n• COFORGE [80] — Pullback buy: entry 1,957.75, stop 1,820.05, target 2,302.00, qty 36\n• ICICIGI [70] — Pullback buy: entry 1,708.20, stop 1,593.60, target 1,994.70, qty 43\n• CPPLUS [70] — Pullback buy: entry 4,178.50, stop 3,896.00, target 4,884.75, qty 17\n• JINDALSAW [70] — Pullback buy: entry 313.45, stop 276.75, target 405.20, qty 136\n• ELECON [60] — Pullback buy: entry 511.15, stop 421.65, target 734.90, qty 55\n• ZENSARTECH [60] — Pullback buy: entry 516.20, stop 446.75, target 689.85, qty 71\n\nALERTS (6)\n• INDHOTEL [100] — Close above 776.15\n• SHYAMMETL [80] — Close above 1,223.00\n• NYKAA [75] — Close above 349.55\n• PVRINOX [70] — Close above 1,426.40\n• LAURUSLABS [60] — Close above 2,086.00\n• KOTAKBANK [55] — Close above 453.20\n\nWATCH (13)\n• TECHM [85] — Momentum — wait: Pullback toward 1,650.00–1,690.10 on light volume\n• WIPRO [85] — Momentum — wait: Pullback toward 170.00–174.05 on light volume\n• HCLTECH [85] — Momentum — wait: Pullback toward 1,348.60–1,360.00 on light volume\n• BSOFT [85] — Sector leader: Pullback that holds 308.95\n• BBOX [85] — Momentum — wait: Pullback toward 874.60–880.20 on light volume\n• LEMONTREE [85] — Sector leader: Pullback that holds 111.65\n• ITCHOTELS [75] — Momentum — wait: Pullback toward 158.00–158.68 on light volume\n• NUVOCO [75] — Sector leader: Pullback that holds 331.40\n\nAvoid list: 260 names. Risk/trade ₹5,000. [score] = 0–100 setup quality.\nRules engine output, not advice. Decide on the close."
 }
