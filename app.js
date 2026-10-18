@@ -15,15 +15,15 @@ const S = {
   settings: { ...E.DEFAULTS }, custom: {}, repoSectors: {}, journal: [],
   meta: null, pending: null,
   tab: 'act', sector: null, open: null, closing: null,
-  uniSort: { key: 'pct', dir: -1 }, search: '',
+  uniSort: { key: 'pct', dir: -1 }, search: '', view: 'industries',
 };
 const sectorMap = () => Object.assign({}, S.repoSectors, S.custom); // repo industry map, overridden by this browser's assignments
 const sectorOf = sym => E.sectorOf(sym, sectorMap());
 
 /* ---------- persistence (localStorage) ---------- */
 const LS = 'nifty-swing-desk-v1';
-function load() { try { const d = JSON.parse(localStorage.getItem(LS) || 'null'); if (d) { S.settings = { ...E.DEFAULTS, ...(d.settings || {}) }; S.custom = d.custom || {}; S.journal = d.journal || []; S.manualSnaps = d.manualSnaps || []; } } catch (e) {} }
-function save() { try { localStorage.setItem(LS, JSON.stringify({ settings: S.settings, custom: S.custom, journal: S.journal, manualSnaps: S.manualSnaps })); } catch (e) { toast('Could not save in this browser (private mode?)'); } }
+function load() { try { const d = JSON.parse(localStorage.getItem(LS) || 'null'); if (d) { S.settings = { ...E.DEFAULTS, ...(d.settings || {}) }; S.custom = d.custom || {}; S.journal = d.journal || []; S.manualSnaps = d.manualSnaps || []; if (d.view === 'all' || d.view === 'industries') S.view = d.view; } } catch (e) {} }
+function save() { try { localStorage.setItem(LS, JSON.stringify({ settings: S.settings, custom: S.custom, journal: S.journal, manualSnaps: S.manualSnaps, view: S.view })); } catch (e) { toast('Could not save in this browser (private mode?)'); } }
 function mergeSnaps() {
   const by = {}; for (const s of S.manualSnaps) by[s.date] = s;
   for (const s of S.repoSnaps) { const m = by[s.date]; if (!m || (s.time || '') >= (m.time || '')) by[s.date] = s; } // job data wins unless the manual one is later in the day
@@ -116,7 +116,7 @@ function renderSectors(board, signals) {
       <span class="num chg ${s.avg30 > 0 ? 'up' : s.avg30 < 0 ? 'down' : ''}">${pct(s.avg30, 1)}</span>
       <span class="num muted">${(s.breadth * 100).toFixed(0)}%↑</span></div>`; }).join('');
   el.querySelectorAll('.sec-row').forEach(r => { const f = () => { const sec = r.dataset.sec || null; S.sector = (sec === null || S.sector === sec) ? null : sec; S.open = null; render(); }; r.onclick = f; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
-  $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : 'click a sector to filter the queue') + ' · <i class="sdot act"></i>act <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
+  $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : (S.view === 'industries' ? 'click a sector to filter the queue and list its stocks' : 'click a sector to filter the queue')) + ' · <i class="sdot act"></i>act <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
 }
 const TABS = [['act', 'Act now'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
 const stripTags = s => s.replace(/<[^>]+>/g, '');
@@ -150,8 +150,14 @@ function detailRow(s) { const r = s.row; const sz = s.size;
   return `<tr class="detail"><td colspan="11"><div class="detail-grid">${cells.map(([l, v]) => `<div><div class="l">${l}</div><div class="v">${v}</div></div>`).join('')}</div>
     <div class="why">${s.why}</div><div class="why" style="margin-top:8px"><b>Score ${s.score} (${esc(s.confidence)})</b>: base 50${s.reasons.length ? ', ' + s.reasons.map(esc).join(', ') : ''}.</div>${s.entry ? `<div style="margin-top:10px"><button class="btn small primary" data-log="${esc(s.sym)}">Log this trade</button></div>` : ''}</td></tr>`;
 }
+function renderView() {
+  $('viewInd').setAttribute('aria-pressed', S.view === 'industries'); $('viewAll').setAttribute('aria-pressed', S.view === 'all');
+  const show = S.view === 'all' || !!S.sector; $('universeCard').hidden = !show;
+  $('uniTitle').textContent = S.view === 'all' ? 'Universe' : (S.sector ? `Stocks in ${S.sector}` : 'Universe');
+}
 function renderUniverse(universe) {
-  const tbl = $('uniTbl'), empty = $('uniEmpty');
+  renderView();
+  const tbl = $('uniTbl'), empty = $('uniEmpty'); if ($('universeCard').hidden) return;
   if (!universe.length) { tbl.querySelector('thead').innerHTML = ''; tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false; empty.textContent = 'Every stock in the latest snapshot appears here with its sector, 52-week position and today\'s move.'; return; }
   empty.hidden = true;
   let rows = universe; if (S.sector) rows = rows.filter(r => r.sector === S.sector); if (S.search) rows = rows.filter(r => r.sym.includes(S.search) || r.sector.toUpperCase().includes(S.search));
@@ -163,7 +169,7 @@ function renderUniverse(universe) {
     <td class="r num chg ${r.pct > 0 ? 'up' : r.pct < 0 ? 'down' : ''}">${pct(r.pct)}</td><td class="r num chg ${r.d30 > 0 ? 'up' : r.d30 < 0 ? 'down' : ''}">${pct(r.d30, 1)}</td><td class="r num">${r.rsPct != null ? r.rsPct.toFixed(0) : '—'}</td><td class="r num">${r.rsi != null ? r.rsi.toFixed(0) : '—'}</td><td class="r num">${fmt(r.val, 0)}</td>
     <td class="r">${r.pos52 != null ? `<span class="range ${r.pos52 >= 0.95 ? 'hi' : r.pos52 <= 0.05 ? 'lo' : ''}" title="${(r.pos52 * 100).toFixed(0)}% of 52W range"><span class="mk" style="left:${(r.pos52 * 100).toFixed(1)}%"></span></span>` : '—'}</td>
     <td class="r num">${r.distHi != null ? '-' + r.distHi.toFixed(1) + '%' : '—'}</td></tr>`).join('');
-  $('uniSub').textContent = `${rows.length} stocks${S.sector ? ' in ' + S.sector : ''} · sorted by ${cols.find(c => c[0] === key)[1].toLowerCase()}`;
+  $('uniSub').textContent = `${rows.length} stocks${S.sector ? ' in ' + S.sector : ''} · sorted by ${cols.find(c => c[0] === key)[1].toLowerCase()}${S.view === 'industries' ? ' · clear the sector filter to hide' : ''}`;
 }
 function renderJournal() {
   const tbl = $('jTbl'), empty = $('jEmpty'); const open = S.journal.filter(t => t.status !== 'closed'), closed = S.journal.filter(t => t.status === 'closed');
@@ -217,6 +223,7 @@ function wire() {
     toast(`Saved ${doc.count} stocks for ${date}`); S.pending = null; $('paste').value = ''; $('file').value = ''; $('saveSnap').disabled = true; $('parseNote').className = 'note'; $('parseNote').textContent = 'Saved in this browser. The daily job\'s snapshot for the same date replaces it when it lands.'; };
   let setT; ['capital', 'riskPct', 'minRR', 'maxPos'].forEach(k => $(k).addEventListener('input', e => { const v = parseFloat(e.target.value); if (!(v > 0)) return; S.settings[k] = v; render(); clearTimeout(setT); setT = setTimeout(save, 500); }));
   $('search').addEventListener('input', e => { S.search = e.target.value.trim().toUpperCase(); render(); });
+  ['viewInd', 'viewAll'].forEach(id => $(id).onclick = () => { S.view = $(id).dataset.view; save(); render(); if (S.view === 'all') $('universeCard').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
   $('assignBtn').onclick = () => { const sym = $('assignSym').value.trim().toUpperCase(), sec = $('assignSec').value.trim(); if (!sym || !sec) return toast('Enter a symbol and a sector'); S.custom[sym] = sec; save(); render(); $('assignSym').value = ''; toast(`${sym} → ${sec} (add it to data/sectors.json too so the Telegram digest agrees)`); };
   $('jAdd').onclick = () => { const sym = $('jSym').value.trim().toUpperCase(), entry = parseFloat($('jEntry').value), stop = parseFloat($('jStop').value), target = parseFloat($('jTarget').value), qty = parseInt($('jQty').value, 10), date = $('jDate').value || todayISO();
     if (!sym || !(entry > 0) || !(stop > 0) || !(qty > 0)) return toast('Symbol, entry, stop and qty are required'); if (stop >= entry) return toast('Stop must be below entry for a long');
