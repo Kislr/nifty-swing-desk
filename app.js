@@ -12,12 +12,13 @@ let toastT; const toast = m => { const t = $('toast'); t.textContent = m; t.hidd
 
 const S = {
   repoSnaps: [], manualSnaps: [], snaps: [], histFiles: [], bars: null, coverage: 0,
-  settings: { ...E.DEFAULTS }, custom: {}, journal: [],
+  settings: { ...E.DEFAULTS }, custom: {}, repoSectors: {}, journal: [],
   meta: null, pending: null,
   tab: 'act', sector: null, open: null, closing: null,
   uniSort: { key: 'pct', dir: -1 }, search: '',
 };
-const sectorOf = sym => E.sectorOf(sym, S.custom);
+const sectorMap = () => Object.assign({}, S.repoSectors, S.custom); // repo industry map, overridden by this browser's assignments
+const sectorOf = sym => E.sectorOf(sym, sectorMap());
 
 /* ---------- persistence (localStorage) ---------- */
 const LS = 'nifty-swing-desk-v1';
@@ -37,6 +38,7 @@ async function loadRepoData() {
     const years = (idx.historyYears && idx.historyYears.length ? idx.historyYears : [new Date().getFullYear() - 1, new Date().getFullYear()]).slice(-2);
     const hf = await Promise.all(years.map(y => fetch(`data/history/${y}.json`, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null)));
     S.histFiles = hf.filter(Boolean);
+    try { const sj = await fetch('data/sectors.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null); S.repoSectors = (sj && sj.map) || {}; } catch (e) {}
     const latest = S.repoSnaps[S.repoSnaps.length - 1];
     pillSet('pillData', 'accent', latest ? `Auto data · ${idx.index || ''} · updated ${idx.generatedAt ? new Date(idx.generatedAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : latest.date}` : 'No job data yet');
   } catch (e) { pillSet('pillData', 'warn', 'Job data not found — upload manually'); }
@@ -46,11 +48,11 @@ async function loadRepoData() {
 /* ---------- render ---------- */
 function pillSet(id, cls, text) { const el = $(id); el.className = 'pill ' + (cls || ''); el.innerHTML = '<span class="dot"></span>' + text; }
 function render() {
-  const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, S.custom);
+  const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, sectorMap());
   const { signals, reg, board, universe, snap } = res; S.bars = res.bars; S.coverage = res.coverage;
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
   renderSectors(board, signals); renderQueue(signals, reg); renderUniverse(universe); renderJournal(); renderSnaplist();
-  $('secList').innerHTML = Object.keys(E.SECTOR_LISTS).map(s => `<option value="${esc(s)}">`).join('');
+  $('secList').innerHTML = [...new Set([...Object.keys(E.SECTOR_LISTS), ...Object.values(S.repoSectors)])].sort().map(s => `<option value="${esc(s)}">`).join('');
 }
 function renderStrip(snap, reg) {
   if (!snap) { pillSet('pillRegime', '', 'No data yet'); pillSet('pillIndex', '', 'Index —'); pillSet('pillBreadth', '', 'Breadth —'); pillSet('pillAsOf', '', 'Waiting for a snapshot'); return; }
