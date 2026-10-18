@@ -46,7 +46,11 @@
   const pct = (n, d = 2) => (n == null || isNaN(n)) ? '—' : (n > 0 ? '+' : '') + Number(n).toFixed(d) + '%';
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const rowObj = (sym, arr) => { const o = { sym }; F.forEach((k, i) => (o[k] = arr[i])); return o; };
-  const sectorOf = (sym, custom) => (custom && custom[sym]) || SECTOR_OF[sym] || 'Unmapped';
+  // NSE's Nifty 500 industry labels (what the backfill writes into data/sectors.json) folded into the built-in sector names
+  const SECTOR_ALIAS = { 'Information Technology': 'IT', 'Consumer Durables': 'Durables & Building', 'Construction Materials': 'Cement', 'Telecommunication': 'Telecom',
+    'Capital Goods': 'Capital Goods & Defence', 'Fast Moving Consumer Goods': 'FMCG', 'Oil Gas & Consumable Fuels': 'Oil & Gas', 'Chemicals': 'Chemicals & Fertilisers',
+    'Healthcare': 'Pharma', 'Automobile and Auto Components': 'Auto', 'Media Entertainment & Publication': 'Internet & Media', 'Metals & Mining': 'Metals & Mining', 'Power': 'Power', 'Realty': 'Realty' };
+  const sectorOf = (sym, custom) => { const v = (custom && custom[sym]) || SECTOR_OF[sym] || 'Unmapped'; return SECTOR_ALIAS[v] || v; };
 
   /* ---------- parsing (CSV download or pasted table text) ---------- */
   const num = s => { if (s == null) return null; s = String(s).replace(/[₹,%\s"]/g, ''); if (s === '' || s === '-') return null; const n = parseFloat(s); return isNaN(n) ? null : n; };
