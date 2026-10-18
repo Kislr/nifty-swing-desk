@@ -1,0 +1,35 @@
+name: Daily NSE snapshot
+
+on:
+  schedule:
+    # 16:10 IST Mon–Fri (= 10:40 UTC). NSE closes 15:30 IST; the market-watch data settles by ~16:00.
+    - cron: '40 10 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Fetch NSE data and compute signals
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/fetch.mjs
+      - name: Commit snapshot
+        run: |
+          git config user.name "swing-desk-bot"
+          git config user.email "swing-desk-bot@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: snapshot $(date -u +%Y-%m-%d)" && git push; fi
