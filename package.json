@@ -1,0 +1,16 @@
+{
+  "name": "nifty-swing-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rules-based NSE swing-trading desk: daily NSE pull, sector leadership, breakout/pullback signals, stops, sizing, journal.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "fetch": "node scripts/fetch.mjs",
+    "fetch:dry": "node scripts/fetch.mjs --dry",
+    "fetch:force": "node scripts/fetch.mjs --force",
+    "serve": "npx --yes serve -l 8080 .",
+    "backfill": "node scripts/backfill.mjs --years 2",
+    "backtest": "node scripts/backtest.mjs",
+    "test": "node scripts/test.mjs"
+  }
+}

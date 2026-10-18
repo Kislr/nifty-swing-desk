@@ -1,0 +1,7 @@
+{
+  "index": "NIFTY 500",
+  "historyDays": 90,
+  "keepDays": 400,
+  "alertIntraday": false,
+  "risk": { "capital": 500000, "riskPct": 1, "minRR": 2.5, "maxPos": 25 }
+}
