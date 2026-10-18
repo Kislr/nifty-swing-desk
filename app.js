@@ -49,7 +49,7 @@ function render() {
   const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, S.custom);
   const { signals, reg, board, universe, snap } = res; S.bars = res.bars; S.coverage = res.coverage;
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
-  renderSectors(board); renderQueue(signals, reg); renderUniverse(universe); renderJournal(); renderSnaplist();
+  renderSectors(board, signals); renderQueue(signals, reg); renderUniverse(universe); renderJournal(); renderSnaplist();
   $('secList').innerHTML = Object.keys(E.SECTOR_LISTS).map(s => `<option value="${esc(s)}">`).join('');
 }
 function renderStrip(snap, reg) {
@@ -90,25 +90,37 @@ function renderRules(reg, snap) {
   ];
   $('rules').innerHTML = items.map(i => `<li class="${i.bad ? 'bad' : i.ok ? 'ok' : ''}"><span class="tick">${i.bad ? '✕' : i.ok ? '✓' : ''}</span><span>${i.t}</span></li>`).join('');
 }
-function renderSectors(board) {
+function sigDots(c) {
+  const parts = [];
+  if (c.act) parts.push(`<span class="sig" title="${c.act} act-now setup${c.act > 1 ? 's' : ''}"><i class="sdot act"></i>${c.act}</span>`);
+  if (c.alert) parts.push(`<span class="sig" title="${c.alert} alert${c.alert > 1 ? 's' : ''} to set"><i class="sdot alert"></i>${c.alert}</span>`);
+  if (c.watch) parts.push(`<span class="sig" title="${c.watch} on watch"><i class="sdot watch"></i>${c.watch}</span>`);
+  return parts.length ? `<span class="sigs">${parts.join('')}</span>` : '';
+}
+function renderSectors(board, signals) {
   const el = $('sectors');
   if (!board) { el.innerHTML = '<div class="empty">Sectors rank by a blend of today\'s average move, 30-day momentum and breadth within the sector. The top three with a positive score are <b>leaders</b>; momentum signals only fire inside them.</div>'; return; }
+  const counts = {}; const total = { act: 0, alert: 0, watch: 0 };
+  for (const g of signals || []) { if (g.kind === 'avoid') continue; const c = counts[g.sector] || (counts[g.sector] = { act: 0, alert: 0, watch: 0 }); c[g.kind]++; total[g.kind]++; }
   const list = board.list; const max = Math.max(0.5, ...list.map(s => Math.abs(s.avgPct || 0)));
-  el.innerHTML = list.map(s => { const w = Math.min(50, Math.abs(s.avgPct || 0) / max * 50); const lead = board.leaders.has(s.sec), lag = board.laggards.has(s.sec);
+  const allRow = `<div class="sec-row all ${S.sector == null ? 'active' : ''}" data-sec="" role="button" tabindex="0">
+      <span class="name">All sectors<span class="n">${list.reduce((a, s) => a + s.n, 0)}</span>${sigDots(total)}</span>
+      <span class="muted small" style="grid-column:span 4">${S.sector ? 'click to clear the ' + esc(S.sector) + ' filter' : 'no filter — the queue shows every sector'}</span></div>`;
+  el.innerHTML = allRow + list.map(s => { const w = Math.min(50, Math.abs(s.avgPct || 0) / max * 50); const lead = board.leaders.has(s.sec), lag = board.laggards.has(s.sec);
     return `<div class="sec-row ${S.sector === s.sec ? 'active' : ''}" data-sec="${esc(s.sec)}" role="button" tabindex="0">
-      <span class="name">${esc(s.sec)}<span class="n">${s.n}</span>${lead ? ' <span class="tag act" style="font-size:10px">LEAD</span>' : lag ? ' <span class="tag avoid" style="font-size:10px">LAG</span>' : ''}</span>
+      <span class="name">${esc(s.sec)}<span class="n">${s.n}</span>${lead ? ' <span class="tag act" style="font-size:10px">LEAD</span>' : lag ? ' <span class="tag avoid" style="font-size:10px">LAG</span>' : ''}${sigDots(counts[s.sec] || {})}</span>
       <span class="bar-track"><span class="zero"></span><span class="bar ${s.avgPct >= 0 ? 'pos' : 'neg'}" style="width:${w}%"></span></span>
       <span class="num chg ${s.avgPct > 0 ? 'up' : s.avgPct < 0 ? 'down' : ''}">${pct(s.avgPct)}</span>
       <span class="num chg ${s.avg30 > 0 ? 'up' : s.avg30 < 0 ? 'down' : ''}">${pct(s.avg30, 1)}</span>
       <span class="num muted">${(s.breadth * 100).toFixed(0)}%↑</span></div>`; }).join('');
-  el.querySelectorAll('.sec-row').forEach(r => { const f = () => { S.sector = S.sector === r.dataset.sec ? null : r.dataset.sec; S.open = null; render(); }; r.onclick = f; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
-  $('secSub').textContent = S.sector ? `filtered to ${S.sector} — click again to clear` : 'click a sector to filter the queue';
+  el.querySelectorAll('.sec-row').forEach(r => { const f = () => { const sec = r.dataset.sec || null; S.sector = (sec === null || S.sector === sec) ? null : sec; S.open = null; render(); }; r.onclick = f; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
+  $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : 'click a sector to filter the queue') + ' · <i class="sdot act"></i>act <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
 }
 const TABS = [['act', 'Act now'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
 const stripTags = s => s.replace(/<[^>]+>/g, '');
 function renderQueue(signals, reg) {
-  const counts = {}; signals.forEach(s => (counts[s.kind] = (counts[s.kind] || 0) + 1));
-  $('tabs').innerHTML = TABS.map(([k, l]) => `<button class="tab" role="tab" data-k="${k}" aria-selected="${S.tab === k}">${l}<span class="count">${counts[k] || 0}</span></button>`).join('');
+  const counts = {}, inSec = {}; signals.forEach(s => { counts[s.kind] = (counts[s.kind] || 0) + 1; if (S.sector && s.sector === S.sector) inSec[s.kind] = (inSec[s.kind] || 0) + 1; });
+  $('tabs').innerHTML = TABS.map(([k, l]) => `<button class="tab" role="tab" data-k="${k}" aria-selected="${S.tab === k}">${l}<span class="count" title="${S.sector ? `${inSec[k] || 0} in ${esc(S.sector)}, ${counts[k] || 0} overall` : 'across all sectors'}">${S.sector ? `${inSec[k] || 0}<span class="muted">/${counts[k] || 0}</span>` : (counts[k] || 0)}</span></button>`).join('');
   $('tabs').querySelectorAll('.tab').forEach(b => (b.onclick = () => { S.tab = b.dataset.k; S.open = null; render(); }));
   let rows = signals.filter(s => s.kind === S.tab); if (S.sector) rows = rows.filter(s => s.sector === S.sector);
   const tbl = $('queueTbl'), empty = $('queueEmpty');
@@ -117,7 +129,8 @@ function renderQueue(signals, reg) {
   tbl.querySelector('thead').innerHTML = `<tr><th>Symbol</th><th>Setup</th><th class="r">Score</th><th class="r">LTP</th><th class="r">Today</th><th class="r">30D</th>${withLevels ? '<th class="r">Entry</th><th class="r">Stop</th><th class="r">Target</th><th class="r">Qty</th>' : '<th>Trigger / reason</th>'}<th></th></tr>`;
   if (!rows.length) { tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false;
     const m = { act: 'Nothing to act on right now. That is the normal state — most days the right trade is no trade.', alert: 'No stocks within 2% of a 52-week high today.', watch: 'No momentum names in leading sectors today.', avoid: 'Nothing near its 52-week low.' };
-    empty.innerHTML = S.snaps.length ? (S.sector ? `No ${S.tab} signals in ${esc(S.sector)}.` : m[S.tab]) : 'The queue fills in once the daily job has written a snapshot (or you upload one below).'; return; }
+    empty.innerHTML = S.snaps.length ? (S.sector ? `No ${TABS.find(t => t[0] === S.tab)[1].toLowerCase()} signals in <b>${esc(S.sector)}</b>${counts[S.tab] ? ` — ${counts[S.tab]} across all sectors.` : '.'} <button class="btn small" id="clearSec" style="margin-left:8px">Show all sectors</button>` : m[S.tab]) : 'The queue fills in once the daily job has written a snapshot (or you upload one below).';
+    const cb = $('clearSec'); if (cb) cb.onclick = () => { S.sector = null; render(); }; return; }
   empty.hidden = true;
   tbl.querySelector('tbody').innerHTML = rows.map(s => { const r = s.row; const open = S.open === s.sym;
     const lv = withLevels ? `<td class="r num">${fmt(s.entry)}</td><td class="r num">${fmt(s.stop)}</td><td class="r num">${fmt(s.target)}</td><td class="r num">${s.size ? fmt0(s.size.qty) : '—'}</td>` : `<td style="white-space:normal;max-width:420px">${s.trigger ? '<span class="muted">Trigger:</span> ' + esc(s.trigger) : stripTags(s.why).slice(0, 120) + '…'}</td>`;
