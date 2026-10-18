@@ -1,0 +1,40 @@
+name: Backfill price history
+
+# One-off (re-runnable) load of NSE bhavcopy history into data/history/. Run it from the Actions tab.
+# If NSE's archive host refuses GitHub's IP range the job fails fast; then run BACKFILL.md locally instead.
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: 'How many years back to load'
+        required: true
+        default: '2'
+      universe:
+        description: 'nifty500 | nifty50 | all'
+        required: true
+        default: 'nifty500'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-snapshot
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Download history from NSE archives
+        run: node scripts/backfill.mjs --years ${{ github.event.inputs.years }} --universe ${{ github.event.inputs.universe }} --pause 700
+      - name: Commit history
+        run: |
+          git config user.name "swing-desk-bot"
+          git config user.email "swing-desk-bot@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: history backfill (${{ github.event.inputs.years }}y, ${{ github.event.inputs.universe }})" && git push; fi
