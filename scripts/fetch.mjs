@@ -15,7 +15,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const E = require(path.join(ROOT, 'engine.js'));
+const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js'));
 const config = JSON.parse(await fs.readFile(path.join(ROOT, 'config.json'), 'utf8'));
 const args = new Set(process.argv.slice(2));
 const DRY = args.has('--dry'), FORCE = args.has('--force');
@@ -80,6 +80,13 @@ async function telegram(text) {
 try {
   const rows = await fetchIndex(config.index || 'NIFTY 500');
   const { date, time } = stampOf(rows);
+  // The history files carry NIFTY 50 as the benchmark (see backfill.mjs). When the universe is a different index its
+  // market-watch payload only includes that index's row, so fetch the NIFTY 50 row separately and use it as doc.index;
+  // the universe's own index row is kept as doc.universeIndex for display.
+  if ((config.index || 'NIFTY 500') !== 'NIFTY 50') {
+    try { const n50 = (await fetchIndex('NIFTY 50')).filter(r => r.isIndex && /^NIFTY 50$/.test(r.sym)); if (n50.length) rows.push(n50[0]); else console.warn('NIFTY 50 row not found; index bar will not be appended to history'); }
+    catch (e) { console.warn('NIFTY 50 fetch failed (' + e.message + '); index bar will not be appended to history'); }
+  }
   const doc = E.toSnapshotDoc(rows, date, time, 'nse-api');
   console.log(`fetched ${doc.count} stocks for ${date} ${time} (${config.index})`);
 
@@ -91,7 +98,8 @@ try {
   const custom = (await readJSON(path.join(DATA, 'sectors.json'), { map: {} })).map || {};
   const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year);
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom);
-  const text = E.digest(result, config.risk);
+  const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
+  const text = E.digest(result, config.risk) + '\n\n' + M.digest(mom, E.fmt);
   console.log('\n' + text + '\n');
 
   if (DRY) process.exit(0);
@@ -110,7 +118,8 @@ try {
   const historyYears = (await fs.readdir(HISTDIR).catch(() => [])).filter(f => /^\d{4}\.json$/.test(f)).map(f => Number(f.slice(0, 4))).sort();
   await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify({ dates: pruned, latest: date, latestTime: time, index: config.index, historyYears, generatedAt: new Date().toISOString() }, null, 1));
   const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
-  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), digest: text }, null, 1));
+  const momOut = { date: mom.date, gate: mom.gate, params: mom.params, picks: mom.picks.map(r => ({ rank: r.rank, sym: r.sym, sector: r.sector, ltp: r.ltp, ret: r.ret, ret1: r.ret1, ret6: r.ret6, ret12: r.ret12, offHigh: r.offHigh })) };
+  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
   const intraday = result.reg.intraday;
   if (!intraday || config.alertIntraday || FORCE) await telegram(text);

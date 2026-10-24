@@ -11,6 +11,7 @@
     "serve": "npx --yes serve -l 8080 .",
     "backfill": "node scripts/backfill.mjs --years 2",
     "backtest": "node scripts/backtest.mjs",
+    "backtest:momentum": "node scripts/backtest-momentum.mjs",
     "test": "node scripts/test.mjs"
   }
 }

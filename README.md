@@ -10,10 +10,12 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 
 ```
 index.html + app.js      the website (reads data/, keeps journal & settings in your browser)
-engine.js                the rules engine, shared by the site, the job and the backtest
+engine.js                the swing rules engine, shared by the site, the job and the backtest
+momentum.js              the momentum engine (ranked strength, monthly rebalance, regime gate) — independent of engine.js
 scripts/fetch.mjs        the daily job: NSE → data/snapshots/DATE.json + data/history/YEAR.json → signals → Telegram
 scripts/backfill.mjs     one-time history load from NSE bhavcopy archives (see BACKFILL.md)
-scripts/backtest.mjs     walk-forward backtest of the rules over data/history/
+scripts/backtest.mjs     walk-forward backtest of the swing rules over data/history/
+scripts/backtest-momentum.mjs  walk-forward backtest (and --sweep) of the momentum engine
 .github/workflows/       runs fetch.mjs at 16:10 IST Mon–Fri and commits the result
 config.json              index to track, risk settings for the digest, retention
 data/sectors.json        sector overrides (the backfill fills this from NSE's industry list)
@@ -74,6 +76,20 @@ node scripts/backtest.mjs --setups breakout                 # one setup at a tim
 
 The latest committed report is `reports/backtest-2026-10-24.md` (with a parameter sweep and what it does and does not show). The report lands in `reports/` with expectancy (average R per trade after costs), profit factor, max drawdown and breakdowns by setup, score band and year. Read the "How to read this" footer; fewer than ~60 trades in a slice is noise. Every parameter in `engine.js` is a convention until this says otherwise.
 
+## The momentum engine
+
+A second engine with a different philosophy, kept separate so each is accountable to its own backtest. Every day it ranks the universe on its return over the last six months *excluding the most recent month* (short-term reversal is the best-documented wrinkle in momentum), drops anything thinly traded or more than 20% below its 52-week high, and lists the top 15, at most four per sector. The site shows this list in the **Momentum portfolio** card and the Telegram digest carries it below the swing signals.
+
+The rules of use: hold the list equal-weighted; rebalance every 21 trading days, selling anything that has fallen below rank 30 and refilling from the top; between rebalances the only exit is a 20% fall from the highest close since entry. A **regime gate** — Nifty 50 above its 200-day average — decides whether new buys are allowed at all; when it is closed, holdings run out on their stops. Expect 35–50% winners: momentum earns from a few large winners and many small quick losses, so the win rate is the wrong number to watch.
+
+```
+node scripts/backtest-momentum.mjs                       # defaults
+node scripts/backtest-momentum.mjs --set lookback=252 --set topN=10 --set trail=15
+node scripts/backtest-momentum.mjs --sweep               # 96-cell parameter map
+```
+
+Reports land in `reports/momentum-*.md`. The warm-up is lookback + 21 bars, so with two years of history a 12-month lookback leaves under a year to test; the backfill at five years (`node scripts/backfill.mjs --years 5`) is what makes these numbers meaningful. Parameters can be overridden for the daily job under a `"momentum"` key in `config.json` (same names as `DEFAULTS` in `momentum.js`).
+
 ## Daily use
 
 The site is read top-down. The **regime** strip tells you whether to be trading at all (weak breadth halves every position size automatically). The **sector board** shows where the money is; only the top three sectors with a positive score count as leaders, and momentum setups fire only inside them. The **signal queue** has four tabs: Orders for tomorrow (pullback buys and confirmed breakouts as *conditional* buy-stop orders for the next session — if the price never reaches the entry, the order expires and the setup is void; a name that disappears the next day was not triggered and cost nothing), Set alerts (names within 2% of a 52-week high and the exact close to wait for), Watch (strong days in leading sectors, tagged "don't chase"), and Avoid (near 52-week lows or down 8%+ in 30 days). Each row carries a **score** (0–100): base 50, plus sector leadership, relative strength, moving-average trend, volume, RSI extension and candle confirmation. Click a row for the full reasoning, the indicator readings and a **Log this trade** button that prefills the journal.
@@ -126,6 +142,10 @@ NSE sits behind a bot filter that occasionally refuses requests from cloud IP ra
 If blocks become the norm, register your own PC as a GitHub self-hosted runner and change `runs-on` in the workflow to `self-hosted`; the job then runs from your IP on the same schedule, as long as the machine is on.
 
 NSE changes its website from time to time. The job calls `/api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData` (the endpoint the live-equity page itself uses as of October 2026). If that moves, `scripts/fetch.mjs` is the only file to update: `E.rowsFromNseApi` in `engine.js` documents the field names it expects.
+
+## Benchmark index
+
+The history files carry **NIFTY 50** as the benchmark (relative strength, the 20-day index return, the momentum gate). When `config.index` is a different index, its market-watch payload only includes that index's own row, so the daily job fetches the NIFTY 50 row separately; the engine refuses to splice a differently named index close into the series (a NIFTY 500 close in a NIFTY 50 series looks like a 7% crash). If the NIFTY 50 fetch fails on a given day, that day's index bar is left empty and the gate uses the latest available bar.
 
 ## The rules, in one paragraph
 

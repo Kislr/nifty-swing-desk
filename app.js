@@ -51,7 +51,7 @@ function render() {
   const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, sectorMap());
   const { signals, reg, board, universe, snap } = res; S.bars = res.bars; S.coverage = res.coverage;
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
-  renderSectors(board, signals); renderQueue(signals, reg); renderUniverse(universe); renderJournal(); renderSnaplist();
+  renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars); renderUniverse(universe); renderJournal(); renderSnaplist();
   $('secList').innerHTML = [...new Set([...Object.keys(E.SECTOR_LISTS), ...Object.values(S.repoSectors)])].sort().map(s => `<option value="${esc(s)}">`).join('');
 }
 function renderStrip(snap, reg) {
@@ -154,6 +154,19 @@ function detailRow(s) { const r = s.row; const sz = s.size;
   if (s.entry) { cells.push(['Risk / share', fmt(s.entry - s.stop)], ['Stop distance', ((s.entry - s.stop) / s.entry * 100).toFixed(1) + '%'], ['Reward:risk', s.rr + ':1']); if (sz) cells.push(['Position', `${fmt0(sz.qty)} sh ≈ ₹${fmt0(sz.value)}${sz.capped ? ' (capped)' : ''}`], ['₹ at risk', '₹' + fmt0(sz.riskActual)]); }
   return `<tr class="detail"><td colspan="11"><div class="detail-grid">${cells.map(([l, v]) => `<div><div class="l">${l}</div><div class="v">${v}</div></div>`).join('')}</div>
     <div class="why">${s.why}</div><div class="why" style="margin-top:8px"><b>Score ${s.score} (${esc(s.confidence)})</b>: base 50${s.reasons.length ? ', ' + s.reasons.map(esc).join(', ') : ''}.</div>${s.entry ? `<div style="margin-top:10px"><button class="btn small primary" data-log="${esc(s.sym)}">Log this trade</button></div>` : ''}</td></tr>`;
+}
+function renderMomentum(bars) {
+  const M = window.MomentumEngine; const tbl = $('momTbl'), empty = $('momEmpty'), note = $('momNote');
+  if (!M || !bars || !bars.dates.length) { $('momSub').textContent = ''; note.hidden = true; empty.hidden = false; empty.textContent = 'Needs history.'; tbl.querySelector('tbody').innerHTML = ''; return; }
+  const i = bars.dates.length - 1; const sel = M.selectAt(bars, i, {}, sectorMap()); const P = sel.params; const g = sel.gate;
+  $('momSub').textContent = `${P.lookback}-bar momentum, skip ${P.skip}, top ${P.topN}, rebalance every ${P.rebalance} bars, ${P.trail}% trailing stop · ${sel.ranked.length} eligible of ${sel.universe.length}`;
+  const gateTxt = g.open == null ? 'Regime gate: <b>unknown</b> (not enough index history)' : g.source === 'index' ? `Regime gate <b>${g.open ? 'OPEN' : 'CLOSED'}</b>: Nifty ${fmt(g.index)} ${g.open ? 'above' : 'below'} its ${g.n}-day average ${fmt(g.sma)}${g.asOf !== sel.date ? ` (index as of ${g.asOf})` : ''}` : `Regime gate <b>${g.open ? 'OPEN' : 'CLOSED'}</b> by breadth: ${Math.round(g.breadth * 100)}% of stocks above their 200-day average (index bars missing)`;
+  note.hidden = false; note.innerHTML = `${gateTxt}. ${g.open === false ? '<b>No new buys.</b> Existing holdings exit on their trailing stops or when they drop below rank ' + P.holdRank + '.' : 'This is the list to hold, equal-weighted, until the next rebalance; between rebalances the only exit is a ' + P.trail + '% fall from the highest close since entry.'} A second, independent engine: ranked strength over months, not a trigger for tomorrow. Judge it on <code>reports/momentum-*.md</code>, not on today's list.`;
+  tbl.querySelector('thead').innerHTML = '<tr><th class="r">Rank</th><th>Symbol</th><th class="r">LTP</th><th class="r">Momentum</th><th class="r">1M</th><th class="r">6M</th><th class="r">12M</th><th class="r">Off high</th><th class="r">Turnover</th><th class="r">Trail stop</th></tr>';
+  if (!sel.picks.length) { tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false; empty.textContent = `Not enough history for a ${P.lookback + P.skip}-bar lookback yet.`; return; }
+  empty.hidden = true;
+  const pc = (x, d = 0) => x == null ? '—' : `<span class="num chg ${x > 0 ? 'up' : x < 0 ? 'down' : ''}">${(x * 100 > 0 ? '+' : '') + (x * 100).toFixed(d)}%</span>`;
+  tbl.querySelector('tbody').innerHTML = sel.picks.map(r => `<tr><td class="r num">${r.rank}</td><td><span class="sym">${esc(r.sym)}<span class="sec">${esc(r.sector)}</span></span></td><td class="r num">${fmt(r.ltp)}</td><td class="r num">${P.volAdjust ? r.score.toFixed(2) : pc(r.ret)}</td><td class="r">${pc(r.ret1)}</td><td class="r">${pc(r.ret6)}</td><td class="r">${pc(r.ret12)}</td><td class="r num">${r.offHigh.toFixed(1)}%</td><td class="r num">₹${fmt(r.avgTurn, 0)} cr</td><td class="r num">${fmt(r.ltp * (1 - P.trail / 100))}</td></tr>`).join('');
 }
 function renderView() {
   $('viewInd').setAttribute('aria-pressed', S.view === 'industries'); $('viewAll').setAttribute('aria-pressed', S.view === 'all');

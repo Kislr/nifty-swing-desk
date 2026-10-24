@@ -1,0 +1,4326 @@
+[
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 83,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.012504431532078364,
+   "cagr": 0.0075690945895903194,
+   "maxDrawdown": 0.11999694382365862,
+   "sharpe": 0.12390234903651987,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4457831325301205,
+   "avgWin": 12.055945945945945,
+   "avgLoss": -9.328695652173911,
+   "avgBars": 25.349397590361445,
+   "byReason": {
+    "trailing stop": 39,
+    "rank drop": 42,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499263,
+     "end": 563852,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 563852,
+     "end": 505506,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6286407766990292,
+   "final": 505506
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 83,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.028437974450288728,
+   "cagr": 0.017160827420713343,
+   "maxDrawdown": 0.08890722454375272,
+   "sharpe": 0.18811559247335127,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.39759036144578314,
+   "avgWin": 16.275454545454544,
+   "avgLoss": -9.998199999999999,
+   "avgBars": 23.49397590361446,
+   "byReason": {
+    "trailing stop": 56,
+    "rank drop": 25,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499262,
+     "end": 562768,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 562768,
+     "end": 513460,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6286407766990292,
+   "final": 513460
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 79,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": -0.012177950298740359,
+   "cagr": -0.007407325824056343,
+   "maxDrawdown": 0.13561285618639998,
+   "sharpe": 0.02181802269973215,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4430379746835443,
+   "avgWin": 13.480000000000002,
+   "avgLoss": -10.900227272727273,
+   "avgBars": 30.21518987341772,
+   "byReason": {
+    "trailing stop": 24,
+    "rank drop": 53,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499263,
+     "end": 567079,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 567079,
+     "end": 493183,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6480582524271845,
+   "final": 493183
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 73,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.18038024123606444,
+   "cagr": 0.10586631133524782,
+   "maxDrawdown": 0.0982656011549582,
+   "sharpe": 0.6465877436513143,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.3972602739726027,
+   "avgWin": 23.206206896551716,
+   "avgLoss": -11.484318181818184,
+   "avgBars": 31.068493150684933,
+   "byReason": {
+    "trailing stop": 33,
+    "rank drop": 36,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499262,
+     "end": 572955,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 572955,
+     "end": 589319,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7742718446601942,
+   "final": 589319
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 75,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": -0.010349254801577557,
+   "cagr": -0.006292727001276144,
+   "maxDrawdown": 0.19056917814502705,
+   "sharpe": 0.037497592555377615,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.5066666666666667,
+   "avgWin": 11.89342105263158,
+   "avgLoss": -12.795405405405404,
+   "avgBars": 33.45333333333333,
+   "byReason": {
+    "trailing stop": 15,
+    "rank drop": 57,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499263,
+     "end": 606758,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 606758,
+     "end": 494096,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7063106796116505,
+   "final": 494096
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 67,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.18112333804695724,
+   "cagr": 0.10628870281316072,
+   "maxDrawdown": 0.10660473032632625,
+   "sharpe": 0.6249351002019592,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.44776119402985076,
+   "avgWin": 22.082333333333334,
+   "avgLoss": -13.222972972972974,
+   "avgBars": 36.985074626865675,
+   "byReason": {
+    "trailing stop": 22,
+    "rank drop": 39,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499262,
+     "end": 591772,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 591772,
+     "end": 589690,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7742718446601942,
+   "final": 589690
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 75,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.0270258360823854,
+   "cagr": 0.016313114377389137,
+   "maxDrawdown": 0.1715531109765073,
+   "sharpe": 0.1817989537878468,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.5066666666666667,
+   "avgWin": 12.210526315789474,
+   "avgLoss": -12.093783783783783,
+   "avgBars": 36.053333333333335,
+   "byReason": {
+    "trailing stop": 5,
+    "rank drop": 62,
+    "ineligible": 8
+   },
+   "byYear": {
+    "2025": {
+     "start": 499263,
+     "end": 610482,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 610482,
+     "end": 512756,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7645631067961165,
+   "final": 512756
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 65,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.26107334425612194,
+   "cagr": 0.15114187022300563,
+   "maxDrawdown": 0.17619509624252877,
+   "sharpe": 0.6045200940316666,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.5076923076923077,
+   "avgWin": 20.19393939393939,
+   "avgLoss": -12.7928125,
+   "avgBars": 42.66153846153846,
+   "byReason": {
+    "trailing stop": 7,
+    "rank drop": 47,
+    "ineligible": 10,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499262,
+     "end": 614479,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 614479,
+     "end": 629606,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 629606
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 117,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.13860463998365602,
+   "cagr": 0.08194924130953196,
+   "maxDrawdown": 0.08575095410179337,
+   "sharpe": 0.7303999607645288,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4358974358974359,
+   "avgWin": 15.214117647058822,
+   "avgLoss": -8.835757575757578,
+   "avgBars": 26.153846153846153,
+   "byReason": {
+    "trailing stop": 65,
+    "rank drop": 49,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499269,
+     "end": 617285,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 617285,
+     "end": 568470,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6286407766990292,
+   "final": 568470
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 119,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.18922112751941333,
+   "cagr": 0.11088489920461453,
+   "maxDrawdown": 0.07310512755174269,
+   "sharpe": 0.8859698862877551,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.40336134453781514,
+   "avgWin": 18.98645833333333,
+   "avgLoss": -9.04774647887324,
+   "avgBars": 24.756302521008404,
+   "byReason": {
+    "trailing stop": 78,
+    "rank drop": 39,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499273,
+     "end": 633392,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 633392,
+     "end": 593746,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6286407766990292,
+   "final": 593746
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 105,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.1273281537607982,
+   "cagr": 0.07543446929817166,
+   "maxDrawdown": 0.135599025083969,
+   "sharpe": 0.6100538795225882,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4380952380952381,
+   "avgWin": 17.56891304347826,
+   "avgLoss": -10.506101694915257,
+   "avgBars": 33.97142857142857,
+   "byReason": {
+    "trailing stop": 39,
+    "rank drop": 62,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499269,
+     "end": 647767,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 647767,
+     "end": 562840,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6480582524271845,
+   "final": 562840
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 101,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.36319408419842447,
+   "cagr": 0.20683830273900794,
+   "maxDrawdown": 0.07909852544963976,
+   "sharpe": 1.3586992646927067,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.45544554455445546,
+   "avgWin": 24.579999999999995,
+   "avgLoss": -10.738909090909095,
+   "avgBars": 34.56435643564357,
+   "byReason": {
+    "trailing stop": 43,
+    "rank drop": 54,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499273,
+     "end": 674955,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 674955,
+     "end": 680606,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7742718446601942,
+   "final": 680606
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 100,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.10447474207291063,
+   "cagr": 0.06215222915404439,
+   "maxDrawdown": 0.18526918132366407,
+   "sharpe": 0.5012925760725134,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.51,
+   "avgWin": 15.280588235294118,
+   "avgLoss": -12.843061224489798,
+   "avgBars": 38.38,
+   "byReason": {
+    "trailing stop": 23,
+    "rank drop": 73,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499269,
+     "end": 672576,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 672576,
+     "end": 551430,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7135922330097088,
+   "final": 551430
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 93,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.30688220672858346,
+   "cagr": 0.17633717907208402,
+   "maxDrawdown": 0.11159919285829922,
+   "sharpe": 1.1304402380335183,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4838709677419355,
+   "avgWin": 23.350888888888893,
+   "avgLoss": -12.475833333333336,
+   "avgBars": 40.31182795698925,
+   "byReason": {
+    "trailing stop": 30,
+    "rank drop": 57,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499273,
+     "end": 688438,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 688438,
+     "end": 652491,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7742718446601942,
+   "final": 652491
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 100,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.1385125052827234,
+   "cagr": 0.0818961153398805,
+   "maxDrawdown": 0.17251907726236343,
+   "sharpe": 0.6142215826182136,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.52,
+   "avgWin": 15.27115384615385,
+   "avgLoss": -12.390833333333333,
+   "avgBars": 40.66,
+   "byReason": {
+    "trailing stop": 8,
+    "rank drop": 80,
+    "ineligible": 12
+   },
+   "byYear": {
+    "2025": {
+     "start": 499269,
+     "end": 679499,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 679499,
+     "end": 568424,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7645631067961165,
+   "final": 568424
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 89,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.39858354046784017,
+   "cagr": 0.22575355965459054,
+   "maxDrawdown": 0.10577283406368965,
+   "sharpe": 1.0650801795579683,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.5393258426966292,
+   "avgWin": 22.7175,
+   "avgLoss": -12.117317073170732,
+   "avgBars": 45.96629213483146,
+   "byReason": {
+    "trailing stop": 11,
+    "rank drop": 64,
+    "ineligible": 13,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499273,
+     "end": 705425,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 705425,
+     "end": 698275,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 698275
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 156,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.04190351435907913,
+   "cagr": 0.02522139213014829,
+   "maxDrawdown": 0.11709150926095727,
+   "sharpe": 0.27262302131054506,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.41025641025641024,
+   "avgWin": 14.042656249999999,
+   "avgLoss": -9.354565217391304,
+   "avgBars": 26.03205128205128,
+   "byReason": {
+    "trailing stop": 91,
+    "rank drop": 62,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499266,
+     "end": 575285,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 575285,
+     "end": 520187,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6286407766990292,
+   "final": 520187
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 157,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.07707946096654283,
+   "cagr": 0.046087002374641584,
+   "maxDrawdown": 0.09936681192879879,
+   "sharpe": 0.4194110744993773,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4012738853503185,
+   "avgWin": 16.462380952380954,
+   "avgLoss": -9.667340425531915,
+   "avgBars": 24.828025477707005,
+   "byReason": {
+    "trailing stop": 109,
+    "rank drop": 45,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 583497,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 583497,
+     "end": 537747,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6480582524271845,
+   "final": 537747
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 136,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.08406140213833901,
+   "cagr": 0.050196482365494566,
+   "maxDrawdown": 0.11434401549961382,
+   "sharpe": 0.4433114181309002,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.41911764705882354,
+   "avgWin": 16.92491228070175,
+   "avgLoss": -10.323544303797469,
+   "avgBars": 34.830882352941174,
+   "byReason": {
+    "trailing stop": 47,
+    "rank drop": 84,
+    "ineligible": 5
+   },
+   "byYear": {
+    "2025": {
+     "start": 499266,
+     "end": 608105,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 608105,
+     "end": 541235,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6480582524271845,
+   "final": 541235
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 129,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.32054784642994494,
+   "cagr": 0.183785848698637,
+   "maxDrawdown": 0.09201125994952436,
+   "sharpe": 1.327492127086856,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4496124031007752,
+   "avgWin": 23.997586206896546,
+   "avgLoss": -10.635352112676056,
+   "avgBars": 36.286821705426355,
+   "byReason": {
+    "trailing stop": 58,
+    "rank drop": 66,
+    "ineligible": 5
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 662490,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 662490,
+     "end": 659302,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7742718446601942,
+   "final": 659302
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 128,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.05640880813033533,
+   "cagr": 0.033858668065207764,
+   "maxDrawdown": 0.15668449112271665,
+   "sharpe": 0.3144116302853268,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4609375,
+   "avgWin": 15.328305084745763,
+   "avgLoss": -11.833043478260873,
+   "avgBars": 39.2265625,
+   "byReason": {
+    "trailing stop": 28,
+    "rank drop": 94,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499266,
+     "end": 621758,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 621758,
+     "end": 527429,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7135922330097088,
+   "final": 527429
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 119,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.32490025317267013,
+   "cagr": 0.18615182392872454,
+   "maxDrawdown": 0.09277502241490847,
+   "sharpe": 1.2797357728099352,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.4957983193277311,
+   "avgWin": 23.934067796610176,
+   "avgLoss": -12.803166666666668,
+   "avgBars": 43.529411764705884,
+   "byReason": {
+    "trailing stop": 35,
+    "rank drop": 74,
+    "ineligible": 10
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 688558,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 688558,
+     "end": 661475,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.9174757281553398,
+   "final": 661475
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 126,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.09001213781831718,
+   "cagr": 0.05369079996865889,
+   "maxDrawdown": 0.1456151610578553,
+   "sharpe": 0.44296678487746294,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.48412698412698413,
+   "avgWin": 15.391475409836065,
+   "avgLoss": -12.039384615384614,
+   "avgBars": 41.904761904761905,
+   "byReason": {
+    "trailing stop": 12,
+    "rank drop": 102,
+    "ineligible": 12
+   },
+   "byYear": {
+    "2025": {
+     "start": 499266,
+     "end": 631112,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 631112,
+     "end": 544206,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7645631067961165,
+   "final": 544206
+  }
+ },
+ {
+  "params": {
+   "lookback": 63,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 114,
+   "days": 412,
+   "start": "2025-02-19",
+   "end": "2026-10-23",
+   "totalReturn": 0.396004919241123,
+   "cagr": 0.22438172229232944,
+   "maxDrawdown": 0.0942280754628287,
+   "sharpe": 1.2078630497856684,
+   "indexReturn": 0.0028103728704174102,
+   "winRate": 0.5263157894736842,
+   "avgWin": 23.37683333333334,
+   "avgLoss": -11.336296296296295,
+   "avgBars": 48.3859649122807,
+   "byReason": {
+    "trailing stop": 13,
+    "rank drop": 81,
+    "ineligible": 19,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 693852,
+     "idx0": 22932.9,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 693852,
+     "end": 696975,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 696975
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 55,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.040130343001574253,
+   "cagr": 0.028585789521022198,
+   "maxDrawdown": 0.14348725767806578,
+   "sharpe": 0.2768887775976456,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4,
+   "avgWin": 16.14409090909091,
+   "avgLoss": -12.06151515151515,
+   "avgBars": 26.181818181818183,
+   "byReason": {
+    "trailing stop": 38,
+    "rank drop": 16,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499298,
+     "end": 567420,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 567420,
+     "end": 519335,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5558739255014327,
+   "final": 519335
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 63,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.020708482886809376,
+   "cagr": -0.014878117834337679,
+   "maxDrawdown": 0.15603854640890863,
+   "sharpe": -0.04586067152072672,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.38095238095238093,
+   "avgWin": 14.759999999999998,
+   "avgLoss": -10.201794871794874,
+   "avgBars": 21.047619047619047,
+   "byReason": {
+    "trailing stop": 54,
+    "rank drop": 8,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 533668,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 533668,
+     "end": 488925,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6017191977077364,
+   "final": 488925
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 49,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.01752660735672884,
+   "cagr": 0.012523898336268768,
+   "maxDrawdown": 0.1570555124390609,
+   "sharpe": 0.15958591840620034,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.42857142857142855,
+   "avgWin": 17.20285714285714,
+   "avgLoss": -14.733928571428569,
+   "avgBars": 34.91836734693877,
+   "byReason": {
+    "trailing stop": 22,
+    "rank drop": 22,
+    "ineligible": 5
+   },
+   "byYear": {
+    "2025": {
+     "start": 499298,
+     "end": 579443,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 579443,
+     "end": 508049,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5845272206303725,
+   "final": 508049
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 51,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.017345532624022608,
+   "cagr": -0.012455963968435957,
+   "maxDrawdown": 0.15514189563241165,
+   "sharpe": 0.00008491522107816846,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.37254901960784315,
+   "avgWin": 17.99421052631579,
+   "avgLoss": -12.4721875,
+   "avgBars": 33.23529411764706,
+   "byReason": {
+    "trailing stop": 32,
+    "rank drop": 13,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 549136,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 549136,
+     "end": 490604,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.670487106017192,
+   "final": 490604
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 47,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.05253776301927904,
+   "cagr": -0.03792143937580916,
+   "maxDrawdown": 0.17613851754894178,
+   "sharpe": -0.1778518396600669,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.48936170212765956,
+   "avgWin": 14.710869565217392,
+   "avgLoss": -17.560833333333335,
+   "avgBars": 38.680851063829785,
+   "byReason": {
+    "trailing stop": 15,
+    "rank drop": 26,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499298,
+     "end": 557575,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 557575,
+     "end": 473066,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.66189111747851,
+   "final": 473066
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 47,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.09985098064350728,
+   "cagr": -0.07258538715320795,
+   "maxDrawdown": 0.2347524282386023,
+   "sharpe": -0.30311262189314064,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.3404255319148936,
+   "avgWin": 18.68375,
+   "avgLoss": -14.874838709677418,
+   "avgBars": 39.40425531914894,
+   "byReason": {
+    "rank drop": 14,
+    "ineligible": 8,
+    "trailing stop": 25
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 529967,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 529967,
+     "end": 449412,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8424068767908309,
+   "final": 449412
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 45,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.05360125616365374,
+   "cagr": -0.03869512953455956,
+   "maxDrawdown": 0.18280517428444265,
+   "sharpe": -0.16925750456854738,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.5333333333333333,
+   "avgWin": 13.923333333333337,
+   "avgLoss": -19.22333333333333,
+   "avgBars": 44.6,
+   "byReason": {
+    "trailing stop": 7,
+    "rank drop": 28,
+    "ineligible": 10
+   },
+   "byYear": {
+    "2025": {
+     "start": 499298,
+     "end": 557959,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 557959,
+     "end": 472535,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7822349570200573,
+   "final": 472535
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 43,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.06139236956800409,
+   "cagr": -0.04437070218120387,
+   "maxDrawdown": 0.19925358576954644,
+   "sharpe": -0.1449978865852387,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4186046511627907,
+   "avgWin": 19.265,
+   "avgLoss": -16.5612,
+   "avgBars": 49.93023255813954,
+   "byReason": {
+    "rank drop": 15,
+    "ineligible": 17,
+    "trailing stop": 11
+   },
+   "byYear": {
+    "2025": {
+     "start": 499264,
+     "end": 532905,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 532905,
+     "end": 468613,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8424068767908309,
+   "final": 468613
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 76,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.062474212763230064,
+   "cagr": -0.04515984444220489,
+   "maxDrawdown": 0.1747368149257475,
+   "sharpe": -0.29457213884673294,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.3684210526315789,
+   "avgWin": 15.257142857142856,
+   "avgLoss": -12.003749999999998,
+   "avgBars": 29.539473684210527,
+   "byReason": {
+    "trailing stop": 54,
+    "rank drop": 21,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499278,
+     "end": 541410,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 541410,
+     "end": 468086,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5616045845272206,
+   "final": 468086
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 87,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.006383076735117399,
+   "cagr": 0.004568276240313862,
+   "maxDrawdown": 0.1167368332004399,
+   "sharpe": 0.09769552320011027,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.3793103448275862,
+   "avgWin": 16.817575757575757,
+   "avgLoss": -10.790925925925926,
+   "avgBars": 24.873563218390803,
+   "byReason": {
+    "trailing stop": 69,
+    "rank drop": 16,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499289,
+     "end": 555583,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 555583,
+     "end": 502476,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6017191977077364,
+   "final": 502476
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 67,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.08212859368928738,
+   "cagr": -0.05954195144717245,
+   "maxDrawdown": 0.17936958121667954,
+   "sharpe": -0.38658155747889,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.417910447761194,
+   "avgWin": 14.885714285714284,
+   "avgLoss": -14.736923076923071,
+   "avgBars": 39.149253731343286,
+   "byReason": {
+    "trailing stop": 32,
+    "rank drop": 29,
+    "ineligible": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499278,
+     "end": 556390,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 556390,
+     "end": 458273,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5845272206303725,
+   "final": 458273
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 68,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.09542369249072191,
+   "cagr": 0.06746577899595363,
+   "maxDrawdown": 0.10651162211714411,
+   "sharpe": 0.5446427083595725,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.39705882352941174,
+   "avgWin": 23.705185185185183,
+   "avgLoss": -12.772682926829267,
+   "avgBars": 38.98529411764706,
+   "byReason": {
+    "trailing stop": 39,
+    "rank drop": 22,
+    "ineligible": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499289,
+     "end": 562333,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 562333,
+     "end": 546933,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7335243553008596,
+   "final": 546933
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 63,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.12813702987113396,
+   "cagr": -0.09355566132763249,
+   "maxDrawdown": 0.2081969254205758,
+   "sharpe": -0.640811826057237,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4603174603174603,
+   "avgWin": 12.411034482758621,
+   "avgLoss": -18.075588235294116,
+   "avgBars": 43.82539682539682,
+   "byReason": {
+    "trailing stop": 22,
+    "rank drop": 33,
+    "ineligible": 8
+   },
+   "byYear": {
+    "2025": {
+     "start": 499278,
+     "end": 545535,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 545535,
+     "end": 435302,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.66189111747851,
+   "final": 435302
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 64,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.007140153297989782,
+   "cagr": 0.005109558996310604,
+   "maxDrawdown": 0.14209356166397177,
+   "sharpe": 0.1093137908262877,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.34375,
+   "avgWin": 30.624545454545455,
+   "avgLoss": -13.821428571428571,
+   "avgBars": 47.484375,
+   "byReason": {
+    "trailing stop": 31,
+    "rank drop": 24,
+    "ineligible": 9
+   },
+   "byYear": {
+    "2025": {
+     "start": 499289,
+     "end": 544240,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 544240,
+     "end": 502854,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.9627507163323782,
+   "final": 502854
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 60,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.10215551256013689,
+   "cagr": -0.07428681946206628,
+   "maxDrawdown": 0.2156416301543386,
+   "sharpe": -0.4477306751518664,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.5166666666666667,
+   "avgWin": 12.67193548387097,
+   "avgLoss": -19.597931034482762,
+   "avgBars": 51.65,
+   "byReason": {
+    "trailing stop": 12,
+    "rank drop": 35,
+    "ineligible": 13
+   },
+   "byYear": {
+    "2025": {
+     "start": 499278,
+     "end": 556798,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 556798,
+     "end": 448274,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.833810888252149,
+   "final": 448274
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 60,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.07183014246258179,
+   "cagr": 0.05094552453862322,
+   "maxDrawdown": 0.13639172781071598,
+   "sharpe": 0.35913321345947763,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.38333333333333336,
+   "avgWin": 31.504347826086956,
+   "avgLoss": -15.610270270270272,
+   "avgBars": 57.65,
+   "byReason": {
+    "trailing stop": 14,
+    "rank drop": 25,
+    "ineligible": 20,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499289,
+     "end": 545297,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 545297,
+     "end": 535153,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 535153
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 96,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.059275000350502594,
+   "cagr": -0.04282694955958832,
+   "maxDrawdown": 0.14056322056322057,
+   "sharpe": -0.35949424568866384,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.40625,
+   "avgWin": 14.734358974358974,
+   "avgLoss": -12.426315789473685,
+   "avgBars": 31.802083333333332,
+   "byReason": {
+    "trailing stop": 72,
+    "rank drop": 23,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499283,
+     "end": 528384,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 528384,
+     "end": 469688,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5673352435530086,
+   "final": 469688
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 110,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.04721504536441756,
+   "cagr": 0.03359962868367883,
+   "maxDrawdown": 0.11418520930949229,
+   "sharpe": 0.35657721914560997,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.42727272727272725,
+   "avgWin": 16.04063829787235,
+   "avgLoss": -10.80063492063492,
+   "avgBars": 26.990909090909092,
+   "byReason": {
+    "trailing stop": 83,
+    "rank drop": 25,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499290,
+     "end": 571116,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 571116,
+     "end": 522864,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6017191977077364,
+   "final": 522864
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 84,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.034928086876581,
+   "cagr": -0.025145959077112146,
+   "maxDrawdown": 0.13369979302820398,
+   "sharpe": -0.1674052797770586,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.39285714285714285,
+   "avgWin": 16.615454545454547,
+   "avgLoss": -13.227843137254903,
+   "avgBars": 42.17857142857143,
+   "byReason": {
+    "trailing stop": 44,
+    "rank drop": 33,
+    "ineligible": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499283,
+     "end": 550878,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 550878,
+     "end": 481844,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.670487106017192,
+   "final": 481844
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 80,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.18126339401950764,
+   "cagr": 0.12674156758331523,
+   "maxDrawdown": 0.09681223404529234,
+   "sharpe": 1.0127632789400678,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4375,
+   "avgWin": 25.184857142857144,
+   "avgLoss": -13.656666666666663,
+   "avgBars": 44.9875,
+   "byReason": {
+    "trailing stop": 46,
+    "rank drop": 27,
+    "ineligible": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499290,
+     "end": 582571,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 582571,
+     "end": 589793,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7335243553008596,
+   "final": 589793
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 77,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.0745669289761518,
+   "cagr": -0.0539984570434493,
+   "maxDrawdown": 0.17097695886296202,
+   "sharpe": -0.3888267396235802,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.44155844155844154,
+   "avgWin": 15.037352941176472,
+   "avgLoss": -16.55,
+   "avgBars": 50.922077922077925,
+   "byReason": {
+    "trailing stop": 29,
+    "rank drop": 38,
+    "ineligible": 10
+   },
+   "byYear": {
+    "2025": {
+     "start": 499283,
+     "end": 544494,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 544494,
+     "end": 462053,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8424068767908309,
+   "final": 462053
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 75,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.1887740591640128,
+   "cagr": 0.13186876205453202,
+   "maxDrawdown": 0.09796418023529081,
+   "sharpe": 0.9734366022162361,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4266666666666667,
+   "avgWin": 28.950312500000003,
+   "avgLoss": -14.305813953488371,
+   "avgBars": 53.82666666666667,
+   "byReason": {
+    "trailing stop": 35,
+    "rank drop": 30,
+    "ineligible": 9,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499290,
+     "end": 570188,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 570188,
+     "end": 593543,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 593543
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 74,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": -0.07123815551500856,
+   "cagr": -0.051562192922292804,
+   "maxDrawdown": 0.18411747264694148,
+   "sharpe": -0.3276381806342601,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4594594594594595,
+   "avgWin": 14.68764705882353,
+   "avgLoss": -17.760249999999996,
+   "avgBars": 57.17567567567568,
+   "byReason": {
+    "trailing stop": 16,
+    "rank drop": 39,
+    "ineligible": 19
+   },
+   "byYear": {
+    "2025": {
+     "start": 499283,
+     "end": 545145,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 545145,
+     "end": 463715,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8424068767908309,
+   "final": 463715
+  }
+ },
+ {
+  "params": {
+   "lookback": 126,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 70,
+   "days": 349,
+   "start": "2025-05-28",
+   "end": "2026-10-23",
+   "totalReturn": 0.17699132768531323,
+   "cagr": 0.12382109457090196,
+   "maxDrawdown": 0.10949664631713676,
+   "sharpe": 0.6693670151915224,
+   "indexReturn": -0.0709061123242346,
+   "winRate": 0.4714285714285714,
+   "avgWin": 27.867878787878787,
+   "avgLoss": -16.669729729729728,
+   "avgBars": 64.48571428571428,
+   "byReason": {
+    "trailing stop": 18,
+    "rank drop": 31,
+    "ineligible": 19,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499290,
+     "end": 568867,
+     "idx0": 24752.45,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 568867,
+     "end": 587660,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 587660
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 34,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.0034750248859851673,
+   "cagr": -0.0030382743830833503,
+   "maxDrawdown": 0.10949177877428999,
+   "sharpe": 0.022526322021920262,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.35294117647058826,
+   "avgWin": 13.7975,
+   "avgLoss": -8.088636363636365,
+   "avgBars": 30.705882352941178,
+   "byReason": {
+    "trailing stop": 27,
+    "rank drop": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 555473,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 555473,
+     "end": 497542,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.493006993006993,
+   "final": 497542
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 38,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.08264583646287116,
+   "cagr": -0.07263082927455189,
+   "maxDrawdown": 0.19503881638862902,
+   "sharpe": -0.43938219233888504,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.34210526315789475,
+   "avgWin": 14.531538461538462,
+   "avgLoss": -11.896399999999998,
+   "avgBars": 26.05263157894737,
+   "byReason": {
+    "trailing stop": 32,
+    "rank drop": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499275,
+     "end": 562151,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 562151,
+     "end": 458012,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.493006993006993,
+   "final": 458012
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 25,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.029536710082779694,
+   "cagr": 0.025771330387891478,
+   "maxDrawdown": 0.10696410420261894,
+   "sharpe": 0.28791804298710894,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.44,
+   "avgWin": 16.313636363636363,
+   "avgLoss": -10.801428571428572,
+   "avgBars": 48.08,
+   "byReason": {
+    "trailing stop": 13,
+    "ineligible": 1,
+    "rank drop": 11
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 568485,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 568485,
+     "end": 514024,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.513986013986014,
+   "final": 514024
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 27,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.04242551699964947,
+   "cagr": 0.03698776143834226,
+   "maxDrawdown": 0.1739907085183344,
+   "sharpe": 0.3174291748155099,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.4444444444444444,
+   "avgWin": 21.50333333333333,
+   "avgLoss": -15.487333333333334,
+   "avgBars": 46,
+   "byReason": {
+    "trailing stop": 18,
+    "rank drop": 7,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499275,
+     "end": 582548,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 582548,
+     "end": 520457,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6713286713286714,
+   "final": 520457
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 22,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.09159244267210376,
+   "cagr": 0.07961692813726162,
+   "maxDrawdown": 0.14754975103525744,
+   "sharpe": 0.6973890118282045,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5,
+   "avgWin": 20.954545454545453,
+   "avgLoss": -12.876363636363635,
+   "avgBars": 61.54545454545455,
+   "byReason": {
+    "trailing stop": 9,
+    "rank drop": 13
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 595265,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 595265,
+     "end": 545007,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6608391608391608,
+   "final": 545007
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 25,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.06294927645085369,
+   "cagr": 0.054812572937800175,
+   "maxDrawdown": 0.19014159958802365,
+   "sharpe": 0.4094004471182291,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.52,
+   "avgWin": 20.20846153846154,
+   "avgLoss": -18.270833333333336,
+   "avgBars": 57.72,
+   "byReason": {
+    "trailing stop": 11,
+    "rank drop": 11,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499275,
+     "end": 576109,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 576109,
+     "end": 530704,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8076923076923077,
+   "final": 530704
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 22,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.08697176116664695,
+   "cagr": 0.07562111615527578,
+   "maxDrawdown": 0.15044749313036665,
+   "sharpe": 0.6305288961142986,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5,
+   "avgWin": 20.517272727272726,
+   "avgLoss": -12.913636363636364,
+   "avgBars": 65.18181818181819,
+   "byReason": {
+    "trailing stop": 5,
+    "ineligible": 4,
+    "rank drop": 13
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 593441,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 593441,
+     "end": 542700,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.6608391608391608,
+   "final": 542700
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 23,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.003755445395823953,
+   "cagr": -0.0032835089807916606,
+   "maxDrawdown": 0.25055306549040735,
+   "sharpe": 0.0783580212429139,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5652173913043478,
+   "avgWin": 19.37846153846154,
+   "avgLoss": -27.709999999999997,
+   "avgBars": 65.26086956521739,
+   "byReason": {
+    "trailing stop": 9,
+    "rank drop": 10,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499275,
+     "end": 588045,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 588045,
+     "end": 497400,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8076923076923077,
+   "final": 497400
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 53,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.0036270997021812246,
+   "cagr": 0.003169818912927669,
+   "maxDrawdown": 0.11421172223629249,
+   "sharpe": 0.08014550465401801,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.3584905660377358,
+   "avgWin": 13.583157894736841,
+   "avgLoss": -7.702647058823529,
+   "avgBars": 30.0188679245283,
+   "byReason": {
+    "trailing stop": 36,
+    "rank drop": 17
+   },
+   "byYear": {
+    "2025": {
+     "start": 499297,
+     "end": 559950,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 559950,
+     "end": 501108,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.493006993006993,
+   "final": 501108
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 57,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.1313319660639466,
+   "cagr": -0.11579990009273267,
+   "maxDrawdown": 0.21298593123805837,
+   "sharpe": -0.88069982410678,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.3508771929824561,
+   "avgWin": 11.274999999999999,
+   "avgLoss": -12.254324324324323,
+   "avgBars": 26.649122807017545,
+   "byReason": {
+    "trailing stop": 43,
+    "rank drop": 13,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499292,
+     "end": 546567,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 546567,
+     "end": 433719,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.493006993006993,
+   "final": 433719
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 43,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.07408015670032064,
+   "cagr": 0.06446154486806743,
+   "maxDrawdown": 0.08676706093398803,
+   "sharpe": 0.6758525625292694,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.46511627906976744,
+   "avgWin": 16.831,
+   "avgLoss": -9.73608695652174,
+   "avgBars": 45.06976744186046,
+   "byReason": {
+    "trailing stop": 19,
+    "rank drop": 23,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499297,
+     "end": 565876,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 565876,
+     "end": 536285,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7272727272727273,
+   "final": 536285
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 47,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.058238465667385,
+   "cagr": -0.05109855415175257,
+   "maxDrawdown": 0.20948972565505744,
+   "sharpe": -0.2978915608409245,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.3829787234042553,
+   "avgWin": 18.716666666666665,
+   "avgLoss": -15.891724137931035,
+   "avgBars": 39.5531914893617,
+   "byReason": {
+    "trailing stop": 29,
+    "rank drop": 15,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499292,
+     "end": 550935,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 550935,
+     "end": 470214,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7272727272727273,
+   "final": 470214
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 39,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.16484777597301803,
+   "cagr": 0.14268782564755456,
+   "maxDrawdown": 0.08855906454932788,
+   "sharpe": 1.211308179694458,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5384615384615384,
+   "avgWin": 20.92761904761905,
+   "avgLoss": -10.650555555555554,
+   "avgBars": 59.15384615384615,
+   "byReason": {
+    "trailing stop": 11,
+    "rank drop": 25,
+    "ineligible": 2,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499297,
+     "end": 568150,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 568150,
+     "end": 581605,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 581605
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 42,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.03734287751456067,
+   "cagr": -0.03272019023409822,
+   "maxDrawdown": 0.20292324538420675,
+   "sharpe": -0.139775596842851,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.4523809523809524,
+   "avgWin": 16.76842105263158,
+   "avgLoss": -17.333478260869562,
+   "avgBars": 51.42857142857143,
+   "byReason": {
+    "trailing stop": 17,
+    "rank drop": 21,
+    "ineligible": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499292,
+     "end": 551705,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 551705,
+     "end": 480647,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8076923076923077,
+   "final": 480647
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 39,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.1586730943706851,
+   "cagr": 0.13739128727241456,
+   "maxDrawdown": 0.08859018190634477,
+   "sharpe": 1.1251128096606693,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5128205128205128,
+   "avgWin": 21.225,
+   "avgLoss": -9.85736842105263,
+   "avgBars": 61.69230769230769,
+   "byReason": {
+    "trailing stop": 6,
+    "rank drop": 26,
+    "ineligible": 6,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499297,
+     "end": 567949,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 567949,
+     "end": 578522,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 578522
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 39,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.030569286109130567,
+   "cagr": -0.026773413917937194,
+   "maxDrawdown": 0.19570165849167878,
+   "sharpe": -0.0783188514210801,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.46153846153846156,
+   "avgWin": 16.186666666666667,
+   "avgLoss": -17.19190476190476,
+   "avgBars": 61.82051282051282,
+   "byReason": {
+    "trailing stop": 11,
+    "rank drop": 20,
+    "ineligible": 8
+   },
+   "byYear": {
+    "2025": {
+     "start": 499292,
+     "end": 554792,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 554792,
+     "end": 484029,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8531468531468531,
+   "final": 484029
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 66,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.02569916098678693,
+   "cagr": -0.022500991289005512,
+   "maxDrawdown": 0.13173559708059424,
+   "sharpe": -0.18794647817785248,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.3787878787878788,
+   "avgWin": 13.032,
+   "avgLoss": -9.681951219512195,
+   "avgBars": 32.36363636363637,
+   "byReason": {
+    "trailing stop": 48,
+    "rank drop": 18
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 558855,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 558855,
+     "end": 486446,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.493006993006993,
+   "final": 486446
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 75,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": -0.12350960681459944,
+   "cagr": -0.10884384400353564,
+   "maxDrawdown": 0.1769406392694064,
+   "sharpe": -0.9751950989583139,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.3466666666666667,
+   "avgWin": 9.718461538461538,
+   "avgLoss": -11.162244897959184,
+   "avgBars": 26.973333333333333,
+   "byReason": {
+    "trailing stop": 62,
+    "rank drop": 12,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499281,
+     "end": 529994,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 529994,
+     "end": 437615,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.513986013986014,
+   "final": 437615
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 53,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.024807872183176816,
+   "cagr": 0.02165165622941534,
+   "maxDrawdown": 0.12519665130913585,
+   "sharpe": 0.25137867357992544,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.39622641509433965,
+   "avgWin": 18.816190476190478,
+   "avgLoss": -11.205312499999998,
+   "avgBars": 49.094339622641506,
+   "byReason": {
+    "trailing stop": 27,
+    "rank drop": 25,
+    "ineligible": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 568447,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 568447,
+     "end": 511663,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7272727272727273,
+   "final": 511663
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 57,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.03910022612516806,
+   "cagr": 0.0340956201817284,
+   "maxDrawdown": 0.15719193857615985,
+   "sharpe": 0.31199811187110393,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.42105263157894735,
+   "avgWin": 22.83375,
+   "avgLoss": -14.492727272727274,
+   "avgBars": 46,
+   "byReason": {
+    "trailing stop": 36,
+    "rank drop": 18,
+    "ineligible": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499281,
+     "end": 548918,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 548918,
+     "end": 518803,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7272727272727273,
+   "final": 518803
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 50,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.09821602036544852,
+   "cagr": 0.08534106840980016,
+   "maxDrawdown": 0.13725239056057548,
+   "sharpe": 0.7006081019463233,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5,
+   "avgWin": 20.6512,
+   "avgLoss": -13.3616,
+   "avgBars": 63.34,
+   "byReason": {
+    "trailing stop": 16,
+    "rank drop": 31,
+    "ineligible": 2,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 568859,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 568859,
+     "end": 548314,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 548314
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 50,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.09027781950444735,
+   "cagr": 0.0784803027451535,
+   "maxDrawdown": 0.1658732844930179,
+   "sharpe": 0.5741812434231398,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.44,
+   "avgWin": 28.264545454545456,
+   "avgLoss": -16.12285714285714,
+   "avgBars": 61.46,
+   "byReason": {
+    "trailing stop": 22,
+    "rank drop": 22,
+    "ineligible": 5,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499281,
+     "end": 549304,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 549304,
+     "end": 544355,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 544355
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 48,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.09502941253051911,
+   "cagr": 0.08258772458801733,
+   "maxDrawdown": 0.14794626809850156,
+   "sharpe": 0.645915975952245,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.5208333333333334,
+   "avgWin": 19.9752,
+   "avgLoss": -13.634782608695653,
+   "avgBars": 69.29166666666667,
+   "byReason": {
+    "trailing stop": 9,
+    "rank drop": 31,
+    "ineligible": 7,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499277,
+     "end": 576152,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 576152,
+     "end": 546723,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 546723
+  }
+ },
+ {
+  "params": {
+   "lookback": 189,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 47,
+   "days": 286,
+   "start": "2025-08-26",
+   "end": "2026-10-23",
+   "totalReturn": 0.11091149072366058,
+   "cagr": 0.09630046157469763,
+   "maxDrawdown": 0.15963321380270556,
+   "sharpe": 0.5082895759639456,
+   "indexReturn": -0.06938720179021973,
+   "winRate": 0.44680851063829785,
+   "avgWin": 30.929523809523808,
+   "avgLoss": -15.295,
+   "avgBars": 74.72340425531915,
+   "byReason": {
+    "trailing stop": 13,
+    "rank drop": 22,
+    "ineligible": 10,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499281,
+     "end": 551423,
+     "idx0": 24712.05,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 551423,
+     "end": 554657,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 554657
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 22,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.08774621538362926,
+   "cagr": -0.09783363852472426,
+   "maxDrawdown": 0.10927858831670607,
+   "sharpe": -1.0262293011946237,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.22727272727272727,
+   "avgWin": 6.28,
+   "avgLoss": -6.845882352941176,
+   "avgBars": 23.272727272727273,
+   "byReason": {
+    "trailing stop": 18,
+    "rank drop": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499258,
+     "end": 500319,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 500319,
+     "end": 455450,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.31390134529147984,
+   "final": 455450
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 23,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.11831934927562648,
+   "cagr": -0.13165999579657894,
+   "maxDrawdown": 0.12417329226655206,
+   "sharpe": -1.4213738997900143,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.13043478260869565,
+   "avgWin": 5.736666666666667,
+   "avgLoss": -7.2565,
+   "avgBars": 21.17391304347826,
+   "byReason": {
+    "trailing stop": 20,
+    "rank drop": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499259,
+     "end": 500066,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 500066,
+     "end": 440187,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.3273542600896861,
+   "final": 440187
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 15,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.07538386966257926,
+   "cagr": -0.08411655694241649,
+   "maxDrawdown": 0.11497677506287823,
+   "sharpe": -0.7638140813362282,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.26666666666666666,
+   "avgWin": 10.475000000000001,
+   "avgLoss": -10.68909090909091,
+   "avgBars": 48.4,
+   "byReason": {
+    "rank drop": 6,
+    "trailing stop": 9
+   },
+   "byYear": {
+    "2025": {
+     "start": 499258,
+     "end": 504924,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 504924,
+     "end": 461622,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5650224215246636,
+   "final": 461622
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 17,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.10428254673426018,
+   "cagr": -0.11614690729957888,
+   "maxDrawdown": 0.1340340949788697,
+   "sharpe": -1.0674028074268327,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.23529411764705882,
+   "avgWin": 8.7375,
+   "avgLoss": -10.386153846153848,
+   "avgBars": 40.76470588235294,
+   "byReason": {
+    "trailing stop": 11,
+    "rank drop": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499259,
+     "end": 497464,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 497464,
+     "end": 447195,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5650224215246636,
+   "final": 447195
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 15,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.054554959559987015,
+   "cagr": -0.0609549634315677,
+   "maxDrawdown": 0.13388865070129233,
+   "sharpe": -0.4393089869766305,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.4,
+   "avgWin": 10.88,
+   "avgLoss": -12.579999999999998,
+   "avgBars": 61.333333333333336,
+   "byReason": {
+    "rank drop": 9,
+    "trailing stop": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499258,
+     "end": 504924,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 504924,
+     "end": 472021,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7533632286995515,
+   "final": 472021
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 17,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.012861060091054921,
+   "cagr": -0.014406960438376304,
+   "maxDrawdown": 0.16413779656025915,
+   "sharpe": -0.02847569807897667,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.35294117647058826,
+   "avgWin": 21.888333333333332,
+   "avgLoss": -12.637272727272727,
+   "avgBars": 59.11764705882353,
+   "byReason": {
+    "ineligible": 1,
+    "rank drop": 7,
+    "trailing stop": 8,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499259,
+     "end": 497189,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 497189,
+     "end": 492838,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 492838
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 15,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.06638050867487355,
+   "cagr": -0.07411255518844251,
+   "maxDrawdown": 0.14420206386808315,
+   "sharpe": -0.4856862840367943,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.4,
+   "avgWin": 10.056666666666667,
+   "avgLoss": -13.401111111111112,
+   "avgBars": 65.13333333333334,
+   "byReason": {
+    "rank drop": 9,
+    "trailing stop": 4,
+    "ineligible": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499258,
+     "end": 504924,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 504924,
+     "end": 466117,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.7533632286995515,
+   "final": 466117
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 10,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 20
+  },
+  "stats": {
+   "n": 16,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.012109946941367133,
+   "cagr": -0.013566185312345658,
+   "maxDrawdown": 0.15690733710574697,
+   "sharpe": -0.018016607094558896,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.3125,
+   "avgWin": 23.542,
+   "avgLoss": -12.172727272727274,
+   "avgBars": 64.4375,
+   "byReason": {
+    "ineligible": 4,
+    "rank drop": 7,
+    "trailing stop": 4,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499259,
+     "end": 497189,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 497189,
+     "end": 493213,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 493213
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 33,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.10641451387414524,
+   "cagr": -0.118505006522438,
+   "maxDrawdown": 0.10737994533966636,
+   "sharpe": -1.3757258137513075,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.18181818181818182,
+   "avgWin": 4.21,
+   "avgLoss": -6.742592592592593,
+   "avgBars": 25.606060606060606,
+   "byReason": {
+    "trailing stop": 29,
+    "rank drop": 4
+   },
+   "byYear": {
+    "2025": {
+     "start": 499274,
+     "end": 495916,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 495916,
+     "end": 446144,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.34977578475336324,
+   "final": 446144
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 35,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.16696777294850484,
+   "cagr": -0.18519097066629364,
+   "maxDrawdown": 0.17353840618816335,
+   "sharpe": -1.841585260661465,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.17142857142857143,
+   "avgWin": 7.026666666666667,
+   "avgLoss": -10.208275862068964,
+   "avgBars": 22.742857142857144,
+   "byReason": {
+    "trailing stop": 33,
+    "rank drop": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 489082,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 489082,
+     "end": 415908,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.4977578475336323,
+   "final": 415908
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 22,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.08330095298373241,
+   "cagr": -0.09290381451175111,
+   "maxDrawdown": 0.11573525081376193,
+   "sharpe": -0.8828049262601732,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.22727272727272727,
+   "avgWin": 10.114,
+   "avgLoss": -10.347647058823528,
+   "avgBars": 52.81818181818182,
+   "byReason": {
+    "trailing stop": 15,
+    "rank drop": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499274,
+     "end": 501693,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 501693,
+     "end": 457684,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.8475336322869955,
+   "final": 457684
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 24,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.09784084763755085,
+   "cagr": -0.10901783088415185,
+   "maxDrawdown": 0.11963382702724311,
+   "sharpe": -0.9893659478597274,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.20833333333333334,
+   "avgWin": 12.616,
+   "avgLoss": -11.17,
+   "avgBars": 44.916666666666664,
+   "byReason": {
+    "trailing stop": 18,
+    "rank drop": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 498800,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 498800,
+     "end": 450421,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.5650224215246636,
+   "final": 450421
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 22,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.008836831078726348,
+   "cagr": -0.009901447749191217,
+   "maxDrawdown": 0.14488807143681798,
+   "sharpe": -0.005868638481303738,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.36363636363636365,
+   "avgWin": 20.7825,
+   "avgLoss": -12.983571428571427,
+   "avgBars": 73.54545454545455,
+   "byReason": {
+    "rank drop": 11,
+    "ineligible": 2,
+    "trailing stop": 8,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499274,
+     "end": 501463,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 501463,
+     "end": 494862,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 494862
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 23,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.0053978809061229205,
+   "cagr": -0.0060494553848085,
+   "maxDrawdown": 0.13168835322100297,
+   "sharpe": 0.0307325074577574,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.34782608695652173,
+   "avgWin": 23.033749999999998,
+   "avgLoss": -13.237999999999998,
+   "avgBars": 70.73913043478261,
+   "byReason": {
+    "ineligible": 3,
+    "rank drop": 9,
+    "trailing stop": 10,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 498612,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 498612,
+     "end": 496575,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 496575
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 22,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.015011797129431903,
+   "cagr": -0.016814006941616166,
+   "maxDrawdown": 0.1495280408619873,
+   "sharpe": -0.04346491725117336,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.36363636363636365,
+   "avgWin": 20.18125,
+   "avgLoss": -13.506428571428572,
+   "avgBars": 76.86363636363636,
+   "byReason": {
+    "rank drop": 11,
+    "ineligible": 5,
+    "trailing stop": 5,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499274,
+     "end": 501463,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 501463,
+     "end": 491779,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 491779
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 15,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 30
+  },
+  "stats": {
+   "n": 22,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.002657880505538057,
+   "cagr": -0.0029792068508365244,
+   "maxDrawdown": 0.1401271211848654,
+   "sharpe": 0.05788017601252895,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.4090909090909091,
+   "avgWin": 22.014444444444443,
+   "avgLoss": -15.139230769230767,
+   "avgBars": 81.81818181818181,
+   "byReason": {
+    "ineligible": 7,
+    "rank drop": 9,
+    "trailing stop": 5,
+    "end of data": 1
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 498612,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 498612,
+     "end": 497943,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 497943
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 40,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.08263600421401762,
+   "cagr": -0.09216613289673559,
+   "maxDrawdown": 0.08640721895214293,
+   "sharpe": -1.054677806979917,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.225,
+   "avgWin": 4.76111111111111,
+   "avgLoss": -6.741612903225808,
+   "avgBars": 28.8,
+   "byReason": {
+    "trailing stop": 37,
+    "rank drop": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499286,
+     "end": 500224,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 500224,
+     "end": 458027,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.34977578475336324,
+   "final": 458027
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 10,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 46,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.1878302321389228,
+   "cagr": -0.20803279770939975,
+   "maxDrawdown": 0.1927414291598517,
+   "sharpe": -2.056581357324082,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.17391304347826086,
+   "avgWin": 6.98375,
+   "avgLoss": -11.870526315789471,
+   "avgBars": 22.695652173913043,
+   "byReason": {
+    "trailing stop": 43,
+    "rank drop": 3
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 492016,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 492016,
+     "end": 405492,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.4977578475336323,
+   "final": 405492
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 29,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.0879716234783271,
+   "cagr": -0.09808354016855003,
+   "maxDrawdown": 0.10672724817500853,
+   "sharpe": -0.9809254877239375,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.20689655172413793,
+   "avgWin": 6.22,
+   "avgLoss": -9.53826086956522,
+   "avgBars": 54.93103448275862,
+   "byReason": {
+    "trailing stop": 23,
+    "rank drop": 6
+   },
+   "byYear": {
+    "2025": {
+     "start": 499286,
+     "end": 502165,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 502165,
+     "end": 455363,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.9865470852017937,
+   "final": 455363
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 15,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 32,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.11741542652272319,
+   "cagr": -0.13066190072986317,
+   "maxDrawdown": 0.15069557473817582,
+   "sharpe": -1.1649328284196916,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.25,
+   "avgWin": 12.71625,
+   "avgLoss": -14.210416666666662,
+   "avgBars": 47.53125,
+   "byReason": {
+    "trailing stop": 25,
+    "rank drop": 7
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 501166,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 501166,
+     "end": 440648,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 0.9865470852017937,
+   "final": 440648
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 28,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.037014857216104646,
+   "cagr": -0.041402464699543895,
+   "maxDrawdown": 0.13575834954120777,
+   "sharpe": -0.2688645036540016,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.32142857142857145,
+   "avgWin": 17.39888888888889,
+   "avgLoss": -12.347894736842104,
+   "avgBars": 76.64285714285714,
+   "byReason": {
+    "rank drop": 12,
+    "ineligible": 3,
+    "trailing stop": 11,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499286,
+     "end": 502028,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 502028,
+     "end": 480805,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 480805
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 20,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 29,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.058180944178500615,
+   "cagr": -0.06499151289216964,
+   "maxDrawdown": 0.16580845515952775,
+   "sharpe": -0.4052301278130919,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.3793103448275862,
+   "avgWin": 19.88272727272727,
+   "avgLoss": -18.523333333333333,
+   "avgBars": 72.41379310344827,
+   "byReason": {
+    "ineligible": 3,
+    "rank drop": 10,
+    "trailing stop": 14,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 502013,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 502013,
+     "end": 470222,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 470222
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": true,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 27,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.041773652776164405,
+   "cagr": -0.04671153874148526,
+   "maxDrawdown": 0.13481968491096608,
+   "sharpe": -0.2920210664106859,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.2962962962962963,
+   "avgWin": 17.73125,
+   "avgLoss": -12.136842105263158,
+   "avgBars": 80.96296296296296,
+   "byReason": {
+    "rank drop": 12,
+    "ineligible": 8,
+    "trailing stop": 5,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499286,
+     "end": 502028,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 502028,
+     "end": 478429,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 478429
+  }
+ },
+ {
+  "params": {
+   "lookback": 252,
+   "topN": 20,
+   "trail": 25,
+   "volAdjust": false,
+   "holdRank": 40
+  },
+  "stats": {
+   "n": 28,
+   "days": 223,
+   "start": "2025-11-27",
+   "end": "2026-10-23",
+   "totalReturn": -0.05856750856250126,
+   "cagr": -0.06542173653248107,
+   "maxDrawdown": 0.16193405350060655,
+   "sharpe": -0.32272381413411,
+   "indexReturn": -0.12275920207663016,
+   "winRate": 0.39285714285714285,
+   "avgWin": 18.62,
+   "avgLoss": -18.62588235294118,
+   "avgBars": 84.64285714285714,
+   "byReason": {
+    "ineligible": 8,
+    "rank drop": 10,
+    "trailing stop": 8,
+    "end of data": 2
+   },
+   "byYear": {
+    "2025": {
+     "start": 499270,
+     "end": 502013,
+     "idx0": 26215.55,
+     "idx1": 26129.6
+    },
+    "2026": {
+     "start": 502013,
+     "end": 470029,
+     "idx0": 26129.6,
+     "idx1": null
+    }
+   },
+   "inMarket": 1,
+   "final": 470029
+  }
+ }
+]

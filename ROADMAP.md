@@ -20,11 +20,15 @@ What the engine does today, what was deliberately left out, and what comes next.
 
 **52-week breakout trigger fixed (Oct 2026).** The level a breakout must clear is now the 52-week high *before today*; NSE's 52W H field and a window ending today both include today's own bar, which made "closed above the 52-week high" impossible and silently disabled the setup on the site and in the backtest. A close more than 4% through the level is flagged extended rather than ordered.
 
+**Momentum engine (Oct 2026).** `momentum.js` + `scripts/backtest-momentum.mjs`: 6-month-minus-1 ranked momentum, top 15, four per sector, monthly rebalance with rank hysteresis, 20% trailing stop, Nifty-above-200-day gate with a breadth fallback. First backtest (May 2025 → Oct 2026, a falling market): +0.7% vs Nifty −7.1%, max drawdown 14%; 83 of 96 sweep cells beat the index over the same window. The site shows the current list; the digest carries it.
+
+**Benchmark guard (Oct 2026).** The daily job was appending NIFTY 500 closes to a NIFTY 50 history series (one phantom −3% day, then a 7% gap). The job now fetches the NIFTY 50 row too, and `buildBars` / `appendSnapshotToHistory` refuse an index bar whose name differs from the series. Five corrupted index days in Oct 2026 were blanked.
+
 **Walk-forward backtest.** `scripts/backtest.mjs` replays the rules day by day with next-day fills, gap handling, breakeven stop moves, position and sector limits, time stops and round-trip costs, and reports expectancy, profit factor, drawdown, and breakdowns by setup, score band and year.
 
 ## Next (in order of expected value)
 
-1. **Extend the history and re-run.** The first real backtest (`reports/backtest-2026-10-24.md`) covers Jan 2025 – Oct 2026: 157 trades, −0.06R expectancy, inside the noise. Two years cannot rank configurations. Run `node scripts/backfill.mjs --years 5`, re-run the backtest, and only then prune: the thresholds (2% from the 52-week high, 3% impulse day, 2 × ATR, score cut-off at 50) are still conventions.
+1. **Extend the history and re-run — both engines.** The momentum engine needs it most: its warm-up is six to twelve months, so two years of history leaves one year of test, and that year was a bear market. A rising year is the untested case. For the swing engine, the first real backtest (`reports/backtest-2026-10-24.md`) covers Jan 2025 – Oct 2026: 157 trades, −0.06R expectancy, inside the noise. Two years cannot rank configurations. Run `node scripts/backfill.mjs --years 5`, re-run the backtest, and only then prune: the thresholds (2% from the 52-week high, 3% impulse day, 2 × ATR, score cut-off at 50) are still conventions.
 2. **Make the score earn its place.** In every run so far the 70+ band had the worst expectancy and 60–69 the best. Test dropping the leading-sector (+15) and volume (+10) bumps for breakouts, or replacing the score with the backtest's own per-setup hit rate.
 3. **Replace the time stop.** Half of all exits are 15-day time stops. Test a trailing exit (close below the 10- or 20-day average) one change at a time, and separate slot budgets per setup so breakouts and pullbacks stop crowding each other out.
 4. **Corporate-action adjustment.** Pull NSE's corporate-action list and adjust history for splits and bonuses so the backtest stops seeing phantom crashes.
