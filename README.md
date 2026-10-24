@@ -12,10 +12,12 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 index.html + app.js      the website (reads data/, keeps journal & settings in your browser)
 engine.js                the swing rules engine, shared by the site, the job and the backtest
 momentum.js              the momentum engine (ranked strength, monthly rebalance, regime gate) — independent of engine.js
+pairs.js                 the relationship-stocks engine (cointegration + spread z-score over curated pairs) — a monitor; see its backtest
 scripts/fetch.mjs        the daily job: NSE → data/snapshots/DATE.json + data/history/YEAR.json → signals → Telegram
 scripts/backfill.mjs     one-time history load from NSE bhavcopy archives (see BACKFILL.md)
 scripts/backtest.mjs     walk-forward backtest of the swing rules over data/history/
 scripts/backtest-momentum.mjs  walk-forward backtest (and --sweep) of the momentum engine
+scripts/backtest-pairs.mjs     walk-forward backtest (and --sweep) of the pairs engine, pair-trade and long-only modes
 .github/workflows/       runs fetch.mjs at 16:10 IST Mon–Fri and commits the result
 config.json              index to track, risk settings for the digest, retention
 data/sectors.json        sector overrides (the backfill fills this from NSE's industry list)
@@ -89,6 +91,12 @@ node scripts/backtest-momentum.mjs --sweep               # 96-cell parameter map
 ```
 
 Reports land in `reports/momentum-*.md`. The warm-up is lookback + 21 bars, so with two years of history a 12-month lookback leaves under a year to test; the backfill at five years (`node scripts/backfill.mjs --years 5`) is what makes these numbers meaningful. Parameters can be overridden for the daily job under a `"momentum"` key in `config.json` (same names as `DEFAULTS` in `momentum.js`).
+
+## Relationship stocks (pairs)
+
+Thirty-three curated pairs of businesses that move together (HDFC Bank / ICICI Bank, TCS / Infosys, Maruti / M&M…). For each, every day: fit the price relationship over the last 120 bars, test whether the gap between the two is stable (Engle–Granger cointegration; pairs that fail are shown but never signal), estimate how fast a gap closes (half-life), and read today's gap in standard deviations. A **stretched** pair is one whose relationship passed the test and whose gap is more than 2σ wide; the lagging leg is named. The site shows the whole board; the digest lists only stretched pairs.
+
+**Read the backtest before trading this.** On the history so far, buying the lagging leg and shorting the leader returned +0.03% per trade after costs; buying the lagging leg alone was similar; across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. The idea that "when one lags it's a quick profit" did not survive contact with two years of Nifty data: stretches tended to keep stretching. The card exists as a monitor, and so that the test can be re-run on longer history (`npm run backtest:pairs`, `--sweep`). Edit the pair list in `pairs.js` (`PAIRS`); override parameters under a `"pairs"` key in `config.json`.
 
 ## Daily use
 

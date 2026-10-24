@@ -15,7 +15,7 @@ import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js'));
+const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js')); const Pr = require(path.join(ROOT, 'pairs.js'));
 const config = JSON.parse(await fs.readFile(path.join(ROOT, 'config.json'), 'utf8'));
 const args = new Set(process.argv.slice(2));
 const DRY = args.has('--dry'), FORCE = args.has('--force');
@@ -99,7 +99,8 @@ try {
   const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year);
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
-  const text = E.digest(result, config.risk) + '\n\n' + M.digest(mom, E.fmt);
+  const pairsBoard = Pr.boardAt(result.bars, result.bars.dates.length - 1, config.pairs || {});
+  const text = E.digest(result, config.risk) + '\n\n' + M.digest(mom, E.fmt) + '\n\n' + Pr.digest(pairsBoard, E.fmt);
   console.log('\n' + text + '\n');
 
   if (DRY) process.exit(0);
@@ -119,7 +120,7 @@ try {
   await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify({ dates: pruned, latest: date, latestTime: time, index: config.index, historyYears, generatedAt: new Date().toISOString() }, null, 1));
   const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
   const momOut = { date: mom.date, gate: mom.gate, params: mom.params, picks: mom.picks.map(r => ({ rank: r.rank, sym: r.sym, sector: r.sector, ltp: r.ltp, ret: r.ret, ret1: r.ret1, ret6: r.ret6, ret12: r.ret12, offHigh: r.offHigh })) };
-  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, digest: text }, null, 1));
+  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, pairs: pairsBoard.pairs.map(p => ({ A: p.A, B: p.B, label: p.label, tstat: p.tstat ?? null, level: p.level ?? null, halfLife: p.halfLife ?? null, z: p.z ?? null, status: p.status, cheap: p.cheap ?? null, gapPct: p.gapPct ?? null })), digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
   const intraday = result.reg.intraday;
   if (!intraday || config.alertIntraday || FORCE) await telegram(text);

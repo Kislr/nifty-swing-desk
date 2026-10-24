@@ -20,6 +20,8 @@ What the engine does today, what was deliberately left out, and what comes next.
 
 **52-week breakout trigger fixed (Oct 2026).** The level a breakout must clear is now the 52-week high *before today*; NSE's 52W H field and a window ending today both include today's own bar, which made "closed above the 52-week high" impossible and silently disabled the setup on the site and in the backtest. A close more than 4% through the level is flagged extended rather than ordered.
 
+**Relationship-stocks engine (Oct 2026).** `pairs.js` + `scripts/backtest-pairs.mjs`: 33 curated pairs, Engle–Granger cointegration test, half-life, 30-bar z-score, stretch / break / in-line states. Backtested in both pair-trade and long-only modes: +0.03% per trade after costs at the defaults; 55 of 154 sweep cells positive, clustered only at the 120-bar window. Shipped as a monitor with the verdict on the card. Re-test on five-year history before treating any of it as a signal.
+
 **Momentum engine (Oct 2026).** `momentum.js` + `scripts/backtest-momentum.mjs`: 6-month-minus-1 ranked momentum, top 15, four per sector, monthly rebalance with rank hysteresis, 20% trailing stop, Nifty-above-200-day gate with a breadth fallback. First backtest (May 2025 → Oct 2026, a falling market): +0.7% vs Nifty −7.1%, max drawdown 14%; 83 of 96 sweep cells beat the index over the same window. The site shows the current list; the digest carries it.
 
 **Benchmark guard (Oct 2026).** The daily job was appending NIFTY 500 closes to a NIFTY 50 history series (one phantom −3% day, then a 7% gap). The job now fetches the NIFTY 50 row too, and `buildBars` / `appendSnapshotToHistory` refuse an index bar whose name differs from the series. Five corrupted index days in Oct 2026 were blanked.

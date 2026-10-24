@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js'));
+const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js')); const Pr = require(path.join(ROOT, 'pairs.js'));
 let fails = 0; const assert = (c, m) => { if (!c) { fails++; console.error('FAIL:', m); } else console.log('ok  ', m); };
 
 // 1. NSE API payload (shape served by /api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData)
@@ -88,6 +88,21 @@ const cb = { o: [100, 95], h: [101, 103], l: [94, 94.5], c: [95, 102], v: [1, 1]
   assert(sim.trades.length > 0 && sim.equity.length === bars.dates.length - sim.warmup, `momentum simulation ran (${sim.trades.length} trades, synthetic data — numbers are meaningless)`);
   assert(Math.abs(sim.equity[sim.equity.length - 1].value - st.final) < 1 && st.maxDrawdown >= 0 && st.maxDrawdown <= 1, 'momentum stats consistent with the equity curve');
   assert(/MOMENTUM/.test(M.digest(sel, E.fmt)), 'momentum digest renders'); }
+
+// 3e. pairs engine: a constructed cointegrated pair passes, a random walk pair fails, stretch detection works
+{ let x = 11; const rnd = () => (x = (x * 1103515245 + 12345) % 2147483648) / 2147483648 - 0.5;
+  const n = 300; const dates = hf.dates.slice(0, n); const pa = [], pb = [], pw = []; let b = 100, e = 0, w = 100;
+  for (let i = 0; i < n; i++) { b *= 1 + rnd() * 0.02; e = 0.8 * e + rnd() * 0.02; pb.push(b); pa.push(2 * b * Math.exp(e)); w *= 1 + rnd() * 0.02; pw.push(w); } // A = 2·B·exp(stationary AR(1)) ; W = unrelated random walk
+  pa[n - 1] = pa[n - 1] * 0.975; // knock A down today → A lagging (about 2.5σ of the spread)
+  const mk = c => ({ o: c, h: c, l: c, c, v: c.map(() => 1e5), t: c.map(() => 10) });
+  const bp = E.buildBars([{ year: 2025, dates, symbols: { AA: mk(pa), BB: mk(pb), WW: mk(pw) }, index: null }], []);
+  const good = Pr.analyzePair(bp, 'AA', 'BB', n - 1), bad = Pr.analyzePair(bp, 'AA', 'WW', n - 1);
+  assert(good && good.cointegrated && Math.abs(good.beta - 1) < 0.15, `constructed pair is cointegrated (t ${good.tstat.toFixed(2)}, beta ${good.beta.toFixed(2)})`);
+  assert(good.stretched && good.cheap === 'AA' && good.z < -Pr.DEFAULTS.entryZ, 'the knocked-down leg is flagged as lagging');
+  assert(bad && !bad.cointegrated, `unrelated random walks are not cointegrated (t ${bad.tstat.toFixed(2)})`);
+  const sim = Pr.simulate(bp, {}, { pairs: [['AA', 'BB', 'test']], mode: 'pair' }); assert(Array.isArray(sim.trades) && Pr.stats(sim.trades).n >= 0, `pairs simulation runs (${sim.trades.length} trades, synthetic)`);
+  const board = Pr.boardAt(bp, n - 1, {}, [['AA', 'BB', 't'], ['AA', 'WW', 'u'], ['AA', 'ZZ', 'missing']]); assert(board.pairs[0].A === 'AA' && board.pairs[0].stretched && board.pairs[2].status === 'no history', 'board sorts stretched first and tolerates missing symbols');
+  assert(/PAIRS/.test(Pr.digest(board)), 'pairs digest renders'); }
 
 // 4. appendSnapshotToHistory keeps arrays aligned
 const f2 = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(f2, doc); E.appendSnapshotToHistory(f2, { date: '2026-10-15', rows: { KOTAKBANK: [1, 2, 0.5, 1, 1.5, 0, 0, 10, 1, null, null, null] }, index: null });

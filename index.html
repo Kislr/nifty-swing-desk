@@ -238,6 +238,12 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     <div id="momEmpty" class="empty" hidden></div>
   </section>
 
+  <section class="card" id="pairsCard">
+    <h2>Relationship stocks <span class="sub" id="pairsSub"></span></h2>
+    <div id="pairsNote" class="note" style="margin-bottom:10px"></div>
+    <div class="tbl-wrap"><table id="pairsTbl"><thead></thead><tbody></tbody></table></div>
+  </section>
+
   <section class="card">
     <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span></h2>
     <div class="sec-head"><span>Sector</span><span>Today avg %</span><span>30D avg</span><span>Breadth</span><span>Turnover</span></div>
@@ -305,6 +311,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   <section class="card" id="backtestCard">
     <h2>What the rules have earned <span class="sub">walk-forward backtest, 2025-01 &rarr; 2026-10, costs included</span></h2>
     <div class="note" style="margin-bottom:10px"><b>Momentum engine</b> (test window May 2025 &rarr; Oct 2026, a falling market): <b>+0.7%</b> against the Nifty's <b>&minus;7.1%</b>, max drawdown 14%, 64 trades, 34% winners. Across a 96-cell parameter sweep 83 cells beat the index over the same window and 47 made money outright. One falling year says it protected capital; it says nothing yet about how it compounds in a rising one. Full reports: <code>reports/momentum-*.md</code>.</div>
+    <div class="note" style="margin-bottom:10px"><b>Relationship stocks (pairs):</b> on the same history, buying the lagging twin and shorting the leader returned <b>+0.03% per trade</b> after costs over 93 trades (48% winners); buying the lagging twin alone was similar. Across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. <b>No usable edge found</b> &mdash; the card above is a monitor, not a signal. Full reports: <code>reports/pairs-*.md</code>.</div>
     <div class="note"><b>Swing engine:</b> over 157 trades the combined rules returned <b>&minus;0.06R per trade</b> (profit factor 0.87, 43% win rate, max drawdown 23R). Each setup alone is slightly positive at a 2R target (pullback +0.11R over 146 trades, breakout +0.05R over 123) and the difference between configurations is inside the noise of a two-year sample. Treat every row above as a hypothesis with roughly even odds and a small positive edge at best; the score (0&ndash;100) has <b>not</b> separated winners from losers so far. Full tables, parameter sweep and every trade: <code>reports/</code> in the repository. Run <code>node scripts/backtest.mjs</code> after any rule change.</div>
   </section>
 
@@ -313,6 +320,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
 <div id="toast" class="toast" hidden></div>
 <script src="engine.js"></script>
 <script src="momentum.js"></script>
+<script src="pairs.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
