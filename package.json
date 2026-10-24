@@ -12,6 +12,7 @@
     "backfill": "node scripts/backfill.mjs --years 2",
     "backtest": "node scripts/backtest.mjs",
     "backtest:momentum": "node scripts/backtest-momentum.mjs",
+    "backtest:pairs": "node scripts/backtest-pairs.mjs",
     "test": "node scripts/test.mjs"
   }
 }

@@ -51,7 +51,7 @@ function render() {
   const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, sectorMap());
   const { signals, reg, board, universe, snap } = res; S.bars = res.bars; S.coverage = res.coverage;
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
-  renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars); renderUniverse(universe); renderJournal(); renderSnaplist();
+  renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars); renderPairs(res.bars); renderUniverse(universe); renderJournal(); renderSnaplist();
   $('secList').innerHTML = [...new Set([...Object.keys(E.SECTOR_LISTS), ...Object.values(S.repoSectors)])].sort().map(s => `<option value="${esc(s)}">`).join('');
 }
 function renderStrip(snap, reg) {
@@ -167,6 +167,16 @@ function renderMomentum(bars) {
   empty.hidden = true;
   const pc = (x, d = 0) => x == null ? '—' : `<span class="num chg ${x > 0 ? 'up' : x < 0 ? 'down' : ''}">${(x * 100 > 0 ? '+' : '') + (x * 100).toFixed(d)}%</span>`;
   tbl.querySelector('tbody').innerHTML = sel.picks.map(r => `<tr><td class="r num">${r.rank}</td><td><span class="sym">${esc(r.sym)}<span class="sec">${esc(r.sector)}</span></span></td><td class="r num">${fmt(r.ltp)}</td><td class="r num">${P.volAdjust ? r.score.toFixed(2) : pc(r.ret)}</td><td class="r">${pc(r.ret1)}</td><td class="r">${pc(r.ret6)}</td><td class="r">${pc(r.ret12)}</td><td class="r num">${r.offHigh.toFixed(1)}%</td><td class="r num">₹${fmt(r.avgTurn, 0)} cr</td><td class="r num">${fmt(r.ltp * (1 - P.trail / 100))}</td></tr>`).join('');
+}
+function renderPairs(bars) {
+  const Pr = window.PairsEngine; const tbl = $('pairsTbl'), note = $('pairsNote');
+  if (!Pr || !bars || bars.dates.length < Pr.DEFAULTS.window) { $('pairsSub').textContent = ''; note.textContent = 'Needs history.'; tbl.querySelector('tbody').innerHTML = ''; return; }
+  const board = Pr.boardAt(bars, bars.dates.length - 1); const P = board.params; const stable = board.pairs.filter(p => p.tradable), live = stable.filter(p => p.stretched && !p.broken);
+  $('pairsSub').textContent = `${board.pairs.length} curated pairs · ${stable.length} with a stable relationship today · ${live.length} stretched`;
+  note.innerHTML = `Each pair is two businesses that move together. The engine fits the relationship over the last ${P.window} bars, tests whether the gap between them is stable (Engle–Granger), and reads today's gap in standard deviations (<b>z</b>). <b>Stretched</b> means |z| ≥ ${P.entryZ} on a pair whose relationship passed the test and closes within ${P.maxHalfLife} bars; the lagging leg is the one that has fallen behind. <b>Read the backtest card below before acting on any of this:</b> on the history so far, buying the lagging leg has returned about zero after costs. This is a monitor.`;
+  tbl.querySelector('thead').innerHTML = '<tr><th>Pair</th><th>Business</th><th class="r" title="Engle–Granger t-statistic; more negative = more stable">Stability</th><th class="r">Half-life</th><th class="r">z today</th><th class="r">Gap</th><th>Status</th></tr>';
+  tbl.querySelector('tbody').innerHTML = board.pairs.map(p => { const cls = p.stretched && !p.broken ? 'alert' : p.tradable ? 'act' : p.broken ? 'avoid' : '';
+    return `<tr><td><span class="sym">${esc(p.A)} / ${esc(p.B)}</span></td><td class="muted">${esc(p.label)}</td><td class="r num">${p.tstat != null ? p.tstat.toFixed(2) + (p.level ? ` <span class="muted">(${p.level}%)</span>` : '') : '—'}</td><td class="r num">${p.halfLife != null && isFinite(p.halfLife) ? p.halfLife.toFixed(0) + ' bars' : '—'}</td><td class="r num chg ${Math.abs(p.z || 0) >= P.entryZ ? (p.z > 0 ? 'up' : 'down') : ''}">${p.z != null ? p.z.toFixed(2) : '—'}</td><td class="r num">${p.gapPct != null && p.tradable ? (p.gapPct > 0 ? '+' : '') + p.gapPct.toFixed(1) + '% on ' + esc(p.cheap) : '—'}</td><td><span class="tag ${cls}">${esc(p.status)}</span></td></tr>`; }).join('');
 }
 function renderView() {
   $('viewInd').setAttribute('aria-pressed', S.view === 'industries'); $('viewAll').setAttribute('aria-pressed', S.view === 'all');
