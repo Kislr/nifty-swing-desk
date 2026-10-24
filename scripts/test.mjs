@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const E = require(path.join(ROOT, 'engine.js'));
+const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js'));
 let fails = 0; const assert = (c, m) => { if (!c) { fails++; console.error('FAIL:', m); } else console.log('ok  ', m); };
 
 // 1. NSE API payload (shape served by /api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData)
@@ -67,6 +67,27 @@ const cb = { o: [100, 95], h: [101, 103], l: [94, 94.5], c: [95, 102], v: [1, 1]
   assert(g('BRK').kind === 'act' && g('BRK').setup === '52W breakout', 'close above the prior high fires as an order for tomorrow');
   assert(g('NEAR').kind === 'alert' && /Close above/.test(g('NEAR').trigger), 'close below the prior high stays an alert');
   assert(g('FAR').kind === 'alert' && /Extended/.test(g('FAR').trigger), 'close >4% through the level is extended, not an order'); }
+
+// 3c. index guard: a snapshot whose index is a different index must not be spliced into the history series
+{ const h = { year: 2026, dates: ['2026-10-14', '2026-10-15'], symbols: { A: { o: [1, 1], h: [1, 1], l: [1, 1], c: [1, 1], v: [1, 1], t: [1, 1] } }, index: { name: 'NIFTY 50', o: [100, 101], h: [100, 101], l: [100, 101], c: [100, 101] } };
+  const s500 = { date: '2026-10-16', time: '16:00', rows: { A: [1, 1, 1, 1, 1, 0, 0, 1, 1, null, null, null] }, index: { name: 'NIFTY 500', ltp: 90, pct: 0.4, open: 90, high: 90, low: 90 } };
+  const s50 = { date: '2026-10-19', time: '16:00', rows: { A: [1, 1, 1, 1, 1, 0, 0, 1, 1, null, null, null] }, index: { name: 'NIFTY 50', ltp: 102, pct: 1, open: 102, high: 102, low: 102 } };
+  const b = E.buildBars([h], [s500, s50]);
+  assert(b.index.c.join() === '100,101,,102', 'buildBars keeps a NIFTY 500 close out of the NIFTY 50 series but accepts a NIFTY 50 one');
+  assert(b.extras['2026-10-16'].__index.pct === 0.4, 'the snapshot\'s own daily % is still available for the regime');
+  const hh = JSON.parse(JSON.stringify(h)); E.appendSnapshotToHistory(hh, s500); E.appendSnapshotToHistory(hh, s50);
+  assert(hh.index.c.join() === '100,101,,102' && hh.symbols.A.c.length === 4, 'appendSnapshotToHistory applies the same guard and keeps arrays aligned'); }
+
+// 3d. momentum engine on the synthetic history: ranks, gate, sector cap, simulation
+{ const sel = M.selectAt(bars, last, { topN: 5, maxPerSector: 2 }, custom);
+  assert(sel.ranked.length > 0 && sel.ranked.every((r, k) => k === 0 || r.score <= sel.ranked[k - 1].score), 'momentum ranking is sorted by score');
+  assert(sel.picks.length === 5 && Object.values(sel.picks.reduce((m, r) => (m[r.sector] = (m[r.sector] || 0) + 1, m), {})).every(n => n <= 2), 'top-N respects the per-sector cap');
+  assert(sel.gate.open != null && sel.gate.source === 'index', 'regime gate computed from index bars');
+  const noIdx = { dates: bars.dates, sym: bars.sym, index: null, extras: {} }; const g = M.gateAt(noIdx, last, M.DEFAULTS); assert(g.source === 'breadth' && typeof g.open === 'boolean', 'gate falls back to breadth without index bars');
+  const sim = M.simulate(bars, { topN: 5 }, custom, { capital: 500000 }); const st = M.stats(sim);
+  assert(sim.trades.length > 0 && sim.equity.length === bars.dates.length - sim.warmup, `momentum simulation ran (${sim.trades.length} trades, synthetic data — numbers are meaningless)`);
+  assert(Math.abs(sim.equity[sim.equity.length - 1].value - st.final) < 1 && st.maxDrawdown >= 0 && st.maxDrawdown <= 1, 'momentum stats consistent with the equity curve');
+  assert(/MOMENTUM/.test(M.digest(sel, E.fmt)), 'momentum digest renders'); }
 
 // 4. appendSnapshotToHistory keeps arrays aligned
 const f2 = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(f2, doc); E.appendSnapshotToHistory(f2, { date: '2026-10-15', rows: { KOTAKBANK: [1, 2, 0.5, 1, 1.5, 0, 0, 10, 1, null, null, null] }, index: null });
