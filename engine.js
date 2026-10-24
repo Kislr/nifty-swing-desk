@@ -141,7 +141,7 @@
   function toSnapshotDoc(rows, date, time, source) {
     const doc = { date, time: time || null, source: source || 'manual', savedAt: new Date().toISOString(), count: 0, rows: {}, index: null };
     for (const r of rows) {
-      if (r.isIndex) { if (!doc.index || /^NIFTY 50$/.test(r.sym)) doc.index = { name: r.sym, ltp: r.ltp, pct: r.pct, chg: r.chg, high: r.high, low: r.low, open: r.open }; continue; }
+      if (r.isIndex) { const ix = { name: r.sym, ltp: r.ltp, pct: r.pct, chg: r.chg, high: r.high, low: r.low, open: r.open }; if (!doc.index || /^NIFTY 50$/.test(r.sym)) doc.index = ix; if (!/^NIFTY 50$/.test(r.sym)) doc.universeIndex = ix; continue; }
       doc.rows[r.sym] = F.map(k => (r[k] == null ? null : r[k])); doc.count++;
     }
     return doc;
@@ -151,6 +151,7 @@
    * history file: {year, dates:[...], symbols:{SYM:{o:[],h:[],l:[],c:[],v:[],t:[]}}, index:{name,o:[],h:[],l:[],c:[]}}
    * bars:         {dates:[...], sym:{SYM:{o,h,l,c,v,t}}, index:{name,o,h,l,c}|null, extras:{date:{SYM:{h52,l52,d30,val,pct,prev}}}}
    * History (end-of-day) wins over a snapshot for the same date; snapshots fill the gaps. */
+  const sameIndex = (a, b) => String(a || '').replace(/\s+/g, '').toUpperCase() === String(b || '').replace(/\s+/g, '').toUpperCase();
   function buildBars(historyFiles, snaps) {
     const dateSet = new Set();
     for (const f of historyFiles || []) for (const d of f.dates || []) dateSet.add(d);
@@ -169,7 +170,8 @@
         if (B.c[i] == null) { B.o[i] = r.open; B.h[i] = r.high; B.l[i] = r.low; B.c[i] = r.ltp; B.v[i] = r.vol; B.t[i] = r.val; }
         ex[k] = { h52: r.h52, l52: r.l52, d30: r.d30, val: r.val, pct: r.pct, prev: r.prev }; }
       if (s.index && s.index.ltp != null) { index = index || { name: s.index.name, o: new Array(N).fill(null), h: new Array(N).fill(null), l: new Array(N).fill(null), c: new Array(N).fill(null) };
-        if (index.c[i] == null) { index.o[i] = s.index.open; index.h[i] = s.index.high; index.l[i] = s.index.low; index.c[i] = s.index.ltp; } ex.__index = { pct: s.index.pct, time: s.time }; }
+        // Only splice a snapshot's index bar into the series when it is the same index (a NIFTY 500 close in a NIFTY 50 series is a phantom crash)
+        if (index.c[i] == null && sameIndex(index.name, s.index.name)) { index.o[i] = s.index.open; index.h[i] = s.index.high; index.l[i] = s.index.low; index.c[i] = s.index.ltp; } ex.__index = { pct: s.index.pct, time: s.time, name: s.index.name }; }
     }
     return { dates, sym, index, extras };
   }
@@ -185,7 +187,8 @@
       b.o[k] = r.open; b.h[k] = r.high; b.l[k] = r.low; b.c[k] = r.ltp; b.v[k] = r.vol; b.t[k] = r.val; }
     if (snap.index && snap.index.ltp != null) { file.index = file.index || { name: snap.index.name, o: [], h: [], l: [], c: [] };
       ['o', 'h', 'l', 'c'].forEach(key => { while (file.index[key].length < N) file.index[key].push(null); });
-      file.index.o[k] = snap.index.open; file.index.h[k] = snap.index.high; file.index.l[k] = snap.index.low; file.index.c[k] = snap.index.ltp; }
+      if (sameIndex(file.index.name, snap.index.name)) { file.index.o[k] = snap.index.open; file.index.h[k] = snap.index.high; file.index.l[k] = snap.index.low; file.index.c[k] = snap.index.ltp; } }
+    else if (file.index) ['o', 'h', 'l', 'c'].forEach(key => { while (file.index[key].length < N) file.index[key].push(null); });
     return file;
   }
 
@@ -382,5 +385,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    buildBars, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, indicators: { sma, atr, rsi, candles } };
 });
