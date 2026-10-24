@@ -3,5 +3,5 @@
   "historyDays": 90,
   "keepDays": 400,
   "alertIntraday": false,
-  "risk": { "capital": 500000, "riskPct": 1, "minRR": 2.5, "maxPos": 25 }
+  "risk": { "capital": 500000, "riskPct": 1, "minRR": 2, "maxPos": 25 }
 }

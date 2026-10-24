@@ -18,16 +18,20 @@ What the engine does today, what was deliberately left out, and what comes next.
 
 **Setup score (0–100).** Base 50 plus the adjustments above. Shown on every row, drives the sort order and the Telegram digest, and an Act-now setup scoring below 50 is downgraded to an alert. Confidence labels: High ≥ 70, Medium ≥ 55, Low otherwise.
 
+**52-week breakout trigger fixed (Oct 2026).** The level a breakout must clear is now the 52-week high *before today*; NSE's 52W H field and a window ending today both include today's own bar, which made "closed above the 52-week high" impossible and silently disabled the setup on the site and in the backtest. A close more than 4% through the level is flagged extended rather than ordered.
+
 **Walk-forward backtest.** `scripts/backtest.mjs` replays the rules day by day with next-day fills, gap handling, breakeven stop moves, position and sector limits, time stops and round-trip costs, and reports expectancy, profit factor, drawdown, and breakdowns by setup, score band and year.
 
 ## Next (in order of expected value)
 
-1. **Run the backtest on real history and prune.** The thresholds (2% from the 52-week high, 3% impulse day, 2 × ATR, score cut-off at 50) are conventions, not fitted values. Sweep each with `--set`, keep what improves out-of-sample expectancy, drop what doesn't. Check that the score bands separate: 70+ should beat 50–59 clearly, or the score is decoration.
-2. **Corporate-action adjustment.** Pull NSE's corporate-action list and adjust history for splits and bonuses so the backtest stops seeing phantom crashes.
-3. **Point-in-time universe.** Store historical Nifty 500 membership so the backtest only trades names that were in the index at the time (removes survivorship bias).
-4. **Earnings-date awareness.** Flag setups with results due within the holding window; many breakout failures cluster there.
-5. **Exit refinements, tested one at a time.** Trailing stop on the 20-day average after +2R; partial profit at the first target; volatility-scaled holding period.
-6. **Alert on price, not just on the close.** A lightweight intraday check (one extra run at 14:45 IST) so a breakout that is confirming into the close reaches you before the bell rather than after.
+1. **Extend the history and re-run.** The first real backtest (`reports/backtest-2026-10-24.md`) covers Jan 2025 – Oct 2026: 157 trades, −0.06R expectancy, inside the noise. Two years cannot rank configurations. Run `node scripts/backfill.mjs --years 5`, re-run the backtest, and only then prune: the thresholds (2% from the 52-week high, 3% impulse day, 2 × ATR, score cut-off at 50) are still conventions.
+2. **Make the score earn its place.** In every run so far the 70+ band had the worst expectancy and 60–69 the best. Test dropping the leading-sector (+15) and volume (+10) bumps for breakouts, or replacing the score with the backtest's own per-setup hit rate.
+3. **Replace the time stop.** Half of all exits are 15-day time stops. Test a trailing exit (close below the 10- or 20-day average) one change at a time, and separate slot budgets per setup so breakouts and pullbacks stop crowding each other out.
+4. **Corporate-action adjustment.** Pull NSE's corporate-action list and adjust history for splits and bonuses so the backtest stops seeing phantom crashes.
+5. **Point-in-time universe.** Store historical Nifty 500 membership so the backtest only trades names that were in the index at the time (removes survivorship bias).
+6. **Earnings-date awareness.** Flag setups with results due within the holding window; many breakout failures cluster there.
+7. **Exit refinements, tested one at a time.** Trailing stop on the 20-day average after +2R; partial profit at the first target; volatility-scaled holding period.
+8. **Alert on price, not just on the close.** A lightweight intraday check (one extra run at 14:45 IST) so a breakout that is confirming into the close reaches you before the bell rather than after.
 
 ## Deliberately not planned
 
