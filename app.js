@@ -87,6 +87,7 @@ function renderRules(reg, snap) {
     { ok: !!snap && !(reg && reg.intraday), bad: !!(reg && reg.intraday), t: snap ? (reg.intraday ? 'Latest snapshot is intraday — wait for the post-close run' : 'Latest snapshot reflects the close') : 'No snapshot loaded' },
     { ok: reg ? reg.state !== 'Weak' : false, bad: !!(reg && reg.state === 'Weak'), t: reg ? (reg.state === 'Weak' ? 'Weak breadth — half size, leaders only' : 'Breadth permits normal size') : 'Regime unknown' },
     { ok: true, t: "Never chase the day's biggest gainer; buy pullbacks or confirmed breakouts" },
+    { ok: true, t: 'An order that does not fill tomorrow is cancelled, not chased. Setups that vanish from the list the next day were never trades' },
     { ok: true, t: 'Stop goes in with the order. Move it to breakeven at +1R, never lower it' },
     { ok: true, t: 'Max 4 open positions, no two in the same sector' },
   ];
@@ -94,7 +95,7 @@ function renderRules(reg, snap) {
 }
 function sigDots(c) {
   const parts = [];
-  if (c.act) parts.push(`<span class="sig" title="${c.act} act-now setup${c.act > 1 ? 's' : ''}"><i class="sdot act"></i>${c.act}</span>`);
+  if (c.act) parts.push(`<span class="sig" title="${c.act} order${c.act > 1 ? 's' : ''} for tomorrow"><i class="sdot act"></i>${c.act}</span>`);
   if (c.alert) parts.push(`<span class="sig" title="${c.alert} alert${c.alert > 1 ? 's' : ''} to set"><i class="sdot alert"></i>${c.alert}</span>`);
   if (c.watch) parts.push(`<span class="sig" title="${c.watch} on watch"><i class="sdot watch"></i>${c.watch}</span>`);
   return parts.length ? `<span class="sigs">${parts.join('')}</span>` : '';
@@ -119,9 +120,9 @@ function renderSectors(board, signals) {
       <span class="num chg ${s.avg30 > 0 ? 'up' : s.avg30 < 0 ? 'down' : ''}">${pct(s.avg30, 1)}</span>
       <span class="num muted">${(s.breadth * 100).toFixed(0)}%↑</span></div>`; }).join('');
   el.querySelectorAll('.sec-row').forEach(r => { const f = () => { const sec = r.dataset.sec || null; S.sector = (sec === null || S.sector === sec) ? null : sec; S.open = null; render(); }; r.onclick = f; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
-  $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : (S.view === 'industries' ? 'click a sector to filter the queue and list its stocks' : 'click a sector to filter the queue')) + ' · <i class="sdot act"></i>act <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
+  $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : (S.view === 'industries' ? 'click a sector to filter the queue and list its stocks' : 'click a sector to filter the queue')) + ' · <i class="sdot act"></i>order <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
 }
-const TABS = [['act', 'Act now'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
+const TABS = [['act', 'Orders for tomorrow'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
 const stripTags = s => s.replace(/<[^>]+>/g, '');
 function renderQueue(signals, reg) {
   const counts = {}, inSec = {}; signals.forEach(s => { counts[s.kind] = (counts[s.kind] || 0) + 1; if (S.sector && s.sector === S.sector) inSec[s.kind] = (inSec[s.kind] || 0) + 1; });
@@ -131,9 +132,10 @@ function renderQueue(signals, reg) {
   const tbl = $('queueTbl'), empty = $('queueEmpty');
   $('queueSub').textContent = S.snaps.length ? `${signals.length} flagged of ${Object.keys(S.snaps[S.snaps.length - 1].rows).length}` : '';
   const withLevels = S.tab !== 'avoid' && S.tab !== 'watch';
-  tbl.querySelector('thead').innerHTML = `<tr><th>Symbol</th><th>Setup</th><th class="r">Score</th><th class="r">LTP</th><th class="r">Today</th><th class="r">30D</th>${withLevels ? '<th class="r">Entry</th><th class="r">Stop</th><th class="r">Target</th><th class="r">Qty</th>' : '<th>Trigger / reason</th>'}<th></th></tr>`;
+  tbl.querySelector('thead').innerHTML = `<tr><th>Symbol</th><th>Setup</th><th class="r">Score</th><th class="r">LTP</th><th class="r">Today</th><th class="r">30D</th>${withLevels ? '<th class="r" title="Buy-stop price for the next session">Buy-stop</th><th class="r">Stop-loss</th><th class="r">Target</th><th class="r">Qty</th>' : '<th>Trigger / reason</th>'}<th></th></tr>`;
+  $('queueNote').hidden = S.tab !== 'act';
   if (!rows.length) { tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false;
-    const m = { act: 'Nothing to act on right now. That is the normal state — most days the right trade is no trade.', alert: 'No stocks within 2% of a 52-week high today.', watch: 'No momentum names in leading sectors today.', avoid: 'Nothing near its 52-week low.' };
+    const m = { act: 'No orders to place for tomorrow. That is the normal state — most days the right trade is no trade.', alert: 'No stocks within 2% of a 52-week high today.', watch: 'No momentum names in leading sectors today.', avoid: 'Nothing near its 52-week low.' };
     empty.innerHTML = S.snaps.length ? (S.sector ? `No ${TABS.find(t => t[0] === S.tab)[1].toLowerCase()} signals in <b>${esc(S.sector)}</b>${counts[S.tab] ? ` — ${counts[S.tab]} across all sectors.` : '.'} <button class="btn small" id="clearSec" style="margin-left:8px">Show all sectors</button>` : m[S.tab]) : 'The queue fills in once the daily job has written a snapshot (or you upload one below).';
     const cb = $('clearSec'); if (cb) cb.onclick = () => { S.sector = null; render(); }; return; }
   empty.hidden = true;

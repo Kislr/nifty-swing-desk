@@ -25,7 +25,7 @@ const doc = E.toSnapshotDoc(rows, '2026-10-16', '15:30', 'nse-api'); assert(doc.
 const res = E.buildSignals([doc], E.DEFAULTS, {});
 const kb = res.signals.find(s => s.sym === 'KOTAKBANK');
 assert(kb && kb.kind === 'alert' && kb.setup === '52W breakout', 'KOTAKBANK flagged as 52W breakout alert');
-assert(kb.entry === 454.55 && kb.stop === 443.2 && kb.target === 482.95, `fallback levels ${kb.entry}/${kb.stop}/${kb.target}`);
+assert(kb.entry === 454.55 && kb.stop === 443.2 && kb.target === 477.25, `fallback levels ${kb.entry}/${kb.stop}/${kb.target} (2R)`);
 assert(kb.size && kb.size.qty === 274 && kb.size.capped, 'sizing capped at 25% of capital');
 assert(typeof kb.score === 'number' && Array.isArray(kb.reasons), 'score and reasons present');
 
@@ -52,6 +52,21 @@ assert(a.signals.every(s => s.score >= 0 && s.score <= 100), 'scores within 0–
 const B = bars.sym.SYM3; const naive = B.c.slice(last - 19, last + 1).reduce((p, c) => p + c, 0) / 20; assert(Math.abs(E.indicators.sma(B.c, 20, last) - naive) < 1e-9, 'SMA20 matches naive mean');
 // candles: construct an obvious bullish engulfing
 const cb = { o: [100, 95], h: [101, 103], l: [94, 94.5], c: [95, 102], v: [1, 1], t: [1, 1] }; const cd = E.indicators.candles(cb, 1); assert(cd.bull.includes('bullish engulfing'), 'bullish engulfing detected');
+
+// 3b. breakout trigger: the level is the 52-week high BEFORE today, so a close above it can actually fire
+{ const n = 300; const dates = hf.dates.slice(0, n); const flat = { o: [], h: [], l: [], c: [], v: [], t: [] };
+  for (let i = 0; i < n; i++) { const c = 100 + (i % 7) * 0.1; flat.o.push(c); flat.h.push(c + 0.5); flat.l.push(c - 0.5); flat.c.push(c); flat.v.push(1e5); flat.t.push(1); }
+  const peak = 110; flat.h[200] = peak; flat.c[200] = 109; // prior 52-week high set 100 bars ago
+  const brk = JSON.parse(JSON.stringify(flat)); brk.o[n - 1] = 108; brk.h[n - 1] = 112; brk.l[n - 1] = 107.5; brk.c[n - 1] = 111; // today closes above it
+  const near = JSON.parse(JSON.stringify(flat)); near.o[n - 1] = 108; near.h[n - 1] = 109.5; near.l[n - 1] = 107.5; near.c[n - 1] = 109; // today stays below it
+  const far = JSON.parse(JSON.stringify(flat)); far.o[n - 1] = 112; far.h[n - 1] = 118; far.l[n - 1] = 111; far.c[n - 1] = 117; // >4% through: extended
+  const b2 = E.buildBars([{ year: 2025, dates, symbols: { BRK: brk, NEAR: near, FAR: far, FILL: flat }, index: null }], []);
+  const a2 = E.analyzeAt(b2, n - 1, { custom: { BRK: 'X', NEAR: 'X', FAR: 'X', FILL: 'X' } });
+  const g = sym => a2.signals.find(s => s.sym === sym);
+  assert(g('BRK') && g('BRK').row.priorHi === peak && g('BRK').level === peak, 'breakout level is the prior 52-week high, not today\'s high');
+  assert(g('BRK').kind === 'act' && g('BRK').setup === '52W breakout', 'close above the prior high fires as an order for tomorrow');
+  assert(g('NEAR').kind === 'alert' && /Close above/.test(g('NEAR').trigger), 'close below the prior high stays an alert');
+  assert(g('FAR').kind === 'alert' && /Extended/.test(g('FAR').trigger), 'close >4% through the level is extended, not an order'); }
 
 // 4. appendSnapshotToHistory keeps arrays aligned
 const f2 = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(f2, doc); E.appendSnapshotToHistory(f2, { date: '2026-10-15', rows: { KOTAKBANK: [1, 2, 0.5, 1, 1.5, 0, 0, 10, 1, null, null, null] }, index: null });

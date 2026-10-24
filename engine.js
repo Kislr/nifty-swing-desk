@@ -39,7 +39,7 @@
   const SECTOR_OF = {};
   for (const [sec, list] of Object.entries(SECTOR_LISTS)) list.split(/\s+/).forEach(s => (SECTOR_OF[s] = sec));
 
-  const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2.5, maxPos: 25 };
+  const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2, maxPos: 25 };
   const F = ['open', 'high', 'low', 'prev', 'ltp', 'chg', 'pct', 'vol', 'val', 'h52', 'l52', 'd30'];
   const tick = x => Math.round(x * 20) / 20;
   const fmt = (n, d = 2) => (n == null || isNaN(n)) ? '—' : Number(n).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -257,12 +257,19 @@
       r.histDays = bars250;
       r.h52 = e.h52 != null ? e.h52 : (bars250 >= 120 ? windowMax(B.h, i - 249, i) : null);
       r.l52 = e.l52 != null ? e.l52 : (bars250 >= 120 ? windowMin(B.l, i - 249, i) : null);
+      // The 52-week high *before today* — the level a breakout has to clear. NSE's 52W H and a window ending at i both
+      // include today's own high, so "close above the 52-week high" could never be true against them.
+      // Prefer the bar window ending yesterday; else yesterday's snapshot figure; else today's figure when today did not set it.
+      const exPrev = i > 0 && bars.extras[bars.dates[i - 1]] && bars.extras[bars.dates[i - 1]][s];
+      r.priorHi = bars250 >= 120 ? windowMax(B.h, i - 249, i - 1)
+        : (exPrev && exPrev.h52 != null) ? exPrev.h52
+        : (r.h52 != null && (r.high == null || r.high < r.h52)) ? r.h52 : null;
       r.d30 = e.d30 != null ? e.d30 : (B.c[i - 21] != null ? (c / B.c[i - 21] - 1) * 100 : null);
       r.sma20 = sma(B.c, 20, i); r.sma50 = sma(B.c, 50, i); r.atr = atr(B, 14, i); r.rsi = rsi(B.c, 14, i);
       r.ret20 = B.c[i - 20] != null ? c / B.c[i - 20] - 1 : null;
       const vols = []; for (let k = Math.max(0, i - 20); k < i; k++) if (B.v[k]) vols.push(B.v[k]); r.relVol = vols.length >= 5 && r.vol ? r.vol / mean(vols) : null;
       const rng = (r.high != null && r.low != null) ? r.high - r.low : null; r.range = rng;
-      r.closePos = rng ? (c - r.low) / rng : null; r.distHi = r.h52 ? (r.h52 - c) / r.h52 * 100 : null; r.distLo = r.l52 ? (c - r.l52) / r.l52 * 100 : null;
+      r.closePos = rng ? (c - r.low) / rng : null; r.distHi = r.priorHi ? (r.priorHi - c) / r.priorHi * 100 : null; r.distLo = r.l52 ? (c - r.l52) / r.l52 * 100 : null;
       r.pos52 = (r.h52 && r.l52 && r.h52 > r.l52) ? (c - r.l52) / (r.h52 - r.l52) : null;
       r.trend = (r.sma20 != null && r.sma50 != null) ? (c > r.sma20 && r.sma20 > r.sma50 ? 'up' : c < r.sma20 && r.sma20 < r.sma50 ? 'down' : 'flat') : null;
       r.candle = candles(B, i);
@@ -298,12 +305,14 @@
         continue;
       }
       if (r.distHi != null && r.distHi <= 2 && (r.d30 == null || r.d30 >= 0) && r.pct > -1.5) {
-        const level = r.h52; const entry = tick(level * 1.003);
+        const level = r.priorHi; const entry = tick(level * 1.003);
         const stopDist = r.atr != null ? Math.max(2 * r.atr, entry * 0.02) : Math.max(1.5 * (rng(r) || 0), entry * 0.025);
         const stop = tick(entry - stopDist); const risk = entry - stop; const target = tick(entry + RR * risk);
-        const triggered = r.ltp > level; const kind = triggered ? (reg.intraday ? 'alert' : 'act') : 'alert';
-        push({ kind, setup: '52W breakout', level, entry, stop, target, rr: RR, trigger: triggered ? `Above ${fmt(level)} now${reg.intraday ? ' — needs a close above it' : ''}` : `Close above ${fmt(level)}`,
-          why: `${triggered ? 'Closed above' : 'Sitting ' + r.distHi.toFixed(1) + '% below'} its 52-week high of <b>${fmt(level)}</b>${r.d30 != null ? ` with ${pct(r.d30, 1)} 30-day momentum` : ''}${r.leader ? ' in a <b>leading sector</b>' : ''}. Stop is ${r.atr != null ? '2 × ATR' : '1.5 × today\'s range'} below entry (${(stopDist / entry * 100).toFixed(1)}%); target ${RR}× the risk. Rule: buy only after a <b>close</b> above the level, ideally on the next day's retest.` });
+        const closedAbove = r.ltp > level; const extended = closedAbove && r.ltp > level * 1.04; // >4% through the level: chasing, not a breakout entry
+        const triggered = closedAbove && !extended; const kind = triggered ? (reg.intraday ? 'alert' : 'act') : 'alert';
+        push({ kind, setup: '52W breakout', level, entry, stop, target, rr: RR,
+          trigger: triggered ? (reg.intraday ? `Above ${fmt(level)} now — needs a close above it` : `Buy-stop ${fmt(entry)} tomorrow; cancel if not filled`) : extended ? `Extended ${(r.ltp / level * 100 - 100).toFixed(1)}% above ${fmt(level)} — wait for a retest` : `Close above ${fmt(level)}`,
+          why: `${closedAbove ? 'Closed above' : 'Sitting ' + r.distHi.toFixed(1) + '% below'} its prior 52-week high of <b>${fmt(level)}</b>${r.d30 != null ? ` with ${pct(r.d30, 1)} 30-day momentum` : ''}${r.leader ? ' in a <b>leading sector</b>' : ''}. Stop is ${r.atr != null ? '2 × ATR' : '1.5 × today\'s range'} below entry (${(stopDist / entry * 100).toFixed(1)}%); target ${RR}× the risk. Rule: buy only after a <b>close</b> above the level, via a buy-stop at ${fmt(entry)} the next session${extended ? '. <b>Already ' + (r.ltp / level * 100 - 100).toFixed(1) + '% through the level</b> — do not chase; wait for a pullback toward it' : ''}.` });
         continue;
       }
       const strongToday = r.pct >= 2 && (r.d30 == null || r.d30 >= 5) && r.leader;
@@ -312,7 +321,7 @@
       if (pullback) {
         const entry = tick(r.high * 1.003); const base = Math.min(r.low, imp.low); const stop = tick(r.atr != null ? base - 0.5 * r.atr : base * 0.995); const risk = entry - stop; const target = tick(entry + RR * risk);
         const capped = r.h52 && target > r.h52;
-        push({ kind: 'act', setup: 'Pullback buy', level: r.high, entry, stop, target, rr: RR, trigger: `Reclaim ${fmt(entry)} (today's high)`,
+        push({ kind: 'act', setup: 'Pullback buy', level: r.high, entry, stop, target, rr: RR, trigger: `Buy-stop ${fmt(entry)} tomorrow (above today's high); cancel if not filled`,
           why: `Impulse day of <b>${pct(imp.pct, 1)}</b> within the last 5 sessions, then a ${pct(r.pct, 1)} day that <b>held above the impulse low (${fmt(imp.low)})</b>${r.sma20 != null ? ` and the 20-day average (${fmt(r.sma20)})` : ''}. Buy the reclaim of today's high; stop ${r.atr != null ? 'half an ATR' : '0.5%'} under the lower of today's low and the impulse low.${capped ? ` <b>Target sits above the 52-week high (${fmt(r.h52)})</b> — expect resistance there.` : ''}${reg.state === 'Weak' ? ' Breadth is weak: size is halved.' : ''}` });
         continue;
       }
@@ -362,13 +371,13 @@
     L.push(`Tape: ${reg.state} · breadth ${reg.up}▲/${reg.down}▼ · ${idx} · history ${result.coverage}/250 bars`);
     const leaders = [...board.leaders]; L.push(`Leading sectors: ${leaders.length ? leaders.join(', ') : 'none qualify'}`);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
-    L.push('', `ACT NOW (${act.length})`);
-    act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: entry ${fmt(s.entry)}, stop ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
+    L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
+    act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
     if (!act.length) L.push('• nothing — no trade is a valid outcome');
     L.push('', `ALERTS (${alert.length})`); alert.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
     L.push('', `WATCH (${watch.length})`); watch.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}${s.trigger ? ': ' + s.trigger : ''}`)); if (!watch.length) L.push('• none');
     L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
-    L.push('Rules engine output, not advice. Decide on the close.');
+    L.push('Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
     return L.join('\n');
   }
 

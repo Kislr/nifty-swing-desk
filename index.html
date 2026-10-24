@@ -226,6 +226,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   <section class="card">
     <h2>Signal queue <span class="sub" id="queueSub"></span></h2>
     <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="queueNote" class="note" style="margin-bottom:10px" hidden>These are <b>conditional orders for the next session</b>, not stocks to buy at market. For each: place a buy-stop at the entry price with the stop-loss attached; if the price never reaches the entry tomorrow, the order expires and the setup is void. A name that was here today and is gone tomorrow was simply not triggered &mdash; nothing was lost. Every rule here is judged on the <a href="#backtestCard">backtest</a>, not on any single day.</div>
     <div class="tbl-wrap"><table id="queueTbl"><thead></thead><tbody></tbody></table></div>
     <div id="queueEmpty" class="empty" hidden></div>
   </section>
@@ -292,6 +293,11 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
       <div class="eyebrow" style="margin-bottom:6px">Stored snapshots</div>
       <div class="snaplist" id="snaplist"></div>
     </div>
+  </section>
+
+  <section class="card" id="backtestCard">
+    <h2>What the rules have earned <span class="sub">walk-forward backtest, 2025-01 &rarr; 2026-10, costs included</span></h2>
+    <div class="note">Over 157 trades the combined rules returned <b>&minus;0.06R per trade</b> (profit factor 0.87, 43% win rate, max drawdown 23R). Each setup alone is slightly positive at a 2R target (pullback +0.11R over 146 trades, breakout +0.05R over 123) and the difference between configurations is inside the noise of a two-year sample. Treat every row above as a hypothesis with roughly even odds and a small positive edge at best; the score (0&ndash;100) has <b>not</b> separated winners from losers so far. Full tables, parameter sweep and every trade: <code>reports/</code> in the repository. Run <code>node scripts/backtest.mjs</code> after any rule change.</div>
   </section>
 
   <footer id="foot">This page applies fixed, published rules (sector leadership, relative strength, moving-average trend, 52-week breakouts, pullbacks in momentum names, ATR-based stops, candle confirmation, fixed-fraction sizing) to data you upload. It is a decision aid, not investment advice; nothing here is a recommendation to buy or sell. Figures are only as current as the last snapshot. Trading involves risk of loss — consult a SEBI-registered advisor for advice on your situation.</footer>
