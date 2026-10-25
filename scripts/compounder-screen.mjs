@@ -38,11 +38,12 @@ const oob = S.universe.filter(r => r.ok && r.inBand === false);
 L.push('', `## Pass all five but outside the cap band (${oob.length})`, '', oob.map(r => `${r.ticker} ($${r.cap}M)`).join(', ') || 'none', '');
 // Sensitivity: how many names each threshold set yields. The backtest decides which set is right; this only shows how binding each rule is.
 const variants = [
-  ['v0.1 as written', {}],
-  ['ROCE ≥ 12% in 3 of 5, floor 8%', s => { s.traits.roce.threshold = 12; s.traits.roce.minYearsPassing = 3; s.traits.roce.floor = 8; }],
-  ['revenue CAGR ≥ 8%', s => { s.traits.growthWithoutDilution.minRevenueCagr = 8; }],
-  ['gross margin within 4 pts of high', s => { s.traits.grossMargin.maxDropFromHighPts = 4; }],
-  ['all three relaxations together', s => { s.traits.roce.threshold = 12; s.traits.roce.minYearsPassing = 3; s.traits.roce.floor = 8; s.traits.growthWithoutDilution.minRevenueCagr = 8; s.traits.grossMargin.maxDropFromHighPts = 4; }],
+  [`v${screen.version} as written`, {}],
+  ['v0.1 strict: ROCE 15 in 4/5 floor 10, GM 2 pts, CAGR 12', s => { s.traits.roce.threshold = 15; s.traits.roce.floor = 10; s.traits.grossMargin.maxDropFromHighPts = 2; s.traits.growthWithoutDilution.minRevenueCagr = 12; }],
+  ['relaxed: ROCE 12 in 3/5 floor 8, GM 4 pts, CAGR 8', s => { s.traits.roce.threshold = 12; s.traits.roce.minYearsPassing = 3; s.traits.roce.floor = 8; s.traits.growthWithoutDilution.minRevenueCagr = 8; s.traits.grossMargin.maxDropFromHighPts = 4; }],
+  ['ROCE only at v0.1 (15 in 4/5, floor 10)', s => { s.traits.roce.threshold = 15; s.traits.roce.floor = 10; }],
+  ['CAGR only at v0.1 (12)', s => { s.traits.growthWithoutDilution.minRevenueCagr = 12; }],
+  ['gross margin only at v0.1 (2 pts)', s => { s.traits.grossMargin.maxDropFromHighPts = 2; }],
 ];
 L.push(`## Sensitivity of the thresholds`, '', `| thresholds | pass all five | in cap band | near-miss |`, `|---|---|---|---|`);
 for (const [name, mod] of variants) { const s2 = JSON.parse(JSON.stringify(screen)); if (typeof mod === 'function') mod(s2); const S2 = C.screenAt({ universe, facts }, s2, asOf, market, null); L.push(`| ${name} | ${S2.counts.passAll} | ${S2.counts.inBand} | ${S2.counts.nearMiss} |`); }
