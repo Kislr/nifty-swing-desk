@@ -45,4 +45,29 @@ assert(Object.keys(FIELDS).length === 16, '16 fields defined');
 const util = { facts: { 'us-gaap': { RegulatedAndUnregulatedOperatingRevenue: { units: { USD: [ f(13441e6, '2024-01-01', '2024-12-31', '2025-02-20', '10-K', 2024, 'FY') ] } }, NetIncomeLoss: { units: { USD: [ f(1e9, '2024-01-01', '2024-12-31', '2025-02-20', '10-K', 2024, 'FY') ] } } } } };
 const ufy = extractFacts(util); assert(ufy['2024-12-31'].rev.v === 13441e6 && ufy['2024-12-31'].rev.tag === 'RegulatedAndUnregulatedOperatingRevenue', 'utility revenue tag picked up');
 
-if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder tests passed');
+if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('extractor tests passed');
+
+// ---- engine: a synthetic compounder, a diluter, and a service business with no gross margin ----
+import { createRequire } from 'node:module';
+const C = createRequire(import.meta.url)('../compounder.js');
+const screen = JSON.parse(await (await import('node:fs/promises')).readFile(new URL('../compounder/screen.json', import.meta.url), 'utf8'));
+const yr = (end, filed, o) => [end, Object.fromEntries(Object.entries(Object.assign({ rev: 1000, cogs: 500, ebit: 200, ni: 150, ocf: 180, da: 20, sharesDil: 100e6, assets: 1200, curLiab: 200, cash: 300, debtLT: 100, sharesOut: 100e6, float: 5000e6 }, o)).map(([k, v]) => [k, { v, filed }]))];
+const mk = (years) => ({ cik: 1, ticker: 'SYN', name: 'Synthetic', fy: Object.fromEntries(years) });
+const good = mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(1.15, i), cogs: 500 * Math.pow(1.15, i), ebit: 200 * Math.pow(1.15, i), ni: 150 * Math.pow(1.15, i), ocf: 180 * Math.pow(1.15, i), sharesDil: 100e6 * (1 + 0.01 * i) })));
+let ev = C.evaluate(good, screen, '2025-06-01');
+assert(ev.ok && ev.failed.length === 0, 'synthetic compounder passes all five: ' + JSON.stringify(ev.failed) + JSON.stringify(ev.na));
+assert(Math.abs(ev.traits.growth.value - 15) < 0.2 && ev.traits.growth.dilution === 5, '5-year revenue CAGR 15%, shares +5%');
+assert(ev.traits.roce.value === 30.4, 'median ROCE 30.4% (EBIT grows, capital employed fixed at 1000)');
+ev = C.evaluate(good, screen, '2024-06-01');
+assert(ev.years === 5 && ev.latest === '2023-12-31' && ev.traits.growth.pass == null, 'point-in-time: FY2024 10-K (filed 2025-02-15) invisible on 2024-06-01, so only 5 years and no 5-year CAGR');
+const diluter = mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(1.3, i), sharesDil: 100e6 * Math.pow(1.3, i) })));
+ev = C.evaluate(diluter, screen, '2025-06-01'); assert(ev.failed.includes('growth') && /share count/.test(ev.traits.growth.why), 'growth bought with shares fails on dilution with the reason attached');
+const service = mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => { const [e, o] = yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(1.15, i), ebit: 200 * Math.pow(1.15, i), ni: 150 * Math.pow(1.15, i), ocf: 180 * Math.pow(1.15, i) }); delete o.cogs; delete o.debtLT; return [e, o]; }));
+ev = C.evaluate(service, screen, '2025-06-01'); assert(!ev.ok && ev.nearMiss && ev.na[0] === 'grossMargin' && ev.traits.leverage.pass && /assumed none/.test(ev.traits.leverage.why), 'no cost-of-revenue line → near-miss; no debt tag with a tagged balance sheet → net cash, labelled');
+const levered = mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(1.15, i), debtLT: 900, cash: 50 })));
+ev = C.evaluate(levered, screen, '2025-06-01'); assert(ev.failed.includes('leverage') && ev.traits.leverage.value === 3.86, 'net debt 850 / EBITDA 220 = 3.86 fails');
+const S = C.screenAt({ universe: { companies: [{ cik: 1, ticker: 'SYN', domestic: true, financial: false }, { cik: 2, ticker: 'BIG', domestic: true, financial: false }, { cik: 3, ticker: 'BNK', domestic: true, financial: true }] }, facts: { 1: good, 2: Object.assign({}, good, { cik: 2 }), 3: Object.assign({}, good, { cik: 3 }) } }, screen, '2025-06-01', 'us', { 2: { price: 500 } });
+assert(S.quality.length === 1 && S.quality[0].ticker === 'SYN' && S.quality[0].capSource === 'public float (10-K)', 'screenAt: float proxy keeps SYN in band');
+assert(S.universe.find(r => r.ticker === 'BIG').inBand === false && S.universe.find(r => r.ticker === 'BIG').cap === 50000, 'price × shares = $50,000M is outside the band');
+assert(!S.universe.find(r => r.ticker === 'BNK'), 'financials excluded from the screen');
+if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder engine tests passed');
