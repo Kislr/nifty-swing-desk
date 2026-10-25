@@ -28,7 +28,8 @@ const opt = (n, d) => { const i = args.indexOf('--' + n); return i >= 0 && args[
 
 /** The concepts behind the five traits, in priority order per field. First tag with data for a period wins; the tag used is recorded. */
 export const FIELDS = {
-  rev:       { kind: 'duration', unit: 'USD',    tags: ['Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax', 'SalesRevenueNet', 'RevenueFromContractWithCustomerIncludingAssessedTax', 'RevenuesNetOfInterestExpense'] },
+  rev:       { kind: 'duration', unit: 'USD',    tags: ['Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax', 'SalesRevenueNet', 'RevenueFromContractWithCustomerIncludingAssessedTax', 'RevenuesNetOfInterestExpense',
+                                                      'RegulatedAndUnregulatedOperatingRevenue', 'RegulatedOperatingRevenue', 'ElectricUtilityRevenue', 'RealEstateRevenueNet', 'OilAndGasRevenue', 'HealthCareOrganizationRevenue', 'RevenueMineralSales', 'RevenuesExcludingInterestAndDividends', 'SalesRevenueGoodsNet'] },
   cogs:      { kind: 'duration', unit: 'USD',    tags: ['CostOfRevenue', 'CostOfGoodsAndServicesSold', 'CostOfGoodsSold', 'CostOfGoodsAndServiceExcludingDepreciationDepletionAndAmortization'] },
   gp:        { kind: 'duration', unit: 'USD',    tags: ['GrossProfit'] },
   ebit:      { kind: 'duration', unit: 'USD',    tags: ['OperatingIncomeLoss'] },
@@ -82,12 +83,26 @@ export function extractFacts(doc) {
       }
     }
   }
+  // Balance-sheet instants sometimes carry a date a few days off the fiscal year end (a 52/53-week year tagged 12-28 on the income
+  // statement and 12-31 on the balance sheet), or appear at dates that are not a fiscal year end at all (a 10-K/A balance sheet, a
+  // transition period). A fiscal-year record needs duration facts; merge an instant-only date into a duration date within 10 days,
+  // otherwise drop it.
+  const DUR = Object.keys(FIELDS).filter(k => FIELDS[k].kind === 'duration');
+  const realEnds = Object.keys(byEnd).filter(e => !e.includes('|') && DUR.some(k => byEnd[e][k])).sort();
+  for (const end of Object.keys(byEnd)) {
+    if (end.includes('|') || realEnds.includes(end)) continue;
+    const slot = byEnd[end]; delete byEnd[end];
+    const target = realEnds.find(e => Math.abs(daysBetween(e, end)) <= 10);
+    if (target) for (const [k, rec] of Object.entries(slot)) if (!byEnd[target][k]) byEnd[target][k] = Object.assign({ asOf: end }, rec);
+  }
   // dei instants (cover-page share count, public float) are dated to the cover date or mid-year, not the fiscal year end.
   // Each was keyed 'accn|date' above; attach it to the fiscal year end that the same filing reports.
   for (const key of Object.keys(byEnd)) {
     if (!key.includes('|')) continue;
     const [accn, asOf] = key.split('|'); const slot = byEnd[key]; delete byEnd[key];
-    const target = accnEnd[accn]; if (!target || !byEnd[target]) continue;
+    let target = accnEnd[accn]; if (!target) continue;
+    if (!byEnd[target]) target = realEnds.find(e => Math.abs(daysBetween(e, target)) <= 10);   // the filing's balance-sheet date was merged into a nearby year end
+    if (!target) continue;
     for (const [k, rec] of Object.entries(slot)) if (!byEnd[target][k]) byEnd[target][k] = Object.assign({ asOf }, rec);
   }
   return byEnd;
