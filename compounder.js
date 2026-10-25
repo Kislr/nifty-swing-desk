@@ -68,6 +68,7 @@
       else { const y0 = years[n - 6], y1 = latest; const r0 = val(y0, 'rev'), r1 = val(y1, 'rev'), s0 = val(y0, 'sharesDil'), s1 = val(y1, 'sharesDil');
         if (!r0 || !r1 || r0 <= 0) res.traits.growth = { pass: null, why: 'revenue missing at one end of the 5-year window' };
         else if (!s0 || !s1) res.traits.growth = { pass: null, why: 'diluted share count missing at one end of the window' };
+        else if ((1 - s1 / s0) * 100 > (T.growthWithoutDilution.maxShareCountDropPct || 60)) res.traits.growth = { pass: null, why: `share count fell ${((1 - s1 / s0) * 100).toFixed(0)}% over 5 years: likely a unit change in the filing, not a buyback` };
         else { const cagr = Math.pow(r1 / r0, 1 / 5) - 1; const dil = s1 / s0 - 1; const sCagr = Math.pow(s1 / s0, 1 / 5) - 1;
           const pass = cagr * 100 >= T.growthWithoutDilution.minRevenueCagr && dil * 100 <= T.growthWithoutDilution.maxShareCountGrowth;
           res.traits.growth = { pass, value: pct(cagr), dilution: pct(dil), rank: cagr - sCagr, why: pass ? `revenue CAGR ${pct(cagr)}%, shares ${dil >= 0 ? '+' : ''}${pct(dil)}% over 5 years` : cagr * 100 < T.growthWithoutDilution.minRevenueCagr ? `revenue CAGR ${pct(cagr)}% < ${T.growthWithoutDilution.minRevenueCagr}%` : `share count +${pct(dil)}% over 5 years (> ${T.growthWithoutDilution.maxShareCountGrowth}%)` }; } } }
