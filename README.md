@@ -98,6 +98,22 @@ Thirty-three curated pairs of businesses that move together (HDFC Bank / ICICI B
 
 **Read the backtest before trading this.** On the history so far, buying the lagging leg and shorting the leader returned +0.03% per trade after costs; buying the lagging leg alone was similar; across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. The idea that "when one lags it's a quick profit" did not survive contact with two years of Nifty data: stretches tended to keep stretching. The card exists as a monitor, and so that the test can be re-run on longer history (`npm run backtest:pairs`, `--sweep`). Edit the pair list in `pairs.js` (`PAIRS`); override parameters under a `"pairs"` key in `config.json`.
 
+## The compounder screen (in progress)
+
+A fourth engine with a different horizon: a quality screen over fundamentals (return on capital, gross margin, growth without dilution, cash conversion, debt), with the momentum engine borrowed as its timing layer. The screen is written down in `compounder/screen.json` and explained in `compounder/SCREEN.md`, including the backtest's pass criteria, fixed before any data was pulled. US first; India later.
+
+**Data (US).** `scripts/compounder-fetch-us.mjs` builds `compounder/data/us/universe.json` (every NYSE / Nasdaq filer with CIK, SIC, fiscal year end, flagged financial / 10-K filer) and `compounder/data/us/facts/NN.json` (per company, per fiscal-year end, the sixteen line items the five traits need). Both come from SEC EDGAR, free, with no account. The store is **point-in-time**: for each fiscal year it keeps the value from the earliest 10-K that reported it, with the filing date, and records any later restatement separately. That is what lets the backtest only use what was knowable on each date.
+
+```
+node scripts/compounder-fetch-us.mjs --universe                 # ~5,000 submissions lookups, ~10 min
+node scripts/compounder-fetch-us.mjs --facts --limit 50         # quick test
+npm run compounder:us                                           # everything, ~30 min
+```
+
+The job `.github/workflows/compounder-us.yml` runs this quarterly and commits the result; run it by hand from the Actions tab the first time. The SEC asks that pulls identify themselves: set a repository variable `EDGAR_USER_AGENT` (Settings → Secrets and variables → Actions → Variables) such as `nifty-swing-desk you@example.com`. Requests stay under the SEC's 10-per-second limit.
+
+Not yet built: the screen engine itself, US prices, the backtest, and the dashboard page.
+
 ## Daily use
 
 The site is read top-down. The **regime** strip tells you whether to be trading at all (weak breadth halves every position size automatically). The **sector board** shows where the money is; only the top three sectors with a positive score count as leaders, and momentum setups fire only inside them. The **signal queue** has four tabs: Orders for tomorrow (pullback buys and confirmed breakouts as *conditional* buy-stop orders for the next session — if the price never reaches the entry, the order expires and the setup is void; a name that disappears the next day was not triggered and cost nothing), Set alerts (names within 2% of a 52-week high and the exact close to wait for), Watch (strong days in leading sectors, tagged "don't chase"), and Avoid (near 52-week lows or down 8%+ in 30 days). Each row carries a **score** (0–100): base 50, plus sector leadership, relative strength, moving-average trend, volume, RSI extension and candle confirmation. Click a row for the full reasoning, the indicator readings and a **Log this trade** button that prefills the journal.
