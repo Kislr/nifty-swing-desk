@@ -73,3 +73,28 @@ assert(S.quality.length === 1 && S.quality[0].ticker === 'SYN' && S.quality[0].c
 assert(S.universe.find(r => r.ticker === 'BIG').inBand === false && S.universe.find(r => r.ticker === 'BIG').cap === 50000, 'price × shares = $50,000M is outside the band');
 assert(!S.universe.find(r => r.ticker === 'BNK'), 'financials excluded from the screen');
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder engine tests passed');
+
+// ---- prices: Yahoo chart parsing (adjustment, New York dates, splits, EDGAR→Yahoo symbol mapping) ----
+const P = await import('./compounder-prices-us.mjs');
+assert(P.yahooSymbol('BRK.B') === 'BRK-B' && P.yahooSymbol('QLYS') === 'QLYS', 'dotted class tickers map to Yahoo dashes');
+const ts = [Date.UTC(2024, 5, 7, 13, 30) / 1000, Date.UTC(2024, 5, 10, 13, 30) / 1000, Date.UTC(2024, 5, 11, 13, 30) / 1000];   // 09:30 New York
+const chartJson = { chart: { result: [{ meta: { currency: 'USD', exchangeName: 'NMS', instrumentType: 'EQUITY', exchangeTimezoneName: 'America/New_York' }, timestamp: ts,
+  indicators: { quote: [{ open: [200, 202, 20.5], high: [210, 205, 21], low: [198, 199, 20], close: [205, 200, 20.8], volume: [1e6, 1.2e6, 9e6] }], adjclose: [{ adjclose: [20.5, 20, 20.8] }] },
+  events: { splits: { '1718110800': { date: ts[2], numerator: 10, denominator: 1, splitRatio: '10:1' } } } }], error: null } };
+const pc = P.parseChart(chartJson);
+assert(pc.bars.length === 3 && pc.bars[0].d === '2024-06-07' && pc.bars[2].d === '2024-06-11', 'bars dated in New York time');
+assert(pc.bars[0].c === 20.5 && pc.bars[0].o === 20 && pc.bars[0].h === 21, 'pre-split bars scaled by adjclose/close so the series is continuous');
+assert(pc.bars[2].c === 20.8 && pc.bars[2].t === +(20.8 * 9e6 / 1e6).toFixed(3), 'post-split bar unchanged; turnover in $M');
+assert(pc.splits['2024-06-11'] === '10:1', 'split event recorded by date');
+assert(P.parseChart({ chart: { result: null, error: { code: 'Not Found', description: 'No data found' } } }).error === 'No data found', 'error surfaced');
+const files = {};
+P.mergeBars(files, '^RUT', [{ d: '2024-06-07', o: 1, h: 1, l: 1, c: 2000 }, { d: '2024-06-10', o: 1, h: 1, l: 1, c: 2010 }, { d: '2024-06-11', o: 1, h: 1, l: 1, c: 2020 }], true);
+P.mergeBars(files, 'AAA', [{ d: '2024-06-07', o: 1, h: 1, l: 1, c: 10, v: 100, t: 0.001 }, { d: '2024-06-11', o: 1, h: 1, l: 1, c: 11, v: 100, t: 0.001 }], false);   // no bar on the 10th (halted)
+P.mergeBars(files, 'BBB', [{ d: '2024-06-10', o: 1, h: 1, l: 1, c: 5, v: 1, t: 0 }, { d: '2024-06-12', o: 1, h: 1, l: 1, c: 6, v: 1, t: 0 }], false);              // adds a new date after the others
+const f24 = files['2024'];
+assert(f24.dates.join(',') === '2024-06-07,2024-06-10,2024-06-11,2024-06-12', 'calendar is the union of all symbols, sorted');
+assert(JSON.stringify(f24.symbols.AAA.c) === '[10,null,11,null]' && JSON.stringify(f24.symbols.BBB.c) === '[null,5,null,6]', 'series aligned to the calendar with null gaps');
+assert(JSON.stringify(f24.index.c) === '[2000,2010,2020,null]' && f24.index.name === '^RUT', 'index aligned and padded');
+const E2 = createRequire(import.meta.url)('../engine.js'); const bars = E2.buildBars([f24], []);
+assert(bars.dates.length === 4 && bars.sym.AAA.c[2] === 11 && bars.index.c[1] === 2010, 'engine.buildBars reads the US price file unchanged');
+if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder price tests passed');
