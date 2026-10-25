@@ -1,0 +1,33 @@
+name: Compounder US screen
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly, Monday 03:00 UTC: re-run the screen on the committed store (new 10-Ks arrive via the quarterly fundamentals job)
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compounder-us
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm test
+      - name: Run the screen
+        run: node scripts/compounder-screen.mjs
+      - name: Commit the result
+        run: |
+          git config user.name "swing-desk-bot"
+          git config user.email "swing-desk-bot@users.noreply.github.com"
+          git add compounder/data reports
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US screen $(date -u +%Y-%m-%d)" && git push; fi

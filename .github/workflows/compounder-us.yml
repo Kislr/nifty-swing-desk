@@ -42,9 +42,11 @@ jobs:
           if [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ]; then ARGS="$ARGS --limit $LIMIT"; fi
           if [ "$FRESH" = "true" ]; then ARGS="$ARGS --fresh"; fi
           node scripts/compounder-fetch-us.mjs $ARGS
-      - name: Commit the store
+      - name: Run the screen on the fresh store
+        run: node scripts/compounder-screen.mjs
+      - name: Commit the store and the screen
         run: |
           git config user.name "swing-desk-bot"
           git config user.email "swing-desk-bot@users.noreply.github.com"
-          git add compounder/data
+          git add compounder/data reports
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US fundamentals $(date -u +%Y-%m-%d)" && git push; fi
