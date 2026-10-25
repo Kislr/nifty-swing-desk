@@ -8,11 +8,11 @@ The screen is a separate engine from the swing rules, the momentum engine and th
 
 ## The five traits
 
-**Return on capital employed.** EBIT over (total assets minus current liabilities). The bar is 15% in at least four of the last five fiscal years, with no year below 10%. The original draft said all five years; that is too strict for a universe that includes US small caps and would leave too few names to rank, and one bad year is exactly what a good business is supposed to survive. The floor of 10% stops a company that had one catastrophic year from passing on the other four. Ranked on the five-year median.
+**Return on capital employed.** EBIT over (total assets minus current liabilities). The bar is 12% in at least four of the last five fiscal years, with no year below 8% (v0.2; the v0.1 draft said 15% and 10%, which the first US run showed passes only 9% of companies and left seven names in the cap band). The original draft said all five years; that is too strict for a universe that includes US small caps and would leave too few names to rank, and one bad year is exactly what a good business is supposed to survive. The floor of 10% stops a company that had one catastrophic year from passing on the other four. Ranked on the five-year median.
 
-**Gross margin holding or widening.** Latest fiscal-year gross margin within two points of its five-year high. This is pricing power as it appears in a filing. Ranked on the five-year change in margin.
+**Gross margin holding or widening.** Latest fiscal-year gross margin within three points of its five-year high (v0.2; two in the draft). This is pricing power as it appears in a filing. Ranked on the five-year change in margin.
 
-**Growth without dilution.** Revenue CAGR of at least 12% over five years with the diluted share count up no more than 10% over the same period. The second half is the part that matters: growth bought with shares is a story, not a business. Ranked on revenue CAGR minus share-count CAGR.
+**Growth without dilution.** Revenue CAGR of at least 10% over five years (v0.2; 12% in the draft) with the diluted share count up no more than 10% over the same period. A share count that falls by more than 60% in five years is treated as a filing unit change, not a buyback, and the trait as not applicable; the first run caught one such case. The second half is the part that matters: growth bought with shares is a story, not a business. Ranked on revenue CAGR minus share-count CAGR.
 
 **Cash conversion.** Operating cash flow over net income, computed as a ratio of three-year sums rather than an average of yearly ratios, so a year with near-zero net income cannot produce a meaningless number. At least 0.8, and the three-year net income sum must be positive. Ranked on the ratio, capped at 3 for ranking so one odd year does not dominate.
 
@@ -50,8 +50,14 @@ Quarterly rebalance, twelve-month holding, overlapping cohorts. Four portfolios 
 
 The screen passes if the top decile beats the bottom decile in at least 70% of cohorts, its mean and median excess return are both positive, and no single ±20% threshold shift flips the first condition. If it fails, the thresholds change and the backtest is re-run; if it fails twice, the screen is shelved and the reasons written up in `reports/`, the way the pairs engine was.
 
+## Version history
+
+v0.1 (2026-10-25): the draft above with ROCE 15% / floor 10%, gross margin within 2 points, CAGR 12%. First US run: 19 companies pass, 7 in the cap band; the 12 outside the band were Microsoft, Meta, Adobe, Autodesk, ResMed, Ulta, Paycom, Manhattan Associates, Comfort Systems, EMCOR, Fabrinet and RCM — the right kind of company, too few of them.
+
+v0.2 (2026-10-25): the midpoint between v0.1 and a relaxed set (ROCE 12% in 3 of 5, CAGR 8%, 4 points), chosen by the owner after seeing both: ROCE 12% in 4 of 5 with an 8% floor, gross margin within 3 points, CAGR 10%. Same run: 45 pass, 21 in band. Every report carries a sensitivity table showing all three so the backtest can judge them side by side.
+
 ## Decisions still open
 
-1. Confirm or change any threshold above.
+1. Thresholds are v0.2 until the backtest says otherwise.
 2. India fundamentals source: Screener.in Premium (₹4,999/yr, manual quarterly CSV) or EODHD (US $599.90/yr, API, NSE depth unverified).
 3. Whether to extend the US universe to foreign filers (20-F) later; v0.1 is 10-K filers only.
