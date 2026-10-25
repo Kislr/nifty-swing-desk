@@ -1,7 +1,7 @@
 {
   "asOf": "2026-10-25",
   "companies": 3152,
-  "withData": 3131,
+  "withData": 3123,
   "noXbrl": 5,
   "fields": {
     "rev": [
@@ -9,7 +9,16 @@
       "RevenueFromContractWithCustomerExcludingAssessedTax",
       "SalesRevenueNet",
       "RevenueFromContractWithCustomerIncludingAssessedTax",
-      "RevenuesNetOfInterestExpense"
+      "RevenuesNetOfInterestExpense",
+      "RegulatedAndUnregulatedOperatingRevenue",
+      "RegulatedOperatingRevenue",
+      "ElectricUtilityRevenue",
+      "RealEstateRevenueNet",
+      "OilAndGasRevenue",
+      "HealthCareOrganizationRevenue",
+      "RevenueMineralSales",
+      "RevenuesExcludingInterestAndDividends",
+      "SalesRevenueGoodsNet"
     ],
     "cogs": [
       "CostOfRevenue",
