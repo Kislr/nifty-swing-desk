@@ -13,6 +13,7 @@
     "backtest": "node scripts/backtest.mjs",
     "backtest:momentum": "node scripts/backtest-momentum.mjs",
     "backtest:pairs": "node scripts/backtest-pairs.mjs",
-    "test": "node scripts/test.mjs"
+    "test": "node scripts/test.mjs && node scripts/test-compounder.mjs",
+    "compounder:us": "node scripts/compounder-fetch-us.mjs --all"
   }
 }
