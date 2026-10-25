@@ -1,0 +1,50 @@
+name: Compounder US fundamentals
+
+on:
+  schedule:
+    # Quarterly, a few weeks after each 10-K/10-Q wave: 15 Jan / Apr / Jul / Oct at 02:30 UTC (08:00 IST)
+    - cron: '30 2 15 1,4,7,10 *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Only the first N companies (0 = all). Use 50 for a quick test run.'
+        type: number
+        default: 0
+      fresh:
+        description: 'Ignore the existing store and refetch everything'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compounder-us
+  cancel-in-progress: false
+
+jobs:
+  fundamentals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build universe and pull EDGAR company facts
+        env:
+          # SEC fair-access policy asks for a User-Agent naming who you are: Settings → Secrets and variables → Actions → Variables → EDGAR_USER_AGENT
+          EDGAR_USER_AGENT: ${{ vars.EDGAR_USER_AGENT }}
+        run: |
+          LIMIT="${{ github.event.inputs.limit }}"
+          FRESH="${{ github.event.inputs.fresh }}"
+          ARGS="--all"
+          if [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ]; then ARGS="$ARGS --limit $LIMIT"; fi
+          if [ "$FRESH" = "true" ]; then ARGS="$ARGS --fresh"; fi
+          node scripts/compounder-fetch-us.mjs $ARGS
+      - name: Commit the store
+        run: |
+          git config user.name "swing-desk-bot"
+          git config user.email "swing-desk-bot@users.noreply.github.com"
+          git add compounder/data
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US fundamentals $(date -u +%Y-%m-%d)" && git push; fi
