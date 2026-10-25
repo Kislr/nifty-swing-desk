@@ -1,0 +1,57 @@
+# Compounder screen — the definition, before any data
+
+This file and `screen.json` are step 1 of the compounder project: write the screen down before touching data, so the backtest tests a hypothesis rather than fits one. Every threshold in `screen.json` is an opinion. The backtest (step 6) is what turns it into a finding or throws it out, and the pass criteria for that backtest are written in `screen.json` now, so the result cannot move the goalposts later.
+
+The screen is a separate engine from the swing rules, the momentum engine and the pairs monitor, as ROADMAP.md asks: its own module, its own store, its own backtest. It borrows the momentum engine unchanged for its timing layer and the daily NSE pull for Indian prices.
+
+**This is a research aid built on fixed rules, not investment advice.** Nothing it prints is a recommendation to buy or sell.
+
+## The five traits
+
+**Return on capital employed.** EBIT over (total assets minus current liabilities). The bar is 15% in at least four of the last five fiscal years, with no year below 10%. The original draft said all five years; that is too strict for a universe that includes US small caps and would leave too few names to rank, and one bad year is exactly what a good business is supposed to survive. The floor of 10% stops a company that had one catastrophic year from passing on the other four. Ranked on the five-year median.
+
+**Gross margin holding or widening.** Latest fiscal-year gross margin within two points of its five-year high. This is pricing power as it appears in a filing. Ranked on the five-year change in margin.
+
+**Growth without dilution.** Revenue CAGR of at least 12% over five years with the diluted share count up no more than 10% over the same period. The second half is the part that matters: growth bought with shares is a story, not a business. Ranked on revenue CAGR minus share-count CAGR.
+
+**Cash conversion.** Operating cash flow over net income, computed as a ratio of three-year sums rather than an average of yearly ratios, so a year with near-zero net income cannot produce a meaningless number. At least 0.8, and the three-year net income sum must be positive. Ranked on the ratio, capped at 3 for ranking so one odd year does not dominate.
+
+**Little debt.** Net debt over EBITDA at or below 2 in the latest fiscal year; net cash passes outright. Ranked ascending, net cash first.
+
+## What is excluded and why
+
+Banks, insurers, brokers, REITs and holding companies have no gross margin and their ROCE is not comparable to an operating company's. Version 0.1 excludes them (US by SIC code 6000–6799, India by sector name) rather than giving them their own rules. If the screen earns its keep, a financials variant on return on equity and book-value growth is a later step.
+
+Any company with fewer than five fiscal years of filed data is excluded, six for the growth trait. This means recent IPOs never appear, which is intended: the screen is looking for businesses that have already been unusual for years.
+
+## The composite
+
+A company must pass all five rules to be on the quality list. Among passers, each trait produces a rank, and the five ranks are summed; lowest sum is best. There are no weights because any weight would be fitted to the past. Each failure is recorded by trait, so the dashboard can say "fails on debt" rather than showing a number.
+
+## Market bands
+
+| | US | India |
+|---|---|---|
+| Market cap | $300m – $10bn | ₹500 cr – ₹25,000 cr |
+| Liquidity floor | $3m average daily dollar volume, 20 days | ₹5 cr average daily turnover, 20 days (same floor as the momentum engine) |
+| Momentum gate index | Russell 2000 | NIFTY 50 for now; NIFTY MIDCAP 150 once the history carries it |
+| Fundamentals source | SEC EDGAR XBRL, free | Pending: Screener.in Premium (manual quarterly download) or EODHD (API); decided after a one-week trial |
+| Point-in-time | Yes, from each fact's EDGAR filing date | No, data is restated; approximated as year end + 60 days and labelled as such |
+
+The market cap band is computed as of the screening date in the backtest (price × shares at that date), never from today's cap, otherwise the screen quietly picks today's survivors.
+
+## The timing layer
+
+The momentum engine's `rankAt()` is run on the quality list with the desk's own parameters (six-month return skipping the last month, not more than 20% off the 52-week high, index above its 200-day average). The dashboard shows two lists per market: the quality list, and the intersection with momentum, which is the only thing that triggers an alert.
+
+## The backtest, specified in advance
+
+Quarterly rebalance, twelve-month holding, overlapping cohorts. Four portfolios per market: top decile, bottom decile, all passers, and the quality-and-momentum intersection. Benchmarks are the Russell 2000 and the NIFTY 500. The report shows mean and median excess return per cohort, the share of cohorts in which the top decile beat the bottom, the dispersion of individual stock returns inside each cohort, drawdown, and a robustness table where each threshold is moved by ±20% one at a time.
+
+The screen passes if the top decile beats the bottom decile in at least 70% of cohorts, its mean and median excess return are both positive, and no single ±20% threshold shift flips the first condition. If it fails, the thresholds change and the backtest is re-run; if it fails twice, the screen is shelved and the reasons written up in `reports/`, the way the pairs engine was.
+
+## Decisions still open
+
+1. Confirm or change any threshold above.
+2. India fundamentals source: Screener.in Premium (₹4,999/yr, manual quarterly CSV) or EODHD (US $599.90/yr, API, NSE depth unverified).
+3. Whether to extend the US universe to foreign filers (20-F) later; v0.1 is 10-K filers only.
