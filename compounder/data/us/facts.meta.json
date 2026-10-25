@@ -1,0 +1,89 @@
+{
+  "asOf": "2026-10-25",
+  "companies": 3152,
+  "withData": 3131,
+  "noXbrl": 5,
+  "fields": {
+    "rev": [
+      "Revenues",
+      "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "SalesRevenueNet",
+      "RevenueFromContractWithCustomerIncludingAssessedTax",
+      "RevenuesNetOfInterestExpense"
+    ],
+    "cogs": [
+      "CostOfRevenue",
+      "CostOfGoodsAndServicesSold",
+      "CostOfGoodsSold",
+      "CostOfGoodsAndServiceExcludingDepreciationDepletionAndAmortization"
+    ],
+    "gp": [
+      "GrossProfit"
+    ],
+    "ebit": [
+      "OperatingIncomeLoss"
+    ],
+    "ni": [
+      "NetIncomeLoss",
+      "ProfitLoss",
+      "NetIncomeLossAvailableToCommonStockholdersBasic"
+    ],
+    "ocf": [
+      "NetCashProvidedByUsedInOperatingActivities",
+      "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"
+    ],
+    "da": [
+      "DepreciationDepletionAndAmortization",
+      "DepreciationAndAmortization",
+      "DepreciationAmortizationAndAccretionNet",
+      "Depreciation"
+    ],
+    "sharesDil": [
+      "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "WeightedAverageNumberOfShareOutstandingBasicAndDiluted",
+      "WeightedAverageNumberOfSharesOutstandingBasic"
+    ],
+    "assets": [
+      "Assets"
+    ],
+    "curLiab": [
+      "LiabilitiesCurrent"
+    ],
+    "cash": [
+      "CashAndCashEquivalentsAtCarryingValue",
+      "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
+      "Cash"
+    ],
+    "debtLT": [
+      "LongTermDebtNoncurrent",
+      "LongTermDebtAndCapitalLeaseObligations",
+      "LongTermDebt",
+      "LongTermNotesPayable",
+      "SeniorLongTermNotes"
+    ],
+    "debtST": [
+      "LongTermDebtCurrent",
+      "DebtCurrent",
+      "LongTermDebtAndCapitalLeaseObligationsCurrent",
+      "ShortTermBorrowings",
+      "NotesPayableCurrent",
+      "LinesOfCreditCurrent",
+      "ConvertibleNotesPayableCurrent"
+    ],
+    "debtTotal": [
+      "DebtLongtermAndShorttermCombinedAmount",
+      "DebtInstrumentCarryingAmount",
+      "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+      "LineOfCredit",
+      "ConvertibleNotesPayable",
+      "NotesPayable"
+    ],
+    "sharesOut": [
+      "dei:EntityCommonStockSharesOutstanding"
+    ],
+    "float": [
+      "dei:EntityPublicFloat"
+    ]
+  },
+  "pointInTime": "v/filed = earliest 10-K reporting the period; r = latest differing restatement"
+}
