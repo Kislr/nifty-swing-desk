@@ -1,16 +1,15 @@
 {
-  "$comment": "Compounder screen definition. Every number here is an opinion until compounder/backtest says otherwise. See compounder/SCREEN.md for the reasoning behind each line. Units: US money in USD millions, India money in INR crore; percentages as numbers (15 = 15%).",
-  "version": "0.1.0",
+  "$comment": "Compounder screen definition. v0.2 thresholds (the midpoint of the v0.1 draft and the relaxed set, chosen after the first US run: 21 names in band vs 7 / 38). Every number here is an opinion until compounder/backtest says otherwise. See compounder/SCREEN.md for the reasoning behind each line. Units: US money in USD millions, India money in INR crore; percentages as numbers (15 = 15%).",
+  "version": "0.2.0",
   "asOf": "2026-10-25",
-
   "traits": {
     "roce": {
       "name": "Return on capital employed",
       "formula": "EBIT / (total assets - current liabilities)",
       "window": "last 5 fiscal years",
-      "rule": "at least 4 of the last 5 fiscal years >= 15, and no year below 10",
-      "threshold": 15,
-      "floor": 10,
+      "rule": "at least 4 of the last 5 fiscal years >= 12, and no year below 8",
+      "threshold": 12,
+      "floor": 8,
       "minYearsPassing": 4,
       "rankOn": "5-year median ROCE, descending"
     },
@@ -18,18 +17,19 @@
       "name": "Gross margin holding or widening",
       "formula": "(revenue - cost of revenue) / revenue",
       "window": "last 5 fiscal years",
-      "rule": "latest fiscal-year gross margin >= (5-year high - 2 points)",
-      "maxDropFromHighPts": 2,
+      "rule": "latest fiscal-year gross margin >= (5-year high - 3 points)",
+      "maxDropFromHighPts": 3,
       "rankOn": "latest gross margin minus 5-year-ago gross margin, descending"
     },
     "growthWithoutDilution": {
       "name": "Revenue growth without printing shares",
       "formula": "revenue CAGR over 5 fiscal years; diluted weighted-average share count change over the same 5 years",
       "window": "last 5 fiscal years (6 year-ends)",
-      "rule": "revenue CAGR >= 12 and share count up <= 10",
-      "minRevenueCagr": 12,
+      "rule": "revenue CAGR >= 10 and share count up <= 10; a share count that FALLS more than 60% over 5 years is treated as a data fault (unit change in the filing) and the trait as not applicable; rises are real dilution and fail",
+      "minRevenueCagr": 10,
       "maxShareCountGrowth": 10,
-      "rankOn": "revenue CAGR minus share-count CAGR, descending"
+      "rankOn": "revenue CAGR minus share-count CAGR, descending",
+      "maxShareCountDropPct": 60
     },
     "cashConversion": {
       "name": "Cash earnings back reported earnings",
@@ -48,48 +48,90 @@
       "rankOn": "net debt / EBITDA, ascending (net cash ranks first)"
     }
   },
-
   "composite": {
     "method": "rank-sum",
     "$comment": "A company must pass all five rules to be on the quality list. Among passers, rank on each trait's rankOn field, sum the five ranks, lowest sum wins. No weights: weights would be fitted to the past. Failures are reported per trait ('fails on debt') so the dashboard can show why.",
     "requireAllTraits": true
   },
-
   "exclusions": {
     "$comment": "Gross margin and ROCE are meaningless for balance-sheet businesses. These are excluded rather than given their own rules for v0.1.",
-    "us": { "sicRanges": [[6000, 6799]], "note": "banks, insurers, brokers, REITs, holding and investment companies" },
-    "in": { "sectors": ["Banks", "NBFC", "Financial Services", "Insurance", "Capital Markets", "Housing Finance"], "note": "names from data/sectors.json / engine.js sector map" },
+    "us": {
+      "sicRanges": [
+        [
+          6000,
+          6799
+        ]
+      ],
+      "note": "banks, insurers, brokers, REITs, holding and investment companies"
+    },
+    "in": {
+      "sectors": [
+        "Banks",
+        "NBFC",
+        "Financial Services",
+        "Insurance",
+        "Capital Markets",
+        "Housing Finance"
+      ],
+      "note": "names from data/sectors.json / engine.js sector map"
+    },
     "minFiscalYearsOfData": 5,
     "minFiscalYearsForGrowth": 6
   },
-
   "markets": {
     "us": {
       "name": "United States",
       "currency": "USD",
       "moneyUnit": "USD millions",
       "universe": "all EDGAR filers with a common stock listing on NYSE, Nasdaq or NYSE American that file 10-K (excludes 20-F / 40-F foreign filers for v0.1)",
-      "marketCap": { "min": 300, "max": 10000 },
+      "marketCap": {
+        "min": 300,
+        "max": 10000
+      },
       "minAvgDailyDollarVolume": 3,
       "turnoverWindowDays": 20,
-      "fundamentals": { "source": "SEC EDGAR XBRL company facts API", "cost": "free", "pointInTime": "use the 'filed' date on each fact; a fiscal year's numbers become usable the day the 10-K was filed" },
-      "prices": { "source": "Stooq daily (fallback Tiingo free tier)", "cost": "free" },
-      "momentumIndex": { "symbol": "^RUT", "name": "Russell 2000", "note": "small/mid universe, so the gate uses a small/mid index, not the S&P 500" }
+      "fundamentals": {
+        "source": "SEC EDGAR XBRL company facts API",
+        "cost": "free",
+        "pointInTime": "use the 'filed' date on each fact; a fiscal year's numbers become usable the day the 10-K was filed"
+      },
+      "prices": {
+        "source": "Stooq daily (fallback Tiingo free tier)",
+        "cost": "free"
+      },
+      "momentumIndex": {
+        "symbol": "^RUT",
+        "name": "Russell 2000",
+        "note": "small/mid universe, so the gate uses a small/mid index, not the S&P 500"
+      }
     },
     "in": {
       "name": "India",
       "currency": "INR",
       "moneyUnit": "INR crore",
       "universe": "NIFTY 500 constituents plus any NSE main-board name inside the cap band with 5 fiscal years of data",
-      "marketCap": { "min": 500, "max": 25000 },
+      "marketCap": {
+        "min": 500,
+        "max": 25000
+      },
       "minAvgDailyTurnoverCrore": 5,
       "turnoverWindowDays": 20,
-      "fundamentals": { "source": "TBD: Screener.in Premium quarterly download (manual) or EODHD fundamentals (API) — decision pending a one-week trial", "cost": "Screener ₹4,999/yr or EODHD $599.90/yr, both subscriptions", "pointInTime": "NOT available: data is as-restated. Usable-from date is approximated as fiscal year end + 60 days (SEBI annual results deadline). The dashboard and backtest must label Indian results 'restated data, look-ahead bias possible'." },
-      "prices": { "source": "existing daily NSE pull (data/history/)", "cost": "free" },
-      "momentumIndex": { "symbol": "NIFTY 50", "name": "NIFTY 50", "note": "data/history/ carries only NIFTY 50 today; switch to NIFTY MIDCAP 150 once the history has it" }
+      "fundamentals": {
+        "source": "TBD: Screener.in Premium quarterly download (manual) or EODHD fundamentals (API) — decision pending a one-week trial",
+        "cost": "Screener ₹4,999/yr or EODHD $599.90/yr, both subscriptions",
+        "pointInTime": "NOT available: data is as-restated. Usable-from date is approximated as fiscal year end + 60 days (SEBI annual results deadline). The dashboard and backtest must label Indian results 'restated data, look-ahead bias possible'."
+      },
+      "prices": {
+        "source": "existing daily NSE pull (data/history/)",
+        "cost": "free"
+      },
+      "momentumIndex": {
+        "symbol": "NIFTY 50",
+        "name": "NIFTY 50",
+        "note": "data/history/ carries only NIFTY 50 today; switch to NIFTY MIDCAP 150 once the history has it"
+      }
     }
   },
-
   "momentumOverlay": {
     "$comment": "Reuses momentum.js rankAt() on the quality list. Same parameters as the desk's momentum engine so the two can never disagree about what 'moving' means.",
     "engine": "momentum.js",
@@ -99,26 +141,45 @@
     "gateSma": 200,
     "intersectionRule": "on the quality list AND momentum-eligible AND momentum rank within the top half of the quality list AND gate open"
   },
-
   "pointInTime": {
     "$comment": "What the screen may know on a given date. The backtest and the live run use the same rule.",
     "us": "a fact is visible from its EDGAR 'filed' date",
     "in": "a fiscal year's facts are visible from fiscal year end + 60 days",
     "pricesLag": "prices are visible same day (close)"
   },
-
   "backtest": {
     "rebalance": "quarterly, on the first trading day of Jan / Apr / Jul / Oct",
     "holdingPeriod": "12 months, overlapping cohorts (each quarter's portfolio tracked for a year)",
-    "portfolios": ["top decile by composite", "bottom decile by composite", "all passers equal-weight", "quality AND momentum intersection"],
-    "benchmark": { "us": "Russell 2000 (^RUT)", "in": "NIFTY 500" },
-    "report": ["mean and median 12-month excess return per cohort", "share of cohorts where top decile beats bottom decile", "within-cohort dispersion (10th / 50th / 90th percentile stock return)", "max drawdown of the rolling portfolio", "robustness: every threshold shifted by +/- 20% one at a time"],
+    "portfolios": [
+      "top decile by composite",
+      "bottom decile by composite",
+      "all passers equal-weight",
+      "quality AND momentum intersection"
+    ],
+    "benchmark": {
+      "us": "Russell 2000 (^RUT)",
+      "in": "NIFTY 500"
+    },
+    "report": [
+      "mean and median 12-month excess return per cohort",
+      "share of cohorts where top decile beats bottom decile",
+      "within-cohort dispersion (10th / 50th / 90th percentile stock return)",
+      "max drawdown of the rolling portfolio",
+      "robustness: every threshold shifted by +/- 20% one at a time"
+    ],
     "passCriteria": {
       "$comment": "Written down before the run so the result cannot move the goalposts.",
       "topBeatsBottom": "top decile beats bottom decile in at least 70% of cohorts",
       "topBeatsIndex": "top decile mean excess return > 0 AND median excess return > 0",
       "robust": "no single +/- 20% threshold shift flips topBeatsBottom to false"
     },
-    "survivorship": { "us": "universe rebuilt each quarter from filers active at that date (EDGAR submissions index)", "in": "hand-built historical NIFTY 500 membership list (data/universe-in/YYYY-QN.json), pending" }
+    "survivorship": {
+      "us": "universe rebuilt each quarter from filers active at that date (EDGAR submissions index)",
+      "in": "hand-built historical NIFTY 500 membership list (data/universe-in/YYYY-QN.json), pending"
+    }
+  },
+  "history": {
+    "0.1.0": "ROCE 15 in 4/5 floor 10; GM within 2 pts; CAGR 12. First US run 2026-10-25: 19 pass, 7 in band.",
+    "0.2.0": "ROCE 12 in 4/5 floor 8; GM within 3 pts; CAGR 10. Same run: 45 pass, 21 in band."
   }
 }
