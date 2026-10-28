@@ -108,17 +108,23 @@
       if (prices && prices[co.cik] && shares) { cap = prices[co.cik].price * shares / 1e6; capSource = 'price × shares'; }
       else if (latest && latest.float) { cap = latest.float.v / 1e6; capSource = 'public float (10-K)'; }
       const inBand = cap == null ? null : cap >= M.marketCap.min && cap <= M.marketCap.max;
+      // liquidity floor: average daily dollar turnover ($M) over the last 20 bars, when prices carry it
+      const turn = prices && prices[co.cik] && prices[co.cik].avgTurnover != null ? prices[co.cik].avgTurnover : null;
+      const floor = M.minAvgDailyDollarVolume != null ? M.minAvgDailyDollarVolume : M.minAvgDailyTurnoverCrore;
+      const illiquid = turn != null && floor != null ? turn < floor : null;
       rows.push({ cik: co.cik, ticker: u.ticker, name: co.name || u.name, sic: u.sic, sicDesc: u.sicDesc, fye: u.fye, latest: ev.latest, latestFiled: ev.latestFiled, years: ev.years,
-        traits: ev.traits, failed: ev.failed, na: ev.na, ok: ev.ok, nearMiss: ev.nearMiss, reason: ev.reason, cap: cap != null ? +cap.toFixed(0) : null, capSource, inBand });
+        traits: ev.traits, failed: ev.failed, na: ev.na, ok: ev.ok, nearMiss: ev.nearMiss, reason: ev.reason, cap: cap != null ? +cap.toFixed(0) : null, capSource, inBand,
+        price: prices && prices[co.cik] ? prices[co.cik].price : null, priceDate: prices && prices[co.cik] ? prices[co.cik].date : null, avgTurnover: turn, illiquid });
     }
-    // composite: rank-sum among passers inside the cap band (null band = unknown cap, kept but flagged)
-    const passers = rows.filter(r => r.ok && r.inBand !== false);
+    // composite: rank-sum among passers inside the cap band and above the liquidity floor (null = unknown, kept but flagged)
+    const passers = rows.filter(r => r.ok && r.inBand !== false && r.illiquid !== true);
     const keys = { roce: -1, grossMargin: -1, growth: -1, cashConversion: -1, leverage: +1 };   // −1: higher is better
     for (const [k, dir] of Object.entries(keys)) { const sorted = [...passers].sort((a, b) => dir * (a.traits[k].rank - b.traits[k].rank)); sorted.forEach((r, i) => { (r.ranks || (r.ranks = {}))[k] = i + 1; }); }
     for (const r of passers) r.rankSum = Object.values(r.ranks).reduce((a, b) => a + b, 0);
     passers.sort((a, b) => a.rankSum - b.rankSum); passers.forEach((r, i) => (r.rank = i + 1));
     const nearMiss = rows.filter(r => r.nearMiss && r.inBand !== false).sort((a, b) => (a.traits.roce.rank || 0) < (b.traits.roce.rank || 0) ? 1 : -1);
     const counts = { screened: rows.length, enoughYears: rows.filter(r => !r.reason).length, passAll: rows.filter(r => r.ok).length, inBand: passers.length, nearMiss: nearMiss.length,
+      illiquidPassers: rows.filter(r => r.ok && r.inBand !== false && r.illiquid === true).length, pricedRows: rows.filter(r => r.price != null).length,
       failedBy: {} , naBy: {} };
     for (const r of rows) { for (const k of r.failed) counts.failedBy[k] = (counts.failedBy[k] || 0) + 1; for (const k of r.na) counts.naBy[k] = (counts.naBy[k] || 0) + 1; }
     return { asOf, market, quality: passers, nearMiss, universe: rows, counts, screenVersion: screen.version };

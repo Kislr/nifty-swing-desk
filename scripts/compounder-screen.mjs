@@ -18,24 +18,58 @@ const dir = path.join(ROOT, 'compounder', 'data', market);
 const universe = JSON.parse(await fs.readFile(path.join(dir, 'universe.json'), 'utf8'));
 const facts = {}; for (const f of await fs.readdir(path.join(dir, 'facts'))) if (f.endsWith('.json')) Object.assign(facts, JSON.parse(await fs.readFile(path.join(dir, 'facts', f), 'utf8')));
 
-const S = C.screenAt({ universe, facts }, screen, asOf, market, null);
+// Prices (optional): compounder/data/<market>/prices/YYYY.json.gz in the desk's history shape → bars via engine.buildBars.
+// From them: last close × cover-page shares = market cap, 20-day average dollar turnover = liquidity, and the momentum overlay.
+const E = require(path.join(ROOT, 'engine.js')); const MOM = require(path.join(ROOT, 'momentum.js'));
+const zlib = await import('node:zlib');
+let bars = null, prices = null, priceMeta = null;
+try {
+  const pdir = path.join(dir, 'prices'); const yearFiles = [];
+  for (const f of (await fs.readdir(pdir)).sort()) if (/^\d{4}\.json\.gz$/.test(f)) yearFiles.push(JSON.parse(zlib.gunzipSync(await fs.readFile(path.join(pdir, f))).toString()));
+  if (yearFiles.length) { bars = E.buildBars(yearFiles, []); priceMeta = JSON.parse(await fs.readFile(path.join(pdir, 'meta.json'), 'utf8')).asOf; }
+} catch (e) { if (e.code !== 'ENOENT') throw e; }
+if (bars) {
+  // the bar on or before asOf
+  let i = bars.dates.length - 1; while (i > 0 && bars.dates[i] > asOf) i--;
+  prices = {}; const byTicker = {}; for (const c of universe.companies) if (c.ticker) byTicker[c.ticker] = c.cik;
+  for (const [t, B] of Object.entries(bars.sym)) { const cik = byTicker[t]; if (!cik) continue; let j = i; while (j >= 0 && B.c[j] == null) j--; if (j < 0 || i - j > 10) continue;
+    const turn = []; for (let k = Math.max(0, j - 19); k <= j; k++) if (B.t[k] != null) turn.push(B.t[k]);
+    prices[cik] = { price: B.c[j], date: bars.dates[j], avgTurnover: turn.length ? +(turn.reduce((a, b) => a + b, 0) / turn.length).toFixed(2) : null }; }
+}
+const S = C.screenAt({ universe, facts }, screen, asOf, market, prices);
+// Momentum overlay: the desk's momentum engine on the quality list, with the market's turnover floor in its own units ($M here).
+let mom = null;
+if (bars && S.quality.length) {
+  const O = screen.momentumOverlay; const Mk = screen.markets[market];
+  let i = bars.dates.length - 1; while (i > 0 && bars.dates[i] > asOf) i--;
+  const sub = { dates: bars.dates, index: bars.index, sym: {} }; for (const r of S.quality) if (bars.sym[r.ticker]) sub.sym[r.ticker] = bars.sym[r.ticker];
+  const R = MOM.rankAt(sub, i, { lookback: O.lookback, skip: O.skip, maxOffHigh: O.maxOffHigh, gateSma: O.gateSma, minTurnover: Mk.minAvgDailyDollarVolume != null ? Mk.minAvgDailyDollarVolume : Mk.minAvgDailyTurnoverCrore, volAdjust: false }, {});
+  const byT = {}; for (const r of R.universe) byT[r.sym] = r; const half = Math.ceil(S.quality.length / 2);
+  for (const r of S.quality) { const m = byT[r.ticker]; r.momentum = m ? { rank: m.rank || null, eligible: m.eligible, why: m.why || null, ret6: m.ret6 != null ? +(m.ret6 * 100).toFixed(1) : null, ret1: m.ret1 != null ? +(m.ret1 * 100).toFixed(1) : null, offHigh: m.offHigh != null ? +m.offHigh.toFixed(1) : null } : { rank: null, eligible: false, why: 'no price history' };
+    r.moving = !!(m && m.eligible && m.rank <= half && R.gate.open === true); }
+  mom = { date: bars.dates[i], gate: R.gate, half, intersection: S.quality.filter(r => r.moving).map(r => r.ticker) };
+}
 const slim = r => ({ rank: r.rank, cik: r.cik, ticker: r.ticker, name: r.name, sic: r.sic, sicDesc: r.sicDesc, latest: r.latest, latestFiled: r.latestFiled, cap: r.cap, capSource: r.capSource, inBand: r.inBand, rankSum: r.rankSum, ranks: r.ranks, failed: r.failed, na: r.na,
+  price: r.price, priceDate: r.priceDate, avgTurnover: r.avgTurnover, illiquid: r.illiquid, momentum: r.momentum, moving: r.moving,
   traits: Object.fromEntries(Object.entries(r.traits).map(([k, t]) => [k, { pass: t.pass, value: t.value, series: t.series, dilution: t.dilution, why: t.why }])) });
-const out = { asOf, market, screenVersion: S.screenVersion, dataVintage: universe.asOf, counts: S.counts, capNote: 'no price feed yet: cap = 10-K public float',
-  quality: S.quality.map(slim), nearMiss: S.nearMiss.map(slim), allPassersOutOfBand: S.universe.filter(r => r.ok && r.inBand === false).map(slim) };
+const out = { asOf, market, screenVersion: S.screenVersion, dataVintage: universe.asOf, priceVintage: priceMeta, counts: S.counts, capNote: bars ? 'cap = last close × cover-page shares; public float where no price' : 'no price feed yet: cap = 10-K public float', momentum: mom,
+  quality: S.quality.map(slim), nearMiss: S.nearMiss.map(slim), allPassersOutOfBand: S.universe.filter(r => r.ok && r.inBand === false).map(slim), illiquidPassers: S.universe.filter(r => r.ok && r.inBand !== false && r.illiquid === true).map(slim) };
 const isToday = asOf === new Date().toISOString().slice(0, 10);
 await fs.writeFile(path.join(dir, isToday ? 'screen-latest.json' : `screen-${asOf}.json`), JSON.stringify(out));
 
 const M = screen.markets[market]; const L = [];
-L.push(`# Compounder screen — ${M.name}, as of ${asOf}`, '', `Screen v${screen.version} on the EDGAR store of ${universe.asOf}. **Research aid, not investment advice.** Market cap here is the 10-K public float (no price feed yet); the band is $${M.marketCap.min}M–$${M.marketCap.max}M.`, '');
-L.push(`## Funnel`, '', `| step | companies |`, `|---|---|`, `| screenable (10-K filers, non-financial) | ${S.counts.screened} |`, `| with 5+ fiscal years filed by ${asOf} | ${S.counts.enoughYears} |`, `| pass all five traits | ${S.counts.passAll} |`, `| …and inside the cap band (the quality list) | ${S.counts.inBand} |`, `| four passes, one trait not applicable (near-miss) | ${S.counts.nearMiss} |`, '');
+L.push(`# Compounder screen — ${M.name}, as of ${asOf}`, '', `Screen v${screen.version} on the EDGAR store of ${universe.asOf}${bars ? ` and prices to ${mom ? mom.date : priceMeta}` : ''}. **Research aid, not investment advice.** ${bars ? `Market cap = last close × cover-page shares (${S.counts.pricedRows} companies priced); liquidity floor $${M.minAvgDailyDollarVolume}M average daily turnover.` : 'Market cap here is the 10-K public float (no price feed yet).'} The cap band is $${M.marketCap.min}M–$${M.marketCap.max}M.`, '');
+L.push(`## Funnel`, '', `| step | companies |`, `|---|---|`, `| screenable (10-K filers, non-financial) | ${S.counts.screened} |`, `| with 5+ fiscal years filed by ${asOf} | ${S.counts.enoughYears} |`, `| pass all five traits | ${S.counts.passAll} |`, `| …and inside the cap band and liquid (the quality list) | ${S.counts.inBand} |`, `| pass but below the liquidity floor | ${S.counts.illiquidPassers} |`, `| four passes, one trait not applicable (near-miss) | ${S.counts.nearMiss} |`, '');
 L.push(`Failed by trait (a company can fail several): ${Object.entries(S.counts.failedBy).map(([k, v]) => `${k} ${v}`).join(', ')}.`, `Not applicable by trait: ${Object.entries(S.counts.naBy).map(([k, v]) => `${k} ${v}`).join(', ')}.`, '');
-L.push(`## Quality list (${S.quality.length})`, '', `| # | ticker | company | industry | ROCE med | GM | 5y rev CAGR | shares 5y | OCF/NI | net debt/EBITDA | cap $M | latest FY |`, `|---|---|---|---|---|---|---|---|---|---|---|---|`);
-for (const r of S.quality) L.push(`| ${r.rank} | ${r.ticker} | ${r.name} | ${r.sicDesc || ''} | ${r.traits.roce.value}% | ${r.traits.grossMargin.value}% | ${r.traits.growth.value}% | ${r.traits.growth.dilution >= 0 ? '+' : ''}${r.traits.growth.dilution}% | ${r.traits.cashConversion.value} | ${r.traits.leverage.value === 0 ? 'net cash' : r.traits.leverage.value} | ${r.cap != null ? r.cap : '—'} | ${r.latest} |`);
+L.push(`## Quality list (${S.quality.length})`, '', `| # | ticker | company | industry | ROCE med | GM | 5y rev CAGR | shares 5y | OCF/NI | net debt/EBITDA | cap $M | latest FY |${mom ? ' 6m mom | off high | moving |' : ''}`, `|---|---|---|---|---|---|---|---|---|---|---|---|${mom ? '---|---|---|' : ''}`);
+for (const r of S.quality) L.push(`| ${r.rank} | ${r.ticker} | ${r.name} | ${r.sicDesc || ''} | ${r.traits.roce.value}% | ${r.traits.grossMargin.value}% | ${r.traits.growth.value}% | ${r.traits.growth.dilution >= 0 ? '+' : ''}${r.traits.growth.dilution}% | ${r.traits.cashConversion.value} | ${r.traits.leverage.value === 0 ? 'net cash' : r.traits.leverage.value} | ${r.cap != null ? r.cap : '—'} | ${r.latest} |${mom ? ` ${r.momentum.ret6 != null ? r.momentum.ret6 + '%' : '—'} | ${r.momentum.offHigh != null ? r.momentum.offHigh + '%' : '—'} | ${r.moving ? '**yes**' : r.momentum.eligible ? 'no' : (r.momentum.why || '—')} |` : ''}`);
+if (mom) L.push('', `## Quality AND momentum (${mom.intersection.length})`, '', `Gate: Russell 2000 ${mom.gate.open === true ? 'above' : mom.gate.open === false ? 'below' : 'n/a vs'} its ${mom.gate.n}-day average${mom.gate.index != null ? ` (${mom.gate.index.toFixed(0)} vs ${mom.gate.sma.toFixed(0)})` : ''} on ${mom.date}. "Moving" = momentum-eligible (turnover ≥ $${M.minAvgDailyDollarVolume}M, within ${screen.momentumOverlay.maxOffHigh}% of its 52-week high) and ranked in the top half of the quality list on 6-month return skipping the last month, with the gate open. This is the only list that is meant to trigger an alert.`, '', mom.intersection.length ? mom.intersection.join(', ') : (mom.gate.open === false ? 'none: the gate is closed' : 'none'), '');
 L.push('', `## Near-misses: four passes, one trait not applicable (${S.nearMiss.length})`, '', `These fail the "all five" rule only because one trait cannot be computed, mostly gross margin for businesses with no cost-of-revenue line. The rule decision is open (SCREEN.md).`, '', `| ticker | company | industry | not applicable | why |`, `|---|---|---|---|---|`);
 for (const r of S.nearMiss.slice(0, 60)) L.push(`| ${r.ticker} | ${r.name} | ${r.sicDesc || ''} | ${r.na[0]} | ${r.traits[r.na[0]].why} |`);
 const oob = S.universe.filter(r => r.ok && r.inBand === false);
 L.push('', `## Pass all five but outside the cap band (${oob.length})`, '', oob.map(r => `${r.ticker} ($${r.cap}M)`).join(', ') || 'none', '');
+const ill = S.universe.filter(r => r.ok && r.inBand !== false && r.illiquid === true);
+if (bars) L.push(`## Pass all five but below the liquidity floor (${ill.length})`, '', ill.map(r => `${r.ticker} ($${r.avgTurnover}M/day)`).join(', ') || 'none', '');
 // Sensitivity: how many names each threshold set yields. The backtest decides which set is right; this only shows how binding each rule is.
 const variants = [
   [`v${screen.version} as written`, {}],

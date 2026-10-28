@@ -112,7 +112,19 @@ npm run compounder:us                                           # everything, ~3
 
 The job `.github/workflows/compounder-us.yml` runs this quarterly and commits the result; run it by hand from the Actions tab the first time. The SEC asks that pulls identify themselves: set a repository variable `EDGAR_USER_AGENT` (Settings → Secrets and variables → Actions → Variables) such as `nifty-swing-desk you@example.com`. Requests stay under the SEC's 10-per-second limit.
 
-Not yet built: the screen engine itself, US prices, the backtest, and the dashboard page.
+**The screen.** `compounder.js` evaluates the five traits for every company as of a date, using only filings made on or before it, and ranks the passers inside the market-cap band by rank-sum across the traits. `node scripts/compounder-screen.mjs` runs it as of today (`--asof 2022-04-01` for a point-in-time run) and writes `compounder/data/us/screen-latest.json` plus `reports/compounder-us-DATE.md`: the funnel, the quality list, the near-misses (four passes, one trait not computable), and a sensitivity table showing how many names each threshold set would yield. The weekly job `compounder-screen.yml` keeps the report current. Tests: `node scripts/test-compounder.mjs` (also part of `npm test`).
+
+**Prices (US).** `scripts/compounder-prices-us.mjs` pulls daily bars for every screenable ticker plus the Russell 2000 from Yahoo Finance's chart endpoint (no key; Stooq turned out to need a login for bulk and to refuse scripts per symbol). Closes are split- and dividend-adjusted, and dollar turnover in $ millions is stored alongside, so `momentum.js`'s turnover floor means "$M" here. The store is `compounder/data/us/prices/YYYY.json.gz`, the same shape as `data/history/YYYY.json`, which is what lets `engine.buildBars()` and the momentum engine read it unchanged.
+
+```
+node scripts/compounder-prices-us.mjs --backfill                # six years for ~3,100 symbols, ~10 min
+node scripts/compounder-prices-us.mjs                           # daily: last 10 sessions, appended
+node scripts/compounder-prices-us.mjs --symbols QLYS,IESC,^RUT  # a few names, for checking
+```
+
+With prices present the screen changes in three ways: market cap becomes last close × cover-page shares instead of the 10-K public float; passers trading under $3M a day on average (20 bars) drop out of the quality list into their own section; and the momentum overlay runs over the quality list with the desk's own parameters (six-month return skipping the last month, within 20% of the 52-week high, Russell 2000 above its 200-day average as the gate). The report gains a **moving** column and a **Quality AND momentum** list, which is the only list meant to trigger an alert. The job `compounder-prices.yml` runs every weekday after the US close and re-runs the screen; the first time, run it from the Actions tab with the **backfill** box ticked.
+
+Not yet built: the backtest (pass criteria already in `screen.json`), the dashboard page, and India.
 
 ## Daily use
 
