@@ -226,9 +226,18 @@ function renderJournal() {
   $('perfNote').innerHTML = !S.journal.length ? 'Expectancy = average R per closed trade. A system with 40% winners and +0.5R expectancy is profitable; a system with 70% winners and −0.2R is not. Judge yourself on R, not on rupees. The journal lives in this browser — use Backup to keep a copy.'
     : `${open.length > 4 ? '<b>More than 4 open positions</b> — above the rule. ' : ''}${dup > 0 ? `<b>${dup} overlapping sector exposure${dup > 1 ? 's' : ''}</b> — correlated risk. ` : ''}${Rs.length < 20 ? 'Fewer than 20 closed trades: the win rate is noise until then.' : 'Enough trades to start trusting the statistics.'}`;
 }
+const SNAP_RECENT = 5;   // chips shown when the strip is collapsed; the daily job keeps up to keepDays (400) snapshots
 function renderSnaplist() {
-  const el = $('snaplist'); const manual = new Set(S.manualSnaps.map(s => s.date));
-  el.innerHTML = S.snaps.length ? S.snaps.map((s, i) => `<span class="snap ${i === S.snaps.length - 1 ? 'cur' : ''}" title="${s.source === 'nse-api' ? 'from the daily job' : 'uploaded manually'}"><span class="num">${s.date}${s.time ? ' ' + s.time : ''}</span><span class="muted">${s.count}${s.source === 'nse-api' ? ' · auto' : ''}</span>${manual.has(s.date) && s.source !== 'nse-api' ? `<button title="Remove manual snapshot" data-delsnap="${s.date}">×</button>` : ''}</span>`).join('') : '<span class="muted small">None yet. The first run of the daily job (or a manual upload) adds one.</span>';
+  const el = $('snaplist'); const manual = new Set(S.manualSnaps.map(s => s.date)); const all = S.snaps; const n = all.length;
+  const chip = (s, i) => `<span class="snap ${i === n - 1 ? 'cur' : ''}" title="${s.source === 'nse-api' ? 'from the daily job' : 'uploaded manually'}"><span class="num">${s.date}${s.time ? ' ' + s.time : ''}</span><span class="muted">${s.count}${s.source === 'nse-api' ? ' · auto' : ''}</span>${manual.has(s.date) && s.source !== 'nse-api' ? `<button title="Remove manual snapshot" data-delsnap="${s.date}">×</button>` : ''}</span>`;
+  const collapsible = n > SNAP_RECENT + 2; const collapsed = collapsible && !S.allSnaps;
+  // collapsed: the most recent few, plus any manual uploads (they carry the delete button), in date order
+  const shown = collapsed ? all.map((s, i) => [s, i]).filter(([s, i]) => i >= n - SNAP_RECENT || (manual.has(s.date) && s.source !== 'nse-api')) : all.map((s, i) => [s, i]);
+  el.innerHTML = n ? shown.map(([s, i]) => chip(s, i)).join('') : '<span class="muted small">None yet. The first run of the daily job (or a manual upload) adds one.</span>';
+  const auto = all.filter(s => s.source === 'nse-api').length; const last = all[n - 1];
+  $('snapSummary').textContent = n ? `${n} snapshot${n === 1 ? '' : 's'}${n > 1 ? ` · ${all[0].date} → ${last.date}` : ''}${auto ? ` · ${auto} from the daily job` : ''}${n > auto ? ` · ${n - auto} manual` : ''}` : '';
+  const btn = $('snapMoreBtn'); btn.hidden = !collapsible;
+  if (collapsible) { btn.textContent = collapsed ? `Show all ${n}` : `Show latest ${SNAP_RECENT} only`; btn.onclick = () => { S.allSnaps = !S.allSnaps; renderSnaplist(); }; }
   el.querySelectorAll('[data-delsnap]').forEach(b => (b.onclick = () => { if (b.dataset.armed) { S.manualSnaps = S.manualSnaps.filter(s => s.date !== b.dataset.delsnap); save(); mergeSnaps(); render(); } else { b.dataset.armed = '1'; b.textContent = '✓?'; setTimeout(() => { b.dataset.armed = ''; b.textContent = '×'; }, 2500); } }));
 }
 function prefillJournal(s) { if (!s) return; $('jSym').value = s.sym; $('jEntry').value = s.entry; $('jStop').value = s.stop; $('jTarget').value = s.target; $('jQty').value = s.size ? s.size.qty : ''; $('jDate').value = todayISO(); $('jSetup').value = s.setup.includes('breakout') ? 'Breakout' : s.setup.includes('Pullback') ? 'Pullback' : 'Momentum'; $('jForm').scrollIntoView({ behavior: 'smooth', block: 'center' }); toast('Journal form prefilled — review and log'); }
