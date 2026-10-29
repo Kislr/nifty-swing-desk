@@ -1,20 +1,15 @@
 {
-  "asOf": "2026-10-28",
+  "asOf": "2026-10-29",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
   "symbols": 3152,
   "missing": 0,
   "errors": 0,
   "years": [
-    "2020",
-    "2021",
-    "2022",
-    "2023",
-    "2024",
     "2025",
     "2026"
   ],
-  "lastDate": "2026-10-27",
+  "lastDate": "2026-10-28",
   "missingList": [],
   "errorList": []
 }
