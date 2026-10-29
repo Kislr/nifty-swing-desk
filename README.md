@@ -6,6 +6,42 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 
 **This is a decision aid built on fixed rules, not investment advice.** Nothing it prints is a recommendation to buy or sell.
 
+## Where things stand
+
+> **Rule for every working session, fresh or continued:** before finishing, update this checklist — tick what was done, add what was found, re-order what is next — and ship it in the same PR as the work. If a session ends with nothing merged, update the date and the "open decisions" anyway. The detailed reasoning behind each item lives in `ROADMAP.md` (swing desk) and `compounder/SCREEN.md` (compounder); this list is only the scoreboard. Last updated **2026-10-29**.
+
+**Swing desk (NSE)**
+
+- [x] Daily job, Telegram digest, website, journal; snapshot strip collapses behind "Show all" (PR #10)
+- [x] Walk-forward backtests for the swing rules, the momentum engine and the pairs engine (`reports/`)
+- [x] Digest moves to 18:00 IST (PR #11)
+- [ ] Five-year history reload, then re-run all three backtests (ROADMAP item 1)
+- [ ] Test "enter at the signal day's close" against "buy-stop next day"; add the 14:45 run only if it wins (ROADMAP item 8)
+
+**Compounder screen (US)**
+
+- [x] EDGAR universe and 10-K store (3,152 screenable companies), five-trait screen, weekly report
+- [x] Yahoo prices 2020–2026 for the whole universe; screen uses real market caps, the $3M/day liquidity floor and the momentum overlay (PR #9); daily incremental run
+- [x] Save step pulls main before pushing, so a merge during a run no longer loses its data; `meta.json` lists every year on disk; `screen.json` names the real price source
+- [ ] Hand-check the first priced screen: market caps for five or six names against a quote page, who the liquidity floor removes, the Russell 2000 gate, the "quality AND momentum" list, and how the cap-band list changed from the 21 names under the 10-K float estimate
+- [ ] Decide before any backtest result exists (see "Open decisions" below): deciles vs terciles vs whole-universe ranking; what to do about delisted companies
+- [ ] Load 12 years of prices (`--years 12`, about 45 quarterly cohorts instead of 22)
+- [ ] Build the backtest (SCREEN step 6): quarterly rebalance, 12-month hold, four portfolios vs the Russell 2000; pass criteria are fixed in `screen.json`. Fails twice → shelve the screen and write up why, as with pairs
+- [ ] Dashboard page (SCREEN step 7), only if the backtest passes
+- [ ] After the backtest: two "early detector" reports on data already in the store — industry over-representation among quality-and-momentum names vs the universe, and a revenue-acceleration flag (latest year's growth vs own 5-year CAGR). Reports, not alerts; each needs its own test
+- [ ] India screen stays parked until the US backtest passes (data source Screener.in vs EODHD; NIFTY 500 membership history)
+
+**Open decisions**
+
+- *Deciles on a short list.* With 20–45 passers a decile is 2–4 stocks, too few for the 70% test. Options: rank the whole screenable universe on the composite score (deciles of ~300), or keep the passers and use terciles. Leaning: whole-universe ranking for the top-vs-bottom test, passers-only as a second, descriptive cut.
+- *Delisted companies.* Yahoo has prices only for stocks still listed, so every past cohort is survivors only and the backtest will flatter the screen. Minimum: measure the share of each past universe with no prices and print it in the report; mark the result "survivor-biased" until a delisted-price source is found.
+
+**Housekeeping**
+
+- [x] `actions/checkout` and `actions/setup-node` on v7 in all five workflows (Node 20 retirement)
+- [x] Merged branches deleted
+- [ ] Nothing else open
+
 ## How it fits together
 
 ```
