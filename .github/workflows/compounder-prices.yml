@@ -27,8 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '20'
       - name: Pull prices
@@ -45,4 +45,4 @@ jobs:
           git config user.name "swing-desk-bot"
           git config user.email "swing-desk-bot@users.noreply.github.com"
           git add compounder/data reports
-          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US prices $(date -u +%Y-%m-%d)" && git push; fi
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US prices $(date -u +%Y-%m-%d)" && git pull --rebase origin main && git push; fi
