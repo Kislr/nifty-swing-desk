@@ -26,8 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '20'
       - name: Download history from NSE archives
@@ -37,4 +37,4 @@ jobs:
           git config user.name "swing-desk-bot"
           git config user.email "swing-desk-bot@users.noreply.github.com"
           git add data
-          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: history backfill (${{ github.event.inputs.years }}y, ${{ github.event.inputs.universe }})" && git push; fi
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: history backfill (${{ github.event.inputs.years }}y, ${{ github.event.inputs.universe }})" && git pull --rebase origin main && git push; fi

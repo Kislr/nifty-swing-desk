@@ -97,7 +97,9 @@ export async function run({ backfill, limit, symbols, years }) {
   }
   for (const f of Object.values(files)) await writeYear(f);
   const meta = { asOf: new Date().toISOString().slice(0, 10), source: 'Yahoo Finance chart API (adjusted closes)', index: INDEX, symbols: log.ok, missing: log.missing.length, errors: log.errors.length,
-    years: Object.keys(files).sort(), lastDate: Object.values(files).map(f => f.dates[f.dates.length - 1] || '').sort().pop() || null, missingList: log.missing.map(x => x[0]).slice(0, 200), errorList: log.errors.slice(0, 50) };
+    // every year on disk, not just the ones this run touched (an incremental run only loads the last two)
+    years: (await fs.readdir(DIR)).filter(f => /^\d{4}\.json\.gz$/.test(f)).map(f => f.slice(0, 4)).sort(),
+    lastDate: Object.values(files).map(f => f.dates[f.dates.length - 1] || '').sort().pop() || null, missingList: log.missing.map(x => x[0]).slice(0, 200), errorList: log.errors.slice(0, 50) };
   await fs.writeFile(path.join(DIR, 'meta.json'), JSON.stringify(meta, null, 2));
   console.log(`prices: ${log.ok} symbols ok, ${log.missing.length} missing, ${log.errors.length} errors; years ${meta.years.join(' ')}; last ${meta.lastDate}`);
   return meta;

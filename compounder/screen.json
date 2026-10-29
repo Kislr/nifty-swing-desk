@@ -96,7 +96,7 @@
         "pointInTime": "use the 'filed' date on each fact; a fiscal year's numbers become usable the day the 10-K was filed"
       },
       "prices": {
-        "source": "Stooq daily (fallback Tiingo free tier)",
+        "source": "Yahoo Finance chart API, adjusted closes (scripts/compounder-prices-us.mjs)",
         "cost": "free"
       },
       "momentumIndex": {
