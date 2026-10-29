@@ -2,8 +2,9 @@ name: Daily NSE snapshot
 
 on:
   schedule:
-    # 16:10 IST Mon–Fri (= 10:40 UTC). NSE closes 15:30 IST; the market-watch data settles by ~16:00.
-    - cron: '40 10 * * 1-5'
+    # 18:00 IST Mon–Fri (= 12:30 UTC), so the Telegram digest lands around 6 pm. NSE closes 15:30 IST; the market-watch data settles by ~16:00.
+    # GitHub starts scheduled runs 5–30 minutes late, so expect the digest between 18:05 and 18:30.
+    - cron: '30 12 * * 1-5'
   workflow_dispatch:
     inputs:
       force:

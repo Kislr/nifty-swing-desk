@@ -18,7 +18,7 @@ scripts/backfill.mjs     one-time history load from NSE bhavcopy archives (see B
 scripts/backtest.mjs     walk-forward backtest of the swing rules over data/history/
 scripts/backtest-momentum.mjs  walk-forward backtest (and --sweep) of the momentum engine
 scripts/backtest-pairs.mjs     walk-forward backtest (and --sweep) of the pairs engine, pair-trade and long-only modes
-.github/workflows/       runs fetch.mjs at 16:10 IST Mon–Fri and commits the result
+.github/workflows/       runs fetch.mjs at 18:00 IST Mon–Fri and commits the result
 config.json              index to track, risk settings for the digest, retention
 data/sectors.json        sector overrides (the backfill fills this from NSE's industry list)
 ROADMAP.md               what is implemented, what is next, what is deliberately excluded
@@ -66,7 +66,7 @@ The indicators need up to a year of bars per stock. Follow **BACKFILL.md** — o
 
 **Actions → Daily NSE snapshot → Run workflow.** Watch the log: it should say `fetched N stocks for YYYY-MM-DD HH:MM` and then `wrote data/snapshots/...`. Open the website; the status pill at the top shows when the data was last updated.
 
-From then on it runs on its own at 16:10 IST every weekday. On a market holiday NSE serves the previous session's figures; the job notices the timestamp hasn't moved and does nothing.
+From then on it runs on its own at 18:00 IST every weekday (the Telegram digest arrives a few minutes after six). On a market holiday NSE serves the previous session's figures; the job notices the timestamp hasn't moved and does nothing.
 
 ## Backtest before you trust it
 
@@ -152,7 +152,7 @@ The Telegram digest sizes positions from `config.json`, not from the browser set
 
 `data/sectors.json` maps symbols to sectors for anything the built-in map in `engine.js` doesn't cover (Nifty 500 has many such names; they show as "Unmapped" and never qualify as a leading sector until mapped). The site's "Assign sector" box changes your browser only; copy the mapping into this file so the job agrees.
 
-To change the schedule, edit the cron line in `.github/workflows/daily.yml` (times are UTC; 10:40 UTC = 16:10 IST).
+To change the schedule, edit the cron line in `.github/workflows/daily.yml` (times are UTC; 12:30 UTC = 18:00 IST).
 
 ## Running locally
 
