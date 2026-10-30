@@ -7,9 +7,13 @@ on:
   workflow_dispatch:
     inputs:
       backfill:
-        description: 'Backfill six years of history for every symbol (first run, or after a gap)'
+        description: 'Backfill history for every symbol (first run, or after a gap)'
         type: boolean
         default: false
+      years:
+        description: 'Years of history to backfill (6 = default; 12 for the compounder backtest, ~45 quarterly cohorts)'
+        type: number
+        default: 6
       limit:
         description: 'Only the first N symbols (0 = all). Use 50 for a quick test.'
         type: number
@@ -35,6 +39,8 @@ jobs:
         run: |
           ARGS=""
           if [ "${{ github.event.inputs.backfill }}" = "true" ]; then ARGS="$ARGS --backfill"; fi
+          YEARS="${{ github.event.inputs.years }}"
+          if [ -n "$YEARS" ] && [ "$YEARS" != "6" ]; then ARGS="$ARGS --years $YEARS"; fi
           LIMIT="${{ github.event.inputs.limit }}"
           if [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ]; then ARGS="$ARGS --limit $LIMIT"; fi
           node scripts/compounder-prices-us.mjs $ARGS
