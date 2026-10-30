@@ -15,8 +15,10 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 - [x] Daily job, Telegram digest, website, journal; snapshot strip collapses behind "Show all" (PR #10)
 - [x] Walk-forward backtests for the swing rules, the momentum engine and the pairs engine (`reports/`)
 - [x] Digest moves to 18:00 IST (PR #11)
-- [ ] Five-year history reload, then re-run all three backtests (ROADMAP item 1) — must run from a home connection: `node scripts/backfill.mjs --years 5`; NSE refuses cloud IPs, confirmed again 30 Oct
-- [ ] Test "enter at the signal day's close" against "buy-stop next day"; add the 14:45 run only if it wins (ROADMAP item 8)
+- [x] Five-year history reload (2021-11 → 2026-10, 1,233 days, 501 symbols, run from a home connection) and all three backtests re-run (`reports/*-2026-10-30.md`). Verdicts: **momentum works** — +106.9% vs Nifty +39.7% over Jun 2022 – Oct 2026, 18.2% CAGR, 21% max drawdown, Sharpe 1.20, ahead of the index in four of five calendar years (behind only in 2025) and +3.9% in a 2026 that fell 12%. **The swing rules lose as written** — 418 trades, −0.08R expectancy, profit factor 0.84, 38R drawdown; both setups negative, every year but 2025 negative, 48% of exits are the 15-day time stop, and the 70+ score band (384 trades, −0.10R) is again the worst while 60–69 (24 trades, +0.20R) is the best. With 418 trades that is no longer noise. **Pairs stays a monitor** — pair trade −0.09% per trade, long-only +0.50%, 4 of 33 pairs cointegrated on the last bar
+- [ ] Swing engine: fix it or demote it. Test, one change at a time against the five-year report: drop the leading-sector (+15) and volume (+10) bumps (ROADMAP item 2); replace the 15-day time stop with a close below the 10/20-day average (item 3); breakouts only (231 trades, −0.05R, the less bad setup). If no single change gets expectancy above +0.1R over 300+ trades, the signal queue becomes "watch" only and the digest leads with the momentum list
+- [ ] Corporate-action adjustment (ROADMAP item 4) before trusting any single trade in the reports: unadjusted bonuses and splits are in the five-year data and show up as false stop-outs
+- [ ] Test "enter at the signal day's close" against "buy-stop next day"; add the 14:45 run only if it wins (ROADMAP item 8) — only once the swing engine has a positive expectancy to protect
 
 **Compounder screen (US)**
 
@@ -113,7 +115,7 @@ node scripts/backtest.mjs --set minRR=2 --set minScore=60   # try other paramete
 node scripts/backtest.mjs --setups breakout                 # one setup at a time
 ```
 
-The latest committed report is `reports/backtest-2026-10-24.md` (with a parameter sweep and what it does and does not show). The report lands in `reports/` with expectancy (average R per trade after costs), profit factor, max drawdown and breakdowns by setup, score band and year. Read the "How to read this" footer; fewer than ~60 trades in a slice is noise. Every parameter in `engine.js` is a convention until this says otherwise.
+The latest committed report is `reports/backtest-2026-10-30.md` (five years; `backtest-2026-10-24.md` has the parameter sweep on two years and what it does and does not show). The report lands in `reports/` with expectancy (average R per trade after costs), profit factor, max drawdown and breakdowns by setup, score band and year. Read the "How to read this" footer; fewer than ~60 trades in a slice is noise. Every parameter in `engine.js` is a convention until this says otherwise.
 
 ## The momentum engine
 
@@ -133,7 +135,7 @@ Reports land in `reports/momentum-*.md`. The warm-up is lookback + 21 bars, so w
 
 Thirty-three curated pairs of businesses that move together (HDFC Bank / ICICI Bank, TCS / Infosys, Maruti / M&M…). For each, every day: fit the price relationship over the last 120 bars, test whether the gap between the two is stable (Engle–Granger cointegration; pairs that fail are shown but never signal), estimate how fast a gap closes (half-life), and read today's gap in standard deviations. A **stretched** pair is one whose relationship passed the test and whose gap is more than 2σ wide; the lagging leg is named. The site shows the whole board; the digest lists only stretched pairs.
 
-**Read the backtest before trading this.** On the history so far, buying the lagging leg and shorting the leader returned +0.03% per trade after costs; buying the lagging leg alone was similar; across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. The idea that "when one lags it's a quick profit" did not survive contact with two years of Nifty data: stretches tended to keep stretching. The card exists as a monitor, and so that the test can be re-run on longer history (`npm run backtest:pairs`, `--sweep`). Edit the pair list in `pairs.js` (`PAIRS`); override parameters under a `"pairs"` key in `config.json`.
+**Read the backtest before trading this.** On five years of history (`reports/pairs-2026-10-30.md`), buying the lagging leg and shorting the leader returned −0.09% per trade after costs over 245 trades; buying the lagging leg alone +0.50%, mostly from the market rising; on the earlier two-year run across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. The idea that "when one lags it's a quick profit" did not survive contact with two years of Nifty data: stretches tended to keep stretching. The card exists as a monitor, and so that the test can be re-run on longer history (`npm run backtest:pairs`, `--sweep`). Edit the pair list in `pairs.js` (`PAIRS`); override parameters under a `"pairs"` key in `config.json`.
 
 ## The compounder screen (in progress)
 
