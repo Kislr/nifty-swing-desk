@@ -103,9 +103,13 @@
     for (const co of Object.values(store.facts)) {
       const u = uni[co.cik]; if (!u || !u.domestic || u.financial) continue;
       const ev = evaluate(co, screen, asOf); const latest = ev.latest ? co.fy[ev.latest] : null;
-      // market cap: price × cover-page shares when prices are given; otherwise the 10-K public float as a labelled proxy
-      let cap = null, capSource = null; const shares = latest && latest.sharesOut ? latest.sharesOut.v : null;
+      // market cap: price × cover-page shares when prices are given. Dual-class filers (GOOGL, META, RL, ~13% of the universe) tag
+      // the cover-page count per class with a dimension, which the companyfacts API drops, so they have no sharesOut; for them use
+      // price × the latest fiscal year's diluted weighted-average share count (one undimensioned total across classes). Only when
+      // neither exists fall back to the 10-K public float as a labelled proxy — it understates closely held companies badly.
+      let cap = null, capSource = null; const shares = latest && latest.sharesOut ? latest.sharesOut.v : null; const sharesDil = latest && latest.sharesDil ? latest.sharesDil.v : null;
       if (prices && prices[co.cik] && shares) { cap = prices[co.cik].price * shares / 1e6; capSource = 'price × shares'; }
+      else if (prices && prices[co.cik] && sharesDil) { cap = prices[co.cik].price * sharesDil / 1e6; capSource = 'price × diluted shares (FY average)'; }
       else if (latest && latest.float) { cap = latest.float.v / 1e6; capSource = 'public float (10-K)'; }
       const inBand = cap == null ? null : cap >= M.marketCap.min && cap <= M.marketCap.max;
       // liquidity floor: average daily dollar turnover ($M) over the last 20 bars, when prices carry it

@@ -71,6 +71,12 @@ ev = C.evaluate(unitFault, screen, '2025-06-01'); assert(ev.traits.growth.pass =
 const S = C.screenAt({ universe: { companies: [{ cik: 1, ticker: 'SYN', domestic: true, financial: false }, { cik: 2, ticker: 'BIG', domestic: true, financial: false }, { cik: 3, ticker: 'BNK', domestic: true, financial: true }] }, facts: { 1: good, 2: Object.assign({}, good, { cik: 2 }), 3: Object.assign({}, good, { cik: 3 }) } }, screen, '2025-06-01', 'us', { 2: { price: 500 } });
 assert(S.quality.length === 1 && S.quality[0].ticker === 'SYN' && S.quality[0].capSource === 'public float (10-K)', 'screenAt: float proxy keeps SYN in band');
 assert(S.universe.find(r => r.ticker === 'BIG').inBand === false && S.universe.find(r => r.ticker === 'BIG').cap === 50000, 'price × shares = $50,000M is outside the band');
+// Dual-class filers tag the cover-page share count per class (dimensioned), which the companyfacts API drops; price × diluted FY-average shares
+// stands in, ahead of the float, which understates a closely held company (WTS sat in the band at its $6.7B float; it is a $11.8B company).
+const dual = Object.assign({}, good, { cik: 4, fy: Object.fromEntries(Object.entries(good.fy).map(([e, o]) => { const c = Object.assign({}, o); delete c.sharesOut; return [e, c]; })) });
+const S4 = C.screenAt({ universe: { companies: [{ cik: 4, ticker: 'DUAL', domestic: true, financial: false }] }, facts: { 4: dual } }, screen, '2025-06-01', 'us', { 4: { price: 200 } });
+const r4 = S4.universe.find(r => r.ticker === 'DUAL');
+assert(r4.cap === 21000 && r4.inBand === false && /diluted/.test(r4.capSource), 'no cover-page count + price → price × diluted shares (200 × 105M = $21,000M, out of band), not the $5,000M float');
 assert(!S.universe.find(r => r.ticker === 'BNK'), 'financials excluded from the screen');
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder engine tests passed');
 

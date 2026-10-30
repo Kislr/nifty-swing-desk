@@ -8,14 +8,14 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 
 ## Where things stand
 
-> **Rule for every working session, fresh or continued:** before finishing, update this checklist — tick what was done, add what was found, re-order what is next — and ship it in the same PR as the work. If a session ends with nothing merged, update the date and the "open decisions" anyway. The detailed reasoning behind each item lives in `ROADMAP.md` (swing desk) and `compounder/SCREEN.md` (compounder); this list is only the scoreboard. Last updated **2026-10-29**.
+> **Rule for every working session, fresh or continued:** before finishing, update this checklist — tick what was done, add what was found, re-order what is next — and ship it in the same PR as the work. If a session ends with nothing merged, update the date and the "open decisions" anyway. The detailed reasoning behind each item lives in `ROADMAP.md` (swing desk) and `compounder/SCREEN.md` (compounder); this list is only the scoreboard. Last updated **2026-10-30**.
 
 **Swing desk (NSE)**
 
 - [x] Daily job, Telegram digest, website, journal; snapshot strip collapses behind "Show all" (PR #10)
 - [x] Walk-forward backtests for the swing rules, the momentum engine and the pairs engine (`reports/`)
 - [x] Digest moves to 18:00 IST (PR #11)
-- [ ] Five-year history reload, then re-run all three backtests (ROADMAP item 1)
+- [ ] Five-year history reload, then re-run all three backtests (ROADMAP item 1) — must run from a home connection: `node scripts/backfill.mjs --years 5`; NSE refuses cloud IPs, confirmed again 30 Oct
 - [ ] Test "enter at the signal day's close" against "buy-stop next day"; add the 14:45 run only if it wins (ROADMAP item 8)
 
 **Compounder screen (US)**
@@ -23,7 +23,7 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 - [x] EDGAR universe and 10-K store (3,152 screenable companies), five-trait screen, weekly report
 - [x] Yahoo prices 2020–2026 for the whole universe; screen uses real market caps, the $3M/day liquidity floor and the momentum overlay (PR #9); daily incremental run
 - [x] Save step pulls main before pushing, so a merge during a run no longer loses its data; `meta.json` lists every year on disk; `screen.json` names the real price source
-- [ ] Hand-check the first priced screen: market caps for five or six names against a quote page, who the liquidity floor removes, the Russell 2000 gate, the "quality AND momentum" list, and how the cap-band list changed from the 21 names under the 10-K float estimate
+- [x] Hand-check the first priced screen (findings in `compounder/SCREEN.md`, version history): six market caps match quote pages within 3%; ^RUT closes and the 200-day average verified, gate open only since 27 Oct by 2%; the $3M floor removes none of the list; 21 → 18 in band (UI, STRL, WTS were float-understated). Fixed: dual-class filers with no cover-page count now use price × diluted shares instead of float (13% of the universe was silently on float); sensitivity table now uses prices
 - [x] Backtest design decisions settled before any result exists (see "Decisions taken" below): whole-universe deciles, survivor gap measured and tagged from EDGAR, cap floor set by the gap
 - [ ] Load 12 years of prices (`--years 12`, about 45 quarterly cohorts instead of 22)
 - [ ] Build the backtest (SCREEN step 6): quarterly rebalance, 12-month hold, four portfolios vs the Russell 2000; pass criteria are fixed in `screen.json`. Fails twice → shelve the screen and write up why, as with pairs
