@@ -2,9 +2,15 @@ name: Daily NSE snapshot
 
 on:
   schedule:
-    # 18:00 IST Mon–Fri (= 12:30 UTC), so the Telegram digest lands around 6 pm. NSE closes 15:30 IST; the market-watch data settles by ~16:00.
-    # GitHub starts scheduled runs 5–30 minutes late, so expect the digest between 18:05 and 18:30.
-    - cron: '30 12 * * 1-5'
+    # Target 18:00 IST Mon–Fri (= 12:30 UTC). NSE closes 15:30 IST; the market-watch data settles by ~16:00.
+    # GitHub's scheduler ran the single 12:30 UTC slot 3–6 hours late every day in the week of 21–29 Oct 2026 (digest at 21:00–00:00 IST),
+    # so there are now four slots half an hour apart. The first one that actually runs saves the snapshot and sends the digest; the later
+    # ones see the same NSE timestamp and exit without doing anything (fetch.mjs: "snapshot unchanged"), so there is never a second digest.
+    # If this is still too late, the reliable fix is an outside clock that calls workflow_dispatch — see README, "When the digest is late".
+    - cron: '32 12 * * 1-5'
+    - cron: '2 13 * * 1-5'
+    - cron: '32 13 * * 1-5'
+    - cron: '2 14 * * 1-5'
   workflow_dispatch:
     inputs:
       force:
