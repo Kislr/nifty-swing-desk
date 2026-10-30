@@ -2,10 +2,16 @@
   "asOf": "2026-10-30",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
-  "symbols": 3151,
-  "missing": 1,
+  "symbols": 3152,
+  "missing": 0,
   "errors": 0,
   "years": [
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
     "2020",
     "2021",
     "2022",
@@ -15,8 +21,6 @@
     "2026"
   ],
   "lastDate": "2026-10-29",
-  "missingList": [
-    "CCO"
-  ],
+  "missingList": [],
   "errorList": []
 }
