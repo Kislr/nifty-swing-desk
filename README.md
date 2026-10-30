@@ -8,7 +8,7 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 
 ## Where things stand
 
-> **Rule for every working session, fresh or continued:** before finishing, update this checklist — tick what was done, add what was found, re-order what is next — and ship it in the same PR as the work. If a session ends with nothing merged, update the date and the "open decisions" anyway. The detailed reasoning behind each item lives in `ROADMAP.md` (swing desk) and `compounder/SCREEN.md` (compounder); this list is only the scoreboard. Last updated **2026-10-30**.
+> **Rule for every working session, fresh or continued:** before finishing, update this checklist — tick what was done, add what was found, re-order what is next — and ship it in the same PR as the work. If a session ends with nothing merged, update the date and the "open decisions" anyway. The detailed reasoning behind each item lives in `ROADMAP.md` (swing desk) and `compounder/SCREEN.md` (compounder); this list is only the scoreboard. Last updated **2026-10-30** (evening).
 
 **Swing desk (NSE)**
 
@@ -16,7 +16,7 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 - [x] Walk-forward backtests for the swing rules, the momentum engine and the pairs engine (`reports/`)
 - [x] Digest moves to 18:00 IST (PR #11)
 - [x] Five-year history reload (2021-11 → 2026-10, 1,233 days, 501 symbols, run from a home connection) and all three backtests re-run (`reports/*-2026-10-30.md`). Verdicts: **momentum works** — +106.9% vs Nifty +39.7% over Jun 2022 – Oct 2026, 18.2% CAGR, 21% max drawdown, Sharpe 1.20, ahead of the index in four of five calendar years (behind only in 2025) and +3.9% in a 2026 that fell 12%. **The swing rules lose as written** — 418 trades, −0.08R expectancy, profit factor 0.84, 38R drawdown; both setups negative, every year but 2025 negative, 48% of exits are the 15-day time stop, and the 70+ score band (384 trades, −0.10R) is again the worst while 60–69 (24 trades, +0.20R) is the best. With 418 trades that is no longer noise. **Pairs stays a monitor** — pair trade −0.09% per trade, long-only +0.50%, 4 of 33 pairs cointegrated on the last bar
-- [ ] Swing engine: fix it or demote it. Test, one change at a time against the five-year report: drop the leading-sector (+15) and volume (+10) bumps (ROADMAP item 2); replace the 15-day time stop with a close below the 10/20-day average (item 3); breakouts only (231 trades, −0.05R, the less bad setup). If no single change gets expectancy above +0.1R over 300+ trades, the signal queue becomes "watch" only and the digest leads with the momentum list
+- [ ] **← Next session starts here.** Swing engine: fix it or demote it. No more data is needed — the five-year history is already in `data/history/` and the tests are pure backtest runs (`npm run backtest --set …`), so this is a code-and-report task, not a waiting one. Do not wait for days to accumulate. Test, one change at a time against the five-year report: drop the leading-sector (+15) and volume (+10) bumps (ROADMAP item 2); replace the 15-day time stop with a close below the 10/20-day average (item 3); breakouts only (231 trades, −0.05R, the less bad setup). If no single change gets expectancy above +0.1R over 300+ trades, the signal queue becomes "watch" only and the digest leads with the momentum list
 - [ ] Corporate-action adjustment (ROADMAP item 4) before trusting any single trade in the reports: unadjusted bonuses and splits are in the five-year data and show up as false stop-outs
 - [ ] Test "enter at the signal day's close" against "buy-stop next day"; add the 14:45 run only if it wins (ROADMAP item 8) — only once the swing engine has a positive expectancy to protect
 
@@ -43,7 +43,9 @@ Everything runs on free tiers: GitHub (hosting, scheduler, storage) and Telegram
 
 - [x] `actions/checkout` and `actions/setup-node` on v7 in all five workflows (Node 20 retirement)
 - [x] Merged branches deleted
+- [ ] Telegram digest arriving 21:00–00:00 IST instead of 18:00. Diagnosed 30 Oct: the job itself takes 35 s; GitHub's scheduler started the single 12:30 UTC slot 3–6 hours late every day that week (snapshot commits at 21:00, 21:30, 22:20, 00:04 IST). Done: four cron slots half an hour apart (12:32–14:02 UTC); a later slot after a successful one is a no-op, so no duplicate digests. Still to do if it is not enough after a week: the reliable fix is an outside clock calling the workflow (README, "When the digest is late") — needs a token, which only the owner should create
 - [ ] Nothing else open
+- [ ] **Final audit, after everything above is ticked:** one session that re-reads every rule in `engine.js` / `momentum.js` / `compounder.js` against its description in this README, ROADMAP.md and SCREEN.md; re-runs `npm test` and all backtests from a clean clone; checks every workflow's schedule against its comment and its last five run times; checks that no stale branch exists and that every report named in a document exists in `reports/`; and lists every mismatch found as a new checklist item before fixing any of them
 
 ## How it fits together
 
@@ -213,6 +215,8 @@ NSE sits behind a bot filter that occasionally refuses requests from cloud IP ra
 1. Re-run the workflow later from the Actions tab (blocks are often temporary).
 2. Run `npm run fetch` on your own computer and `git push` the result — a home connection is almost never blocked.
 3. Upload the CSV from the NSE page (Market Data → Equity/Stock → download) in the site's Manual snapshot panel. That stores it in your browser only, but the signals work.
+
+**When the digest is late.** The job takes about half a minute; if the digest arrives hours after six, GitHub's scheduler started the job late (free-tier scheduled runs are queued behind everything else and can slip by hours at busy times). `daily.yml` has four slots half an hour apart so the first one to run wins. If that is still not enough, trigger the job from an outside clock instead: create a fine-grained personal access token (Settings → Developer settings → Fine-grained tokens) limited to this repository with Actions: read and write, and set up a free job on cron-job.org (or any scheduler) that at 12:30 UTC Mon–Fri sends `POST https://api.github.com/repos/YOUR-USER/nifty-swing-desk/actions/workflows/daily.yml/dispatches` with headers `Authorization: Bearer <token>`, `Accept: application/vnd.github+json` and body `{"ref":"main"}`. That starts the job within a minute. The cron entries can stay as a backstop.
 
 If blocks become the norm, register your own PC as a GitHub self-hosted runner and change `runs-on` in the workflow to `self-hosted`; the job then runs from your IP on the same schedule, as long as the machine is on.
 
