@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-10-31",
+  "asOf": "2026-11-03",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
   "symbols": 3149,
@@ -20,7 +20,7 @@
     "2025",
     "2026"
   ],
-  "lastDate": "2026-10-30",
+  "lastDate": "2026-11-02",
   "missingList": [
     "CCO",
     "ACVA",
