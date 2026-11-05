@@ -50,7 +50,13 @@
     // 1. ROCE = EBIT / (assets − current liabilities), each of the last 5 years
     { const r = last5.map(y => { const e = val(y, 'ebit'), a = val(y, 'assets'), c = val(y, 'curLiab'); return e == null || a == null || c == null || a - c <= 0 ? null : e / (a - c); });
       const have = r.filter(x => x != null);
-      if (have.length < 5) res.traits.roce = { pass: null, series: r.map(pct), why: `ROCE computable in ${have.length}/5 years` };
+      if (T.roce.mode === 'level') {
+        // v0.3: the LEVEL of profitability — 3-year average ROCE, pass if ≥ threshold; ranked on the average. No stability rule.
+        const l3 = r.slice(-3); const h3 = l3.filter(x => x != null);
+        if (h3.length < 3) res.traits.roce = { pass: null, series: r.map(pct), why: `ROCE computable in ${h3.length}/3 years` };
+        else { const avg = h3.reduce((a, b) => a + b, 0) / 3; const pass = avg * 100 >= T.roce.threshold;
+          res.traits.roce = { pass, series: r.map(pct), value: pct(avg), rank: avg, why: `3-year average ROCE ${pct(avg)}%${pass ? '' : ' < ' + T.roce.threshold + '%'}` }; } }
+      else if (have.length < 5) res.traits.roce = { pass: null, series: r.map(pct), why: `ROCE computable in ${have.length}/5 years` };
       else { const passing = have.filter(x => x * 100 >= T.roce.threshold).length; const worst = Math.min(...have);
         const pass = passing >= T.roce.minYearsPassing && worst * 100 >= T.roce.floor;
         res.traits.roce = { pass, series: r.map(pct), value: pct(median(have)), rank: median(have), why: pass ? `median ROCE ${pct(median(have))}%, ${passing}/5 years ≥ ${T.roce.threshold}%` : passing < T.roce.minYearsPassing ? `only ${passing}/5 years ≥ ${T.roce.threshold}%` : `worst year ${pct(worst)}% < floor ${T.roce.floor}%` }; } }
@@ -88,7 +94,8 @@
         else if (ebitda == null || ebitda <= 0) res.traits.leverage = { pass: false, value: null, why: 'net debt with EBITDA ≤ 0 or untagged' };
         else { const x = net / ebitda; const pass = x <= T.leverage.maxNetDebtToEbitda; res.traits.leverage = { pass, value: +x.toFixed(2), rank: x, why: `net debt / EBITDA ${x.toFixed(2)}${pass ? '' : ' > ' + T.leverage.maxNetDebtToEbitda}` + (note ? ` (${note})` : '') }; } } }
 
-    for (const [k, t] of Object.entries(res.traits)) { if (t.pass === false) res.failed.push(k); else if (t.pass == null) res.na.push(k); }
+    // a trait with enabled:false in the screen (v0.3 drops gross margin) is computed for the record but takes no part in the verdict
+    for (const [k, t] of Object.entries(res.traits)) { const def = T[k === 'growth' ? 'growthWithoutDilution' : k]; t.enabled = !(def && def.enabled === false); if (!t.enabled) continue; if (t.pass === false) res.failed.push(k); else if (t.pass == null) res.na.push(k); }
     res.ok = res.failed.length === 0 && res.na.length === 0;
     res.nearMiss = res.failed.length === 0 && res.na.length === 1;   // four passes, one not applicable
     return res;
@@ -122,10 +129,15 @@
     }
     // composite: rank-sum among passers inside the cap band and above the liquidity floor (null = unknown, kept but flagged)
     const passers = rows.filter(r => r.ok && r.inBand !== false && r.illiquid !== true);
-    const keys = { roce: -1, grossMargin: -1, growth: -1, cashConversion: -1, leverage: +1 };   // −1: higher is better
-    for (const [k, dir] of Object.entries(keys)) { const sorted = [...passers].sort((a, b) => dir * (a.traits[k].rank - b.traits[k].rank)); sorted.forEach((r, i) => { (r.ranks || (r.ranks = {}))[k] = i + 1; }); }
-    for (const r of passers) r.rankSum = Object.values(r.ranks).reduce((a, b) => a + b, 0);
-    passers.sort((a, b) => a.rankSum - b.rankSum); passers.forEach((r, i) => (r.rank = i + 1));
+    const keys = enabledKeys(passers[0]);
+    if (screen.composite && screen.composite.method === 'gates-then-level') {
+      // v0.3: among passers (all gates passed by definition) the order is the level trait alone
+      const lv = screen.composite.level || 'roce'; passers.sort((a, b) => b.traits[lv].rank - a.traits[lv].rank); passers.forEach((r, i) => { r.ranks = { [lv]: i + 1 }; r.rankSum = i + 1; r.rank = i + 1; });
+    } else {
+      for (const [k, dir] of Object.entries(keys)) { const sorted = [...passers].sort((a, b) => dir * (a.traits[k].rank - b.traits[k].rank)); sorted.forEach((r, i) => { (r.ranks || (r.ranks = {}))[k] = i + 1; }); }
+      for (const r of passers) r.rankSum = Object.values(r.ranks).reduce((a, b) => a + b, 0);
+      passers.sort((a, b) => a.rankSum - b.rankSum); passers.forEach((r, i) => (r.rank = i + 1));
+    }
     const nearMiss = rows.filter(r => r.nearMiss && r.inBand !== false).sort((a, b) => (a.traits.roce.rank || 0) < (b.traits.roce.rank || 0) ? 1 : -1);
     const counts = { screened: rows.length, enoughYears: rows.filter(r => !r.reason).length, passAll: rows.filter(r => r.ok).length, inBand: passers.length, nearMiss: nearMiss.length,
       illiquidPassers: rows.filter(r => r.ok && r.inBand !== false && r.illiquid === true).length, pricedRows: rows.filter(r => r.price != null).length,
@@ -144,9 +156,24 @@
    *  `rows` are screenAt().universe rows that have enough fiscal years (r.reason == null); returns them sorted with
    *  r.uRanks, r.uRankSum, r.uRank, r.decile (1 = best) added. `deciles` defaults to 10. `mode` 'pass-first' (default) or 'value'
    *  (rank on the trait value alone, ignoring the thresholds — a diagnostic: if the two orderings test the same, the thresholds add nothing). */
-  function rankUniverse(rows, deciles, mode) {
-    const keys = { roce: -1, grossMargin: -1, growth: -1, cashConversion: -1, leverage: +1 };   // −1: higher is better
-    const N = rows.length; const mid = (N + 1) / 2; const passFirst = mode !== 'value';
+  const ALL_KEYS = { roce: -1, grossMargin: -1, growth: -1, cashConversion: -1, leverage: +1 };   // −1: higher is better
+  /** The trait keys that take part, read off one evaluated row (a trait with enabled:false in the screen is skipped). */
+  function enabledKeys(row) { const out = {}; for (const [k, d] of Object.entries(ALL_KEYS)) if (!row || !row.traits[k] || row.traits[k].enabled !== false) out[k] = d; return out; }
+
+  function rankUniverse(rows, deciles, mode, composite) {
+    const N = rows.length;
+    if (composite && composite.method === 'gates-then-level') {
+      // v0.3: tiers by the number of gates passed, then the level trait (descending) inside each tier. A gate that cannot be
+      // computed counts as not passed — the company cannot show it clears the bar. Deciles cut from the whole order.
+      const gates = composite.gates.map(g => g === 'growthWithoutDilution' ? 'growth' : g); const lv = composite.level || 'roce';
+      for (const r of rows) { r.gatesPassed = gates.filter(g => r.traits[g] && r.traits[g].pass === true).length; r.level = r.traits[lv] && typeof r.traits[lv].rank === 'number' ? r.traits[lv].rank : null; }
+      rows.sort((a, b) => b.gatesPassed - a.gatesPassed || (b.level == null ? -Infinity : b.level) - (a.level == null ? -Infinity : a.level));
+      rows.forEach((r, i) => { r.uRanks = { gates: r.gatesPassed, [lv]: r.level }; r.uRankSum = i + 1; r.uRank = i + 1; });
+      const D = deciles || 10; rows.forEach((r, i) => { r.decile = N ? Math.min(D, Math.floor(i * D / N) + 1) : null; });
+      return rows;
+    }
+    const keys = enabledKeys(rows[0]);
+    const mid = (N + 1) / 2; const passFirst = mode !== 'value';
     for (const [k, dir] of Object.entries(keys)) {
       const scored = rows.filter(r => r.traits[k] && r.traits[k].pass != null && typeof r.traits[k].rank === 'number');
       scored.sort((a, b) => { const ta = a.traits[k], tb = b.traits[k]; if (passFirst && ta.pass !== tb.pass) return ta.pass ? -1 : 1; return dir * (ta.rank - tb.rank); });
@@ -169,5 +196,5 @@
     return L.join('\n');
   }
 
-  return { visibleYears, evaluate, screenAt, rankUniverse, digest, debtOf };
+  return { visibleYears, evaluate, screenAt, rankUniverse, enabledKeys, digest, debtOf };
 });

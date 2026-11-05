@@ -87,6 +87,19 @@ assert(!S.universe.find(r => r.ticker === 'BNK'), 'financials excluded from the 
   assert(R.filter(r => r.decile === 1).length === 2 && R.filter(r => r.decile === 2).length === 2, 'deciles (here halves) are equal cuts of the ranking');
   const V = C.rankUniverse(rows.map(r => Object.assign({}, r, { uRanks: null })), 2, 'value');
   assert(V.every(r => r.uRankSum > 0) && V[0].uRank === 1, 'value mode ranks on trait values alone'); }
+// v0.3 (compounder/screen-v0.3.json): ROCE as a level, gross margin disabled, gates-then-level composite
+{ const v3 = JSON.parse(await (await import('node:fs/promises')).readFile(new URL('../compounder/screen-v0.3.json', import.meta.url), 'utf8'));
+  let e3 = C.evaluate(good, v3, '2025-06-01');
+  assert(e3.ok && e3.traits.roce.pass && /3-year average/.test(e3.traits.roce.why) && Math.abs(e3.traits.roce.rank - e3.traits.roce.value / 100) < 1e-3, 'v0.3 ROCE is a 3-year average level, ranked on the average');
+  assert(e3.traits.grossMargin.enabled === false && e3.traits.roce.enabled === true && !e3.na.includes('grossMargin') && !e3.failed.includes('grossMargin'), 'a disabled trait is computed for the record but takes no part in the verdict');
+  e3 = C.evaluate(service, v3, '2025-06-01'); assert(e3.ok && !e3.nearMiss, 'v0.3: a service business with no gross margin now passes outright');
+  const dip = mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(1.15, i), ebit: i === 4 ? 20 : 300 })));   // one bad year in a strongly profitable run
+  assert(!C.evaluate(dip, screen, '2025-06-01').traits.roce.pass && C.evaluate(dip, v3, '2025-06-01').traits.roce.pass, 'the stability rule (v0.2) fails one bad year; the level rule (v0.3) averages through it');
+  const rows = C.screenAt({ universe: { companies: [1, 2, 3, 4].map(cik => ({ cik, ticker: 'T' + cik, domestic: true, financial: false })) }, facts: { 1: good, 2: Object.assign({}, levered, { cik: 2 }), 3: Object.assign({}, diluter, { cik: 3 }), 4: Object.assign({}, service, { cik: 4 }) } }, v3, '2025-06-01', 'us');
+  assert(rows.quality.length === 2 && rows.quality[0].rank === 1 && rows.quality.every(r => r.ranks.roce), 'v0.3 quality list: both all-gate passers, ordered by ROCE level alone');
+  const R3 = C.rankUniverse(rows.universe, 2, undefined, v3.composite);
+  assert(R3[0].gatesPassed === 3 && R3[R3.length - 1].gatesPassed === 2 && R3.every((r, i) => i === 0 || r.gatesPassed < R3[i - 1].gatesPassed || r.level <= R3[i - 1].level), 'gates-then-level: tiers by gates passed, ROCE level descending inside a tier');
+  assert(R3[0].uRanks.gates === 3 && typeof R3[0].uRanks.roce === 'number' && R3.filter(r => r.decile === 1).length === 2, 'ranks recorded and deciles cut from the order'); }
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder engine tests passed');
 
 // ---- backtest: end to end on a synthetic store (facts + prices + index) where the good companies are built to win ----
