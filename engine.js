@@ -399,7 +399,22 @@
     const label = t.status === 'closed' ? 'Closed' : (!last ? 'No data since entry' : stopHit && (!targetHit || stopHit <= targetHit) ? 'Stop hit ' + stopHit : targetHit ? 'Target touched ' + targetHit : 'Open');
     return { label, R, pnl, mark, last, stopHit, targetHit };
   }
-  /** Telegram text. `blocks` = { momentum, pairs } are the other engines' digests (strings); in swingMode 'watch'
+  /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'}]). A reminder is due from its
+   *  date for `windowDays` (7) days, so a missed day still nags for a week; a repeating one is due around every occurrence. Returns
+   *  the digest block or null. Edit or remove the entry in config.json once the check is done. */
+  function remindersDue(list, today, windowDays) {
+    if (!Array.isArray(list) || !list.length || !today) return null; const W = windowDays || 7;
+    const dayDiff = (a, b) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000);
+    const addMonths = (d, n) => { const t = new Date(d + 'T00:00:00Z'); const day = t.getUTCDate(); t.setUTCDate(1); t.setUTCMonth(t.getUTCMonth() + n); const last = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() + 1, 0)).getUTCDate(); t.setUTCDate(Math.min(day, last)); return t.toISOString().slice(0, 10); };
+    const due = [];
+    for (const r of list) { if (!r || !r.date || !r.text) continue; const step = r.repeat === 'monthly' ? 1 : r.repeat === 'quarterly' ? 3 : 0;
+      let occ = r.date; if (step) { let guard = 0; while (addMonths(occ, step) <= today && guard++ < 600) occ = addMonths(occ, step); }
+      const d = dayDiff(occ, today); if (d >= 0 && d < W) due.push({ date: occ, text: r.text, repeat: r.repeat || null }); }
+    if (!due.length) return null;
+    return ['DESK CHECKS DUE', ...due.map(r => `• ${r.date}${r.repeat ? ' (' + r.repeat + ')' : ''} — ${r.text}`)].join('\n');
+  }
+
+  /** Telegram text. `blocks` = { momentum, pairs, reminders } are the other engines' digests (strings); in swingMode 'watch'
    *  the momentum list comes first and swing setups are listed as levels to watch, without quantities. */
   function digest(result, settings, blocks) {
     const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {}); blocks = blocks || {};
@@ -425,11 +440,12 @@
     else L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
     if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
     if (blocks.pairs) L.push('', blocks.pairs);
+    if (blocks.reminders) L.push('', blocks.reminders);
     L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive five-year record; swing levels are for watching and paper trades.'
       : 'Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
     return L.join('\n');
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, remindersDue, indicators: { sma, atr, rsi, candles } };
 });

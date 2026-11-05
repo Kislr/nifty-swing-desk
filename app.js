@@ -127,6 +127,8 @@ function renderSectors(board, signals) {
 const WATCH_ONLY = E.DEFAULTS.swingMode === 'watch';
 const TABS = [['act', WATCH_ONLY ? 'Setups (watch only)' : 'Orders for tomorrow'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
 const stripTags = s => s.replace(/<[^>]+>/g, '');
+// Out-link to the live NSE quote page for a symbol (opens in a new tab; the click must not toggle the row's detail)
+const symLink = sym => `<a class="symlink" href="https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(sym)}" target="_blank" rel="noopener" title="Live quote on nseindia.com" onclick="event.stopPropagation()">&#8599;</a>`;
 function renderQueue(signals, reg) {
   const counts = {}, inSec = {}; signals.forEach(s => { counts[s.kind] = (counts[s.kind] || 0) + 1; if (S.sector && s.sector === S.sector) inSec[s.kind] = (inSec[s.kind] || 0) + 1; });
   $('tabs').innerHTML = TABS.map(([k, l]) => `<button class="tab" role="tab" data-k="${k}" aria-selected="${S.tab === k}">${l}<span class="count" title="${S.sector ? `${inSec[k] || 0} in ${esc(S.sector)}, ${counts[k] || 0} overall` : 'across all sectors'}">${S.sector ? `${inSec[k] || 0}<span class="muted">/${counts[k] || 0}</span>` : (counts[k] || 0)}</span></button>`).join('');
@@ -145,7 +147,7 @@ function renderQueue(signals, reg) {
   empty.hidden = true;
   tbl.querySelector('tbody').innerHTML = rows.map(s => { const r = s.row; const open = S.open === s.sym;
     const lv = withLevels ? `<td class="r num">${fmt(s.entry)}</td><td class="r num">${fmt(s.stop)}</td><td class="r num">${fmt(s.target)}</td><td class="r num">${s.size ? fmt0(s.size.qty) : '—'}</td>` : `<td style="white-space:normal;max-width:420px">${s.trigger ? '<span class="muted">Trigger:</span> ' + esc(s.trigger) : stripTags(s.why).slice(0, 120) + '…'}</td>`;
-    return `<tr class="row" data-sym="${esc(s.sym)}"><td><span class="sym">${esc(s.sym)}<span class="sec">${esc(s.sector)}</span></span></td><td><span class="tag ${s.kind}">${esc(s.setup)}</span></td>
+    return `<tr class="row" data-sym="${esc(s.sym)}"><td><span class="sym">${esc(s.sym)}${symLink(s.sym)}<span class="sec">${esc(s.sector)}</span></span></td><td><span class="tag ${s.kind}">${esc(s.setup)}</span></td>
       <td class="r"><span class="score ${s.score >= 70 ? 'hi' : s.score >= 55 ? 'mid' : 'lo'}" title="${esc(s.confidence)} confidence">${s.score}</span></td><td class="r num">${fmt(r.ltp)}</td><td class="r num chg ${r.pct > 0 ? 'up' : r.pct < 0 ? 'down' : ''}">${pct(r.pct)}</td><td class="r num chg ${r.d30 > 0 ? 'up' : r.d30 < 0 ? 'down' : ''}">${pct(r.d30, 1)}</td>${lv}
       <td class="r"><button class="btn small" data-open="${esc(s.sym)}">${open ? 'Hide' : 'Detail'}</button></td></tr>${open ? detailRow(s) : ''}`; }).join('');
   tbl.querySelectorAll('[data-open]').forEach(b => (b.onclick = e => { e.stopPropagation(); S.open = S.open === b.dataset.open ? null : b.dataset.open; render(); }));
@@ -170,7 +172,7 @@ function renderMomentum(bars) {
   if (!sel.picks.length) { tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false; empty.textContent = `Not enough history for a ${P.lookback + P.skip}-bar lookback yet.`; return; }
   empty.hidden = true;
   const pc = (x, d = 0) => x == null ? '—' : `<span class="num chg ${x > 0 ? 'up' : x < 0 ? 'down' : ''}">${(x * 100 > 0 ? '+' : '') + (x * 100).toFixed(d)}%</span>`;
-  tbl.querySelector('tbody').innerHTML = sel.picks.map(r => `<tr><td class="r num">${r.rank}</td><td><span class="sym">${esc(r.sym)}<span class="sec">${esc(r.sector)}</span></span></td><td class="r num">${fmt(r.ltp)}</td><td class="r num">${P.volAdjust ? r.score.toFixed(2) : pc(r.ret)}</td><td class="r">${pc(r.ret1)}</td><td class="r">${pc(r.ret6)}</td><td class="r">${pc(r.ret12)}</td><td class="r num">${r.offHigh.toFixed(1)}%</td><td class="r num">₹${fmt(r.avgTurn, 0)} cr</td><td class="r num">${fmt(r.ltp * (1 - P.trail / 100))}</td></tr>`).join('');
+  tbl.querySelector('tbody').innerHTML = sel.picks.map(r => `<tr><td class="r num">${r.rank}</td><td><span class="sym">${esc(r.sym)}${symLink(r.sym)}<span class="sec">${esc(r.sector)}</span></span></td><td class="r num">${fmt(r.ltp)}</td><td class="r num">${P.volAdjust ? r.score.toFixed(2) : pc(r.ret)}</td><td class="r">${pc(r.ret1)}</td><td class="r">${pc(r.ret6)}</td><td class="r">${pc(r.ret12)}</td><td class="r num">${r.offHigh.toFixed(1)}%</td><td class="r num">₹${fmt(r.avgTurn, 0)} cr</td><td class="r num">${fmt(r.ltp * (1 - P.trail / 100))}</td></tr>`).join('');
 }
 function renderPairs(bars) {
   const Pr = window.PairsEngine; const tbl = $('pairsTbl'), note = $('pairsNote');
@@ -197,7 +199,7 @@ function renderUniverse(universe) {
   const cols = [['sym', 'Symbol'], ['sector', 'Sector'], ['ltp', 'LTP', 'r'], ['pct', 'Today', 'r'], ['d30', '30D', 'r'], ['rsPct', 'RS %ile', 'r'], ['rsi', 'RSI', 'r'], ['val', 'Turnover ₹cr', 'r'], ['pos52', '52W position', 'r'], ['distHi', 'To 52W high', 'r']];
   tbl.querySelector('thead').innerHTML = '<tr>' + cols.map(([k, l, r]) => `<th class="sortable ${r || ''} ${key === k ? 'sorted' : ''}" data-k="${k}">${l}${key === k ? (dir < 0 ? ' ↓' : ' ↑') : ''}</th>`).join('') + '</tr>';
   tbl.querySelectorAll('th').forEach(th => (th.onclick = () => { const k = th.dataset.k; S.uniSort = S.uniSort.key === k ? { key: k, dir: -S.uniSort.dir } : { key: k, dir: (k === 'sym' || k === 'sector') ? 1 : -1 }; render(); }));
-  tbl.querySelector('tbody').innerHTML = rows.slice(0, 600).map(r => `<tr><td><span class="sym">${esc(r.sym)}</span></td><td class="muted">${esc(r.sector)}</td><td class="r num">${fmt(r.ltp)}</td>
+  tbl.querySelector('tbody').innerHTML = rows.slice(0, 600).map(r => `<tr><td><span class="sym">${esc(r.sym)}${symLink(r.sym)}</span></td><td class="muted">${esc(r.sector)}</td><td class="r num">${fmt(r.ltp)}</td>
     <td class="r num chg ${r.pct > 0 ? 'up' : r.pct < 0 ? 'down' : ''}">${pct(r.pct)}</td><td class="r num chg ${r.d30 > 0 ? 'up' : r.d30 < 0 ? 'down' : ''}">${pct(r.d30, 1)}</td><td class="r num">${r.rsPct != null ? r.rsPct.toFixed(0) : '—'}</td><td class="r num">${r.rsi != null ? r.rsi.toFixed(0) : '—'}</td><td class="r num">${fmt(r.val, 0)}</td>
     <td class="r">${r.pos52 != null ? `<span class="range ${r.pos52 >= 0.95 ? 'hi' : r.pos52 <= 0.05 ? 'lo' : ''}" title="${(r.pos52 * 100).toFixed(0)}% of 52W range"><span class="mk" style="left:${(r.pos52 * 100).toFixed(1)}%"></span></span>` : '—'}</td>
     <td class="r num">${r.distHi != null ? '-' + r.distHi.toFixed(1) + '%' : '—'}</td></tr>`).join('');
@@ -210,7 +212,7 @@ function renderJournal() {
     tbl.querySelector('thead').innerHTML = '<tr><th>Symbol</th><th>Setup</th><th>Entered</th><th class="r">Entry</th><th class="r">Stop</th><th class="r">Target</th><th class="r">Qty</th><th class="r">Mark</th><th class="r">R</th><th class="r">P&amp;L ₹</th><th>Status</th><th></th></tr>';
     const list = [...open, ...closed].sort((a, b) => b.date.localeCompare(a.date));
     tbl.querySelector('tbody').innerHTML = list.map(t => { const st = E.journalStatus(t, S.bars); const cls = st.R > 0 ? 'r-pos' : st.R < 0 ? 'r-neg' : '';
-      return `<tr class="jrow"><td><span class="sym">${esc(t.sym)}</span></td><td class="muted">${esc(t.setup || '')}</td><td class="num">${t.date}</td><td class="r num">${fmt(t.entry)}</td><td class="r num">${fmt(t.stop)}</td><td class="r num">${fmt(t.target)}</td><td class="r num">${fmt0(t.qty)}</td>
+      return `<tr class="jrow"><td><span class="sym">${esc(t.sym)}${symLink(t.sym)}</span></td><td class="muted">${esc(t.setup || '')}</td><td class="num">${t.date}</td><td class="r num">${fmt(t.entry)}</td><td class="r num">${fmt(t.stop)}</td><td class="r num">${fmt(t.target)}</td><td class="r num">${fmt0(t.qty)}</td>
         <td class="r num">${fmt(st.mark)}</td><td class="r num ${cls}">${st.R != null ? (st.R > 0 ? '+' : '') + st.R.toFixed(2) + 'R' : '—'}</td><td class="r num ${cls}">${st.pnl != null ? fmt0(st.pnl) : '—'}</td>
         <td><span class="tag ${t.status === 'closed' ? '' : st.stopHit ? 'avoid' : st.targetHit ? 'act' : 'alert'}">${esc(st.label)}</span></td>
         <td class="r" style="white-space:nowrap">${t.status !== 'closed' ? `<button class="btn small" data-close="${esc(t.id)}">Close…</button> ` : ''}<button class="btn small danger" data-del="${esc(t.id)}">Delete</button></td></tr>
