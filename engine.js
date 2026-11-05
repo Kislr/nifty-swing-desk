@@ -41,8 +41,9 @@
 
   // sectorBump / volumeBump are the score points for "leading sector" and "volume ≥ 1.5× average"; the backtest
   // overrides them (--set sectorBump=0) to test whether they earn their place (ROADMAP item 2).
-  // swingMode: 'watch' (5 Nov 2026) — the swing rules lost −0.08R/trade over 419 trades on five years and no single
-  // tested change fixed them (reports/backtest-2026-11-05.md), so setups are shown as levels to watch, not as orders,
+  // swingMode: 'watch' (5 Nov 2026) — the swing rules lost −0.08R/trade over 419 trades on five years and no single tested
+  // change fixed them (reports/backtest-2026-11-05.md). On corporate-action-adjusted history they are breakeven (+0.01R over 433,
+  // reports/backtest-2026-11-05-adjusted.md) and the best variant +0.04R: still under the +0.1R bar, so setups are levels to watch, not orders,
   // and the digest leads with the momentum list. Set back to 'orders' only after a backtest earns it.
   const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2, maxPos: 25, sectorBump: 15, volumeBump: 10, swingMode: 'watch' };
   const F = ['open', 'high', 'low', 'prev', 'ltp', 'chg', 'pct', 'vol', 'val', 'h52', 'l52', 'd30'];
@@ -410,7 +411,7 @@
     if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
-      L.push('', `SWING SETUPS (${act.length}) — watch only, not orders: the rules lost −0.08R/trade over 419 trades on five years (reports/)`);
+      L.push('', `SWING SETUPS (${act.length}) — watch only, not orders: breakeven after costs over five years (+0.01R/trade, 433 trades; reports/)`);
       act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!act.length) L.push('• none today');
     } else {

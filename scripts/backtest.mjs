@@ -97,7 +97,7 @@ const byScore = (() => { const g = { '50-59': [], '60-69': [], '70+': [] }; for 
 const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(d);
 const row = (name, s) => s.n ? `| ${name} | ${s.n} | ${f(s.winRate * 100, 0)}% | ${f(s.expectancy)}R | ${f(s.profitFactor)} | ${f(s.totalR, 1)}R | ${f(s.maxDrawdownR, 1)}R | ${f(s.avgBars, 1)} | ₹${Math.round(s.pnl).toLocaleString('en-IN')} |` : `| ${name} | 0 | | | | | | | |`;
 const hdr = '| slice | trades | win rate | expectancy | profit factor | total | max DD | avg bars | P&L (fixed ₹' + P.capital.toLocaleString('en-IN') + ') |\n|---|---|---|---|---|---|---|---|---|';
-const stamp = new Date().toISOString().slice(0, 10);
+const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '');   // adjusted-history runs get their own file name
 const md = [`# Backtest — ${stamp}`, '', `History ${bars.dates[P.warmup]} → ${bars.dates[N - 1]} (${N} days, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P)}. Setups: ${setupsFilter}.`, '',
   '## Overall', '', hdr, row('all', all), '', '## By setup', '', hdr, ...Object.entries(bySetup).map(([k, v]) => row(k, v)), '', '## By score band', '', hdr, ...Object.entries(byScore).map(([k, v]) => row(k, v)), '', '## By year', '', hdr, ...Object.entries(byYear).map(([k, v]) => row(k, v)), '',
   '## Exit reasons', '', ...Object.entries(byReason).map(([k, v]) => `- ${k}: ${v}`), '',

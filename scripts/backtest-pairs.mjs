@@ -32,7 +32,7 @@ const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(
 const hdr = '| run | mode | trades | win rate | avg / trade | total | avg bars | max DD (sum of %) | converged / time / stop |\n|---|---|---|---|---|---|---|---|---|';
 const row = (name, mode, st) => st.n ? `| ${name} | ${mode} | ${st.n} | ${f(st.winRate * 100, 0)}% | ${f(st.avgRet)}% | ${f(st.totalRet, 1)}% | ${f(st.avgBars, 0)} | ${f(st.maxDD, 1)} | ${st.byReason.converged || 0} / ${st.byReason['time stop'] || 0} / ${st.byReason['stop (relationship broke)'] || 0} |` : `| ${name} | ${mode} | 0 | | | | | | |`;
 const run = (params, mode) => { const sim = Pr.simulate(bars, params, { mode, from, to }); return { sim, st: Pr.stats(sim.trades) }; };
-const stamp = new Date().toISOString().slice(0, 10); const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
+const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '');   // adjusted-history runs get their own file name const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 
 if (flag('sweep')) {
   const lines = [`# Pairs sweep — ${stamp}`, '', `History ${bars.dates[0]} → ${bars.dates[N - 1]} (${N} days). Every row is a full walk-forward run over all curated pairs.`, '', hdr]; const results = [];
