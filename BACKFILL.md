@@ -55,6 +55,26 @@ git push
 
 The website picks the history up on its next load (the status card shows "bars of history" climbing from 1 to ~250), and from the next scheduled run the daily job appends each new day to the same files.
 
+## Corporate actions (run once after the backfill, then after any big gap)
+
+The history files stay raw. A separate table, `data/adjustments.json`, lists every bonus, split and consolidation with its ex-date and factor, and `engine.buildBars()` applies it when the bars are loaded — by the site, the daily job and every backtest — dividing prices before the ex-date by the factor and multiplying volume by it. Keeping the raw files raw is what lets the daily job keep appending without re-adjusting anything.
+
+From your own computer (NSE refuses cloud IPs for this endpoint too):
+
+```
+node scripts/corporate-actions.mjs            # pulls NSE's corporate-actions list from the first history date to today, ~1 minute
+```
+
+If NSE blocks the API, download the list by hand instead: nseindia.com → Corporates → Corporate Actions → set the date range → Download (.csv), then `node scripts/corporate-actions.mjs --csv ~/Downloads/CF-CA-equities-….csv`.
+
+The script checks every event against the bars — the close before the ex-date over the open on it should be about the factor — and applies only the ones that pass (within 12%). It writes `data/adjustments.json` and `reports/corporate-actions-DATE.md`, which lists what was applied, what was rejected and why, and the events it cannot reduce to one factor (demergers, rights, schemes of arrangement — dates on which a price gap is real but unadjustable). Then re-run the three backtests so the reports reflect adjusted history, and `git push` the lot:
+
+```
+npm run backtest:momentum && npm run backtest && npm run backtest:pairs
+```
+
+Expect the momentum numbers to move a little: some of its 20% trailing-stop exits were bonuses, not falls.
+
 ## What gets written
 
 `data/history/<year>.json` — one file per calendar year with aligned open/high/low/close/volume/turnover for every symbol in the universe, plus NIFTY 50 index bars (open/high/low/close) for the regime and relative-strength calculations. The site loads only the current and previous year; the backtest loads them all.
@@ -74,7 +94,7 @@ The website picks the history up on its next load (the status card shows "bars o
 
 ## Caveats worth knowing
 
-Bhavcopy prices are not adjusted for splits and bonuses. A 1:1 bonus shows as a 50% drop on the ex-date, which the engine will read as a stop-out or an "avoid". Rare in large caps, worth remembering when a backtest trade looks absurd.
+Bhavcopy prices are not adjusted for splits and bonuses. A 1:1 bonus shows as a 50% drop on the ex-date, which the engine will read as a stop-out, an "avoid" or a momentum trailing-stop exit. The fix is the corporate-actions step below; until it has been run, remember it when a backtest trade looks absurd.
 
 The constituent list is today's Nifty 500. Stocks that were in the index two years ago but have since left are not in the backfill, which flatters backtests slightly (survivorship bias). The report says so in its footer.
 

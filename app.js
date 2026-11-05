@@ -39,6 +39,7 @@ async function loadRepoData() {
     const hf = await Promise.all(years.map(y => fetch(`data/history/${y}.json`, { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null)));
     S.histFiles = hf.filter(Boolean);
     try { const sj = await fetch('data/sectors.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null); S.repoSectors = (sj && sj.map) || {}; } catch (e) {}
+    try { S.adjustments = await fetch('data/adjustments.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null); } catch (e) { S.adjustments = null; }   // corporate actions, optional
     const latest = S.repoSnaps[S.repoSnaps.length - 1];
     pillSet('pillData', 'accent', latest ? `Auto data · ${idx.index || ''} · updated ${idx.generatedAt ? new Date(idx.generatedAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : latest.date}` : 'No job data yet');
   } catch (e) { pillSet('pillData', 'warn', 'Job data not found — upload manually'); }
@@ -48,7 +49,7 @@ async function loadRepoData() {
 /* ---------- render ---------- */
 function pillSet(id, cls, text) { const el = $(id); el.className = 'pill ' + (cls || ''); el.innerHTML = '<span class="dot"></span>' + text; }
 function render() {
-  const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, sectorMap());
+  const res = E.analyzeLatest(S.histFiles, S.snaps, S.settings, sectorMap(), S.adjustments);
   const { signals, reg, board, universe, snap } = res; S.bars = res.bars; S.coverage = res.coverage;
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
   renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars); renderPairs(res.bars); renderUniverse(universe); renderJournal(); renderSnaplist();
