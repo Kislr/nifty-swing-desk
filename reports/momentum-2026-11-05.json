@@ -1,0 +1,10959 @@
+{
+ "params": {
+  "lookback": 126,
+  "skip": 21,
+  "volAdjust": false,
+  "topN": 15,
+  "holdRank": 30,
+  "rebalance": 21,
+  "trail": 20,
+  "gateSma": 200,
+  "minTurnover": 5,
+  "maxOffHigh": 20,
+  "maxPerSector": 4,
+  "costBps": 30
+ },
+ "stats": {
+  "n": 233,
+  "days": 1089,
+  "start": "2022-06-07",
+  "end": "2026-11-04",
+  "totalReturn": 1.388108848660623,
+  "cagr": 0.2212069949910047,
+  "maxDrawdown": 0.1995917454939056,
+  "sharpe": 1.4818806440170764,
+  "indexReturn": 0.4595570879032185,
+  "winRate": 0.49356223175965663,
+  "avgWin": 30.59226086956522,
+  "avgLoss": -12.02466101694915,
+  "avgBars": 54.60515021459227,
+  "byReason": {
+   "trailing stop": 100,
+   "ineligible": 34,
+   "rank drop": 99
+  },
+  "byYear": {
+   "2022": {
+    "start": 499262,
+    "end": 632379,
+    "idx0": 16416.35,
+    "idx1": 18105.3
+   },
+   "2023": {
+    "start": 632379,
+    "end": 951765,
+    "idx0": 18105.3,
+    "idx1": 21731.4
+   },
+   "2024": {
+    "start": 951765,
+    "end": 1191158,
+    "idx0": 21731.4,
+    "idx1": 23644.8
+   },
+   "2025": {
+    "start": 1191158,
+    "end": 1151660,
+    "idx0": 23644.8,
+    "idx1": 26129.6
+   },
+   "2026": {
+    "start": 1151660,
+    "end": 1192292,
+    "idx0": 26129.6,
+    "idx1": 23960.6
+   }
+  },
+  "inMarket": 0.9788797061524335,
+  "final": 1192292
+ },
+ "equity": [
+  {
+   "date": "2022-06-07",
+   "value": 499262,
+   "positions": 15,
+   "gate": null,
+   "index": 16416.35
+  },
+  {
+   "date": "2022-06-08",
+   "value": 500461,
+   "positions": 15,
+   "gate": null,
+   "index": 16356.25
+  },
+  {
+   "date": "2022-06-09",
+   "value": 504418,
+   "positions": 15,
+   "gate": null,
+   "index": 16478.1
+  },
+  {
+   "date": "2022-06-10",
+   "value": 498323,
+   "positions": 15,
+   "gate": null,
+   "index": 16201.8
+  },
+  {
+   "date": "2022-06-13",
+   "value": 480453,
+   "positions": 15,
+   "gate": null,
+   "index": 15774.4
+  },
+  {
+   "date": "2022-06-14",
+   "value": 476449,
+   "positions": 15,
+   "gate": null,
+   "index": 15732.1
+  },
+  {
+   "date": "2022-06-15",
+   "value": 481466,
+   "positions": 15,
+   "gate": null,
+   "index": 15692.15
+  },
+  {
+   "date": "2022-06-16",
+   "value": 465196,
+   "positions": 14,
+   "gate": null,
+   "index": 15360.6
+  },
+  {
+   "date": "2022-06-17",
+   "value": 461632,
+   "positions": 14,
+   "gate": null,
+   "index": 15293.5
+  },
+  {
+   "date": "2022-06-20",
+   "value": 442165,
+   "positions": 12,
+   "gate": null,
+   "index": 15350.15
+  },
+  {
+   "date": "2022-06-21",
+   "value": 453867,
+   "positions": 12,
+   "gate": null,
+   "index": 15638.8
+  },
+  {
+   "date": "2022-06-22",
+   "value": 447472,
+   "positions": 12,
+   "gate": null,
+   "index": 15413.3
+  },
+  {
+   "date": "2022-06-23",
+   "value": 450644,
+   "positions": 12,
+   "gate": null,
+   "index": 15556.65
+  },
+  {
+   "date": "2022-06-24",
+   "value": 455292,
+   "positions": 12,
+   "gate": null,
+   "index": 15699.25
+  },
+  {
+   "date": "2022-06-27",
+   "value": 461136,
+   "positions": 12,
+   "gate": null,
+   "index": 15832.05
+  },
+  {
+   "date": "2022-06-28",
+   "value": 460687,
+   "positions": 12,
+   "gate": null,
+   "index": 15850.2
+  },
+  {
+   "date": "2022-06-29",
+   "value": 458178,
+   "positions": 12,
+   "gate": null,
+   "index": 15799.1
+  },
+  {
+   "date": "2022-06-30",
+   "value": 457202,
+   "positions": 12,
+   "gate": null,
+   "index": 15780.25
+  },
+  {
+   "date": "2022-07-01",
+   "value": 453616,
+   "positions": 12,
+   "gate": null,
+   "index": 15752.05
+  },
+  {
+   "date": "2022-07-04",
+   "value": 458231,
+   "positions": 12,
+   "gate": null,
+   "index": 15835.35
+  },
+  {
+   "date": "2022-07-05",
+   "value": 461330,
+   "positions": 12,
+   "gate": null,
+   "index": 15810.85
+  },
+  {
+   "date": "2022-07-06",
+   "value": 462531,
+   "positions": 15,
+   "gate": null,
+   "index": 15989.8
+  },
+  {
+   "date": "2022-07-07",
+   "value": 463494,
+   "positions": 15,
+   "gate": null,
+   "index": 16132.9
+  },
+  {
+   "date": "2022-07-08",
+   "value": 469242,
+   "positions": 15,
+   "gate": null,
+   "index": 16220.6
+  },
+  {
+   "date": "2022-07-11",
+   "value": 477112,
+   "positions": 15,
+   "gate": null,
+   "index": 16216
+  },
+  {
+   "date": "2022-07-12",
+   "value": 472748,
+   "positions": 15,
+   "gate": null,
+   "index": 16058.3
+  },
+  {
+   "date": "2022-07-13",
+   "value": 468115,
+   "positions": 15,
+   "gate": null,
+   "index": 15966.65
+  },
+  {
+   "date": "2022-07-14",
+   "value": 469811,
+   "positions": 15,
+   "gate": null,
+   "index": 15938.65
+  },
+  {
+   "date": "2022-07-15",
+   "value": 471449,
+   "positions": 15,
+   "gate": null,
+   "index": 16049.2
+  },
+  {
+   "date": "2022-07-18",
+   "value": 479642,
+   "positions": 15,
+   "gate": null,
+   "index": 16278.5
+  },
+  {
+   "date": "2022-07-19",
+   "value": 481928,
+   "positions": 15,
+   "gate": null,
+   "index": 16340.55
+  },
+  {
+   "date": "2022-07-20",
+   "value": 481226,
+   "positions": 15,
+   "gate": null,
+   "index": 16520.85
+  },
+  {
+   "date": "2022-07-21",
+   "value": 486119,
+   "positions": 15,
+   "gate": null,
+   "index": 16605.25
+  },
+  {
+   "date": "2022-07-22",
+   "value": 485158,
+   "positions": 15,
+   "gate": null,
+   "index": 16719.45
+  },
+  {
+   "date": "2022-07-25",
+   "value": 487359,
+   "positions": 15,
+   "gate": null,
+   "index": 16631
+  },
+  {
+   "date": "2022-07-26",
+   "value": 480125,
+   "positions": 15,
+   "gate": null,
+   "index": 16483.85
+  },
+  {
+   "date": "2022-07-27",
+   "value": 484598,
+   "positions": 15,
+   "gate": null,
+   "index": 16641.8
+  },
+  {
+   "date": "2022-07-28",
+   "value": 490807,
+   "positions": 15,
+   "gate": null,
+   "index": 16929.6
+  },
+  {
+   "date": "2022-07-29",
+   "value": 502235,
+   "positions": 15,
+   "gate": null,
+   "index": 17158.25
+  },
+  {
+   "date": "2022-08-01",
+   "value": 515867,
+   "positions": 15,
+   "gate": null,
+   "index": 17340.05
+  },
+  {
+   "date": "2022-08-02",
+   "value": 520689,
+   "positions": 15,
+   "gate": null,
+   "index": 17345.45
+  },
+  {
+   "date": "2022-08-03",
+   "value": 522686,
+   "positions": 15,
+   "gate": null,
+   "index": 17388.15
+  },
+  {
+   "date": "2022-08-04",
+   "value": 523469,
+   "positions": 15,
+   "gate": null,
+   "index": 17382
+  },
+  {
+   "date": "2022-08-05",
+   "value": 523459,
+   "positions": 15,
+   "gate": null,
+   "index": 17397.5
+  },
+  {
+   "date": "2022-08-08",
+   "value": 536066,
+   "positions": 15,
+   "gate": null,
+   "index": 17525.1
+  },
+  {
+   "date": "2022-08-10",
+   "value": 543517,
+   "positions": 15,
+   "gate": null,
+   "index": 17534.75
+  },
+  {
+   "date": "2022-08-11",
+   "value": 546348,
+   "positions": 15,
+   "gate": null,
+   "index": 17659
+  },
+  {
+   "date": "2022-08-12",
+   "value": 549033,
+   "positions": 15,
+   "gate": null,
+   "index": 17698.15
+  },
+  {
+   "date": "2022-08-16",
+   "value": 557378,
+   "positions": 15,
+   "gate": null,
+   "index": 17825.25
+  },
+  {
+   "date": "2022-08-17",
+   "value": 559472,
+   "positions": 15,
+   "gate": null,
+   "index": 17944.25
+  },
+  {
+   "date": "2022-08-18",
+   "value": 564081,
+   "positions": 15,
+   "gate": null,
+   "index": 17956.5
+  },
+  {
+   "date": "2022-08-19",
+   "value": 557860,
+   "positions": 15,
+   "gate": true,
+   "index": 17758.45
+  },
+  {
+   "date": "2022-08-22",
+   "value": 557404,
+   "positions": 15,
+   "gate": true,
+   "index": 17490.7
+  },
+  {
+   "date": "2022-08-23",
+   "value": 561765,
+   "positions": 15,
+   "gate": true,
+   "index": 17577.5
+  },
+  {
+   "date": "2022-08-24",
+   "value": 561410,
+   "positions": 15,
+   "gate": true,
+   "index": 17604.95
+  },
+  {
+   "date": "2022-08-25",
+   "value": 555246,
+   "positions": 15,
+   "gate": true,
+   "index": 17522.45
+  },
+  {
+   "date": "2022-08-26",
+   "value": 559887,
+   "positions": 15,
+   "gate": true,
+   "index": 17558.9
+  },
+  {
+   "date": "2022-08-29",
+   "value": 554056,
+   "positions": 15,
+   "gate": true,
+   "index": 17312.9
+  },
+  {
+   "date": "2022-08-30",
+   "value": 561014,
+   "positions": 15,
+   "gate": true,
+   "index": 17759.3
+  },
+  {
+   "date": "2022-09-01",
+   "value": 562322,
+   "positions": 15,
+   "gate": true,
+   "index": 17542.8
+  },
+  {
+   "date": "2022-09-02",
+   "value": 568430,
+   "positions": 15,
+   "gate": true,
+   "index": 17539.45
+  },
+  {
+   "date": "2022-09-05",
+   "value": 575974,
+   "positions": 15,
+   "gate": true,
+   "index": 17665.8
+  },
+  {
+   "date": "2022-09-06",
+   "value": 577668,
+   "positions": 15,
+   "gate": true,
+   "index": 17655.6
+  },
+  {
+   "date": "2022-09-07",
+   "value": 580413,
+   "positions": 15,
+   "gate": true,
+   "index": 17624.4
+  },
+  {
+   "date": "2022-09-08",
+   "value": 580809,
+   "positions": 15,
+   "gate": true,
+   "index": 17798.75
+  },
+  {
+   "date": "2022-09-09",
+   "value": 581025,
+   "positions": 15,
+   "gate": true,
+   "index": 17833.35
+  },
+  {
+   "date": "2022-09-12",
+   "value": 587125,
+   "positions": 15,
+   "gate": true,
+   "index": 17936.35
+  },
+  {
+   "date": "2022-09-13",
+   "value": 598124,
+   "positions": 15,
+   "gate": true,
+   "index": 18070.05
+  },
+  {
+   "date": "2022-09-14",
+   "value": 604521,
+   "positions": 15,
+   "gate": true,
+   "index": 18003.75
+  },
+  {
+   "date": "2022-09-15",
+   "value": 608801,
+   "positions": 15,
+   "gate": true,
+   "index": 17877.4
+  },
+  {
+   "date": "2022-09-16",
+   "value": 602231,
+   "positions": 15,
+   "gate": true,
+   "index": 17530.85
+  },
+  {
+   "date": "2022-09-19",
+   "value": 599752,
+   "positions": 15,
+   "gate": true,
+   "index": 17622.25
+  },
+  {
+   "date": "2022-09-20",
+   "value": 608023,
+   "positions": 15,
+   "gate": true,
+   "index": 17816.25
+  },
+  {
+   "date": "2022-09-21",
+   "value": 602906,
+   "positions": 15,
+   "gate": true,
+   "index": 17718.35
+  },
+  {
+   "date": "2022-09-22",
+   "value": 609680,
+   "positions": 15,
+   "gate": true,
+   "index": 17629.8
+  },
+  {
+   "date": "2022-09-23",
+   "value": 596946,
+   "positions": 15,
+   "gate": true,
+   "index": 17327.35
+  },
+  {
+   "date": "2022-09-26",
+   "value": 572587,
+   "positions": 15,
+   "gate": true,
+   "index": 17016.3
+  },
+  {
+   "date": "2022-09-27",
+   "value": 575086,
+   "positions": 15,
+   "gate": true,
+   "index": 17007.4
+  },
+  {
+   "date": "2022-09-28",
+   "value": 570037,
+   "positions": 15,
+   "gate": false,
+   "index": 16858.6
+  },
+  {
+   "date": "2022-09-29",
+   "value": 574919,
+   "positions": 15,
+   "gate": false,
+   "index": 16818.1
+  },
+  {
+   "date": "2022-09-30",
+   "value": 585376,
+   "positions": 15,
+   "gate": true,
+   "index": 17094.35
+  },
+  {
+   "date": "2022-10-03",
+   "value": 577158,
+   "positions": 15,
+   "gate": false,
+   "index": 16887.35
+  },
+  {
+   "date": "2022-10-04",
+   "value": 595030,
+   "positions": 15,
+   "gate": true,
+   "index": 17274.3
+  },
+  {
+   "date": "2022-10-06",
+   "value": 603475,
+   "positions": 15,
+   "gate": true,
+   "index": 17331.8
+  },
+  {
+   "date": "2022-10-07",
+   "value": 605523,
+   "positions": 15,
+   "gate": true,
+   "index": 17314.65
+  },
+  {
+   "date": "2022-10-10",
+   "value": 596225,
+   "positions": 15,
+   "gate": true,
+   "index": 17241
+  },
+  {
+   "date": "2022-10-11",
+   "value": 591220,
+   "positions": 15,
+   "gate": false,
+   "index": 16983.55
+  },
+  {
+   "date": "2022-10-12",
+   "value": 589673,
+   "positions": 15,
+   "gate": true,
+   "index": 17123.6
+  },
+  {
+   "date": "2022-10-13",
+   "value": 589272,
+   "positions": 15,
+   "gate": true,
+   "index": 17014.35
+  },
+  {
+   "date": "2022-10-14",
+   "value": 585521,
+   "positions": 15,
+   "gate": true,
+   "index": 17185.7
+  },
+  {
+   "date": "2022-10-17",
+   "value": 594118,
+   "positions": 15,
+   "gate": true,
+   "index": 17311.8
+  },
+  {
+   "date": "2022-10-18",
+   "value": 602629,
+   "positions": 15,
+   "gate": true,
+   "index": 17486.95
+  },
+  {
+   "date": "2022-10-19",
+   "value": 608594,
+   "positions": 15,
+   "gate": true,
+   "index": 17512.25
+  },
+  {
+   "date": "2022-10-20",
+   "value": 605669,
+   "positions": 14,
+   "gate": true,
+   "index": 17563.95
+  },
+  {
+   "date": "2022-10-21",
+   "value": 602701,
+   "positions": 14,
+   "gate": true,
+   "index": 17576.3
+  },
+  {
+   "date": "2022-10-24",
+   "value": 606752,
+   "positions": 14,
+   "gate": true,
+   "index": 17730.75
+  },
+  {
+   "date": "2022-10-25",
+   "value": 613874,
+   "positions": 14,
+   "gate": true,
+   "index": 17656.35
+  },
+  {
+   "date": "2022-10-27",
+   "value": 614223,
+   "positions": 14,
+   "gate": true,
+   "index": 17736.95
+  },
+  {
+   "date": "2022-10-28",
+   "value": 612064,
+   "positions": 14,
+   "gate": true,
+   "index": 17786.8
+  },
+  {
+   "date": "2022-10-31",
+   "value": 619549,
+   "positions": 14,
+   "gate": true,
+   "index": 18012.2
+  },
+  {
+   "date": "2022-11-01",
+   "value": 623594,
+   "positions": 14,
+   "gate": true,
+   "index": 18145.4
+  },
+  {
+   "date": "2022-11-02",
+   "value": 623278,
+   "positions": 14,
+   "gate": true,
+   "index": 18082.85
+  },
+  {
+   "date": "2022-11-03",
+   "value": 630639,
+   "positions": 14,
+   "gate": true,
+   "index": 18052.7
+  },
+  {
+   "date": "2022-11-04",
+   "value": 633258,
+   "positions": 14,
+   "gate": true,
+   "index": 18117.15
+  },
+  {
+   "date": "2022-11-07",
+   "value": 641230,
+   "positions": 14,
+   "gate": true,
+   "index": 18202.8
+  },
+  {
+   "date": "2022-11-09",
+   "value": 639672,
+   "positions": 15,
+   "gate": true,
+   "index": 18157
+  },
+  {
+   "date": "2022-11-10",
+   "value": 631531,
+   "positions": 15,
+   "gate": true,
+   "index": 18028.2
+  },
+  {
+   "date": "2022-11-11",
+   "value": 636404,
+   "positions": 15,
+   "gate": true,
+   "index": 18349.7
+  },
+  {
+   "date": "2022-11-14",
+   "value": 637504,
+   "positions": 15,
+   "gate": true,
+   "index": 18329.15
+  },
+  {
+   "date": "2022-11-15",
+   "value": 641038,
+   "positions": 15,
+   "gate": true,
+   "index": 18403.4
+  },
+  {
+   "date": "2022-11-16",
+   "value": 644163,
+   "positions": 15,
+   "gate": true,
+   "index": 18409.65
+  },
+  {
+   "date": "2022-11-17",
+   "value": 643807,
+   "positions": 15,
+   "gate": true,
+   "index": 18343.9
+  },
+  {
+   "date": "2022-11-18",
+   "value": 640057,
+   "positions": 15,
+   "gate": true,
+   "index": 18307.65
+  },
+  {
+   "date": "2022-11-21",
+   "value": 637648,
+   "positions": 15,
+   "gate": true,
+   "index": 18159.95
+  },
+  {
+   "date": "2022-11-22",
+   "value": 642310,
+   "positions": 15,
+   "gate": true,
+   "index": 18244.2
+  },
+  {
+   "date": "2022-11-23",
+   "value": 642642,
+   "positions": 15,
+   "gate": true,
+   "index": 18267.25
+  },
+  {
+   "date": "2022-11-24",
+   "value": 645000,
+   "positions": 15,
+   "gate": true,
+   "index": 18484.1
+  },
+  {
+   "date": "2022-11-25",
+   "value": 646180,
+   "positions": 15,
+   "gate": true,
+   "index": 18512.75
+  },
+  {
+   "date": "2022-11-28",
+   "value": 647840,
+   "positions": 14,
+   "gate": true,
+   "index": 18562.75
+  },
+  {
+   "date": "2022-11-29",
+   "value": 642259,
+   "positions": 14,
+   "gate": true,
+   "index": 18618.05
+  },
+  {
+   "date": "2022-11-30",
+   "value": 652084,
+   "positions": 14,
+   "gate": true,
+   "index": 18758.35
+  },
+  {
+   "date": "2022-12-01",
+   "value": 657660,
+   "positions": 14,
+   "gate": true,
+   "index": 18812.5
+  },
+  {
+   "date": "2022-12-02",
+   "value": 659576,
+   "positions": 14,
+   "gate": true,
+   "index": 18696.1
+  },
+  {
+   "date": "2022-12-05",
+   "value": 658976,
+   "positions": 14,
+   "gate": true,
+   "index": 18701.05
+  },
+  {
+   "date": "2022-12-06",
+   "value": 659248,
+   "positions": 14,
+   "gate": true,
+   "index": 18642.75
+  },
+  {
+   "date": "2022-12-07",
+   "value": 656952,
+   "positions": 14,
+   "gate": true,
+   "index": 18560.5
+  },
+  {
+   "date": "2022-12-08",
+   "value": 665420,
+   "positions": 15,
+   "gate": true,
+   "index": 18609.35
+  },
+  {
+   "date": "2022-12-09",
+   "value": 656958,
+   "positions": 15,
+   "gate": true,
+   "index": 18496.6
+  },
+  {
+   "date": "2022-12-12",
+   "value": 660236,
+   "positions": 15,
+   "gate": true,
+   "index": 18497.15
+  },
+  {
+   "date": "2022-12-13",
+   "value": 679769,
+   "positions": 15,
+   "gate": true,
+   "index": 18608
+  },
+  {
+   "date": "2022-12-14",
+   "value": 679968,
+   "positions": 15,
+   "gate": true,
+   "index": 18660.3
+  },
+  {
+   "date": "2022-12-15",
+   "value": 669561,
+   "positions": 15,
+   "gate": true,
+   "index": 18414.9
+  },
+  {
+   "date": "2022-12-16",
+   "value": 664587,
+   "positions": 15,
+   "gate": true,
+   "index": 18269
+  },
+  {
+   "date": "2022-12-19",
+   "value": 672338,
+   "positions": 15,
+   "gate": true,
+   "index": 18420.45
+  },
+  {
+   "date": "2022-12-20",
+   "value": 677361,
+   "positions": 15,
+   "gate": true,
+   "index": 18385.3
+  },
+  {
+   "date": "2022-12-21",
+   "value": 656590,
+   "positions": 15,
+   "gate": true,
+   "index": 18199.1
+  },
+  {
+   "date": "2022-12-22",
+   "value": 642419,
+   "positions": 15,
+   "gate": true,
+   "index": 18127.35
+  },
+  {
+   "date": "2022-12-23",
+   "value": 600625,
+   "positions": 10,
+   "gate": true,
+   "index": 17806.8
+  },
+  {
+   "date": "2022-12-26",
+   "value": 616751,
+   "positions": 10,
+   "gate": true,
+   "index": 18014.6
+  },
+  {
+   "date": "2022-12-27",
+   "value": 621728,
+   "positions": 10,
+   "gate": true,
+   "index": 18132.3
+  },
+  {
+   "date": "2022-12-28",
+   "value": 624721,
+   "positions": 10,
+   "gate": true,
+   "index": 18122.5
+  },
+  {
+   "date": "2022-12-29",
+   "value": 628357,
+   "positions": 10,
+   "gate": true,
+   "index": 18191
+  },
+  {
+   "date": "2022-12-30",
+   "value": 632379,
+   "positions": 10,
+   "gate": true,
+   "index": 18105.3
+  },
+  {
+   "date": "2023-01-02",
+   "value": 632136,
+   "positions": 10,
+   "gate": true,
+   "index": 18197.45
+  },
+  {
+   "date": "2023-01-03",
+   "value": 628842,
+   "positions": 10,
+   "gate": true,
+   "index": 18232.55
+  },
+  {
+   "date": "2023-01-04",
+   "value": 626150,
+   "positions": 10,
+   "gate": true,
+   "index": 18042.95
+  },
+  {
+   "date": "2023-01-05",
+   "value": 628891,
+   "positions": 10,
+   "gate": true,
+   "index": 17992.15
+  },
+  {
+   "date": "2023-01-06",
+   "value": 627198,
+   "positions": 15,
+   "gate": true,
+   "index": 17859.45
+  },
+  {
+   "date": "2023-01-09",
+   "value": 631416,
+   "positions": 15,
+   "gate": true,
+   "index": 18101.2
+  },
+  {
+   "date": "2023-01-10",
+   "value": 619470,
+   "positions": 15,
+   "gate": true,
+   "index": 17914.15
+  },
+  {
+   "date": "2023-01-11",
+   "value": 618158,
+   "positions": 15,
+   "gate": true,
+   "index": 17895.7
+  },
+  {
+   "date": "2023-01-12",
+   "value": 616572,
+   "positions": 15,
+   "gate": true,
+   "index": 17858.2
+  },
+  {
+   "date": "2023-01-13",
+   "value": 616898,
+   "positions": 15,
+   "gate": true,
+   "index": 17956.6
+  },
+  {
+   "date": "2023-01-16",
+   "value": 617048,
+   "positions": 15,
+   "gate": true,
+   "index": 17894.85
+  },
+  {
+   "date": "2023-01-17",
+   "value": 616820,
+   "positions": 15,
+   "gate": true,
+   "index": 18053.3
+  },
+  {
+   "date": "2023-01-18",
+   "value": 619609,
+   "positions": 15,
+   "gate": true,
+   "index": 18165.35
+  },
+  {
+   "date": "2023-01-19",
+   "value": 617997,
+   "positions": 15,
+   "gate": true,
+   "index": 18107.85
+  },
+  {
+   "date": "2023-01-20",
+   "value": 616916,
+   "positions": 15,
+   "gate": true,
+   "index": 18027.65
+  },
+  {
+   "date": "2023-01-23",
+   "value": 612664,
+   "positions": 15,
+   "gate": true,
+   "index": 18118.55
+  },
+  {
+   "date": "2023-01-24",
+   "value": 611097,
+   "positions": 15,
+   "gate": true,
+   "index": 18118.3
+  },
+  {
+   "date": "2023-01-25",
+   "value": 603385,
+   "positions": 15,
+   "gate": true,
+   "index": 17891.95
+  },
+  {
+   "date": "2023-01-27",
+   "value": 575802,
+   "positions": 13,
+   "gate": true,
+   "index": 17604.35
+  },
+  {
+   "date": "2023-01-30",
+   "value": 574668,
+   "positions": 12,
+   "gate": true,
+   "index": 17648.95
+  },
+  {
+   "date": "2023-01-31",
+   "value": 590806,
+   "positions": 12,
+   "gate": true,
+   "index": 17662.15
+  },
+  {
+   "date": "2023-02-01",
+   "value": 575925,
+   "positions": 12,
+   "gate": true,
+   "index": 17616.3
+  },
+  {
+   "date": "2023-02-02",
+   "value": 577474,
+   "positions": 12,
+   "gate": true,
+   "index": 17610.4
+  },
+  {
+   "date": "2023-02-03",
+   "value": 576919,
+   "positions": 12,
+   "gate": true,
+   "index": 17854.05
+  },
+  {
+   "date": "2023-02-06",
+   "value": 578447,
+   "positions": 12,
+   "gate": true,
+   "index": 17764.6
+  },
+  {
+   "date": "2023-02-07",
+   "value": 580195,
+   "positions": 15,
+   "gate": true,
+   "index": 17721.5
+  },
+  {
+   "date": "2023-02-08",
+   "value": 581048,
+   "positions": 15,
+   "gate": true,
+   "index": 17871.7
+  },
+  {
+   "date": "2023-02-09",
+   "value": 578836,
+   "positions": 15,
+   "gate": true,
+   "index": 17893.45
+  },
+  {
+   "date": "2023-02-10",
+   "value": 577501,
+   "positions": 15,
+   "gate": true,
+   "index": 17856.5
+  },
+  {
+   "date": "2023-02-13",
+   "value": 564896,
+   "positions": 15,
+   "gate": true,
+   "index": 17770.9
+  },
+  {
+   "date": "2023-02-14",
+   "value": 564788,
+   "positions": 15,
+   "gate": true,
+   "index": 17929.85
+  },
+  {
+   "date": "2023-02-15",
+   "value": 568260,
+   "positions": 15,
+   "gate": true,
+   "index": 18015.85
+  },
+  {
+   "date": "2023-02-16",
+   "value": 570218,
+   "positions": 15,
+   "gate": true,
+   "index": 18035.85
+  },
+  {
+   "date": "2023-02-17",
+   "value": 567375,
+   "positions": 15,
+   "gate": true,
+   "index": 17944.2
+  },
+  {
+   "date": "2023-02-20",
+   "value": 568509,
+   "positions": 15,
+   "gate": true,
+   "index": 17844.6
+  },
+  {
+   "date": "2023-02-21",
+   "value": 568775,
+   "positions": 15,
+   "gate": true,
+   "index": 17826.7
+  },
+  {
+   "date": "2023-02-22",
+   "value": 553308,
+   "positions": 14,
+   "gate": true,
+   "index": 17554.3
+  },
+  {
+   "date": "2023-02-23",
+   "value": 557938,
+   "positions": 14,
+   "gate": true,
+   "index": 17511.25
+  },
+  {
+   "date": "2023-02-24",
+   "value": 552964,
+   "positions": 14,
+   "gate": true,
+   "index": 17465.8
+  },
+  {
+   "date": "2023-02-27",
+   "value": 544252,
+   "positions": 14,
+   "gate": true,
+   "index": 17392.7
+  },
+  {
+   "date": "2023-02-28",
+   "value": 550070,
+   "positions": 14,
+   "gate": false,
+   "index": 17303.95
+  },
+  {
+   "date": "2023-03-01",
+   "value": 560517,
+   "positions": 14,
+   "gate": true,
+   "index": 17450.9
+  },
+  {
+   "date": "2023-03-02",
+   "value": 562664,
+   "positions": 14,
+   "gate": false,
+   "index": 17321.9
+  },
+  {
+   "date": "2023-03-03",
+   "value": 573905,
+   "positions": 14,
+   "gate": true,
+   "index": 17594.35
+  },
+  {
+   "date": "2023-03-06",
+   "value": 576420,
+   "positions": 14,
+   "gate": true,
+   "index": 17711.45
+  },
+  {
+   "date": "2023-03-08",
+   "value": 584227,
+   "positions": 14,
+   "gate": true,
+   "index": 17754.4
+  },
+  {
+   "date": "2023-03-09",
+   "value": 582058,
+   "positions": 15,
+   "gate": true,
+   "index": 17589.6
+  },
+  {
+   "date": "2023-03-10",
+   "value": 575115,
+   "positions": 15,
+   "gate": false,
+   "index": 17412.9
+  },
+  {
+   "date": "2023-03-13",
+   "value": 559157,
+   "positions": 15,
+   "gate": false,
+   "index": 17154.3
+  },
+  {
+   "date": "2023-03-14",
+   "value": 552916,
+   "positions": 14,
+   "gate": false,
+   "index": 17043.3
+  },
+  {
+   "date": "2023-03-15",
+   "value": 556618,
+   "positions": 14,
+   "gate": false,
+   "index": 16972.15
+  },
+  {
+   "date": "2023-03-16",
+   "value": 555859,
+   "positions": 14,
+   "gate": false,
+   "index": 16985.6
+  },
+  {
+   "date": "2023-03-17",
+   "value": 561222,
+   "positions": 14,
+   "gate": false,
+   "index": 17100.05
+  },
+  {
+   "date": "2023-03-20",
+   "value": 557741,
+   "positions": 14,
+   "gate": false,
+   "index": 16988.4
+  },
+  {
+   "date": "2023-03-21",
+   "value": 563807,
+   "positions": 14,
+   "gate": false,
+   "index": 17107.5
+  },
+  {
+   "date": "2023-03-22",
+   "value": 567418,
+   "positions": 14,
+   "gate": false,
+   "index": 17151.9
+  },
+  {
+   "date": "2023-03-23",
+   "value": 564840,
+   "positions": 14,
+   "gate": false,
+   "index": 17076.9
+  },
+  {
+   "date": "2023-03-24",
+   "value": 556082,
+   "positions": 12,
+   "gate": false,
+   "index": 16945.05
+  },
+  {
+   "date": "2023-03-27",
+   "value": 554433,
+   "positions": 12,
+   "gate": false,
+   "index": 16985.7
+  },
+  {
+   "date": "2023-03-28",
+   "value": 548508,
+   "positions": 12,
+   "gate": false,
+   "index": 16951.7
+  },
+  {
+   "date": "2023-03-29",
+   "value": 558458,
+   "positions": 12,
+   "gate": false,
+   "index": 17080.7
+  },
+  {
+   "date": "2023-03-31",
+   "value": 566040,
+   "positions": 12,
+   "gate": false,
+   "index": 17359.75
+  },
+  {
+   "date": "2023-04-03",
+   "value": 572097,
+   "positions": 12,
+   "gate": false,
+   "index": 17398.05
+  },
+  {
+   "date": "2023-04-05",
+   "value": 573301,
+   "positions": 12,
+   "gate": true,
+   "index": 17557.05
+  },
+  {
+   "date": "2023-04-06",
+   "value": 573350,
+   "positions": 11,
+   "gate": true,
+   "index": 17599.15
+  },
+  {
+   "date": "2023-04-10",
+   "value": 571083,
+   "positions": 11,
+   "gate": true,
+   "index": 17624.05
+  },
+  {
+   "date": "2023-04-11",
+   "value": 577527,
+   "positions": 11,
+   "gate": true,
+   "index": 17722.3
+  },
+  {
+   "date": "2023-04-12",
+   "value": 576807,
+   "positions": 15,
+   "gate": true,
+   "index": 17812.4
+  },
+  {
+   "date": "2023-04-13",
+   "value": 579787,
+   "positions": 15,
+   "gate": true,
+   "index": 17828
+  },
+  {
+   "date": "2023-04-17",
+   "value": 577778,
+   "positions": 15,
+   "gate": true,
+   "index": 17706.85
+  },
+  {
+   "date": "2023-04-18",
+   "value": 578596,
+   "positions": 15,
+   "gate": true,
+   "index": 17660.15
+  },
+  {
+   "date": "2023-04-19",
+   "value": 579613,
+   "positions": 15,
+   "gate": true,
+   "index": 17618.75
+  },
+  {
+   "date": "2023-04-20",
+   "value": 581097,
+   "positions": 15,
+   "gate": true,
+   "index": 17624.45
+  },
+  {
+   "date": "2023-04-21",
+   "value": 577728,
+   "positions": 15,
+   "gate": true,
+   "index": 17624.05
+  },
+  {
+   "date": "2023-04-24",
+   "value": 591280,
+   "positions": 15,
+   "gate": true,
+   "index": 17743.4
+  },
+  {
+   "date": "2023-04-25",
+   "value": 599693,
+   "positions": 15,
+   "gate": true,
+   "index": 17769.25
+  },
+  {
+   "date": "2023-04-26",
+   "value": 604623,
+   "positions": 15,
+   "gate": true,
+   "index": 17813.6
+  },
+  {
+   "date": "2023-04-27",
+   "value": 605438,
+   "positions": 15,
+   "gate": true,
+   "index": 17915.05
+  },
+  {
+   "date": "2023-04-28",
+   "value": 615273,
+   "positions": 15,
+   "gate": true,
+   "index": 18065
+  },
+  {
+   "date": "2023-05-02",
+   "value": 620153,
+   "positions": 15,
+   "gate": true,
+   "index": 18147.65
+  },
+  {
+   "date": "2023-05-03",
+   "value": 629410,
+   "positions": 15,
+   "gate": true,
+   "index": 18089.85
+  },
+  {
+   "date": "2023-05-04",
+   "value": 630731,
+   "positions": 15,
+   "gate": true,
+   "index": 18255.8
+  },
+  {
+   "date": "2023-05-05",
+   "value": 632414,
+   "positions": 15,
+   "gate": true,
+   "index": 18069
+  },
+  {
+   "date": "2023-05-08",
+   "value": 632253,
+   "positions": 15,
+   "gate": true,
+   "index": 18264.4
+  },
+  {
+   "date": "2023-05-09",
+   "value": 618900,
+   "positions": 15,
+   "gate": true,
+   "index": 18265.95
+  },
+  {
+   "date": "2023-05-10",
+   "value": 615018,
+   "positions": 15,
+   "gate": true,
+   "index": 18315.1
+  },
+  {
+   "date": "2023-05-11",
+   "value": 627875,
+   "positions": 15,
+   "gate": true,
+   "index": 18297
+  },
+  {
+   "date": "2023-05-12",
+   "value": 624344,
+   "positions": 15,
+   "gate": true,
+   "index": 18314.8
+  },
+  {
+   "date": "2023-05-15",
+   "value": 635579,
+   "positions": 15,
+   "gate": true,
+   "index": 18398.85
+  },
+  {
+   "date": "2023-05-16",
+   "value": 635011,
+   "positions": 15,
+   "gate": true,
+   "index": 18286.5
+  },
+  {
+   "date": "2023-05-17",
+   "value": 635103,
+   "positions": 15,
+   "gate": true,
+   "index": 18181.75
+  },
+  {
+   "date": "2023-05-18",
+   "value": 636938,
+   "positions": 15,
+   "gate": true,
+   "index": 18129.95
+  },
+  {
+   "date": "2023-05-19",
+   "value": 631333,
+   "positions": 15,
+   "gate": true,
+   "index": 18203.4
+  },
+  {
+   "date": "2023-05-22",
+   "value": 634977,
+   "positions": 15,
+   "gate": true,
+   "index": 18314.4
+  },
+  {
+   "date": "2023-05-23",
+   "value": 629080,
+   "positions": 14,
+   "gate": true,
+   "index": 18348
+  },
+  {
+   "date": "2023-05-24",
+   "value": 627284,
+   "positions": 14,
+   "gate": true,
+   "index": 18285.4
+  },
+  {
+   "date": "2023-05-25",
+   "value": 627794,
+   "positions": 14,
+   "gate": true,
+   "index": 18321.15
+  },
+  {
+   "date": "2023-05-26",
+   "value": 632799,
+   "positions": 14,
+   "gate": true,
+   "index": 18499.35
+  },
+  {
+   "date": "2023-05-29",
+   "value": 628760,
+   "positions": 14,
+   "gate": true,
+   "index": 18598.65
+  },
+  {
+   "date": "2023-05-30",
+   "value": 636221,
+   "positions": 14,
+   "gate": true,
+   "index": 18633.85
+  },
+  {
+   "date": "2023-05-31",
+   "value": 650146,
+   "positions": 14,
+   "gate": true,
+   "index": 18534.4
+  },
+  {
+   "date": "2023-06-01",
+   "value": 651053,
+   "positions": 14,
+   "gate": true,
+   "index": 18487.75
+  },
+  {
+   "date": "2023-06-02",
+   "value": 656656,
+   "positions": 14,
+   "gate": true,
+   "index": 18534.1
+  },
+  {
+   "date": "2023-06-05",
+   "value": 655772,
+   "positions": 14,
+   "gate": true,
+   "index": 18593.85
+  },
+  {
+   "date": "2023-06-06",
+   "value": 656844,
+   "positions": 14,
+   "gate": true,
+   "index": 18599
+  },
+  {
+   "date": "2023-06-07",
+   "value": 664960,
+   "positions": 14,
+   "gate": true,
+   "index": 18726.4
+  },
+  {
+   "date": "2023-06-08",
+   "value": 664505,
+   "positions": 14,
+   "gate": true,
+   "index": 18634.55
+  },
+  {
+   "date": "2023-06-09",
+   "value": 663091,
+   "positions": 14,
+   "gate": true,
+   "index": 18563.4
+  },
+  {
+   "date": "2023-06-12",
+   "value": 665837,
+   "positions": 14,
+   "gate": true,
+   "index": 18601.5
+  },
+  {
+   "date": "2023-06-13",
+   "value": 673985,
+   "positions": 15,
+   "gate": true,
+   "index": 18716.15
+  },
+  {
+   "date": "2023-06-14",
+   "value": 679460,
+   "positions": 15,
+   "gate": true,
+   "index": 18755.9
+  },
+  {
+   "date": "2023-06-15",
+   "value": 681465,
+   "positions": 15,
+   "gate": true,
+   "index": 18688.1
+  },
+  {
+   "date": "2023-06-16",
+   "value": 675622,
+   "positions": 15,
+   "gate": true,
+   "index": 18826
+  },
+  {
+   "date": "2023-06-19",
+   "value": 680484,
+   "positions": 15,
+   "gate": true,
+   "index": 18755.45
+  },
+  {
+   "date": "2023-06-20",
+   "value": 686582,
+   "positions": 15,
+   "gate": true,
+   "index": 18816.7
+  },
+  {
+   "date": "2023-06-21",
+   "value": 687358,
+   "positions": 15,
+   "gate": true,
+   "index": 18856.85
+  },
+  {
+   "date": "2023-06-22",
+   "value": 682895,
+   "positions": 15,
+   "gate": true,
+   "index": 18771.25
+  },
+  {
+   "date": "2023-06-23",
+   "value": 674526,
+   "positions": 15,
+   "gate": true,
+   "index": 18665.5
+  },
+  {
+   "date": "2023-06-26",
+   "value": 685714,
+   "positions": 15,
+   "gate": true,
+   "index": 18691.2
+  },
+  {
+   "date": "2023-06-27",
+   "value": 699328,
+   "positions": 15,
+   "gate": true,
+   "index": 18817.4
+  },
+  {
+   "date": "2023-06-28",
+   "value": 703214,
+   "positions": 15,
+   "gate": true,
+   "index": 18972.1
+  },
+  {
+   "date": "2023-06-30",
+   "value": 707833,
+   "positions": 15,
+   "gate": true,
+   "index": 19189.05
+  },
+  {
+   "date": "2023-07-03",
+   "value": 719273,
+   "positions": 15,
+   "gate": true,
+   "index": 19322.55
+  },
+  {
+   "date": "2023-07-04",
+   "value": 726712,
+   "positions": 15,
+   "gate": true,
+   "index": 19389
+  },
+  {
+   "date": "2023-07-05",
+   "value": 732631,
+   "positions": 15,
+   "gate": true,
+   "index": 19398.5
+  },
+  {
+   "date": "2023-07-06",
+   "value": 730035,
+   "positions": 15,
+   "gate": true,
+   "index": 19497.3
+  },
+  {
+   "date": "2023-07-07",
+   "value": 728300,
+   "positions": 15,
+   "gate": true,
+   "index": 19331.8
+  },
+  {
+   "date": "2023-07-10",
+   "value": 723229,
+   "positions": 15,
+   "gate": true,
+   "index": 19355.9
+  },
+  {
+   "date": "2023-07-11",
+   "value": 735067,
+   "positions": 15,
+   "gate": true,
+   "index": 19439.4
+  },
+  {
+   "date": "2023-07-12",
+   "value": 743382,
+   "positions": 15,
+   "gate": true,
+   "index": 19384.3
+  },
+  {
+   "date": "2023-07-13",
+   "value": 739492,
+   "positions": 15,
+   "gate": true,
+   "index": 19413.75
+  },
+  {
+   "date": "2023-07-14",
+   "value": 754836,
+   "positions": 15,
+   "gate": true,
+   "index": 19564.5
+  },
+  {
+   "date": "2023-07-17",
+   "value": 761287,
+   "positions": 15,
+   "gate": true,
+   "index": 19711.45
+  },
+  {
+   "date": "2023-07-18",
+   "value": 758882,
+   "positions": 15,
+   "gate": true,
+   "index": 19749.25
+  },
+  {
+   "date": "2023-07-19",
+   "value": 769442,
+   "positions": 15,
+   "gate": true,
+   "index": 19833.15
+  },
+  {
+   "date": "2023-07-20",
+   "value": 772484,
+   "positions": 15,
+   "gate": true,
+   "index": 19979.15
+  },
+  {
+   "date": "2023-07-21",
+   "value": 783003,
+   "positions": 15,
+   "gate": true,
+   "index": 19745
+  },
+  {
+   "date": "2023-07-24",
+   "value": 772284,
+   "positions": 15,
+   "gate": true,
+   "index": 19672.35
+  },
+  {
+   "date": "2023-07-25",
+   "value": 772592,
+   "positions": 14,
+   "gate": true,
+   "index": 19680.6
+  },
+  {
+   "date": "2023-07-26",
+   "value": 776850,
+   "positions": 14,
+   "gate": true,
+   "index": 19778.3
+  },
+  {
+   "date": "2023-07-27",
+   "value": 777844,
+   "positions": 14,
+   "gate": true,
+   "index": 19659.9
+  },
+  {
+   "date": "2023-07-28",
+   "value": 770303,
+   "positions": 14,
+   "gate": true,
+   "index": 19646.05
+  },
+  {
+   "date": "2023-07-31",
+   "value": 776759,
+   "positions": 14,
+   "gate": true,
+   "index": 19753.8
+  },
+  {
+   "date": "2023-08-01",
+   "value": 777000,
+   "positions": 14,
+   "gate": true,
+   "index": 19733.55
+  },
+  {
+   "date": "2023-08-02",
+   "value": 764778,
+   "positions": 14,
+   "gate": true,
+   "index": 19526.55
+  },
+  {
+   "date": "2023-08-03",
+   "value": 767831,
+   "positions": 14,
+   "gate": true,
+   "index": 19381.65
+  },
+  {
+   "date": "2023-08-04",
+   "value": 770715,
+   "positions": 14,
+   "gate": true,
+   "index": 19517
+  },
+  {
+   "date": "2023-08-07",
+   "value": 778733,
+   "positions": 14,
+   "gate": true,
+   "index": 19597.3
+  },
+  {
+   "date": "2023-08-08",
+   "value": 780175,
+   "positions": 14,
+   "gate": true,
+   "index": 19570.85
+  },
+  {
+   "date": "2023-08-09",
+   "value": 780606,
+   "positions": 14,
+   "gate": true,
+   "index": 19632.55
+  },
+  {
+   "date": "2023-08-10",
+   "value": 785565,
+   "positions": 14,
+   "gate": true,
+   "index": 19543.1
+  },
+  {
+   "date": "2023-08-11",
+   "value": 781485,
+   "positions": 15,
+   "gate": true,
+   "index": 19428.3
+  },
+  {
+   "date": "2023-08-14",
+   "value": 782708,
+   "positions": 15,
+   "gate": true,
+   "index": 19434.55
+  },
+  {
+   "date": "2023-08-16",
+   "value": 792028,
+   "positions": 14,
+   "gate": true,
+   "index": 19465
+  },
+  {
+   "date": "2023-08-17",
+   "value": 795014,
+   "positions": 14,
+   "gate": true,
+   "index": 19365.25
+  },
+  {
+   "date": "2023-08-18",
+   "value": 783089,
+   "positions": 14,
+   "gate": true,
+   "index": 19310.15
+  },
+  {
+   "date": "2023-08-21",
+   "value": 802569,
+   "positions": 14,
+   "gate": true,
+   "index": 19393.6
+  },
+  {
+   "date": "2023-08-22",
+   "value": 802692,
+   "positions": 14,
+   "gate": true,
+   "index": 19396.45
+  },
+  {
+   "date": "2023-08-23",
+   "value": 802663,
+   "positions": 14,
+   "gate": true,
+   "index": 19444
+  },
+  {
+   "date": "2023-08-24",
+   "value": 810374,
+   "positions": 14,
+   "gate": true,
+   "index": 19386.7
+  },
+  {
+   "date": "2023-08-25",
+   "value": 811590,
+   "positions": 14,
+   "gate": true,
+   "index": 19265.8
+  },
+  {
+   "date": "2023-08-28",
+   "value": 815538,
+   "positions": 14,
+   "gate": true,
+   "index": 19306.05
+  },
+  {
+   "date": "2023-08-29",
+   "value": 816193,
+   "positions": 14,
+   "gate": true,
+   "index": 19342.65
+  },
+  {
+   "date": "2023-08-30",
+   "value": 823804,
+   "positions": 14,
+   "gate": true,
+   "index": 19347.45
+  },
+  {
+   "date": "2023-08-31",
+   "value": 800026,
+   "positions": 14,
+   "gate": true,
+   "index": 19253.8
+  },
+  {
+   "date": "2023-09-01",
+   "value": 805058,
+   "positions": 14,
+   "gate": true,
+   "index": 19435.3
+  },
+  {
+   "date": "2023-09-04",
+   "value": 808090,
+   "positions": 14,
+   "gate": true,
+   "index": 19528.8
+  },
+  {
+   "date": "2023-09-05",
+   "value": 813848,
+   "positions": 14,
+   "gate": true,
+   "index": 19574.9
+  },
+  {
+   "date": "2023-09-06",
+   "value": 809898,
+   "positions": 14,
+   "gate": true,
+   "index": 19611.05
+  },
+  {
+   "date": "2023-09-07",
+   "value": 812085,
+   "positions": 14,
+   "gate": true,
+   "index": 19727.05
+  },
+  {
+   "date": "2023-09-08",
+   "value": 822697,
+   "positions": 14,
+   "gate": true,
+   "index": 19819.95
+  },
+  {
+   "date": "2023-09-11",
+   "value": 839304,
+   "positions": 14,
+   "gate": true,
+   "index": 19996.35
+  },
+  {
+   "date": "2023-09-12",
+   "value": 802905,
+   "positions": 15,
+   "gate": true,
+   "index": 19993.2
+  },
+  {
+   "date": "2023-09-13",
+   "value": 808239,
+   "positions": 15,
+   "gate": true,
+   "index": 20070
+  },
+  {
+   "date": "2023-09-14",
+   "value": 819009,
+   "positions": 15,
+   "gate": true,
+   "index": 20103.1
+  },
+  {
+   "date": "2023-09-15",
+   "value": 828550,
+   "positions": 15,
+   "gate": true,
+   "index": 20192.35
+  },
+  {
+   "date": "2023-09-18",
+   "value": 827090,
+   "positions": 15,
+   "gate": true,
+   "index": 20133.3
+  },
+  {
+   "date": "2023-09-20",
+   "value": 826204,
+   "positions": 15,
+   "gate": true,
+   "index": 19901.4
+  },
+  {
+   "date": "2023-09-21",
+   "value": 816332,
+   "positions": 15,
+   "gate": true,
+   "index": 19742.35
+  },
+  {
+   "date": "2023-09-22",
+   "value": 813577,
+   "positions": 15,
+   "gate": true,
+   "index": 19674.25
+  },
+  {
+   "date": "2023-09-25",
+   "value": 822257,
+   "positions": 15,
+   "gate": true,
+   "index": 19674.55
+  },
+  {
+   "date": "2023-09-26",
+   "value": 827235,
+   "positions": 15,
+   "gate": true,
+   "index": 19664.7
+  },
+  {
+   "date": "2023-09-27",
+   "value": 827952,
+   "positions": 15,
+   "gate": true,
+   "index": 19716.45
+  },
+  {
+   "date": "2023-09-28",
+   "value": 824368,
+   "positions": 15,
+   "gate": true,
+   "index": 19523.55
+  },
+  {
+   "date": "2023-09-29",
+   "value": 829061,
+   "positions": 15,
+   "gate": true,
+   "index": 19638.3
+  },
+  {
+   "date": "2023-10-03",
+   "value": 837355,
+   "positions": 15,
+   "gate": true,
+   "index": 19528.75
+  },
+  {
+   "date": "2023-10-04",
+   "value": 834260,
+   "positions": 15,
+   "gate": true,
+   "index": 19436.1
+  },
+  {
+   "date": "2023-10-05",
+   "value": 845094,
+   "positions": 15,
+   "gate": true,
+   "index": 19545.75
+  },
+  {
+   "date": "2023-10-06",
+   "value": 849774,
+   "positions": 15,
+   "gate": true,
+   "index": 19653.5
+  },
+  {
+   "date": "2023-10-09",
+   "value": 839248,
+   "positions": 15,
+   "gate": true,
+   "index": 19512.35
+  },
+  {
+   "date": "2023-10-10",
+   "value": 834649,
+   "positions": 15,
+   "gate": true,
+   "index": 19689.85
+  },
+  {
+   "date": "2023-10-11",
+   "value": 838093,
+   "positions": 15,
+   "gate": true,
+   "index": 19811.35
+  },
+  {
+   "date": "2023-10-12",
+   "value": 849367,
+   "positions": 15,
+   "gate": true,
+   "index": 19794
+  },
+  {
+   "date": "2023-10-13",
+   "value": 845990,
+   "positions": 15,
+   "gate": true,
+   "index": 19751.05
+  },
+  {
+   "date": "2023-10-16",
+   "value": 846303,
+   "positions": 15,
+   "gate": true,
+   "index": 19731.75
+  },
+  {
+   "date": "2023-10-17",
+   "value": 850661,
+   "positions": 15,
+   "gate": true,
+   "index": 19811.5
+  },
+  {
+   "date": "2023-10-18",
+   "value": 848086,
+   "positions": 15,
+   "gate": true,
+   "index": 19671.1
+  },
+  {
+   "date": "2023-10-19",
+   "value": 854538,
+   "positions": 15,
+   "gate": true,
+   "index": 19624.7
+  },
+  {
+   "date": "2023-10-20",
+   "value": 849518,
+   "positions": 15,
+   "gate": true,
+   "index": 19542.65
+  },
+  {
+   "date": "2023-10-23",
+   "value": 823800,
+   "positions": 15,
+   "gate": true,
+   "index": 19281.75
+  },
+  {
+   "date": "2023-10-25",
+   "value": 814713,
+   "positions": 15,
+   "gate": true,
+   "index": 19122.15
+  },
+  {
+   "date": "2023-10-26",
+   "value": 818935,
+   "positions": 15,
+   "gate": true,
+   "index": 18857.25
+  },
+  {
+   "date": "2023-10-27",
+   "value": 825272,
+   "positions": 15,
+   "gate": true,
+   "index": 19047.25
+  },
+  {
+   "date": "2023-10-30",
+   "value": 835511,
+   "positions": 15,
+   "gate": true,
+   "index": 19140.9
+  },
+  {
+   "date": "2023-10-31",
+   "value": 843574,
+   "positions": 15,
+   "gate": true,
+   "index": 19079.6
+  },
+  {
+   "date": "2023-11-01",
+   "value": 835249,
+   "positions": 15,
+   "gate": true,
+   "index": 18989.15
+  },
+  {
+   "date": "2023-11-02",
+   "value": 836581,
+   "positions": 15,
+   "gate": true,
+   "index": 19133.25
+  },
+  {
+   "date": "2023-11-03",
+   "value": 842579,
+   "positions": 15,
+   "gate": true,
+   "index": 19230.6
+  },
+  {
+   "date": "2023-11-06",
+   "value": 855192,
+   "positions": 15,
+   "gate": true,
+   "index": 19411.75
+  },
+  {
+   "date": "2023-11-07",
+   "value": 869155,
+   "positions": 15,
+   "gate": true,
+   "index": 19406.7
+  },
+  {
+   "date": "2023-11-08",
+   "value": 875278,
+   "positions": 14,
+   "gate": true,
+   "index": 19443.5
+  },
+  {
+   "date": "2023-11-09",
+   "value": 879157,
+   "positions": 14,
+   "gate": true,
+   "index": 19395.3
+  },
+  {
+   "date": "2023-11-10",
+   "value": 885423,
+   "positions": 14,
+   "gate": true,
+   "index": 19425.35
+  },
+  {
+   "date": "2023-11-13",
+   "value": 892222,
+   "positions": 14,
+   "gate": true,
+   "index": 19443.55
+  },
+  {
+   "date": "2023-11-15",
+   "value": 901892,
+   "positions": 15,
+   "gate": true,
+   "index": 19675.45
+  },
+  {
+   "date": "2023-11-16",
+   "value": 897946,
+   "positions": 15,
+   "gate": true,
+   "index": 19765.2
+  },
+  {
+   "date": "2023-11-17",
+   "value": 901788,
+   "positions": 15,
+   "gate": true,
+   "index": 19731.8
+  },
+  {
+   "date": "2023-11-20",
+   "value": 902889,
+   "positions": 15,
+   "gate": true,
+   "index": 19694
+  },
+  {
+   "date": "2023-11-21",
+   "value": 905334,
+   "positions": 15,
+   "gate": true,
+   "index": 19783.4
+  },
+  {
+   "date": "2023-11-22",
+   "value": 898018,
+   "positions": 15,
+   "gate": true,
+   "index": 19811.85
+  },
+  {
+   "date": "2023-11-23",
+   "value": 898196,
+   "positions": 15,
+   "gate": true,
+   "index": 19802
+  },
+  {
+   "date": "2023-11-24",
+   "value": 895699,
+   "positions": 15,
+   "gate": true,
+   "index": 19794.7
+  },
+  {
+   "date": "2023-11-28",
+   "value": 901733,
+   "positions": 15,
+   "gate": true,
+   "index": 19889.7
+  },
+  {
+   "date": "2023-11-29",
+   "value": 902302,
+   "positions": 15,
+   "gate": true,
+   "index": 20096.6
+  },
+  {
+   "date": "2023-11-30",
+   "value": 907693,
+   "positions": 15,
+   "gate": true,
+   "index": 20133.15
+  },
+  {
+   "date": "2023-12-01",
+   "value": 908572,
+   "positions": 15,
+   "gate": true,
+   "index": 20267.9
+  },
+  {
+   "date": "2023-12-04",
+   "value": 933983,
+   "positions": 15,
+   "gate": true,
+   "index": 20686.8
+  },
+  {
+   "date": "2023-12-05",
+   "value": 933623,
+   "positions": 15,
+   "gate": true,
+   "index": 20855.1
+  },
+  {
+   "date": "2023-12-06",
+   "value": 932919,
+   "positions": 15,
+   "gate": true,
+   "index": 20937.7
+  },
+  {
+   "date": "2023-12-07",
+   "value": 932859,
+   "positions": 15,
+   "gate": true,
+   "index": 20901.15
+  },
+  {
+   "date": "2023-12-08",
+   "value": 923184,
+   "positions": 15,
+   "gate": true,
+   "index": 20969.4
+  },
+  {
+   "date": "2023-12-11",
+   "value": 927295,
+   "positions": 15,
+   "gate": true,
+   "index": 20997.1
+  },
+  {
+   "date": "2023-12-12",
+   "value": 929554,
+   "positions": 15,
+   "gate": true,
+   "index": 20906.4
+  },
+  {
+   "date": "2023-12-13",
+   "value": 932395,
+   "positions": 15,
+   "gate": true,
+   "index": 20926.35
+  },
+  {
+   "date": "2023-12-14",
+   "value": 938111,
+   "positions": 15,
+   "gate": true,
+   "index": 21182.7
+  },
+  {
+   "date": "2023-12-15",
+   "value": 940888,
+   "positions": 15,
+   "gate": true,
+   "index": 21456.65
+  },
+  {
+   "date": "2023-12-18",
+   "value": 942018,
+   "positions": 15,
+   "gate": true,
+   "index": 21418.65
+  },
+  {
+   "date": "2023-12-19",
+   "value": 948784,
+   "positions": 15,
+   "gate": true,
+   "index": 21453.1
+  },
+  {
+   "date": "2023-12-20",
+   "value": 924938,
+   "positions": 15,
+   "gate": true,
+   "index": 21150.15
+  },
+  {
+   "date": "2023-12-21",
+   "value": 936051,
+   "positions": 15,
+   "gate": true,
+   "index": 21255.05
+  },
+  {
+   "date": "2023-12-22",
+   "value": 944065,
+   "positions": 15,
+   "gate": true,
+   "index": 21349.4
+  },
+  {
+   "date": "2023-12-26",
+   "value": 949014,
+   "positions": 15,
+   "gate": true,
+   "index": 21441.35
+  },
+  {
+   "date": "2023-12-27",
+   "value": 947399,
+   "positions": 15,
+   "gate": true,
+   "index": 21654.75
+  },
+  {
+   "date": "2023-12-28",
+   "value": 945081,
+   "positions": 15,
+   "gate": true,
+   "index": 21778.7
+  },
+  {
+   "date": "2023-12-29",
+   "value": 951765,
+   "positions": 15,
+   "gate": true,
+   "index": 21731.4
+  },
+  {
+   "date": "2024-01-01",
+   "value": 961921,
+   "positions": 15,
+   "gate": true,
+   "index": 21741.9
+  },
+  {
+   "date": "2024-01-02",
+   "value": 969431,
+   "positions": 15,
+   "gate": true,
+   "index": 21665.8
+  },
+  {
+   "date": "2024-01-03",
+   "value": 968235,
+   "positions": 15,
+   "gate": true,
+   "index": 21517.35
+  },
+  {
+   "date": "2024-01-04",
+   "value": 977975,
+   "positions": 15,
+   "gate": true,
+   "index": 21658.6
+  },
+  {
+   "date": "2024-01-05",
+   "value": 981807,
+   "positions": 15,
+   "gate": true,
+   "index": 21710.8
+  },
+  {
+   "date": "2024-01-08",
+   "value": 989564,
+   "positions": 15,
+   "gate": true,
+   "index": 21513
+  },
+  {
+   "date": "2024-01-09",
+   "value": 996030,
+   "positions": 15,
+   "gate": true,
+   "index": 21544.85
+  },
+  {
+   "date": "2024-01-10",
+   "value": 981707,
+   "positions": 15,
+   "gate": true,
+   "index": 21618.7
+  },
+  {
+   "date": "2024-01-11",
+   "value": 982037,
+   "positions": 15,
+   "gate": true,
+   "index": 21647.2
+  },
+  {
+   "date": "2024-01-12",
+   "value": 983053,
+   "positions": 15,
+   "gate": true,
+   "index": 21894.55
+  },
+  {
+   "date": "2024-01-15",
+   "value": 1035679,
+   "positions": 15,
+   "gate": true,
+   "index": 22097.45
+  },
+  {
+   "date": "2024-01-16",
+   "value": 1043855,
+   "positions": 15,
+   "gate": true,
+   "index": 22032.3
+  },
+  {
+   "date": "2024-01-17",
+   "value": 1044628,
+   "positions": 15,
+   "gate": true,
+   "index": 21571.95
+  },
+  {
+   "date": "2024-01-18",
+   "value": 1040227,
+   "positions": 15,
+   "gate": true,
+   "index": 21462.25
+  },
+  {
+   "date": "2024-01-19",
+   "value": 1054511,
+   "positions": 15,
+   "gate": true,
+   "index": 21622.4
+  },
+  {
+   "date": "2024-01-23",
+   "value": 1040593,
+   "positions": 15,
+   "gate": true,
+   "index": 21238.8
+  },
+  {
+   "date": "2024-01-24",
+   "value": 1059517,
+   "positions": 15,
+   "gate": true,
+   "index": 21453.95
+  },
+  {
+   "date": "2024-01-25",
+   "value": 1065472,
+   "positions": 15,
+   "gate": true,
+   "index": 21352.6
+  },
+  {
+   "date": "2024-01-29",
+   "value": 1075403,
+   "positions": 15,
+   "gate": true,
+   "index": 21737.6
+  },
+  {
+   "date": "2024-01-30",
+   "value": 1073647,
+   "positions": 15,
+   "gate": true,
+   "index": 21522.1
+  },
+  {
+   "date": "2024-01-31",
+   "value": 1085930,
+   "positions": 15,
+   "gate": true,
+   "index": 21725.7
+  },
+  {
+   "date": "2024-02-01",
+   "value": 1083438,
+   "positions": 15,
+   "gate": true,
+   "index": 21697.45
+  },
+  {
+   "date": "2024-02-02",
+   "value": 1096549,
+   "positions": 15,
+   "gate": true,
+   "index": 21853.8
+  },
+  {
+   "date": "2024-02-05",
+   "value": 1102485,
+   "positions": 15,
+   "gate": true,
+   "index": 21771.7
+  },
+  {
+   "date": "2024-02-06",
+   "value": 1102365,
+   "positions": 15,
+   "gate": true,
+   "index": 21929.4
+  },
+  {
+   "date": "2024-02-07",
+   "value": 1108499,
+   "positions": 15,
+   "gate": true,
+   "index": 21930.5
+  },
+  {
+   "date": "2024-02-08",
+   "value": 1111790,
+   "positions": 15,
+   "gate": true,
+   "index": 21717.95
+  },
+  {
+   "date": "2024-02-09",
+   "value": 1090290,
+   "positions": 15,
+   "gate": true,
+   "index": 21782.5
+  },
+  {
+   "date": "2024-02-12",
+   "value": 1048735,
+   "positions": 11,
+   "gate": true,
+   "index": 21616.05
+  },
+  {
+   "date": "2024-02-13",
+   "value": 1049076,
+   "positions": 11,
+   "gate": true,
+   "index": 21743.25
+  },
+  {
+   "date": "2024-02-14",
+   "value": 1064445,
+   "positions": 11,
+   "gate": true,
+   "index": 21840.05
+  },
+  {
+   "date": "2024-02-15",
+   "value": 1061122,
+   "positions": 11,
+   "gate": true,
+   "index": 21910.75
+  },
+  {
+   "date": "2024-02-16",
+   "value": 1062443,
+   "positions": 15,
+   "gate": true,
+   "index": 22040.7
+  },
+  {
+   "date": "2024-02-19",
+   "value": 1070279,
+   "positions": 15,
+   "gate": true,
+   "index": 22122.25
+  },
+  {
+   "date": "2024-02-20",
+   "value": 1067645,
+   "positions": 15,
+   "gate": true,
+   "index": 22196.95
+  },
+  {
+   "date": "2024-02-21",
+   "value": 1056816,
+   "positions": 15,
+   "gate": true,
+   "index": 22055.05
+  },
+  {
+   "date": "2024-02-22",
+   "value": 1058914,
+   "positions": 15,
+   "gate": true,
+   "index": 22217.45
+  },
+  {
+   "date": "2024-02-23",
+   "value": 1066932,
+   "positions": 15,
+   "gate": true,
+   "index": 22212.7
+  },
+  {
+   "date": "2024-02-26",
+   "value": 1068045,
+   "positions": 15,
+   "gate": true,
+   "index": 22122.05
+  },
+  {
+   "date": "2024-02-27",
+   "value": 1069811,
+   "positions": 15,
+   "gate": true,
+   "index": 22198.35
+  },
+  {
+   "date": "2024-02-28",
+   "value": 1058108,
+   "positions": 15,
+   "gate": true,
+   "index": 21951.15
+  },
+  {
+   "date": "2024-02-29",
+   "value": 1064477,
+   "positions": 15,
+   "gate": true,
+   "index": 21982.8
+  },
+  {
+   "date": "2024-03-01",
+   "value": 1065045,
+   "positions": 15,
+   "gate": true,
+   "index": 22338.75
+  },
+  {
+   "date": "2024-03-04",
+   "value": 1066400,
+   "positions": 15,
+   "gate": true,
+   "index": 22405.6
+  },
+  {
+   "date": "2024-03-05",
+   "value": 1062428,
+   "positions": 15,
+   "gate": true,
+   "index": 22356.3
+  },
+  {
+   "date": "2024-03-06",
+   "value": 1054617,
+   "positions": 14,
+   "gate": true,
+   "index": 22474.05
+  },
+  {
+   "date": "2024-03-07",
+   "value": 1057800,
+   "positions": 14,
+   "gate": true,
+   "index": 22493.55
+  },
+  {
+   "date": "2024-03-11",
+   "value": 1050286,
+   "positions": 14,
+   "gate": true,
+   "index": 22332.65
+  },
+  {
+   "date": "2024-03-12",
+   "value": 1037050,
+   "positions": 13,
+   "gate": true,
+   "index": 22335.7
+  },
+  {
+   "date": "2024-03-13",
+   "value": 1006143,
+   "positions": 7,
+   "gate": true,
+   "index": 21997.7
+  },
+  {
+   "date": "2024-03-14",
+   "value": 1009284,
+   "positions": 7,
+   "gate": true,
+   "index": 22146.65
+  },
+  {
+   "date": "2024-03-15",
+   "value": 1005646,
+   "positions": 7,
+   "gate": true,
+   "index": 22023.35
+  },
+  {
+   "date": "2024-03-18",
+   "value": 1004517,
+   "positions": 6,
+   "gate": true,
+   "index": 22055.7
+  },
+  {
+   "date": "2024-03-19",
+   "value": 1003507,
+   "positions": 15,
+   "gate": true,
+   "index": 21817.45
+  },
+  {
+   "date": "2024-03-20",
+   "value": 1002905,
+   "positions": 15,
+   "gate": true,
+   "index": 21839.1
+  },
+  {
+   "date": "2024-03-21",
+   "value": 1014963,
+   "positions": 15,
+   "gate": true,
+   "index": 22011.95
+  },
+  {
+   "date": "2024-03-22",
+   "value": 1019459,
+   "positions": 15,
+   "gate": true,
+   "index": 22096.75
+  },
+  {
+   "date": "2024-03-26",
+   "value": 1021645,
+   "positions": 15,
+   "gate": true,
+   "index": 22004.7
+  },
+  {
+   "date": "2024-03-27",
+   "value": 1023312,
+   "positions": 15,
+   "gate": true,
+   "index": 22123.65
+  },
+  {
+   "date": "2024-03-28",
+   "value": 1027172,
+   "positions": 15,
+   "gate": true,
+   "index": 22326.9
+  },
+  {
+   "date": "2024-04-01",
+   "value": 1040759,
+   "positions": 15,
+   "gate": true,
+   "index": 22462
+  },
+  {
+   "date": "2024-04-02",
+   "value": 1040548,
+   "positions": 15,
+   "gate": true,
+   "index": 22453.3
+  },
+  {
+   "date": "2024-04-03",
+   "value": 1049855,
+   "positions": 15,
+   "gate": true,
+   "index": 22434.65
+  },
+  {
+   "date": "2024-04-04",
+   "value": 1051574,
+   "positions": 15,
+   "gate": true,
+   "index": 22514.65
+  },
+  {
+   "date": "2024-04-05",
+   "value": 1054276,
+   "positions": 15,
+   "gate": true,
+   "index": 22513.7
+  },
+  {
+   "date": "2024-04-08",
+   "value": 1057406,
+   "positions": 15,
+   "gate": true,
+   "index": 22666.3
+  },
+  {
+   "date": "2024-04-09",
+   "value": 1060772,
+   "positions": 15,
+   "gate": true,
+   "index": 22642.75
+  },
+  {
+   "date": "2024-04-10",
+   "value": 1064393,
+   "positions": 15,
+   "gate": true,
+   "index": 22753.8
+  },
+  {
+   "date": "2024-04-12",
+   "value": 1062235,
+   "positions": 15,
+   "gate": true,
+   "index": 22519.4
+  },
+  {
+   "date": "2024-04-15",
+   "value": 1063174,
+   "positions": 14,
+   "gate": true,
+   "index": 22272.5
+  },
+  {
+   "date": "2024-04-16",
+   "value": 1062001,
+   "positions": 14,
+   "gate": true,
+   "index": 22147.9
+  },
+  {
+   "date": "2024-04-18",
+   "value": 1061708,
+   "positions": 14,
+   "gate": true,
+   "index": 21995.85
+  },
+  {
+   "date": "2024-04-19",
+   "value": 1063783,
+   "positions": 14,
+   "gate": true,
+   "index": 22147
+  },
+  {
+   "date": "2024-04-22",
+   "value": 1067114,
+   "positions": 14,
+   "gate": true,
+   "index": 22336.4
+  },
+  {
+   "date": "2024-04-23",
+   "value": 1073778,
+   "positions": 15,
+   "gate": true,
+   "index": 22368
+  },
+  {
+   "date": "2024-04-24",
+   "value": 1082282,
+   "positions": 15,
+   "gate": true,
+   "index": 22402.4
+  },
+  {
+   "date": "2024-04-25",
+   "value": 1094498,
+   "positions": 15,
+   "gate": true,
+   "index": 22570.35
+  },
+  {
+   "date": "2024-04-26",
+   "value": 1103235,
+   "positions": 15,
+   "gate": true,
+   "index": 22419.95
+  },
+  {
+   "date": "2024-04-29",
+   "value": 1100685,
+   "positions": 15,
+   "gate": true,
+   "index": 22643.4
+  },
+  {
+   "date": "2024-04-30",
+   "value": 1105490,
+   "positions": 15,
+   "gate": true,
+   "index": 22604.85
+  },
+  {
+   "date": "2024-05-02",
+   "value": 1113358,
+   "positions": 15,
+   "gate": true,
+   "index": 22648.2
+  },
+  {
+   "date": "2024-05-03",
+   "value": 1111933,
+   "positions": 15,
+   "gate": true,
+   "index": 22475.85
+  },
+  {
+   "date": "2024-05-06",
+   "value": 1102064,
+   "positions": 15,
+   "gate": true,
+   "index": 22442.7
+  },
+  {
+   "date": "2024-05-07",
+   "value": 1086878,
+   "positions": 15,
+   "gate": true,
+   "index": 22302.5
+  },
+  {
+   "date": "2024-05-08",
+   "value": 1094311,
+   "positions": 15,
+   "gate": true,
+   "index": 22302.5
+  },
+  {
+   "date": "2024-05-09",
+   "value": 1076911,
+   "positions": 14,
+   "gate": true,
+   "index": 21957.5
+  },
+  {
+   "date": "2024-05-10",
+   "value": 1078156,
+   "positions": 14,
+   "gate": true,
+   "index": 22055.2
+  },
+  {
+   "date": "2024-05-13",
+   "value": 1077655,
+   "positions": 14,
+   "gate": true,
+   "index": 22104.05
+  },
+  {
+   "date": "2024-05-14",
+   "value": 1092909,
+   "positions": 14,
+   "gate": true,
+   "index": 22217.85
+  },
+  {
+   "date": "2024-05-15",
+   "value": 1093877,
+   "positions": 14,
+   "gate": true,
+   "index": 22200.55
+  },
+  {
+   "date": "2024-05-16",
+   "value": 1100112,
+   "positions": 14,
+   "gate": true,
+   "index": 22403.85
+  },
+  {
+   "date": "2024-05-17",
+   "value": 1109467,
+   "positions": 14,
+   "gate": true,
+   "index": 22466.1
+  },
+  {
+   "date": "2024-05-21",
+   "value": 1134875,
+   "positions": 14,
+   "gate": true,
+   "index": 22529.05
+  },
+  {
+   "date": "2024-05-22",
+   "value": 1127195,
+   "positions": 14,
+   "gate": true,
+   "index": 22597.8
+  },
+  {
+   "date": "2024-05-23",
+   "value": 1140615,
+   "positions": 14,
+   "gate": true,
+   "index": 22967.65
+  },
+  {
+   "date": "2024-05-24",
+   "value": 1146122,
+   "positions": 15,
+   "gate": true,
+   "index": 22957.1
+  },
+  {
+   "date": "2024-05-27",
+   "value": 1149962,
+   "positions": 15,
+   "gate": true,
+   "index": 22932.45
+  },
+  {
+   "date": "2024-05-28",
+   "value": 1137334,
+   "positions": 15,
+   "gate": true,
+   "index": 22888.15
+  },
+  {
+   "date": "2024-05-29",
+   "value": 1143714,
+   "positions": 15,
+   "gate": true,
+   "index": 22704.7
+  },
+  {
+   "date": "2024-05-30",
+   "value": 1131947,
+   "positions": 15,
+   "gate": true,
+   "index": 22488.65
+  },
+  {
+   "date": "2024-05-31",
+   "value": 1139657,
+   "positions": 15,
+   "gate": true,
+   "index": 22530.7
+  },
+  {
+   "date": "2024-06-03",
+   "value": 1158278,
+   "positions": 15,
+   "gate": true,
+   "index": 23263.9
+  },
+  {
+   "date": "2024-06-04",
+   "value": 1085051,
+   "positions": 12,
+   "gate": true,
+   "index": 21884.5
+  },
+  {
+   "date": "2024-06-05",
+   "value": 1089955,
+   "positions": 12,
+   "gate": true,
+   "index": 22620.35
+  },
+  {
+   "date": "2024-06-06",
+   "value": 1112807,
+   "positions": 12,
+   "gate": true,
+   "index": 22821.4
+  },
+  {
+   "date": "2024-06-07",
+   "value": 1124319,
+   "positions": 12,
+   "gate": true,
+   "index": 23290.15
+  },
+  {
+   "date": "2024-06-10",
+   "value": 1127088,
+   "positions": 12,
+   "gate": true,
+   "index": 23259.2
+  },
+  {
+   "date": "2024-06-11",
+   "value": 1136245,
+   "positions": 12,
+   "gate": true,
+   "index": 23264.85
+  },
+  {
+   "date": "2024-06-12",
+   "value": 1139067,
+   "positions": 12,
+   "gate": true,
+   "index": 23322.95
+  },
+  {
+   "date": "2024-06-13",
+   "value": 1145077,
+   "positions": 12,
+   "gate": true,
+   "index": 23398.9
+  },
+  {
+   "date": "2024-06-14",
+   "value": 1156061,
+   "positions": 12,
+   "gate": true,
+   "index": 23465.6
+  },
+  {
+   "date": "2024-06-18",
+   "value": 1164358,
+   "positions": 12,
+   "gate": true,
+   "index": 23557.9
+  },
+  {
+   "date": "2024-06-19",
+   "value": 1161238,
+   "positions": 12,
+   "gate": true,
+   "index": 23516
+  },
+  {
+   "date": "2024-06-20",
+   "value": 1160459,
+   "positions": 12,
+   "gate": true,
+   "index": 23567
+  },
+  {
+   "date": "2024-06-21",
+   "value": 1153814,
+   "positions": 12,
+   "gate": true,
+   "index": 23501.1
+  },
+  {
+   "date": "2024-06-24",
+   "value": 1148213,
+   "positions": 12,
+   "gate": true,
+   "index": 23537.85
+  },
+  {
+   "date": "2024-06-25",
+   "value": 1149458,
+   "positions": 15,
+   "gate": true,
+   "index": 23721.3
+  },
+  {
+   "date": "2024-06-26",
+   "value": 1153275,
+   "positions": 15,
+   "gate": true,
+   "index": 23868.8
+  },
+  {
+   "date": "2024-06-27",
+   "value": 1152186,
+   "positions": 15,
+   "gate": true,
+   "index": 24044.5
+  },
+  {
+   "date": "2024-06-28",
+   "value": 1152767,
+   "positions": 15,
+   "gate": true,
+   "index": 24010.6
+  },
+  {
+   "date": "2024-07-01",
+   "value": 1154089,
+   "positions": 15,
+   "gate": true,
+   "index": 24141.95
+  },
+  {
+   "date": "2024-07-02",
+   "value": 1156044,
+   "positions": 15,
+   "gate": true,
+   "index": 24123.85
+  },
+  {
+   "date": "2024-07-03",
+   "value": 1174089,
+   "positions": 15,
+   "gate": true,
+   "index": 24286.5
+  },
+  {
+   "date": "2024-07-04",
+   "value": 1199766,
+   "positions": 15,
+   "gate": true,
+   "index": 24302.15
+  },
+  {
+   "date": "2024-07-05",
+   "value": 1213306,
+   "positions": 15,
+   "gate": true,
+   "index": 24323.85
+  },
+  {
+   "date": "2024-07-08",
+   "value": 1220532,
+   "positions": 15,
+   "gate": true,
+   "index": 24320.55
+  },
+  {
+   "date": "2024-07-09",
+   "value": 1216756,
+   "positions": 15,
+   "gate": true,
+   "index": 24433.2
+  },
+  {
+   "date": "2024-07-10",
+   "value": 1210413,
+   "positions": 15,
+   "gate": true,
+   "index": 24324.45
+  },
+  {
+   "date": "2024-07-11",
+   "value": 1224157,
+   "positions": 15,
+   "gate": true,
+   "index": 24315.95
+  },
+  {
+   "date": "2024-07-12",
+   "value": 1230251,
+   "positions": 15,
+   "gate": true,
+   "index": 24502.15
+  },
+  {
+   "date": "2024-07-15",
+   "value": 1227836,
+   "positions": 15,
+   "gate": true,
+   "index": 24586.7
+  },
+  {
+   "date": "2024-07-16",
+   "value": 1225423,
+   "positions": 15,
+   "gate": true,
+   "index": 24613
+  },
+  {
+   "date": "2024-07-18",
+   "value": 1203200,
+   "positions": 15,
+   "gate": true,
+   "index": 24800.85
+  },
+  {
+   "date": "2024-07-19",
+   "value": 1184441,
+   "positions": 14,
+   "gate": true,
+   "index": 24530.9
+  },
+  {
+   "date": "2024-07-22",
+   "value": 1194542,
+   "positions": 14,
+   "gate": true,
+   "index": 24509.25
+  },
+  {
+   "date": "2024-07-23",
+   "value": 1178967,
+   "positions": 14,
+   "gate": true,
+   "index": 24479.05
+  },
+  {
+   "date": "2024-07-24",
+   "value": 1190061,
+   "positions": 14,
+   "gate": true,
+   "index": 24413.5
+  },
+  {
+   "date": "2024-07-25",
+   "value": 1183396,
+   "positions": 15,
+   "gate": true,
+   "index": 24406.1
+  },
+  {
+   "date": "2024-07-26",
+   "value": 1184871,
+   "positions": 15,
+   "gate": true,
+   "index": 24834.85
+  },
+  {
+   "date": "2024-07-29",
+   "value": 1199853,
+   "positions": 15,
+   "gate": true,
+   "index": 24836.1
+  },
+  {
+   "date": "2024-07-30",
+   "value": 1205661,
+   "positions": 15,
+   "gate": true,
+   "index": 24857.3
+  },
+  {
+   "date": "2024-07-31",
+   "value": 1201382,
+   "positions": 15,
+   "gate": true,
+   "index": 24951.15
+  },
+  {
+   "date": "2024-08-01",
+   "value": 1194534,
+   "positions": 15,
+   "gate": true,
+   "index": 25010.9
+  },
+  {
+   "date": "2024-08-02",
+   "value": 1188978,
+   "positions": 14,
+   "gate": true,
+   "index": 24717.7
+  },
+  {
+   "date": "2024-08-05",
+   "value": 1154094,
+   "positions": 13,
+   "gate": true,
+   "index": 24055.6
+  },
+  {
+   "date": "2024-08-06",
+   "value": 1141807,
+   "positions": 12,
+   "gate": true,
+   "index": 23992.55
+  },
+  {
+   "date": "2024-08-07",
+   "value": 1160232,
+   "positions": 12,
+   "gate": true,
+   "index": 24297.5
+  },
+  {
+   "date": "2024-08-08",
+   "value": 1152280,
+   "positions": 12,
+   "gate": true,
+   "index": 24117
+  },
+  {
+   "date": "2024-08-09",
+   "value": 1162010,
+   "positions": 12,
+   "gate": true,
+   "index": 24367.5
+  },
+  {
+   "date": "2024-08-12",
+   "value": 1169523,
+   "positions": 12,
+   "gate": true,
+   "index": 24347
+  },
+  {
+   "date": "2024-08-13",
+   "value": 1160621,
+   "positions": 11,
+   "gate": true,
+   "index": 24139
+  },
+  {
+   "date": "2024-08-14",
+   "value": 1157313,
+   "positions": 11,
+   "gate": true,
+   "index": 24143.75
+  },
+  {
+   "date": "2024-08-16",
+   "value": 1166785,
+   "positions": 11,
+   "gate": true,
+   "index": 24541.15
+  },
+  {
+   "date": "2024-08-19",
+   "value": 1174339,
+   "positions": 11,
+   "gate": true,
+   "index": 24572.65
+  },
+  {
+   "date": "2024-08-20",
+   "value": 1179402,
+   "positions": 11,
+   "gate": true,
+   "index": 24698.85
+  },
+  {
+   "date": "2024-08-21",
+   "value": 1180604,
+   "positions": 11,
+   "gate": true,
+   "index": 24770.2
+  },
+  {
+   "date": "2024-08-22",
+   "value": 1182031,
+   "positions": 11,
+   "gate": true,
+   "index": 24811.5
+  },
+  {
+   "date": "2024-08-23",
+   "value": 1178143,
+   "positions": 11,
+   "gate": true,
+   "index": 24823.15
+  },
+  {
+   "date": "2024-08-26",
+   "value": 1183091,
+   "positions": 15,
+   "gate": true,
+   "index": 25010.6
+  },
+  {
+   "date": "2024-08-27",
+   "value": 1185035,
+   "positions": 15,
+   "gate": true,
+   "index": 25017.75
+  },
+  {
+   "date": "2024-08-28",
+   "value": 1194253,
+   "positions": 15,
+   "gate": true,
+   "index": 25052.35
+  },
+  {
+   "date": "2024-08-29",
+   "value": 1195120,
+   "positions": 15,
+   "gate": true,
+   "index": 25151.95
+  },
+  {
+   "date": "2024-08-30",
+   "value": 1195682,
+   "positions": 15,
+   "gate": true,
+   "index": 25235.9
+  },
+  {
+   "date": "2024-09-02",
+   "value": 1188227,
+   "positions": 15,
+   "gate": true,
+   "index": 25278.7
+  },
+  {
+   "date": "2024-09-03",
+   "value": 1191293,
+   "positions": 14,
+   "gate": true,
+   "index": 25279.85
+  },
+  {
+   "date": "2024-09-04",
+   "value": 1183703,
+   "positions": 14,
+   "gate": true,
+   "index": 25198.7
+  },
+  {
+   "date": "2024-09-05",
+   "value": 1183152,
+   "positions": 14,
+   "gate": true,
+   "index": 25145.1
+  },
+  {
+   "date": "2024-09-06",
+   "value": 1177918,
+   "positions": 14,
+   "gate": true,
+   "index": 24852.15
+  },
+  {
+   "date": "2024-09-09",
+   "value": 1170763,
+   "positions": 13,
+   "gate": true,
+   "index": 24936.4
+  },
+  {
+   "date": "2024-09-10",
+   "value": 1174492,
+   "positions": 13,
+   "gate": true,
+   "index": 25041.1
+  },
+  {
+   "date": "2024-09-11",
+   "value": 1167488,
+   "positions": 12,
+   "gate": true,
+   "index": 24918.45
+  },
+  {
+   "date": "2024-09-12",
+   "value": 1172567,
+   "positions": 12,
+   "gate": true,
+   "index": 25388.9
+  },
+  {
+   "date": "2024-09-13",
+   "value": 1180414,
+   "positions": 12,
+   "gate": true,
+   "index": 25356.5
+  },
+  {
+   "date": "2024-09-16",
+   "value": 1185668,
+   "positions": 12,
+   "gate": true,
+   "index": 25383.75
+  },
+  {
+   "date": "2024-09-17",
+   "value": 1181802,
+   "positions": 12,
+   "gate": true,
+   "index": 25418.55
+  },
+  {
+   "date": "2024-09-18",
+   "value": 1177487,
+   "positions": 12,
+   "gate": true,
+   "index": 25377.55
+  },
+  {
+   "date": "2024-09-19",
+   "value": 1170626,
+   "positions": 12,
+   "gate": true,
+   "index": 25415.8
+  },
+  {
+   "date": "2024-09-20",
+   "value": 1173298,
+   "positions": 12,
+   "gate": true,
+   "index": 25790.95
+  },
+  {
+   "date": "2024-09-23",
+   "value": 1173696,
+   "positions": 12,
+   "gate": true,
+   "index": 25939.05
+  },
+  {
+   "date": "2024-09-24",
+   "value": 1173627,
+   "positions": 15,
+   "gate": true,
+   "index": 25940.4
+  },
+  {
+   "date": "2024-09-25",
+   "value": 1169939,
+   "positions": 15,
+   "gate": true,
+   "index": 26004.15
+  },
+  {
+   "date": "2024-09-26",
+   "value": 1169499,
+   "positions": 15,
+   "gate": true,
+   "index": 26216.05
+  },
+  {
+   "date": "2024-09-27",
+   "value": 1169214,
+   "positions": 15,
+   "gate": true,
+   "index": 26178.95
+  },
+  {
+   "date": "2024-09-30",
+   "value": 1164918,
+   "positions": 15,
+   "gate": true,
+   "index": 25810.85
+  },
+  {
+   "date": "2024-10-01",
+   "value": 1164448,
+   "positions": 15,
+   "gate": true,
+   "index": 25796.9
+  },
+  {
+   "date": "2024-10-03",
+   "value": 1151962,
+   "positions": 15,
+   "gate": true,
+   "index": 25250.1
+  },
+  {
+   "date": "2024-10-04",
+   "value": 1149690,
+   "positions": 15,
+   "gate": true,
+   "index": 25014.6
+  },
+  {
+   "date": "2024-10-07",
+   "value": 1131987,
+   "positions": 11,
+   "gate": true,
+   "index": 24795.75
+  },
+  {
+   "date": "2024-10-08",
+   "value": 1141810,
+   "positions": 11,
+   "gate": true,
+   "index": 25013.15
+  },
+  {
+   "date": "2024-10-09",
+   "value": 1147727,
+   "positions": 11,
+   "gate": true,
+   "index": 24981.95
+  },
+  {
+   "date": "2024-10-10",
+   "value": 1154426,
+   "positions": 11,
+   "gate": true,
+   "index": 24998.45
+  },
+  {
+   "date": "2024-10-11",
+   "value": 1155451,
+   "positions": 11,
+   "gate": true,
+   "index": 24964.25
+  },
+  {
+   "date": "2024-10-14",
+   "value": 1155813,
+   "positions": 11,
+   "gate": true,
+   "index": 25127.95
+  },
+  {
+   "date": "2024-10-15",
+   "value": 1158946,
+   "positions": 11,
+   "gate": true,
+   "index": 25057.35
+  },
+  {
+   "date": "2024-10-16",
+   "value": 1157057,
+   "positions": 11,
+   "gate": true,
+   "index": 24971.3
+  },
+  {
+   "date": "2024-10-17",
+   "value": 1153506,
+   "positions": 11,
+   "gate": true,
+   "index": 24749.85
+  },
+  {
+   "date": "2024-10-18",
+   "value": 1153009,
+   "positions": 11,
+   "gate": true,
+   "index": 24854.05
+  },
+  {
+   "date": "2024-10-21",
+   "value": 1144654,
+   "positions": 11,
+   "gate": true,
+   "index": 24781.1
+  },
+  {
+   "date": "2024-10-22",
+   "value": 1130645,
+   "positions": 10,
+   "gate": true,
+   "index": 24472.1
+  },
+  {
+   "date": "2024-10-23",
+   "value": 1136402,
+   "positions": 9,
+   "gate": true,
+   "index": 24435.5
+  },
+  {
+   "date": "2024-10-24",
+   "value": 1129134,
+   "positions": 15,
+   "gate": true,
+   "index": 24399.4
+  },
+  {
+   "date": "2024-10-25",
+   "value": 1116135,
+   "positions": 15,
+   "gate": true,
+   "index": 24180.8
+  },
+  {
+   "date": "2024-10-28",
+   "value": 1125769,
+   "positions": 15,
+   "gate": true,
+   "index": 24339.15
+  },
+  {
+   "date": "2024-10-29",
+   "value": 1133817,
+   "positions": 15,
+   "gate": true,
+   "index": 24466.85
+  },
+  {
+   "date": "2024-10-30",
+   "value": 1129430,
+   "positions": 15,
+   "gate": true,
+   "index": 24340.85
+  },
+  {
+   "date": "2024-10-31",
+   "value": 1141251,
+   "positions": 15,
+   "gate": true,
+   "index": 24205.35
+  },
+  {
+   "date": "2024-11-01",
+   "value": 1145509,
+   "positions": 15,
+   "gate": true,
+   "index": 24304.35
+  },
+  {
+   "date": "2024-11-04",
+   "value": 1140573,
+   "positions": 15,
+   "gate": true,
+   "index": 23995.35
+  },
+  {
+   "date": "2024-11-05",
+   "value": 1144759,
+   "positions": 15,
+   "gate": true,
+   "index": 24213.3
+  },
+  {
+   "date": "2024-11-06",
+   "value": 1161132,
+   "positions": 15,
+   "gate": true,
+   "index": 24484.05
+  },
+  {
+   "date": "2024-11-07",
+   "value": 1152842,
+   "positions": 15,
+   "gate": true,
+   "index": 24199.35
+  },
+  {
+   "date": "2024-11-08",
+   "value": 1147986,
+   "positions": 15,
+   "gate": true,
+   "index": 24148.2
+  },
+  {
+   "date": "2024-11-11",
+   "value": 1138880,
+   "positions": 15,
+   "gate": true,
+   "index": 24141.3
+  },
+  {
+   "date": "2024-11-12",
+   "value": 1136153,
+   "positions": 14,
+   "gate": true,
+   "index": 23883.45
+  },
+  {
+   "date": "2024-11-13",
+   "value": 1115422,
+   "positions": 13,
+   "gate": true,
+   "index": 23559.05
+  },
+  {
+   "date": "2024-11-14",
+   "value": 1119904,
+   "positions": 13,
+   "gate": false,
+   "index": 23532.7
+  },
+  {
+   "date": "2024-11-18",
+   "value": 1115360,
+   "positions": 12,
+   "gate": false,
+   "index": 23453.8
+  },
+  {
+   "date": "2024-11-19",
+   "value": 1120879,
+   "positions": 12,
+   "gate": false,
+   "index": 23518.5
+  },
+  {
+   "date": "2024-11-21",
+   "value": 1122252,
+   "positions": 12,
+   "gate": false,
+   "index": 23349.9
+  },
+  {
+   "date": "2024-11-22",
+   "value": 1123408,
+   "positions": 12,
+   "gate": true,
+   "index": 23907.25
+  },
+  {
+   "date": "2024-11-25",
+   "value": 1127518,
+   "positions": 12,
+   "gate": true,
+   "index": 24221.9
+  },
+  {
+   "date": "2024-11-26",
+   "value": 1126707,
+   "positions": 15,
+   "gate": true,
+   "index": 24194.5
+  },
+  {
+   "date": "2024-11-27",
+   "value": 1136734,
+   "positions": 15,
+   "gate": true,
+   "index": 24274.9
+  },
+  {
+   "date": "2024-11-28",
+   "value": 1135577,
+   "positions": 15,
+   "gate": true,
+   "index": 23914.15
+  },
+  {
+   "date": "2024-11-29",
+   "value": 1144812,
+   "positions": 15,
+   "gate": true,
+   "index": 24131.1
+  },
+  {
+   "date": "2024-12-02",
+   "value": 1153744,
+   "positions": 15,
+   "gate": true,
+   "index": 24276.05
+  },
+  {
+   "date": "2024-12-03",
+   "value": 1153871,
+   "positions": 15,
+   "gate": true,
+   "index": 24457.15
+  },
+  {
+   "date": "2024-12-04",
+   "value": 1158592,
+   "positions": 15,
+   "gate": true,
+   "index": 24467.45
+  },
+  {
+   "date": "2024-12-05",
+   "value": 1165308,
+   "positions": 15,
+   "gate": true,
+   "index": 24708.4
+  },
+  {
+   "date": "2024-12-06",
+   "value": 1169494,
+   "positions": 15,
+   "gate": true,
+   "index": 24677.8
+  },
+  {
+   "date": "2024-12-09",
+   "value": 1173477,
+   "positions": 15,
+   "gate": true,
+   "index": 24619
+  },
+  {
+   "date": "2024-12-10",
+   "value": 1174194,
+   "positions": 15,
+   "gate": true,
+   "index": 24610.05
+  },
+  {
+   "date": "2024-12-11",
+   "value": 1175911,
+   "positions": 15,
+   "gate": true,
+   "index": 24641.8
+  },
+  {
+   "date": "2024-12-12",
+   "value": 1174152,
+   "positions": 15,
+   "gate": true,
+   "index": 24548.7
+  },
+  {
+   "date": "2024-12-13",
+   "value": 1176819,
+   "positions": 15,
+   "gate": true,
+   "index": 24768.3
+  },
+  {
+   "date": "2024-12-16",
+   "value": 1191126,
+   "positions": 15,
+   "gate": true,
+   "index": 24668.25
+  },
+  {
+   "date": "2024-12-17",
+   "value": 1193266,
+   "positions": 15,
+   "gate": true,
+   "index": 24336
+  },
+  {
+   "date": "2024-12-18",
+   "value": 1188947,
+   "positions": 15,
+   "gate": true,
+   "index": 24198.85
+  },
+  {
+   "date": "2024-12-19",
+   "value": 1189799,
+   "positions": 15,
+   "gate": true,
+   "index": 23951.7
+  },
+  {
+   "date": "2024-12-20",
+   "value": 1178549,
+   "positions": 14,
+   "gate": false,
+   "index": 23587.5
+  },
+  {
+   "date": "2024-12-23",
+   "value": 1184573,
+   "positions": 14,
+   "gate": false,
+   "index": 23753.45
+  },
+  {
+   "date": "2024-12-24",
+   "value": 1184056,
+   "positions": 14,
+   "gate": false,
+   "index": 23727.65
+  },
+  {
+   "date": "2024-12-26",
+   "value": 1183192,
+   "positions": 12,
+   "gate": false,
+   "index": 23750.2
+  },
+  {
+   "date": "2024-12-27",
+   "value": 1182165,
+   "positions": 12,
+   "gate": false,
+   "index": 23813.4
+  },
+  {
+   "date": "2024-12-30",
+   "value": 1190797,
+   "positions": 12,
+   "gate": false,
+   "index": 23644.9
+  },
+  {
+   "date": "2024-12-31",
+   "value": 1191158,
+   "positions": 12,
+   "gate": false,
+   "index": 23644.8
+  },
+  {
+   "date": "2025-01-01",
+   "value": 1194941,
+   "positions": 12,
+   "gate": false,
+   "index": 23742.9
+  },
+  {
+   "date": "2025-01-02",
+   "value": 1197064,
+   "positions": 12,
+   "gate": true,
+   "index": 24188.65
+  },
+  {
+   "date": "2025-01-03",
+   "value": 1197781,
+   "positions": 12,
+   "gate": true,
+   "index": 24004.75
+  },
+  {
+   "date": "2025-01-06",
+   "value": 1182621,
+   "positions": 12,
+   "gate": false,
+   "index": 23616.05
+  },
+  {
+   "date": "2025-01-07",
+   "value": 1190204,
+   "positions": 12,
+   "gate": false,
+   "index": 23707.9
+  },
+  {
+   "date": "2025-01-08",
+   "value": 1178334,
+   "positions": 12,
+   "gate": false,
+   "index": 23688.95
+  },
+  {
+   "date": "2025-01-09",
+   "value": 1170424,
+   "positions": 12,
+   "gate": false,
+   "index": 23526.5
+  },
+  {
+   "date": "2025-01-10",
+   "value": 1156409,
+   "positions": 11,
+   "gate": false,
+   "index": 23431.5
+  },
+  {
+   "date": "2025-01-13",
+   "value": 1132061,
+   "positions": 9,
+   "gate": false,
+   "index": 23085.95
+  },
+  {
+   "date": "2025-01-14",
+   "value": 1136779,
+   "positions": 9,
+   "gate": false,
+   "index": 23176.05
+  },
+  {
+   "date": "2025-01-15",
+   "value": 1140984,
+   "positions": 9,
+   "gate": false,
+   "index": 23213.2
+  },
+  {
+   "date": "2025-01-16",
+   "value": 1144646,
+   "positions": 8,
+   "gate": false,
+   "index": 23311.8
+  },
+  {
+   "date": "2025-01-17",
+   "value": 1141367,
+   "positions": 8,
+   "gate": false,
+   "index": 23203.2
+  },
+  {
+   "date": "2025-01-20",
+   "value": 1146773,
+   "positions": 8,
+   "gate": false,
+   "index": 23344.75
+  },
+  {
+   "date": "2025-01-21",
+   "value": 1130803,
+   "positions": 5,
+   "gate": false,
+   "index": 23024.65
+  },
+  {
+   "date": "2025-01-22",
+   "value": 1126236,
+   "positions": 4,
+   "gate": false,
+   "index": 23155.35
+  },
+  {
+   "date": "2025-01-23",
+   "value": 1125138,
+   "positions": 4,
+   "gate": false,
+   "index": 23205.35
+  },
+  {
+   "date": "2025-01-24",
+   "value": 1121531,
+   "positions": 2,
+   "gate": false,
+   "index": 23092.2
+  },
+  {
+   "date": "2025-01-27",
+   "value": 1114387,
+   "positions": 1,
+   "gate": false,
+   "index": 22829.15
+  },
+  {
+   "date": "2025-01-28",
+   "value": 1114142,
+   "positions": 1,
+   "gate": false,
+   "index": 22957.25
+  },
+  {
+   "date": "2025-01-29",
+   "value": 1116007,
+   "positions": 1,
+   "gate": false,
+   "index": 23163.1
+  },
+  {
+   "date": "2025-01-30",
+   "value": 1116777,
+   "positions": 1,
+   "gate": false,
+   "index": 23249.5
+  },
+  {
+   "date": "2025-01-31",
+   "value": 1117695,
+   "positions": 1,
+   "gate": false,
+   "index": 23508.4
+  },
+  {
+   "date": "2025-02-03",
+   "value": 1115741,
+   "positions": 1,
+   "gate": false,
+   "index": 23361.05
+  },
+  {
+   "date": "2025-02-04",
+   "value": 1116086,
+   "positions": 1,
+   "gate": false,
+   "index": 23739.25
+  },
+  {
+   "date": "2025-02-05",
+   "value": 1116749,
+   "positions": 1,
+   "gate": false,
+   "index": 23696.3
+  },
+  {
+   "date": "2025-02-06",
+   "value": 1116720,
+   "positions": 1,
+   "gate": false,
+   "index": 23603.35
+  },
+  {
+   "date": "2025-02-07",
+   "value": 1117195,
+   "positions": 1,
+   "gate": false,
+   "index": 23559.95
+  },
+  {
+   "date": "2025-02-10",
+   "value": 1116975,
+   "positions": 1,
+   "gate": false,
+   "index": 23381.6
+  },
+  {
+   "date": "2025-02-11",
+   "value": 1115784,
+   "positions": 1,
+   "gate": false,
+   "index": 23071.8
+  },
+  {
+   "date": "2025-02-12",
+   "value": 1115435,
+   "positions": 1,
+   "gate": false,
+   "index": 23045.25
+  },
+  {
+   "date": "2025-02-13",
+   "value": 1116835,
+   "positions": 1,
+   "gate": false,
+   "index": 23031.4
+  },
+  {
+   "date": "2025-02-14",
+   "value": 1116605,
+   "positions": 1,
+   "gate": false,
+   "index": 22929.25
+  },
+  {
+   "date": "2025-02-17",
+   "value": 1118232,
+   "positions": 1,
+   "gate": false,
+   "index": 22959.5
+  },
+  {
+   "date": "2025-02-18",
+   "value": 1117602,
+   "positions": 1,
+   "gate": false,
+   "index": 22945.3
+  },
+  {
+   "date": "2025-02-19",
+   "value": 1118347,
+   "positions": 1,
+   "gate": false,
+   "index": 22932.9
+  },
+  {
+   "date": "2025-02-20",
+   "value": 1118718,
+   "positions": 1,
+   "gate": false,
+   "index": 22913.15
+  },
+  {
+   "date": "2025-02-21",
+   "value": 1118880,
+   "positions": 1,
+   "gate": false,
+   "index": 22795.9
+  },
+  {
+   "date": "2025-02-24",
+   "value": 1117811,
+   "positions": 1,
+   "gate": false,
+   "index": 22553.35
+  },
+  {
+   "date": "2025-02-25",
+   "value": 1117850,
+   "positions": 1,
+   "gate": false,
+   "index": 22547.55
+  },
+  {
+   "date": "2025-02-27",
+   "value": 1117231,
+   "positions": 1,
+   "gate": false,
+   "index": 22545.05
+  },
+  {
+   "date": "2025-02-28",
+   "value": 1116281,
+   "positions": 1,
+   "gate": false,
+   "index": 22124.7
+  },
+  {
+   "date": "2025-03-03",
+   "value": 1115982,
+   "positions": 1,
+   "gate": false,
+   "index": 22119.3
+  },
+  {
+   "date": "2025-03-04",
+   "value": 1116331,
+   "positions": 1,
+   "gate": false,
+   "index": 22082.65
+  },
+  {
+   "date": "2025-03-05",
+   "value": 1117152,
+   "positions": 1,
+   "gate": false,
+   "index": 22337.3
+  },
+  {
+   "date": "2025-03-06",
+   "value": 1117890,
+   "positions": 1,
+   "gate": false,
+   "index": 22544.7
+  },
+  {
+   "date": "2025-03-07",
+   "value": 1117541,
+   "positions": 1,
+   "gate": false,
+   "index": 22552.5
+  },
+  {
+   "date": "2025-03-10",
+   "value": 1119809,
+   "positions": 1,
+   "gate": false,
+   "index": 22460.3
+  },
+  {
+   "date": "2025-03-11",
+   "value": 1121601,
+   "positions": 1,
+   "gate": false,
+   "index": 22497.9
+  },
+  {
+   "date": "2025-03-12",
+   "value": 1122397,
+   "positions": 1,
+   "gate": false,
+   "index": 22470.5
+  },
+  {
+   "date": "2025-03-13",
+   "value": 1122581,
+   "positions": 1,
+   "gate": false,
+   "index": 22397.2
+  },
+  {
+   "date": "2025-03-17",
+   "value": 1122350,
+   "positions": 1,
+   "gate": false,
+   "index": 22508.75
+  },
+  {
+   "date": "2025-03-18",
+   "value": 1123686,
+   "positions": 1,
+   "gate": false,
+   "index": 22834.3
+  },
+  {
+   "date": "2025-03-19",
+   "value": 1122465,
+   "positions": 1,
+   "gate": false,
+   "index": 22907.6
+  },
+  {
+   "date": "2025-03-20",
+   "value": 1122631,
+   "positions": 1,
+   "gate": false,
+   "index": 23190.65
+  },
+  {
+   "date": "2025-03-21",
+   "value": 1122905,
+   "positions": 1,
+   "gate": false,
+   "index": 23350.4
+  },
+  {
+   "date": "2025-03-24",
+   "value": 1122138,
+   "positions": 1,
+   "gate": false,
+   "index": 23658.35
+  },
+  {
+   "date": "2025-03-25",
+   "value": 1118484,
+   "positions": 1,
+   "gate": false,
+   "index": 23668.65
+  },
+  {
+   "date": "2025-03-26",
+   "value": 1118513,
+   "positions": 1,
+   "gate": false,
+   "index": 23486.85
+  },
+  {
+   "date": "2025-03-27",
+   "value": 1120097,
+   "positions": 1,
+   "gate": false,
+   "index": 23591.95
+  },
+  {
+   "date": "2025-03-28",
+   "value": 1120626,
+   "positions": 1,
+   "gate": false,
+   "index": 23519.35
+  },
+  {
+   "date": "2025-04-01",
+   "value": 1121645,
+   "positions": 1,
+   "gate": false,
+   "index": 23165.7
+  },
+  {
+   "date": "2025-04-02",
+   "value": 1122267,
+   "positions": 1,
+   "gate": false,
+   "index": 23332.35
+  },
+  {
+   "date": "2025-04-03",
+   "value": 1121706,
+   "positions": 1,
+   "gate": false,
+   "index": 23250.1
+  },
+  {
+   "date": "2025-04-04",
+   "value": 1119319,
+   "positions": 1,
+   "gate": false,
+   "index": 22904.45
+  },
+  {
+   "date": "2025-04-07",
+   "value": 1116446,
+   "positions": 1,
+   "gate": false,
+   "index": 22161.6
+  },
+  {
+   "date": "2025-04-08",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 22535.85
+  },
+  {
+   "date": "2025-04-09",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 22399.15
+  },
+  {
+   "date": "2025-04-11",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 22828.55
+  },
+  {
+   "date": "2025-04-15",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 23328.55
+  },
+  {
+   "date": "2025-04-16",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 23437.2
+  },
+  {
+   "date": "2025-04-17",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 23851.65
+  },
+  {
+   "date": "2025-04-21",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24125.55
+  },
+  {
+   "date": "2025-04-22",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24167.25
+  },
+  {
+   "date": "2025-04-23",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24328.95
+  },
+  {
+   "date": "2025-04-24",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24246.7
+  },
+  {
+   "date": "2025-04-25",
+   "value": 1115185,
+   "positions": 0,
+   "gate": false,
+   "index": 24039.35
+  },
+  {
+   "date": "2025-04-28",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24328.5
+  },
+  {
+   "date": "2025-04-29",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24335.95
+  },
+  {
+   "date": "2025-04-30",
+   "value": 1115185,
+   "positions": 0,
+   "gate": true,
+   "index": 24334.2
+  },
+  {
+   "date": "2025-05-02",
+   "value": 1114466,
+   "positions": 15,
+   "gate": true,
+   "index": 24346.7
+  },
+  {
+   "date": "2025-05-05",
+   "value": 1118333,
+   "positions": 15,
+   "gate": true,
+   "index": 24461.15
+  },
+  {
+   "date": "2025-05-06",
+   "value": 1112637,
+   "positions": 15,
+   "gate": true,
+   "index": 24379.6
+  },
+  {
+   "date": "2025-05-07",
+   "value": 1117172,
+   "positions": 15,
+   "gate": true,
+   "index": 24414.4
+  },
+  {
+   "date": "2025-05-08",
+   "value": 1106020,
+   "positions": 15,
+   "gate": true,
+   "index": 24273.8
+  },
+  {
+   "date": "2025-05-09",
+   "value": 1106360,
+   "positions": 15,
+   "gate": false,
+   "index": 24008
+  },
+  {
+   "date": "2025-05-12",
+   "value": 1119282,
+   "positions": 15,
+   "gate": true,
+   "index": 24924.7
+  },
+  {
+   "date": "2025-05-13",
+   "value": 1117042,
+   "positions": 15,
+   "gate": true,
+   "index": 24578.35
+  },
+  {
+   "date": "2025-05-14",
+   "value": 1118225,
+   "positions": 15,
+   "gate": true,
+   "index": 24666.9
+  },
+  {
+   "date": "2025-05-15",
+   "value": 1122294,
+   "positions": 15,
+   "gate": true,
+   "index": 25062.1
+  },
+  {
+   "date": "2025-05-16",
+   "value": 1126090,
+   "positions": 15,
+   "gate": true,
+   "index": 25019.8
+  },
+  {
+   "date": "2025-05-19",
+   "value": 1126010,
+   "positions": 15,
+   "gate": true,
+   "index": 24945.45
+  },
+  {
+   "date": "2025-05-20",
+   "value": 1123593,
+   "positions": 15,
+   "gate": true,
+   "index": 24683.9
+  },
+  {
+   "date": "2025-05-21",
+   "value": 1123702,
+   "positions": 15,
+   "gate": true,
+   "index": 24813.45
+  },
+  {
+   "date": "2025-05-22",
+   "value": 1118757,
+   "positions": 15,
+   "gate": true,
+   "index": 24609.7
+  },
+  {
+   "date": "2025-05-23",
+   "value": 1116121,
+   "positions": 15,
+   "gate": true,
+   "index": 24853.15
+  },
+  {
+   "date": "2025-05-26",
+   "value": 1116842,
+   "positions": 15,
+   "gate": true,
+   "index": 25001.15
+  },
+  {
+   "date": "2025-05-27",
+   "value": 1115710,
+   "positions": 15,
+   "gate": true,
+   "index": 24826.2
+  },
+  {
+   "date": "2025-05-28",
+   "value": 1122011,
+   "positions": 15,
+   "gate": true,
+   "index": 24752.45
+  },
+  {
+   "date": "2025-05-29",
+   "value": 1130284,
+   "positions": 15,
+   "gate": true,
+   "index": 24833.6
+  },
+  {
+   "date": "2025-05-30",
+   "value": 1124643,
+   "positions": 14,
+   "gate": true,
+   "index": 24750.7
+  },
+  {
+   "date": "2025-06-02",
+   "value": 1120820,
+   "positions": 15,
+   "gate": true,
+   "index": 24716.6
+  },
+  {
+   "date": "2025-06-03",
+   "value": 1125001,
+   "positions": 15,
+   "gate": true,
+   "index": 24542.5
+  },
+  {
+   "date": "2025-06-04",
+   "value": 1126025,
+   "positions": 15,
+   "gate": true,
+   "index": 24620.2
+  },
+  {
+   "date": "2025-06-05",
+   "value": 1134450,
+   "positions": 15,
+   "gate": true,
+   "index": 24750.9
+  },
+  {
+   "date": "2025-06-06",
+   "value": 1134350,
+   "positions": 15,
+   "gate": true,
+   "index": 25003.05
+  },
+  {
+   "date": "2025-06-09",
+   "value": 1140924,
+   "positions": 15,
+   "gate": true,
+   "index": 25103.2
+  },
+  {
+   "date": "2025-06-10",
+   "value": 1144626,
+   "positions": 15,
+   "gate": true,
+   "index": 25104.25
+  },
+  {
+   "date": "2025-06-11",
+   "value": 1141271,
+   "positions": 15,
+   "gate": true,
+   "index": 25141.4
+  },
+  {
+   "date": "2025-06-12",
+   "value": 1141197,
+   "positions": 15,
+   "gate": true,
+   "index": 24888.2
+  },
+  {
+   "date": "2025-06-13",
+   "value": 1144562,
+   "positions": 15,
+   "gate": true,
+   "index": 24718.6
+  },
+  {
+   "date": "2025-06-16",
+   "value": 1123193,
+   "positions": 14,
+   "gate": true,
+   "index": 24946.5
+  },
+  {
+   "date": "2025-06-17",
+   "value": 1122853,
+   "positions": 14,
+   "gate": true,
+   "index": 24853.4
+  },
+  {
+   "date": "2025-06-18",
+   "value": 1119914,
+   "positions": 14,
+   "gate": true,
+   "index": 24812.05
+  },
+  {
+   "date": "2025-06-19",
+   "value": 1113459,
+   "positions": 14,
+   "gate": true,
+   "index": 24793.25
+  },
+  {
+   "date": "2025-06-20",
+   "value": 1117456,
+   "positions": 14,
+   "gate": true,
+   "index": 25112.4
+  },
+  {
+   "date": "2025-06-23",
+   "value": 1121351,
+   "positions": 13,
+   "gate": true,
+   "index": 24971.9
+  },
+  {
+   "date": "2025-06-24",
+   "value": 1119609,
+   "positions": 13,
+   "gate": true,
+   "index": 25044.35
+  },
+  {
+   "date": "2025-06-25",
+   "value": 1122688,
+   "positions": 13,
+   "gate": true,
+   "index": 25244.75
+  },
+  {
+   "date": "2025-06-26",
+   "value": 1121895,
+   "positions": 13,
+   "gate": true,
+   "index": 25549
+  },
+  {
+   "date": "2025-06-27",
+   "value": 1133940,
+   "positions": 13,
+   "gate": true,
+   "index": 25637.8
+  },
+  {
+   "date": "2025-06-30",
+   "value": 1143939,
+   "positions": 13,
+   "gate": true,
+   "index": 25517.05
+  },
+  {
+   "date": "2025-07-01",
+   "value": 1140750,
+   "positions": 15,
+   "gate": true,
+   "index": 25541.8
+  },
+  {
+   "date": "2025-07-02",
+   "value": 1138776,
+   "positions": 15,
+   "gate": true,
+   "index": 25453.4
+  },
+  {
+   "date": "2025-07-03",
+   "value": 1141463,
+   "positions": 15,
+   "gate": true,
+   "index": 25405.3
+  },
+  {
+   "date": "2025-07-04",
+   "value": 1138711,
+   "positions": 15,
+   "gate": true,
+   "index": 25461
+  },
+  {
+   "date": "2025-07-07",
+   "value": 1136622,
+   "positions": 15,
+   "gate": true,
+   "index": 25461.3
+  },
+  {
+   "date": "2025-07-08",
+   "value": 1137615,
+   "positions": 15,
+   "gate": true,
+   "index": 25522.5
+  },
+  {
+   "date": "2025-07-09",
+   "value": 1144497,
+   "positions": 15,
+   "gate": true,
+   "index": 25476.1
+  },
+  {
+   "date": "2025-07-10",
+   "value": 1141984,
+   "positions": 15,
+   "gate": true,
+   "index": 25355.25
+  },
+  {
+   "date": "2025-07-11",
+   "value": 1136336,
+   "positions": 14,
+   "gate": true,
+   "index": 25149.85
+  },
+  {
+   "date": "2025-07-14",
+   "value": 1137671,
+   "positions": 14,
+   "gate": true,
+   "index": 25082.3
+  },
+  {
+   "date": "2025-07-15",
+   "value": 1140930,
+   "positions": 14,
+   "gate": true,
+   "index": 25195.8
+  },
+  {
+   "date": "2025-07-16",
+   "value": 1137161,
+   "positions": 14,
+   "gate": true,
+   "index": 25212.05
+  },
+  {
+   "date": "2025-07-17",
+   "value": 1136374,
+   "positions": 14,
+   "gate": true,
+   "index": 25111.45
+  },
+  {
+   "date": "2025-07-18",
+   "value": 1131998,
+   "positions": 13,
+   "gate": true,
+   "index": 24968.4
+  },
+  {
+   "date": "2025-07-21",
+   "value": 1135531,
+   "positions": 13,
+   "gate": true,
+   "index": 25090.7
+  },
+  {
+   "date": "2025-07-22",
+   "value": 1140938,
+   "positions": 13,
+   "gate": true,
+   "index": 25060.9
+  },
+  {
+   "date": "2025-07-23",
+   "value": 1143667,
+   "positions": 13,
+   "gate": true,
+   "index": 25219.9
+  },
+  {
+   "date": "2025-07-24",
+   "value": 1143200,
+   "positions": 13,
+   "gate": true,
+   "index": 25062.1
+  },
+  {
+   "date": "2025-07-25",
+   "value": 1129365,
+   "positions": 13,
+   "gate": true,
+   "index": 24837
+  },
+  {
+   "date": "2025-07-28",
+   "value": 1127416,
+   "positions": 13,
+   "gate": true,
+   "index": 24680.9
+  },
+  {
+   "date": "2025-07-29",
+   "value": 1133715,
+   "positions": 13,
+   "gate": true,
+   "index": 24821.1
+  },
+  {
+   "date": "2025-07-30",
+   "value": 1130145,
+   "positions": 15,
+   "gate": true,
+   "index": 24855.05
+  },
+  {
+   "date": "2025-07-31",
+   "value": 1122900,
+   "positions": 14,
+   "gate": true,
+   "index": 24768.35
+  },
+  {
+   "date": "2025-08-01",
+   "value": 1116685,
+   "positions": 13,
+   "gate": true,
+   "index": 24565.35
+  },
+  {
+   "date": "2025-08-04",
+   "value": 1125356,
+   "positions": 13,
+   "gate": true,
+   "index": 24722.75
+  },
+  {
+   "date": "2025-08-05",
+   "value": 1128289,
+   "positions": 12,
+   "gate": true,
+   "index": 24649.55
+  },
+  {
+   "date": "2025-08-06",
+   "value": 1131863,
+   "positions": 12,
+   "gate": true,
+   "index": 24574.2
+  },
+  {
+   "date": "2025-08-07",
+   "value": 1128859,
+   "positions": 12,
+   "gate": true,
+   "index": 24596.15
+  },
+  {
+   "date": "2025-08-08",
+   "value": 1124430,
+   "positions": 12,
+   "gate": true,
+   "index": 24363.3
+  },
+  {
+   "date": "2025-08-11",
+   "value": 1127726,
+   "positions": 12,
+   "gate": true,
+   "index": 24585.05
+  },
+  {
+   "date": "2025-08-12",
+   "value": 1124557,
+   "positions": 12,
+   "gate": true,
+   "index": 24487.4
+  },
+  {
+   "date": "2025-08-13",
+   "value": 1135304,
+   "positions": 12,
+   "gate": true,
+   "index": 24619.35
+  },
+  {
+   "date": "2025-08-14",
+   "value": 1132385,
+   "positions": 12,
+   "gate": true,
+   "index": 24631.3
+  },
+  {
+   "date": "2025-08-18",
+   "value": 1136864,
+   "positions": 12,
+   "gate": true,
+   "index": 24876.95
+  },
+  {
+   "date": "2025-08-19",
+   "value": 1142320,
+   "positions": 12,
+   "gate": true,
+   "index": 24980.65
+  },
+  {
+   "date": "2025-08-20",
+   "value": 1146269,
+   "positions": 12,
+   "gate": true,
+   "index": 25050.55
+  },
+  {
+   "date": "2025-08-21",
+   "value": 1148691,
+   "positions": 12,
+   "gate": true,
+   "index": 25083.75
+  },
+  {
+   "date": "2025-08-22",
+   "value": 1142525,
+   "positions": 12,
+   "gate": true,
+   "index": 24870.1
+  },
+  {
+   "date": "2025-08-25",
+   "value": 1143075,
+   "positions": 12,
+   "gate": true,
+   "index": 24967.75
+  },
+  {
+   "date": "2025-08-26",
+   "value": 1139103,
+   "positions": 12,
+   "gate": true,
+   "index": 24712.05
+  },
+  {
+   "date": "2025-08-28",
+   "value": 1135787,
+   "positions": 12,
+   "gate": true,
+   "index": 24500.9
+  },
+  {
+   "date": "2025-08-29",
+   "value": 1137145,
+   "positions": 12,
+   "gate": true,
+   "index": 24426.85
+  },
+  {
+   "date": "2025-09-01",
+   "value": 1142671,
+   "positions": 15,
+   "gate": true,
+   "index": 24625.05
+  },
+  {
+   "date": "2025-09-02",
+   "value": 1139935,
+   "positions": 15,
+   "gate": true,
+   "index": 24579.6
+  },
+  {
+   "date": "2025-09-03",
+   "value": 1144135,
+   "positions": 15,
+   "gate": true,
+   "index": 24715.05
+  },
+  {
+   "date": "2025-09-04",
+   "value": 1139063,
+   "positions": 15,
+   "gate": true,
+   "index": 24734.3
+  },
+  {
+   "date": "2025-09-05",
+   "value": 1139201,
+   "positions": 15,
+   "gate": true,
+   "index": 24741
+  },
+  {
+   "date": "2025-09-08",
+   "value": 1135000,
+   "positions": 13,
+   "gate": true,
+   "index": 24773.15
+  },
+  {
+   "date": "2025-09-09",
+   "value": 1141744,
+   "positions": 13,
+   "gate": true,
+   "index": 24868.6
+  },
+  {
+   "date": "2025-09-10",
+   "value": 1139971,
+   "positions": 13,
+   "gate": true,
+   "index": 24973.1
+  },
+  {
+   "date": "2025-09-11",
+   "value": 1135919,
+   "positions": 13,
+   "gate": true,
+   "index": 25005.5
+  },
+  {
+   "date": "2025-09-12",
+   "value": 1133059,
+   "positions": 13,
+   "gate": true,
+   "index": 25114
+  },
+  {
+   "date": "2025-09-15",
+   "value": 1137415,
+   "positions": 13,
+   "gate": true,
+   "index": 25069.2
+  },
+  {
+   "date": "2025-09-16",
+   "value": 1141035,
+   "positions": 13,
+   "gate": true,
+   "index": 25239.1
+  },
+  {
+   "date": "2025-09-17",
+   "value": 1140342,
+   "positions": 13,
+   "gate": true,
+   "index": 25330.25
+  },
+  {
+   "date": "2025-09-18",
+   "value": 1136662,
+   "positions": 13,
+   "gate": true,
+   "index": 25423.6
+  },
+  {
+   "date": "2025-09-19",
+   "value": 1139943,
+   "positions": 13,
+   "gate": true,
+   "index": 25327.05
+  },
+  {
+   "date": "2025-09-22",
+   "value": 1135140,
+   "positions": 13,
+   "gate": true,
+   "index": 25202.35
+  },
+  {
+   "date": "2025-09-23",
+   "value": 1134722,
+   "positions": 13,
+   "gate": true,
+   "index": 25169.5
+  },
+  {
+   "date": "2025-09-24",
+   "value": 1139834,
+   "positions": 13,
+   "gate": true,
+   "index": 25056.9
+  },
+  {
+   "date": "2025-09-25",
+   "value": 1135213,
+   "positions": 13,
+   "gate": true,
+   "index": 24890.85
+  },
+  {
+   "date": "2025-09-26",
+   "value": 1128107,
+   "positions": 13,
+   "gate": true,
+   "index": 24654.7
+  },
+  {
+   "date": "2025-09-29",
+   "value": 1130582,
+   "positions": 13,
+   "gate": true,
+   "index": 24634.9
+  },
+  {
+   "date": "2025-09-30",
+   "value": 1124827,
+   "positions": 15,
+   "gate": true,
+   "index": 24611.1
+  },
+  {
+   "date": "2025-10-01",
+   "value": 1131361,
+   "positions": 15,
+   "gate": true,
+   "index": 24836.3
+  },
+  {
+   "date": "2025-10-03",
+   "value": 1139509,
+   "positions": 15,
+   "gate": true,
+   "index": 24894.25
+  },
+  {
+   "date": "2025-10-06",
+   "value": 1140896,
+   "positions": 15,
+   "gate": true,
+   "index": 25077.65
+  },
+  {
+   "date": "2025-10-07",
+   "value": 1139542,
+   "positions": 15,
+   "gate": true,
+   "index": 25108.3
+  },
+  {
+   "date": "2025-10-08",
+   "value": 1142903,
+   "positions": 15,
+   "gate": true,
+   "index": 25046.15
+  },
+  {
+   "date": "2025-10-09",
+   "value": 1142075,
+   "positions": 15,
+   "gate": true,
+   "index": 25181.8
+  },
+  {
+   "date": "2025-10-10",
+   "value": 1141709,
+   "positions": 15,
+   "gate": true,
+   "index": 25285.35
+  },
+  {
+   "date": "2025-10-13",
+   "value": 1140481,
+   "positions": 15,
+   "gate": true,
+   "index": 25227.35
+  },
+  {
+   "date": "2025-10-14",
+   "value": 1133679,
+   "positions": 15,
+   "gate": true,
+   "index": 25145.5
+  },
+  {
+   "date": "2025-10-15",
+   "value": 1143072,
+   "positions": 15,
+   "gate": true,
+   "index": 25323.55
+  },
+  {
+   "date": "2025-10-16",
+   "value": 1143770,
+   "positions": 15,
+   "gate": true,
+   "index": 25585.3
+  },
+  {
+   "date": "2025-10-17",
+   "value": 1136431,
+   "positions": 15,
+   "gate": true,
+   "index": 25709.85
+  },
+  {
+   "date": "2025-10-20",
+   "value": 1141414,
+   "positions": 15,
+   "gate": true,
+   "index": 25843.15
+  },
+  {
+   "date": "2025-10-21",
+   "value": 1142043,
+   "positions": 15,
+   "gate": true,
+   "index": 25868.6
+  },
+  {
+   "date": "2025-10-23",
+   "value": 1127177,
+   "positions": 15,
+   "gate": true,
+   "index": 25891.4
+  },
+  {
+   "date": "2025-10-24",
+   "value": 1123918,
+   "positions": 14,
+   "gate": true,
+   "index": 25795.15
+  },
+  {
+   "date": "2025-10-27",
+   "value": 1126008,
+   "positions": 14,
+   "gate": true,
+   "index": 25966.05
+  },
+  {
+   "date": "2025-10-28",
+   "value": 1138449,
+   "positions": 14,
+   "gate": true,
+   "index": 25936.2
+  },
+  {
+   "date": "2025-10-29",
+   "value": 1138274,
+   "positions": 14,
+   "gate": true,
+   "index": 26053.9
+  },
+  {
+   "date": "2025-10-30",
+   "value": 1137082,
+   "positions": 14,
+   "gate": true,
+   "index": 25877.85
+  },
+  {
+   "date": "2025-10-31",
+   "value": 1132936,
+   "positions": 15,
+   "gate": true,
+   "index": 25722.1
+  },
+  {
+   "date": "2025-11-03",
+   "value": 1136395,
+   "positions": 15,
+   "gate": true,
+   "index": 25763.35
+  },
+  {
+   "date": "2025-11-04",
+   "value": 1129216,
+   "positions": 15,
+   "gate": true,
+   "index": 25597.65
+  },
+  {
+   "date": "2025-11-06",
+   "value": 1116237,
+   "positions": 15,
+   "gate": true,
+   "index": 25509.7
+  },
+  {
+   "date": "2025-11-07",
+   "value": 1123324,
+   "positions": 15,
+   "gate": true,
+   "index": 25492.3
+  },
+  {
+   "date": "2025-11-10",
+   "value": 1124689,
+   "positions": 15,
+   "gate": true,
+   "index": 25574.35
+  },
+  {
+   "date": "2025-11-11",
+   "value": 1120311,
+   "positions": 15,
+   "gate": true,
+   "index": 25694.95
+  },
+  {
+   "date": "2025-11-12",
+   "value": 1133673,
+   "positions": 15,
+   "gate": true,
+   "index": 25875.8
+  },
+  {
+   "date": "2025-11-13",
+   "value": 1131231,
+   "positions": 15,
+   "gate": true,
+   "index": 25879.15
+  },
+  {
+   "date": "2025-11-14",
+   "value": 1132732,
+   "positions": 14,
+   "gate": true,
+   "index": 25910.05
+  },
+  {
+   "date": "2025-11-17",
+   "value": 1128530,
+   "positions": 13,
+   "gate": true,
+   "index": 26013.45
+  },
+  {
+   "date": "2025-11-18",
+   "value": 1122485,
+   "positions": 13,
+   "gate": true,
+   "index": 25910.05
+  },
+  {
+   "date": "2025-11-19",
+   "value": 1119595,
+   "positions": 13,
+   "gate": true,
+   "index": 26052.65
+  },
+  {
+   "date": "2025-11-20",
+   "value": 1118483,
+   "positions": 13,
+   "gate": true,
+   "index": 26192.15
+  },
+  {
+   "date": "2025-11-21",
+   "value": 1109372,
+   "positions": 12,
+   "gate": true,
+   "index": 26068.15
+  },
+  {
+   "date": "2025-11-24",
+   "value": 1106125,
+   "positions": 11,
+   "gate": true,
+   "index": 25959.5
+  },
+  {
+   "date": "2025-11-25",
+   "value": 1106462,
+   "positions": 10,
+   "gate": true,
+   "index": 25884.8
+  },
+  {
+   "date": "2025-11-26",
+   "value": 1109029,
+   "positions": 10,
+   "gate": true,
+   "index": 26205.3
+  },
+  {
+   "date": "2025-11-27",
+   "value": 1107984,
+   "positions": 9,
+   "gate": true,
+   "index": 26215.55
+  },
+  {
+   "date": "2025-11-28",
+   "value": 1107062,
+   "positions": 9,
+   "gate": true,
+   "index": 26202.95
+  },
+  {
+   "date": "2025-12-01",
+   "value": 1108842,
+   "positions": 8,
+   "gate": true,
+   "index": 26175.75
+  },
+  {
+   "date": "2025-12-02",
+   "value": 1107330,
+   "positions": 15,
+   "gate": true,
+   "index": 26032.2
+  },
+  {
+   "date": "2025-12-03",
+   "value": 1109452,
+   "positions": 15,
+   "gate": true,
+   "index": 25986
+  },
+  {
+   "date": "2025-12-04",
+   "value": 1107283,
+   "positions": 15,
+   "gate": true,
+   "index": 26033.75
+  },
+  {
+   "date": "2025-12-05",
+   "value": 1101226,
+   "positions": 15,
+   "gate": true,
+   "index": 26186.45
+  },
+  {
+   "date": "2025-12-08",
+   "value": 1094398,
+   "positions": 15,
+   "gate": true,
+   "index": 25960.55
+  },
+  {
+   "date": "2025-12-09",
+   "value": 1101828,
+   "positions": 15,
+   "gate": true,
+   "index": 25839.65
+  },
+  {
+   "date": "2025-12-10",
+   "value": 1100928,
+   "positions": 15,
+   "gate": true,
+   "index": 25758
+  },
+  {
+   "date": "2025-12-11",
+   "value": 1102341,
+   "positions": 15,
+   "gate": true,
+   "index": 25898.55
+  },
+  {
+   "date": "2025-12-12",
+   "value": 1107388,
+   "positions": 15,
+   "gate": true,
+   "index": 26046.95
+  },
+  {
+   "date": "2025-12-15",
+   "value": 1114819,
+   "positions": 15,
+   "gate": true,
+   "index": 26027.3
+  },
+  {
+   "date": "2025-12-16",
+   "value": 1112283,
+   "positions": 14,
+   "gate": true,
+   "index": 25860.1
+  },
+  {
+   "date": "2025-12-17",
+   "value": 1109213,
+   "positions": 14,
+   "gate": true,
+   "index": 25818.55
+  },
+  {
+   "date": "2025-12-18",
+   "value": 1112606,
+   "positions": 14,
+   "gate": true,
+   "index": 25815.55
+  },
+  {
+   "date": "2025-12-19",
+   "value": 1119240,
+   "positions": 14,
+   "gate": true,
+   "index": 25966.4
+  },
+  {
+   "date": "2025-12-22",
+   "value": 1130007,
+   "positions": 14,
+   "gate": true,
+   "index": 26172.4
+  },
+  {
+   "date": "2025-12-23",
+   "value": 1133125,
+   "positions": 14,
+   "gate": true,
+   "index": 26177.15
+  },
+  {
+   "date": "2025-12-24",
+   "value": 1137994,
+   "positions": 14,
+   "gate": true,
+   "index": 26142.1
+  },
+  {
+   "date": "2025-12-26",
+   "value": 1138479,
+   "positions": 14,
+   "gate": true,
+   "index": 26042.3
+  },
+  {
+   "date": "2025-12-29",
+   "value": 1137019,
+   "positions": 14,
+   "gate": true,
+   "index": 25942.1
+  },
+  {
+   "date": "2025-12-30",
+   "value": 1144479,
+   "positions": 14,
+   "gate": true,
+   "index": 25938.85
+  },
+  {
+   "date": "2025-12-31",
+   "value": 1151660,
+   "positions": 14,
+   "gate": true,
+   "index": 26129.6
+  },
+  {
+   "date": "2026-01-01",
+   "value": 1150908,
+   "positions": 15,
+   "gate": true,
+   "index": 26146.55
+  },
+  {
+   "date": "2026-01-02",
+   "value": 1133234,
+   "positions": 15,
+   "gate": true,
+   "index": 26328.55
+  },
+  {
+   "date": "2026-01-05",
+   "value": 1126881,
+   "positions": 14,
+   "gate": true,
+   "index": 26250.3
+  },
+  {
+   "date": "2026-01-06",
+   "value": 1128493,
+   "positions": 14,
+   "gate": true,
+   "index": 26178.7
+  },
+  {
+   "date": "2026-01-07",
+   "value": 1124328,
+   "positions": 14,
+   "gate": true,
+   "index": 26140.75
+  },
+  {
+   "date": "2026-01-08",
+   "value": 1113349,
+   "positions": 14,
+   "gate": true,
+   "index": 25876.85
+  },
+  {
+   "date": "2026-01-09",
+   "value": 1104540,
+   "positions": 13,
+   "gate": true,
+   "index": 25683.3
+  },
+  {
+   "date": "2026-01-12",
+   "value": 1109251,
+   "positions": 13,
+   "gate": true,
+   "index": 25790.25
+  },
+  {
+   "date": "2026-01-13",
+   "value": 1111024,
+   "positions": 13,
+   "gate": true,
+   "index": 25732.3
+  },
+  {
+   "date": "2026-01-14",
+   "value": 1110646,
+   "positions": 13,
+   "gate": true,
+   "index": 25665.6
+  },
+  {
+   "date": "2026-01-16",
+   "value": 1109209,
+   "positions": 13,
+   "gate": true,
+   "index": 25694.35
+  },
+  {
+   "date": "2026-01-19",
+   "value": 1100392,
+   "positions": 13,
+   "gate": true,
+   "index": 25585.5
+  },
+  {
+   "date": "2026-01-20",
+   "value": 1088845,
+   "positions": 12,
+   "gate": true,
+   "index": 25232.5
+  },
+  {
+   "date": "2026-01-21",
+   "value": 1086517,
+   "positions": 12,
+   "gate": true,
+   "index": 25157.5
+  },
+  {
+   "date": "2026-01-22",
+   "value": 1092216,
+   "positions": 11,
+   "gate": true,
+   "index": 25289.9
+  },
+  {
+   "date": "2026-01-23",
+   "value": 1082766,
+   "positions": 11,
+   "gate": false,
+   "index": 25048.65
+  },
+  {
+   "date": "2026-01-27",
+   "value": 1084487,
+   "positions": 11,
+   "gate": true,
+   "index": 25175.4
+  },
+  {
+   "date": "2026-01-28",
+   "value": 1089744,
+   "positions": 11,
+   "gate": true,
+   "index": 25342.75
+  },
+  {
+   "date": "2026-01-29",
+   "value": 1096143,
+   "positions": 11,
+   "gate": true,
+   "index": 25418.9
+  },
+  {
+   "date": "2026-01-30",
+   "value": 1098311,
+   "positions": 11,
+   "gate": true,
+   "index": 25320.65
+  },
+  {
+   "date": "2026-02-02",
+   "value": 1099638,
+   "positions": 11,
+   "gate": false,
+   "index": 25088.4
+  },
+  {
+   "date": "2026-02-03",
+   "value": 1117253,
+   "positions": 15,
+   "gate": true,
+   "index": 25727.55
+  },
+  {
+   "date": "2026-02-04",
+   "value": 1121897,
+   "positions": 15,
+   "gate": true,
+   "index": 25776
+  },
+  {
+   "date": "2026-02-05",
+   "value": 1121201,
+   "positions": 15,
+   "gate": true,
+   "index": 25642.8
+  },
+  {
+   "date": "2026-02-06",
+   "value": 1116865,
+   "positions": 15,
+   "gate": true,
+   "index": 25693.7
+  },
+  {
+   "date": "2026-02-09",
+   "value": 1134395,
+   "positions": 15,
+   "gate": true,
+   "index": 25867.3
+  },
+  {
+   "date": "2026-02-10",
+   "value": 1134263,
+   "positions": 15,
+   "gate": true,
+   "index": 25935.15
+  },
+  {
+   "date": "2026-02-11",
+   "value": 1134825,
+   "positions": 14,
+   "gate": true,
+   "index": 25953.85
+  },
+  {
+   "date": "2026-02-12",
+   "value": 1133044,
+   "positions": 14,
+   "gate": true,
+   "index": 25807.2
+  },
+  {
+   "date": "2026-02-13",
+   "value": 1122695,
+   "positions": 14,
+   "gate": true,
+   "index": 25471.1
+  },
+  {
+   "date": "2026-02-16",
+   "value": 1129629,
+   "positions": 14,
+   "gate": true,
+   "index": 25682.75
+  },
+  {
+   "date": "2026-02-17",
+   "value": 1130753,
+   "positions": 14,
+   "gate": true,
+   "index": 25725.4
+  },
+  {
+   "date": "2026-02-18",
+   "value": 1136667,
+   "positions": 14,
+   "gate": true,
+   "index": 25819.35
+  },
+  {
+   "date": "2026-02-19",
+   "value": 1126763,
+   "positions": 14,
+   "gate": true,
+   "index": 25454.35
+  },
+  {
+   "date": "2026-02-20",
+   "value": 1124318,
+   "positions": 14,
+   "gate": true,
+   "index": 25571.25
+  },
+  {
+   "date": "2026-02-23",
+   "value": 1128245,
+   "positions": 14,
+   "gate": true,
+   "index": 25713
+  },
+  {
+   "date": "2026-02-24",
+   "value": 1128325,
+   "positions": 14,
+   "gate": true,
+   "index": 25424.65
+  },
+  {
+   "date": "2026-02-25",
+   "value": 1134021,
+   "positions": 14,
+   "gate": true,
+   "index": 25482.5
+  },
+  {
+   "date": "2026-02-26",
+   "value": 1136034,
+   "positions": 14,
+   "gate": true,
+   "index": 25496.55
+  },
+  {
+   "date": "2026-02-27",
+   "value": 1129877,
+   "positions": 14,
+   "gate": false,
+   "index": 25178.65
+  },
+  {
+   "date": "2026-03-02",
+   "value": 1129438,
+   "positions": 14,
+   "gate": false,
+   "index": 24865.7
+  },
+  {
+   "date": "2026-03-04",
+   "value": 1116534,
+   "positions": 14,
+   "gate": false,
+   "index": 24480.5
+  },
+  {
+   "date": "2026-03-05",
+   "value": 1125573,
+   "positions": 11,
+   "gate": false,
+   "index": 24765.9
+  },
+  {
+   "date": "2026-03-06",
+   "value": 1128941,
+   "positions": 11,
+   "gate": false,
+   "index": 24450.45
+  },
+  {
+   "date": "2026-03-09",
+   "value": 1119654,
+   "positions": 11,
+   "gate": false,
+   "index": 24028.05
+  },
+  {
+   "date": "2026-03-10",
+   "value": 1128286,
+   "positions": 11,
+   "gate": false,
+   "index": 24261.6
+  },
+  {
+   "date": "2026-03-11",
+   "value": 1121497,
+   "positions": 11,
+   "gate": false,
+   "index": 23866.85
+  },
+  {
+   "date": "2026-03-12",
+   "value": 1120900,
+   "positions": 11,
+   "gate": false,
+   "index": 23639.15
+  },
+  {
+   "date": "2026-03-13",
+   "value": 1104921,
+   "positions": 10,
+   "gate": false,
+   "index": 23151.1
+  },
+  {
+   "date": "2026-03-16",
+   "value": 1105049,
+   "positions": 10,
+   "gate": false,
+   "index": 23408.8
+  },
+  {
+   "date": "2026-03-17",
+   "value": 1113852,
+   "positions": 10,
+   "gate": false,
+   "index": 23581.15
+  },
+  {
+   "date": "2026-03-18",
+   "value": 1116951,
+   "positions": 10,
+   "gate": false,
+   "index": 23777.8
+  },
+  {
+   "date": "2026-03-19",
+   "value": 1106936,
+   "positions": 9,
+   "gate": false,
+   "index": 23002.15
+  },
+  {
+   "date": "2026-03-20",
+   "value": 1118890,
+   "positions": 9,
+   "gate": false,
+   "index": 23114.5
+  },
+  {
+   "date": "2026-03-23",
+   "value": 1108248,
+   "positions": 7,
+   "gate": false,
+   "index": 22512.65
+  },
+  {
+   "date": "2026-03-24",
+   "value": 1120834,
+   "positions": 7,
+   "gate": false,
+   "index": 22912.4
+  },
+  {
+   "date": "2026-03-25",
+   "value": 1126998,
+   "positions": 7,
+   "gate": false,
+   "index": 23306.45
+  },
+  {
+   "date": "2026-03-27",
+   "value": 1128386,
+   "positions": 7,
+   "gate": false,
+   "index": 22819.6
+  },
+  {
+   "date": "2026-03-30",
+   "value": 1126324,
+   "positions": 7,
+   "gate": false,
+   "index": 22331.4
+  },
+  {
+   "date": "2026-04-01",
+   "value": 1129335,
+   "positions": 7,
+   "gate": false,
+   "index": 22679.4
+  },
+  {
+   "date": "2026-04-02",
+   "value": 1124512,
+   "positions": 7,
+   "gate": false,
+   "index": 22713.1
+  },
+  {
+   "date": "2026-04-06",
+   "value": 1132722,
+   "positions": 7,
+   "gate": false,
+   "index": 22968.25
+  },
+  {
+   "date": "2026-04-07",
+   "value": 1133822,
+   "positions": 7,
+   "gate": false,
+   "index": 23123.65
+  },
+  {
+   "date": "2026-04-08",
+   "value": 1138370,
+   "positions": 5,
+   "gate": false,
+   "index": 23997.35
+  },
+  {
+   "date": "2026-04-09",
+   "value": 1138424,
+   "positions": 5,
+   "gate": false,
+   "index": 23775.1
+  },
+  {
+   "date": "2026-04-10",
+   "value": 1144408,
+   "positions": 5,
+   "gate": false,
+   "index": 24050.6
+  },
+  {
+   "date": "2026-04-13",
+   "value": 1150481,
+   "positions": 5,
+   "gate": false,
+   "index": 23842.65
+  },
+  {
+   "date": "2026-04-15",
+   "value": 1155484,
+   "positions": 5,
+   "gate": false,
+   "index": 24231.3
+  },
+  {
+   "date": "2026-04-16",
+   "value": 1156451,
+   "positions": 5,
+   "gate": false,
+   "index": 24196.75
+  },
+  {
+   "date": "2026-04-17",
+   "value": 1156603,
+   "positions": 5,
+   "gate": false,
+   "index": 24353.55
+  },
+  {
+   "date": "2026-04-20",
+   "value": 1155952,
+   "positions": 5,
+   "gate": false,
+   "index": 24364.85
+  },
+  {
+   "date": "2026-04-21",
+   "value": 1157138,
+   "positions": 5,
+   "gate": false,
+   "index": 24576.6
+  },
+  {
+   "date": "2026-04-22",
+   "value": 1162992,
+   "positions": 5,
+   "gate": false,
+   "index": 24378.1
+  },
+  {
+   "date": "2026-04-23",
+   "value": 1161720,
+   "positions": 5,
+   "gate": false,
+   "index": 24173.05
+  },
+  {
+   "date": "2026-04-24",
+   "value": 1155142,
+   "positions": 5,
+   "gate": false,
+   "index": 23897.95
+  },
+  {
+   "date": "2026-04-27",
+   "value": 1163883,
+   "positions": 5,
+   "gate": false,
+   "index": 24092.7
+  },
+  {
+   "date": "2026-04-28",
+   "value": 1161385,
+   "positions": 5,
+   "gate": false,
+   "index": 23995.7
+  },
+  {
+   "date": "2026-04-29",
+   "value": 1167091,
+   "positions": 5,
+   "gate": false,
+   "index": 24177.65
+  },
+  {
+   "date": "2026-04-30",
+   "value": 1174988,
+   "positions": 5,
+   "gate": false,
+   "index": 23997.55
+  },
+  {
+   "date": "2026-05-04",
+   "value": 1171710,
+   "positions": 5,
+   "gate": false,
+   "index": 24119.3
+  },
+  {
+   "date": "2026-05-05",
+   "value": 1174966,
+   "positions": 5,
+   "gate": false,
+   "index": 24032.8
+  },
+  {
+   "date": "2026-05-06",
+   "value": 1171412,
+   "positions": 5,
+   "gate": false,
+   "index": 24330.95
+  },
+  {
+   "date": "2026-05-07",
+   "value": 1178691,
+   "positions": 5,
+   "gate": false,
+   "index": 24326.65
+  },
+  {
+   "date": "2026-05-08",
+   "value": 1175097,
+   "positions": 5,
+   "gate": false,
+   "index": 24176.15
+  },
+  {
+   "date": "2026-05-11",
+   "value": 1176945,
+   "positions": 5,
+   "gate": false,
+   "index": 23815.85
+  },
+  {
+   "date": "2026-05-12",
+   "value": 1169853,
+   "positions": 5,
+   "gate": false,
+   "index": 23379.55
+  },
+  {
+   "date": "2026-05-13",
+   "value": 1161021,
+   "positions": 5,
+   "gate": false,
+   "index": 23412.6
+  },
+  {
+   "date": "2026-05-14",
+   "value": 1170329,
+   "positions": 5,
+   "gate": false,
+   "index": 23689.6
+  },
+  {
+   "date": "2026-05-15",
+   "value": 1164521,
+   "positions": 5,
+   "gate": false,
+   "index": 23643.5
+  },
+  {
+   "date": "2026-05-18",
+   "value": 1162507,
+   "positions": 5,
+   "gate": false,
+   "index": 23649.95
+  },
+  {
+   "date": "2026-05-19",
+   "value": 1159863,
+   "positions": 5,
+   "gate": false,
+   "index": 23618
+  },
+  {
+   "date": "2026-05-20",
+   "value": 1168431,
+   "positions": 5,
+   "gate": false,
+   "index": 23659
+  },
+  {
+   "date": "2026-05-21",
+   "value": 1176191,
+   "positions": 5,
+   "gate": false,
+   "index": 23654.7
+  },
+  {
+   "date": "2026-05-22",
+   "value": 1177074,
+   "positions": 5,
+   "gate": false,
+   "index": 23719.3
+  },
+  {
+   "date": "2026-05-25",
+   "value": 1176153,
+   "positions": 5,
+   "gate": false,
+   "index": 24031.7
+  },
+  {
+   "date": "2026-05-26",
+   "value": 1179469,
+   "positions": 5,
+   "gate": false,
+   "index": 23913.7
+  },
+  {
+   "date": "2026-05-27",
+   "value": 1180791,
+   "positions": 5,
+   "gate": false,
+   "index": 23907.15
+  },
+  {
+   "date": "2026-05-29",
+   "value": 1182393,
+   "positions": 5,
+   "gate": false,
+   "index": 23547.75
+  },
+  {
+   "date": "2026-06-01",
+   "value": 1169712,
+   "positions": 5,
+   "gate": false,
+   "index": 23382.6
+  },
+  {
+   "date": "2026-06-02",
+   "value": 1172977,
+   "positions": 5,
+   "gate": false,
+   "index": 23483.55
+  },
+  {
+   "date": "2026-06-03",
+   "value": 1180811,
+   "positions": 5,
+   "gate": false,
+   "index": 23405.6
+  },
+  {
+   "date": "2026-06-04",
+   "value": 1181449,
+   "positions": 5,
+   "gate": false,
+   "index": 23416.55
+  },
+  {
+   "date": "2026-06-05",
+   "value": 1181623,
+   "positions": 5,
+   "gate": false,
+   "index": 23366.7
+  },
+  {
+   "date": "2026-06-08",
+   "value": 1172175,
+   "positions": 5,
+   "gate": false,
+   "index": 23123
+  },
+  {
+   "date": "2026-06-09",
+   "value": 1177455,
+   "positions": 5,
+   "gate": false,
+   "index": 23242.1
+  },
+  {
+   "date": "2026-06-10",
+   "value": 1172743,
+   "positions": 5,
+   "gate": false,
+   "index": 23214.95
+  },
+  {
+   "date": "2026-06-11",
+   "value": 1159800,
+   "positions": 4,
+   "gate": false,
+   "index": 23161.6
+  },
+  {
+   "date": "2026-06-12",
+   "value": 1160690,
+   "positions": 4,
+   "gate": false,
+   "index": 23622.9
+  },
+  {
+   "date": "2026-06-15",
+   "value": 1160344,
+   "positions": 4,
+   "gate": false,
+   "index": 23853.9
+  },
+  {
+   "date": "2026-06-16",
+   "value": 1156022,
+   "positions": 4,
+   "gate": false,
+   "index": 23989.15
+  },
+  {
+   "date": "2026-06-17",
+   "value": 1156022,
+   "positions": 4,
+   "gate": false,
+   "index": 24085.7
+  },
+  {
+   "date": "2026-06-18",
+   "value": 1157052,
+   "positions": 4,
+   "gate": false,
+   "index": 24168
+  },
+  {
+   "date": "2026-06-19",
+   "value": 1159664,
+   "positions": 4,
+   "gate": false,
+   "index": 24013.1
+  },
+  {
+   "date": "2026-06-22",
+   "value": 1159392,
+   "positions": 4,
+   "gate": false,
+   "index": 24102.9
+  },
+  {
+   "date": "2026-06-23",
+   "value": 1159904,
+   "positions": 4,
+   "gate": false,
+   "index": 23824.1
+  },
+  {
+   "date": "2026-06-24",
+   "value": 1158361,
+   "positions": 3,
+   "gate": false,
+   "index": 24021.65
+  },
+  {
+   "date": "2026-06-25",
+   "value": 1159252,
+   "positions": 3,
+   "gate": false,
+   "index": 24056
+  },
+  {
+   "date": "2026-06-29",
+   "value": 1167369,
+   "positions": 3,
+   "gate": false,
+   "index": 23946.25
+  },
+  {
+   "date": "2026-06-30",
+   "value": 1169253,
+   "positions": 3,
+   "gate": false,
+   "index": 23865.75
+  },
+  {
+   "date": "2026-07-01",
+   "value": 1169457,
+   "positions": 3,
+   "gate": false,
+   "index": 24005.85
+  },
+  {
+   "date": "2026-07-02",
+   "value": 1172012,
+   "positions": 3,
+   "gate": false,
+   "index": 24175.7
+  },
+  {
+   "date": "2026-07-03",
+   "value": 1171475,
+   "positions": 3,
+   "gate": false,
+   "index": 24270.85
+  },
+  {
+   "date": "2026-07-06",
+   "value": 1168388,
+   "positions": 3,
+   "gate": false,
+   "index": 24430.35
+  },
+  {
+   "date": "2026-07-07",
+   "value": 1167092,
+   "positions": 3,
+   "gate": false,
+   "index": 24398.7
+  },
+  {
+   "date": "2026-07-08",
+   "value": 1170781,
+   "positions": 3,
+   "gate": false,
+   "index": 23882.05
+  },
+  {
+   "date": "2026-07-09",
+   "value": 1171677,
+   "positions": 3,
+   "gate": false,
+   "index": 23962.8
+  },
+  {
+   "date": "2026-07-10",
+   "value": 1171082,
+   "positions": 3,
+   "gate": false,
+   "index": 24206.9
+  },
+  {
+   "date": "2026-07-13",
+   "value": 1170739,
+   "positions": 3,
+   "gate": false,
+   "index": 24211
+  },
+  {
+   "date": "2026-07-14",
+   "value": 1170945,
+   "positions": 3,
+   "gate": false,
+   "index": 24052.05
+  },
+  {
+   "date": "2026-07-15",
+   "value": 1176597,
+   "positions": 3,
+   "gate": false,
+   "index": 24078.5
+  },
+  {
+   "date": "2026-07-16",
+   "value": 1195646,
+   "positions": 3,
+   "gate": false,
+   "index": 24072.75
+  },
+  {
+   "date": "2026-07-17",
+   "value": 1196646,
+   "positions": 3,
+   "gate": false,
+   "index": 24334.3
+  },
+  {
+   "date": "2026-07-20",
+   "value": 1196912,
+   "positions": 3,
+   "gate": false,
+   "index": 24238.5
+  },
+  {
+   "date": "2026-07-21",
+   "value": 1197838,
+   "positions": 3,
+   "gate": false,
+   "index": 24187.7
+  },
+  {
+   "date": "2026-07-22",
+   "value": 1195909,
+   "positions": 3,
+   "gate": false,
+   "index": 23996.25
+  },
+  {
+   "date": "2026-07-23",
+   "value": 1191339,
+   "positions": 3,
+   "gate": false,
+   "index": 23869.6
+  },
+  {
+   "date": "2026-07-24",
+   "value": 1187547,
+   "positions": 3,
+   "gate": false,
+   "index": 23767.45
+  },
+  {
+   "date": "2026-07-27",
+   "value": 1189279,
+   "positions": 3,
+   "gate": false,
+   "index": 23995.95
+  },
+  {
+   "date": "2026-07-28",
+   "value": 1187846,
+   "positions": 3,
+   "gate": false,
+   "index": 23985.35
+  },
+  {
+   "date": "2026-07-29",
+   "value": 1193514,
+   "positions": 3,
+   "gate": false,
+   "index": 24250.2
+  },
+  {
+   "date": "2026-07-30",
+   "value": 1188762,
+   "positions": 3,
+   "gate": false,
+   "index": 24317.15
+  },
+  {
+   "date": "2026-07-31",
+   "value": 1186999,
+   "positions": 3,
+   "gate": false,
+   "index": 24383.6
+  },
+  {
+   "date": "2026-08-03",
+   "value": 1189860,
+   "positions": 3,
+   "gate": false,
+   "index": 24774.3
+  },
+  {
+   "date": "2026-08-04",
+   "value": 1200320,
+   "positions": 3,
+   "gate": false,
+   "index": 24614.9
+  },
+  {
+   "date": "2026-08-05",
+   "value": 1201609,
+   "positions": 3,
+   "gate": false,
+   "index": 24624.65
+  },
+  {
+   "date": "2026-08-06",
+   "value": 1199043,
+   "positions": 3,
+   "gate": false,
+   "index": 24636
+  },
+  {
+   "date": "2026-08-07",
+   "value": 1200130,
+   "positions": 3,
+   "gate": false,
+   "index": 24570.65
+  },
+  {
+   "date": "2026-08-10",
+   "value": 1198282,
+   "positions": 2,
+   "gate": false,
+   "index": 24583.8
+  },
+  {
+   "date": "2026-08-11",
+   "value": 1200370,
+   "positions": 2,
+   "gate": false,
+   "index": 24471.7
+  },
+  {
+   "date": "2026-08-12",
+   "value": 1200868,
+   "positions": 2,
+   "gate": false,
+   "index": 24435.95
+  },
+  {
+   "date": "2026-08-13",
+   "value": 1198253,
+   "positions": 2,
+   "gate": false,
+   "index": 24395.85
+  },
+  {
+   "date": "2026-08-14",
+   "value": 1199578,
+   "positions": 2,
+   "gate": false,
+   "index": 24366
+  },
+  {
+   "date": "2026-08-17",
+   "value": 1197796,
+   "positions": 2,
+   "gate": false,
+   "index": 24287.65
+  },
+  {
+   "date": "2026-08-18",
+   "value": 1200014,
+   "positions": 2,
+   "gate": false,
+   "index": 24154.9
+  },
+  {
+   "date": "2026-08-19",
+   "value": 1196172,
+   "positions": 2,
+   "gate": false,
+   "index": 24078.3
+  },
+  {
+   "date": "2026-08-20",
+   "value": 1196391,
+   "positions": 2,
+   "gate": false,
+   "index": 24231.85
+  },
+  {
+   "date": "2026-08-21",
+   "value": 1196285,
+   "positions": 2,
+   "gate": false,
+   "index": 24252
+  },
+  {
+   "date": "2026-08-24",
+   "value": 1195948,
+   "positions": 2,
+   "gate": false,
+   "index": 24219.05
+  },
+  {
+   "date": "2026-08-25",
+   "value": 1197578,
+   "positions": 2,
+   "gate": false,
+   "index": 24334.55
+  },
+  {
+   "date": "2026-08-26",
+   "value": 1199173,
+   "positions": 2,
+   "gate": false,
+   "index": 24207.75
+  },
+  {
+   "date": "2026-08-27",
+   "value": 1200347,
+   "positions": 2,
+   "gate": false,
+   "index": 24090.85
+  },
+  {
+   "date": "2026-08-28",
+   "value": 1205030,
+   "positions": 2,
+   "gate": false,
+   "index": 24175.65
+  },
+  {
+   "date": "2026-08-31",
+   "value": 1207657,
+   "positions": 2,
+   "gate": false,
+   "index": 24080.4
+  },
+  {
+   "date": "2026-09-01",
+   "value": 1208232,
+   "positions": 2,
+   "gate": false,
+   "index": 24055.8
+  },
+  {
+   "date": "2026-09-02",
+   "value": 1205824,
+   "positions": 2,
+   "gate": false,
+   "index": 23914.45
+  },
+  {
+   "date": "2026-09-03",
+   "value": 1204757,
+   "positions": 2,
+   "gate": false,
+   "index": 23873.45
+  },
+  {
+   "date": "2026-09-04",
+   "value": 1201767,
+   "positions": 2,
+   "gate": false,
+   "index": 23897.7
+  },
+  {
+   "date": "2026-09-07",
+   "value": 1202665,
+   "positions": 2,
+   "gate": false,
+   "index": 23779.15
+  },
+  {
+   "date": "2026-09-08",
+   "value": 1201715,
+   "positions": 2,
+   "gate": false,
+   "index": 23635.1
+  },
+  {
+   "date": "2026-09-09",
+   "value": 1202760,
+   "positions": 2,
+   "gate": false,
+   "index": 23431.5
+  },
+  {
+   "date": "2026-09-10",
+   "value": 1209637,
+   "positions": 2,
+   "gate": false,
+   "index": 23477.8
+  },
+  {
+   "date": "2026-09-11",
+   "value": 1208450,
+   "positions": 2,
+   "gate": false,
+   "index": 23398.1
+  },
+  {
+   "date": "2026-09-15",
+   "value": 1202633,
+   "positions": 2,
+   "gate": false,
+   "index": 23118.6
+  },
+  {
+   "date": "2026-09-16",
+   "value": 1203844,
+   "positions": 2,
+   "gate": false,
+   "index": 23217.6
+  },
+  {
+   "date": "2026-09-17",
+   "value": 1202583,
+   "positions": 2,
+   "gate": false,
+   "index": 23270.6
+  },
+  {
+   "date": "2026-09-18",
+   "value": 1208636,
+   "positions": 2,
+   "gate": false,
+   "index": 23346.4
+  },
+  {
+   "date": "2026-09-21",
+   "value": 1206287,
+   "positions": 2,
+   "gate": false,
+   "index": 23414.3
+  },
+  {
+   "date": "2026-09-22",
+   "value": 1200681,
+   "positions": 2,
+   "gate": false,
+   "index": 23329
+  },
+  {
+   "date": "2026-09-23",
+   "value": 1199507,
+   "positions": 2,
+   "gate": false,
+   "index": 23446.8
+  },
+  {
+   "date": "2026-09-24",
+   "value": 1199785,
+   "positions": 2,
+   "gate": false,
+   "index": 23063.1
+  },
+  {
+   "date": "2026-09-25",
+   "value": 1199516,
+   "positions": 2,
+   "gate": false,
+   "index": 23140.5
+  },
+  {
+   "date": "2026-09-28",
+   "value": 1196692,
+   "positions": 2,
+   "gate": false,
+   "index": 22780.25
+  },
+  {
+   "date": "2026-09-29",
+   "value": 1195972,
+   "positions": 2,
+   "gate": false,
+   "index": 22716.2
+  },
+  {
+   "date": "2026-09-30",
+   "value": 1196386,
+   "positions": 2,
+   "gate": false,
+   "index": 22620.45
+  },
+  {
+   "date": "2026-10-01",
+   "value": 1194209,
+   "positions": 2,
+   "gate": false,
+   "index": 22421.95
+  },
+  {
+   "date": "2026-10-05",
+   "value": 1193192,
+   "positions": 2,
+   "gate": false,
+   "index": 22555.75
+  },
+  {
+   "date": "2026-10-06",
+   "value": 1195368,
+   "positions": 2,
+   "gate": false,
+   "index": 22776.1
+  },
+  {
+   "date": "2026-10-07",
+   "value": 1196053,
+   "positions": 2,
+   "gate": false,
+   "index": 22603.05
+  },
+  {
+   "date": "2026-10-08",
+   "value": 1191968,
+   "positions": 2,
+   "gate": false,
+   "index": 22231.8
+  },
+  {
+   "date": "2026-10-09",
+   "value": 1194833,
+   "positions": 1,
+   "gate": false,
+   "index": 22520.45
+  },
+  {
+   "date": "2026-10-12",
+   "value": 1198280,
+   "positions": 1,
+   "gate": false,
+   "index": 22363.35
+  },
+  {
+   "date": "2026-10-13",
+   "value": 1197555,
+   "positions": 1,
+   "gate": false,
+   "index": 22721.95
+  },
+  {
+   "date": "2026-10-14",
+   "value": 1196300,
+   "positions": 1,
+   "gate": false,
+   "index": 22622.7
+  },
+  {
+   "date": "2026-10-15",
+   "value": 1196435,
+   "positions": 1,
+   "gate": false,
+   "index": 22997.35
+  },
+  {
+   "date": "2026-10-16",
+   "value": 1196435,
+   "positions": 1,
+   "gate": false,
+   "index": null
+  },
+  {
+   "date": "2026-10-19",
+   "value": 1195940,
+   "positions": 1,
+   "gate": false,
+   "index": null
+  },
+  {
+   "date": "2026-10-21",
+   "value": 1195409,
+   "positions": 1,
+   "gate": false,
+   "index": null
+  },
+  {
+   "date": "2026-10-22",
+   "value": 1194423,
+   "positions": 1,
+   "gate": false,
+   "index": null
+  },
+  {
+   "date": "2026-10-23",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": null
+  },
+  {
+   "date": "2026-10-26",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 22753.2
+  },
+  {
+   "date": "2026-10-27",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 22749.75
+  },
+  {
+   "date": "2026-10-28",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 22698.85
+  },
+  {
+   "date": "2026-10-29",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 22936.75
+  },
+  {
+   "date": "2026-10-30",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 23053.1
+  },
+  {
+   "date": "2026-11-02",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 23440.8
+  },
+  {
+   "date": "2026-11-03",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 23810.85
+  },
+  {
+   "date": "2026-11-04",
+   "value": 1192292,
+   "positions": 0,
+   "gate": false,
+   "index": 23960.6
+  }
+ ],
+ "trades": [
+  {
+   "sym": "MRPL",
+   "sector": "Oil & Gas",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-06-16",
+   "entry": 108.31,
+   "exit": 96.06,
+   "qty": 307,
+   "bars": 7,
+   "ret": -11.32,
+   "pnl": -3763,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "CHENNPETRO",
+   "sector": "Oil & Gas",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-06-20",
+   "entry": 370,
+   "exit": 274.14,
+   "qty": 90,
+   "bars": 9,
+   "ret": -25.91,
+   "pnl": -8628,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "DEEPAKFERT",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-06-20",
+   "entry": 708.61,
+   "exit": 542.24,
+   "qty": 47,
+   "bars": 9,
+   "ret": -23.48,
+   "pnl": -7820,
+   "rankIn": 12,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ADANIPOWER",
+   "sector": "Power",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-07-06",
+   "entry": 58.37,
+   "exit": 52.46,
+   "qty": 571,
+   "bars": 21,
+   "ret": -10.12,
+   "pnl": -3372,
+   "rankIn": 1,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "RHIM",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-07-06",
+   "entry": 566.15,
+   "exit": 518.27,
+   "qty": 58,
+   "bars": 21,
+   "ret": -8.46,
+   "pnl": -2777,
+   "rankIn": 3,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "THERMAX",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-07-06",
+   "entry": 2004.25,
+   "exit": 2063.65,
+   "qty": 16,
+   "bars": 21,
+   "ret": 2.96,
+   "pnl": 950,
+   "rankIn": 10,
+   "reason": "rank 40"
+  },
+  {
+   "sym": "POWERGRID",
+   "sector": "Power",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-07-06",
+   "entry": 169,
+   "exit": 157.6,
+   "qty": 197,
+   "bars": 21,
+   "ret": -6.75,
+   "pnl": -2246,
+   "rankIn": 15,
+   "reason": "rank 49"
+  },
+  {
+   "sym": "NLCINDIA",
+   "sector": "Power",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-07-06",
+   "entry": 73.76,
+   "exit": 66.95,
+   "qty": 451,
+   "bars": 21,
+   "ret": -9.23,
+   "pnl": -3072,
+   "rankIn": 16,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "CGCL",
+   "sector": "Financial Services",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-08-04",
+   "entry": 704.81,
+   "exit": 698.85,
+   "qty": 47,
+   "bars": 42,
+   "ret": -0.84,
+   "pnl": -280,
+   "rankIn": 17,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "ELGIEQUIP",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-09-07",
+   "entry": 380.97,
+   "exit": 556.56,
+   "qty": 87,
+   "bars": 63,
+   "ret": 46.09,
+   "pnl": 15277,
+   "rankIn": 5,
+   "reason": "rank 62"
+  },
+  {
+   "sym": "TATAELXSI",
+   "sector": "IT",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-09-07",
+   "entry": 7985.81,
+   "exit": 8799.98,
+   "qty": 4,
+   "bars": 42,
+   "ret": 10.2,
+   "pnl": 3257,
+   "rankIn": 6,
+   "reason": "rank 42"
+  },
+  {
+   "sym": "WELCORP",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-09-07",
+   "entry": 220.63,
+   "exit": 246.08,
+   "qty": 151,
+   "bars": 42,
+   "ret": 11.54,
+   "pnl": 3843,
+   "rankIn": 8,
+   "reason": "rank 48"
+  },
+  {
+   "sym": "SUMICHEM",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-09-07",
+   "entry": 465.1,
+   "exit": 496.8,
+   "qty": 21,
+   "bars": 42,
+   "ret": 6.82,
+   "pnl": 666,
+   "rankIn": 16,
+   "reason": "rank 45"
+  },
+  {
+   "sym": "CREDITACC",
+   "sector": "Financial Services",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-10-07",
+   "entry": 1082.62,
+   "exit": 998.1,
+   "qty": 30,
+   "bars": 84,
+   "ret": -7.81,
+   "pnl": -2536,
+   "rankIn": 6,
+   "reason": "rank 38"
+  },
+  {
+   "sym": "PGEL",
+   "sector": "Durables & Building",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-10-07",
+   "entry": 96.25,
+   "exit": 102.86,
+   "qty": 346,
+   "bars": 84,
+   "ret": 6.86,
+   "pnl": 2286,
+   "rankIn": 13,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "DEEPAKFERT",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-10-07",
+   "entry": 612.37,
+   "exit": 936.89,
+   "qty": 54,
+   "bars": 63,
+   "ret": 53,
+   "pnl": 17524,
+   "rankIn": 3,
+   "reason": "rank 46"
+  },
+  {
+   "sym": "LEMONTREE",
+   "sector": "Aviation & Hotels",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-10-07",
+   "entry": 64.35,
+   "exit": 92.66,
+   "qty": 518,
+   "bars": 63,
+   "ret": 44,
+   "pnl": 14667,
+   "rankIn": 9,
+   "reason": "rank 45"
+  },
+  {
+   "sym": "SCHAEFFLER",
+   "sector": "Auto Ancillary",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-10-20",
+   "entry": 2260.09,
+   "exit": 2941.58,
+   "qty": 14,
+   "bars": 93,
+   "ret": 30.15,
+   "pnl": 9541,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "HSCL",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2022-07-06",
+   "exitDate": "2022-11-09",
+   "entry": 73.46,
+   "exit": 98.7,
+   "qty": 453,
+   "bars": 84,
+   "ret": 34.36,
+   "pnl": 11434,
+   "rankIn": 4,
+   "reason": "rank 42"
+  },
+  {
+   "sym": "ATGL",
+   "sector": "Oil & Gas",
+   "entryDate": "2022-10-07",
+   "exitDate": "2022-11-09",
+   "entry": 3192.38,
+   "exit": 3789.51,
+   "qty": 10,
+   "bars": 21,
+   "ret": 18.7,
+   "pnl": 5971,
+   "rankIn": 4,
+   "reason": "rank 45"
+  },
+  {
+   "sym": "ADANIPOWER",
+   "sector": "Power",
+   "entryDate": "2022-08-04",
+   "exitDate": "2022-11-28",
+   "entry": 69.55,
+   "exit": 65.55,
+   "qty": 475,
+   "bars": 76,
+   "ret": -5.75,
+   "pnl": -1901,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BDL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-06-07",
+   "exitDate": "2022-12-08",
+   "entry": 409.24,
+   "exit": 491.06,
+   "qty": 81,
+   "bars": 126,
+   "ret": 19.99,
+   "pnl": 6628,
+   "rankIn": 4,
+   "reason": "rank 42"
+  },
+  {
+   "sym": "M&M",
+   "sector": "Auto",
+   "entryDate": "2022-10-07",
+   "exitDate": "2022-12-08",
+   "entry": 1240.71,
+   "exit": 1272.44,
+   "qty": 26,
+   "bars": 42,
+   "ret": 2.56,
+   "pnl": 825,
+   "rankIn": 14,
+   "reason": "rank 41"
+  },
+  {
+   "sym": "TIINDIA",
+   "sector": "Auto Ancillary",
+   "entryDate": "2022-10-07",
+   "exitDate": "2022-12-08",
+   "entry": 2749.67,
+   "exit": 2893.85,
+   "qty": 12,
+   "bars": 42,
+   "ret": 5.24,
+   "pnl": 1730,
+   "rankIn": 17,
+   "reason": "rank 40"
+  },
+  {
+   "sym": "TATAINVEST",
+   "sector": "Financial Services",
+   "entryDate": "2022-11-09",
+   "exitDate": "2022-12-08",
+   "entry": 245.63,
+   "exit": 224.83,
+   "qty": 135,
+   "bars": 21,
+   "ret": -8.47,
+   "pnl": -2809,
+   "rankIn": 9,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "AMBUJACEM",
+   "sector": "Cement",
+   "entryDate": "2022-11-09",
+   "exitDate": "2022-12-08",
+   "entry": 565.35,
+   "exit": 586.87,
+   "qty": 58,
+   "bars": 21,
+   "ret": 3.81,
+   "pnl": 1248,
+   "rankIn": 10,
+   "reason": "rank 34"
+  },
+  {
+   "sym": "ELECON",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-09-07",
+   "exitDate": "2022-12-23",
+   "entry": 187.46,
+   "exit": 173.79,
+   "qty": 177,
+   "bars": 74,
+   "ret": -7.29,
+   "pnl": -2419,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BLS",
+   "sector": "Consumer Services",
+   "entryDate": "2022-09-07",
+   "exitDate": "2022-12-23",
+   "entry": 128.77,
+   "exit": 157.71,
+   "qty": 258,
+   "bars": 74,
+   "ret": 22.48,
+   "pnl": 7468,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "MAZDOCK",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-12-08",
+   "exitDate": "2022-12-23",
+   "entry": 453.83,
+   "exit": 349.65,
+   "qty": 73,
+   "bars": 11,
+   "ret": -22.96,
+   "pnl": -7605,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "UNIONBANK",
+   "sector": "Banks",
+   "entryDate": "2022-12-08",
+   "exitDate": "2022-12-23",
+   "entry": 88.63,
+   "exit": 67.45,
+   "qty": 376,
+   "bars": 11,
+   "ret": -23.9,
+   "pnl": -7965,
+   "rankIn": 14,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BANKINDIA",
+   "sector": "Financial Services",
+   "entryDate": "2022-12-08",
+   "exitDate": "2022-12-23",
+   "entry": 100.35,
+   "exit": 77.28,
+   "qty": 332,
+   "bars": 11,
+   "ret": -22.99,
+   "pnl": -7658,
+   "rankIn": 16,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "HAL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-07-06",
+   "exitDate": "2023-01-06",
+   "entry": 874.86,
+   "exit": 1248.32,
+   "qty": 38,
+   "bars": 126,
+   "ret": 42.69,
+   "pnl": 14192,
+   "rankIn": 5,
+   "reason": "rank 56"
+  },
+  {
+   "sym": "TVSMOTOR",
+   "sector": "Auto",
+   "entryDate": "2022-10-07",
+   "exitDate": "2023-01-06",
+   "entry": 1086.48,
+   "exit": 1022.96,
+   "qty": 30,
+   "bars": 63,
+   "ret": -5.85,
+   "pnl": -1905,
+   "rankIn": 8,
+   "reason": "rank 72"
+  },
+  {
+   "sym": "ADANIENT",
+   "sector": "Conglomerate",
+   "entryDate": "2022-06-07",
+   "exitDate": "2023-01-27",
+   "entry": 2230.89,
+   "exit": 2757.31,
+   "qty": 14,
+   "bars": 161,
+   "ret": 23.6,
+   "pnl": 7370,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BANKINDIA",
+   "sector": "Financial Services",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-01-27",
+   "entry": 93.59,
+   "exit": 77.78,
+   "qty": 356,
+   "bars": 14,
+   "ret": -16.89,
+   "pnl": -5627,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "APARINDS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2022-09-07",
+   "exitDate": "2023-01-30",
+   "entry": 1223.98,
+   "exit": 1403.59,
+   "qty": 27,
+   "bars": 99,
+   "ret": 14.67,
+   "pnl": 4849,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GESHIP",
+   "sector": "Ports & Logistics",
+   "entryDate": "2022-07-06",
+   "exitDate": "2023-02-07",
+   "entry": 407.41,
+   "exit": 620.92,
+   "qty": 81,
+   "bars": 147,
+   "ret": 52.41,
+   "pnl": 17294,
+   "rankIn": 12,
+   "reason": "rank 32"
+  },
+  {
+   "sym": "VBL",
+   "sector": "FMCG",
+   "entryDate": "2022-09-07",
+   "exitDate": "2023-02-07",
+   "entry": 216.9,
+   "exit": 260.43,
+   "qty": 146,
+   "bars": 105,
+   "ret": 20.07,
+   "pnl": 6354,
+   "rankIn": 7,
+   "reason": "rank 34"
+  },
+  {
+   "sym": "UNIONBANK",
+   "sector": "Banks",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-02-07",
+   "entry": 80.92,
+   "exit": 73.14,
+   "qty": 411,
+   "bars": 21,
+   "ret": -9.62,
+   "pnl": -3198,
+   "rankIn": 2,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "RVNL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-02-22",
+   "entry": 72.56,
+   "exit": 62.21,
+   "qty": 459,
+   "bars": 32,
+   "ret": -14.27,
+   "pnl": -4752,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GRSE",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-03-09",
+   "entry": 493.79,
+   "exit": 429.85,
+   "qty": 67,
+   "bars": 21,
+   "ret": -12.95,
+   "pnl": -4284,
+   "rankIn": 9,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "MAHABANK",
+   "sector": "Financial Services",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-03-09",
+   "entry": 28.19,
+   "exit": 27.06,
+   "qty": 1182,
+   "bars": 21,
+   "ret": -4.02,
+   "pnl": -1339,
+   "rankIn": 13,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "IDBI",
+   "sector": "Financial Services",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-03-09",
+   "entry": 50.68,
+   "exit": 48.33,
+   "qty": 657,
+   "bars": 21,
+   "ret": -4.63,
+   "pnl": -1543,
+   "rankIn": 14,
+   "reason": "rank 63"
+  },
+  {
+   "sym": "J&KBANK",
+   "sector": "Financial Services",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-03-14",
+   "entry": 55.43,
+   "exit": 45.73,
+   "qty": 601,
+   "bars": 45,
+   "ret": -17.5,
+   "pnl": -5831,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "MAZDOCK",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-03-24",
+   "entry": 402.03,
+   "exit": 319.15,
+   "qty": 82,
+   "bars": 53,
+   "ret": -20.62,
+   "pnl": -6796,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "RBLBANK",
+   "sector": "Banks",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-03-24",
+   "entry": 163.75,
+   "exit": 134.9,
+   "qty": 203,
+   "bars": 32,
+   "ret": -17.62,
+   "pnl": -5856,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "KALYANKJIL",
+   "sector": "Consumer & Retail",
+   "entryDate": "2022-12-08",
+   "exitDate": "2023-04-06",
+   "entry": 107.96,
+   "exit": 104.14,
+   "qty": 308,
+   "bars": 81,
+   "ret": -3.54,
+   "pnl": -1176,
+   "rankIn": 13,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ANANTRAJ",
+   "sector": "Realty",
+   "entryDate": "2022-12-08",
+   "exitDate": "2023-04-12",
+   "entry": 101.35,
+   "exit": 141.24,
+   "qty": 328,
+   "bars": 84,
+   "ret": 39.35,
+   "pnl": 13083,
+   "rankIn": 5,
+   "reason": "rank 36"
+  },
+  {
+   "sym": "BLS",
+   "sector": "Consumer Services",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-04-12",
+   "entry": 170.1,
+   "exit": 172.99,
+   "qty": 195,
+   "bars": 63,
+   "ret": 1.7,
+   "pnl": 563,
+   "rankIn": 8,
+   "reason": "rank 35"
+  },
+  {
+   "sym": "PNB",
+   "sector": "Banks",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-04-12",
+   "entry": 51.38,
+   "exit": 46.98,
+   "qty": 648,
+   "bars": 42,
+   "ret": -8.56,
+   "pnl": -2850,
+   "rankIn": 15,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "DATAPATTNS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-03-09",
+   "exitDate": "2023-04-12",
+   "entry": 1327.44,
+   "exit": 1626.41,
+   "qty": 25,
+   "bars": 21,
+   "ret": 22.52,
+   "pnl": 7474,
+   "rankIn": 4,
+   "reason": "rank 58"
+  },
+  {
+   "sym": "RAINBOW",
+   "sector": "Pharma",
+   "entryDate": "2023-03-09",
+   "exitDate": "2023-04-12",
+   "entry": 736.9,
+   "exit": 728.56,
+   "qty": 45,
+   "bars": 21,
+   "ret": -1.13,
+   "pnl": -376,
+   "rankIn": 12,
+   "reason": "rank 46"
+  },
+  {
+   "sym": "KARURVYSYA",
+   "sector": "Banks",
+   "entryDate": "2022-11-09",
+   "exitDate": "2023-05-15",
+   "entry": 83.08,
+   "exit": 81.09,
+   "qty": 401,
+   "bars": 126,
+   "ret": -2.4,
+   "pnl": -800,
+   "rankIn": 8,
+   "reason": "rank 79"
+  },
+  {
+   "sym": "KPITTECH",
+   "sector": "IT",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-05-15",
+   "entry": 852.73,
+   "exit": 919.52,
+   "qty": 39,
+   "bars": 21,
+   "ret": 7.83,
+   "pnl": 2605,
+   "rankIn": 11,
+   "reason": "rank 47"
+  },
+  {
+   "sym": "RVNL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-03-09",
+   "exitDate": "2023-05-23",
+   "entry": 66.3,
+   "exit": 112.83,
+   "qty": 502,
+   "bars": 48,
+   "ret": 70.18,
+   "pnl": 23359,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "INDIANB",
+   "sector": "Banks",
+   "entryDate": "2022-12-08",
+   "exitDate": "2023-06-13",
+   "entry": 295.39,
+   "exit": 281.38,
+   "qty": 112,
+   "bars": 126,
+   "ret": -4.74,
+   "pnl": -1570,
+   "rankIn": 15,
+   "reason": "rank 138"
+  },
+  {
+   "sym": "GODFRYPHLP",
+   "sector": "FMCG",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-06-13",
+   "entry": 592.55,
+   "exit": 566.96,
+   "qty": 56,
+   "bars": 42,
+   "ret": -4.32,
+   "pnl": -1433,
+   "rankIn": 5,
+   "reason": "rank 167"
+  },
+  {
+   "sym": "J&KBANK",
+   "sector": "Financial Services",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-06-13",
+   "entry": 50.38,
+   "exit": 56.22,
+   "qty": 661,
+   "bars": 42,
+   "ret": 11.59,
+   "pnl": 3860,
+   "rankIn": 8,
+   "reason": "rank 41"
+  },
+  {
+   "sym": "PERSISTENT",
+   "sector": "IT",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-06-13",
+   "entry": 2275.21,
+   "exit": 2516.32,
+   "qty": 14,
+   "bars": 42,
+   "ret": 10.6,
+   "pnl": 3376,
+   "rankIn": 14,
+   "reason": "rank 54"
+  },
+  {
+   "sym": "MAHABANK",
+   "sector": "Financial Services",
+   "entryDate": "2023-05-15",
+   "exitDate": "2023-06-13",
+   "entry": 30.95,
+   "exit": 28.46,
+   "qty": 1077,
+   "bars": 21,
+   "ret": -8.04,
+   "pnl": -2681,
+   "rankIn": 14,
+   "reason": "rank 47"
+  },
+  {
+   "sym": "KIRLOSENG",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-01-06",
+   "exitDate": "2023-07-13",
+   "entry": 310.87,
+   "exit": 400.25,
+   "qty": 107,
+   "bars": 126,
+   "ret": 28.75,
+   "pnl": 9564,
+   "rankIn": 4,
+   "reason": "rank 89"
+  },
+  {
+   "sym": "GRAVITA",
+   "sector": "Metals & Mining",
+   "entryDate": "2023-03-09",
+   "exitDate": "2023-07-13",
+   "entry": 475.66,
+   "exit": 626.96,
+   "qty": 70,
+   "bars": 84,
+   "ret": 31.81,
+   "pnl": 10591,
+   "rankIn": 7,
+   "reason": "rank 39"
+  },
+  {
+   "sym": "PFC",
+   "sector": "NBFC & Finance",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-07-13",
+   "entry": 132.92,
+   "exit": 179.45,
+   "qty": 250,
+   "bars": 63,
+   "ret": 35.01,
+   "pnl": 11633,
+   "rankIn": 18,
+   "reason": "rank 40"
+  },
+  {
+   "sym": "POLICYBZR",
+   "sector": "Internet & Media",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-07-13",
+   "entry": 637.71,
+   "exit": 761.71,
+   "qty": 52,
+   "bars": 21,
+   "ret": 19.44,
+   "pnl": 6448,
+   "rankIn": 16,
+   "reason": "rank 59"
+  },
+  {
+   "sym": "OLECTRA",
+   "sector": "Auto",
+   "entryDate": "2023-07-13",
+   "exitDate": "2023-07-25",
+   "entry": 1364.64,
+   "exit": 1080.33,
+   "qty": 24,
+   "bars": 8,
+   "ret": -20.83,
+   "pnl": -6824,
+   "rankIn": 15,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "JSL",
+   "sector": "Metals & Mining",
+   "entryDate": "2023-02-07",
+   "exitDate": "2023-08-11",
+   "entry": 258.89,
+   "exit": 410.83,
+   "qty": 128,
+   "bars": 126,
+   "ret": 58.69,
+   "pnl": 19449,
+   "rankIn": 3,
+   "reason": "rank 41"
+  },
+  {
+   "sym": "FACT",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2023-05-15",
+   "exitDate": "2023-08-11",
+   "entry": 308.31,
+   "exit": 443.58,
+   "qty": 108,
+   "bars": 63,
+   "ret": 43.88,
+   "pnl": 14609,
+   "rankIn": 1,
+   "reason": "rank 65"
+  },
+  {
+   "sym": "NCC",
+   "sector": "Construction",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-08-11",
+   "entry": 121.98,
+   "exit": 154.67,
+   "qty": 273,
+   "bars": 42,
+   "ret": 26.79,
+   "pnl": 8923,
+   "rankIn": 13,
+   "reason": "rank 64"
+  },
+  {
+   "sym": "ANURAS",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-08-11",
+   "entry": 1087.13,
+   "exit": 949.17,
+   "qty": 30,
+   "bars": 42,
+   "ret": -12.69,
+   "pnl": -4139,
+   "rankIn": 15,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "CHENNPETRO",
+   "sector": "Oil & Gas",
+   "entryDate": "2023-07-13",
+   "exitDate": "2023-08-16",
+   "entry": 436.5,
+   "exit": 349.77,
+   "qty": 76,
+   "bars": 23,
+   "ret": -19.87,
+   "pnl": -6591,
+   "rankIn": 14,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "RVNL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-09-12",
+   "entry": 122.13,
+   "exit": 169.6,
+   "qty": 272,
+   "bars": 63,
+   "ret": 38.86,
+   "pnl": 12910,
+   "rankIn": 2,
+   "reason": "rank 36"
+  },
+  {
+   "sym": "CYIENT",
+   "sector": "IT",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-09-12",
+   "entry": 1470.7,
+   "exit": 1761.55,
+   "qty": 22,
+   "bars": 63,
+   "ret": 19.78,
+   "pnl": 6399,
+   "rankIn": 11,
+   "reason": "rank 37"
+  },
+  {
+   "sym": "CHOLAFIN",
+   "sector": "NBFC & Finance",
+   "entryDate": "2023-08-11",
+   "exitDate": "2023-09-12",
+   "entry": 1044.81,
+   "exit": 1164.3,
+   "qty": 31,
+   "bars": 21,
+   "ret": 11.44,
+   "pnl": 3704,
+   "rankIn": 20,
+   "reason": "rank 125"
+  },
+  {
+   "sym": "CHOLAHLDNG",
+   "sector": "Financial Services",
+   "entryDate": "2023-08-11",
+   "exitDate": "2023-09-12",
+   "entry": 921.38,
+   "exit": 1102.84,
+   "qty": 36,
+   "bars": 21,
+   "ret": 19.69,
+   "pnl": 6533,
+   "rankIn": 24,
+   "reason": "rank 82"
+  },
+  {
+   "sym": "ZENSARTECH",
+   "sector": "IT",
+   "entryDate": "2023-06-13",
+   "exitDate": "2023-10-13",
+   "entry": 396.34,
+   "exit": 542.93,
+   "qty": 84,
+   "bars": 84,
+   "ret": 36.99,
+   "pnl": 12314,
+   "rankIn": 8,
+   "reason": "rank 40"
+  },
+  {
+   "sym": "INOXWIND",
+   "sector": "Power",
+   "entryDate": "2023-08-11",
+   "exitDate": "2023-10-13",
+   "entry": 52.42,
+   "exit": 50.27,
+   "qty": 635,
+   "bars": 42,
+   "ret": -4.09,
+   "pnl": -1360,
+   "rankIn": 16,
+   "reason": "rank 57"
+  },
+  {
+   "sym": "OLECTRA",
+   "sector": "Auto",
+   "entryDate": "2023-09-12",
+   "exitDate": "2023-10-13",
+   "entry": 1199.3,
+   "exit": 1172.59,
+   "qty": 27,
+   "bars": 21,
+   "ret": -2.23,
+   "pnl": -721,
+   "rankIn": 9,
+   "reason": "rank 43"
+  },
+  {
+   "sym": "KIRLOSBROS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-09-12",
+   "exitDate": "2023-11-08",
+   "entry": 810.86,
+   "exit": 812.18,
+   "qty": 41,
+   "bars": 38,
+   "ret": 0.16,
+   "pnl": 54,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NEULANDLAB",
+   "sector": "Pharma",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-11-15",
+   "entry": 2105.4,
+   "exit": 5293.3,
+   "qty": 15,
+   "bars": 147,
+   "ret": 151.41,
+   "pnl": 47818,
+   "rankIn": 17,
+   "reason": "rank 47"
+  },
+  {
+   "sym": "AUROPHARMA",
+   "sector": "Pharma",
+   "entryDate": "2023-09-12",
+   "exitDate": "2023-11-15",
+   "entry": 872.51,
+   "exit": 965.45,
+   "qty": 38,
+   "bars": 42,
+   "ret": 10.65,
+   "pnl": 3532,
+   "rankIn": 14,
+   "reason": "rank 74"
+  },
+  {
+   "sym": "GLENMARK",
+   "sector": "Pharma",
+   "entryDate": "2023-09-12",
+   "exitDate": "2023-11-15",
+   "entry": 815.42,
+   "exit": 749.92,
+   "qty": 40,
+   "bars": 42,
+   "ret": -8.03,
+   "pnl": -2620,
+   "rankIn": 16,
+   "reason": "rank 75"
+  },
+  {
+   "sym": "JBMA",
+   "sector": "Auto",
+   "entryDate": "2023-04-12",
+   "exitDate": "2023-12-15",
+   "entry": 373.06,
+   "exit": 703.62,
+   "qty": 89,
+   "bars": 168,
+   "ret": 88.61,
+   "pnl": 29420,
+   "rankIn": 9,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "THANGAMAYL",
+   "sector": "Durables & Building",
+   "entryDate": "2023-09-12",
+   "exitDate": "2023-12-15",
+   "entry": 1227.09,
+   "exit": 1423.21,
+   "qty": 27,
+   "bars": 63,
+   "ret": 15.98,
+   "pnl": 5295,
+   "rankIn": 13,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "JINDALSAW",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-04-12",
+   "exitDate": "2024-01-16",
+   "entry": 81.85,
+   "exit": 259.19,
+   "qty": 407,
+   "bars": 189,
+   "ret": 216.67,
+   "pnl": 72177,
+   "rankIn": 3,
+   "reason": "rank 51"
+  },
+  {
+   "sym": "APARINDS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-04-12",
+   "exitDate": "2024-01-16",
+   "entry": 2697.94,
+   "exit": 5468.24,
+   "qty": 12,
+   "bars": 189,
+   "ret": 102.68,
+   "pnl": 33244,
+   "rankIn": 4,
+   "reason": "rank 47"
+  },
+  {
+   "sym": "KAYNES",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-07-13",
+   "exitDate": "2024-01-16",
+   "entry": 1692.13,
+   "exit": 2756.86,
+   "qty": 19,
+   "bars": 126,
+   "ret": 62.92,
+   "pnl": 20230,
+   "rankIn": 3,
+   "reason": "rank 75"
+  },
+  {
+   "sym": "RKFORGE",
+   "sector": "Auto",
+   "entryDate": "2023-07-13",
+   "exitDate": "2024-01-16",
+   "entry": 457.28,
+   "exit": 775.09,
+   "qty": 72,
+   "bars": 126,
+   "ret": 69.5,
+   "pnl": 22882,
+   "rankIn": 9,
+   "reason": "rank 36"
+  },
+  {
+   "sym": "SUZLON",
+   "sector": "Power",
+   "entryDate": "2023-08-11",
+   "exitDate": "2024-01-16",
+   "entry": 20.23,
+   "exit": 41.99,
+   "qty": 1647,
+   "bars": 105,
+   "ret": 107.54,
+   "pnl": 35833,
+   "rankIn": 21,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "IRFC",
+   "sector": "NBFC & Finance",
+   "entryDate": "2023-10-13",
+   "exitDate": "2024-02-12",
+   "entry": 76.71,
+   "exit": 132.75,
+   "qty": 434,
+   "bars": 80,
+   "ret": 73.04,
+   "pnl": 24319,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GMDCLTD",
+   "sector": "Metals & Mining",
+   "entryDate": "2023-11-15",
+   "exitDate": "2024-02-12",
+   "entry": 386.68,
+   "exit": 373.89,
+   "qty": 86,
+   "bars": 59,
+   "ret": -3.31,
+   "pnl": -1100,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ITI",
+   "sector": "Telecom",
+   "entryDate": "2023-11-15",
+   "exitDate": "2024-02-12",
+   "entry": 266.45,
+   "exit": 280.83,
+   "qty": 125,
+   "bars": 59,
+   "ret": 5.4,
+   "pnl": 1797,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "SJVN",
+   "sector": "Power",
+   "entryDate": "2024-01-16",
+   "exitDate": "2024-02-12",
+   "entry": 100,
+   "exit": 112.28,
+   "qty": 333,
+   "bars": 17,
+   "ret": 12.28,
+   "pnl": 4090,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "FORCEMOT",
+   "sector": "Auto",
+   "entryDate": "2023-08-11",
+   "exitDate": "2024-02-16",
+   "entry": 3347.36,
+   "exit": 5220.91,
+   "qty": 9,
+   "bars": 126,
+   "ret": 55.97,
+   "pnl": 16862,
+   "rankIn": 19,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "MAZDOCK",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2023-11-15",
+   "exitDate": "2024-02-16",
+   "entry": 1000.85,
+   "exit": 1042.06,
+   "qty": 33,
+   "bars": 63,
+   "ret": 4.12,
+   "pnl": 1360,
+   "rankIn": 3,
+   "reason": "rank 161"
+  },
+  {
+   "sym": "INOXWIND",
+   "sector": "Power",
+   "entryDate": "2024-01-16",
+   "exitDate": "2024-03-06",
+   "entry": 109.75,
+   "exit": 124.51,
+   "qty": 303,
+   "bars": 34,
+   "ret": 13.45,
+   "pnl": 4473,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ITI",
+   "sector": "Telecom",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-03-12",
+   "entry": 312.97,
+   "exit": 261.06,
+   "qty": 106,
+   "bars": 16,
+   "ret": -16.59,
+   "pnl": -5503,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BSE",
+   "sector": "Capital Markets",
+   "entryDate": "2023-10-13",
+   "exitDate": "2024-03-13",
+   "entry": 495.19,
+   "exit": 669.56,
+   "qty": 67,
+   "bars": 101,
+   "ret": 35.21,
+   "pnl": 11683,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "JWL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-01-16",
+   "exitDate": "2024-03-13",
+   "entry": 384.88,
+   "exit": 308.04,
+   "qty": 86,
+   "bars": 38,
+   "ret": -19.96,
+   "pnl": -6608,
+   "rankIn": 11,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "IRFC",
+   "sector": "NBFC & Finance",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-03-13",
+   "entry": 155.68,
+   "exit": 124.06,
+   "qty": 214,
+   "bars": 17,
+   "ret": -20.31,
+   "pnl": -6767,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GMDCLTD",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-03-13",
+   "entry": 408.41,
+   "exit": 323.31,
+   "qty": 81,
+   "bars": 17,
+   "ret": -20.84,
+   "pnl": -6893,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "RAILTEL",
+   "sector": "Telecom",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-03-13",
+   "entry": 379.27,
+   "exit": 307.79,
+   "qty": 87,
+   "bars": 17,
+   "ret": -18.85,
+   "pnl": -6219,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "IRCON",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-03-13",
+   "entry": 226.04,
+   "exit": 184.92,
+   "qty": 147,
+   "bars": 17,
+   "ret": -18.19,
+   "pnl": -6044,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PFC",
+   "sector": "NBFC & Finance",
+   "entryDate": "2024-01-16",
+   "exitDate": "2024-03-18",
+   "entry": 401.05,
+   "exit": 374.29,
+   "qty": 83,
+   "bars": 41,
+   "ret": -6.67,
+   "pnl": -2221,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "HSCL",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2023-10-13",
+   "exitDate": "2024-04-15",
+   "entry": 257.99,
+   "exit": 309.19,
+   "qty": 129,
+   "bars": 121,
+   "ret": 19.85,
+   "pnl": 6605,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "KALYANKJIL",
+   "sector": "Consumer & Retail",
+   "entryDate": "2023-11-15",
+   "exitDate": "2024-04-23",
+   "entry": 330.29,
+   "exit": 414.03,
+   "qty": 100,
+   "bars": 105,
+   "ret": 25.35,
+   "pnl": 8373,
+   "rankIn": 9,
+   "reason": "rank 36"
+  },
+  {
+   "sym": "IRCON",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-04-23",
+   "entry": 215.12,
+   "exit": 227.51,
+   "qty": 154,
+   "bars": 21,
+   "ret": 5.76,
+   "pnl": 1907,
+   "rankIn": 7,
+   "reason": "rank 67"
+  },
+  {
+   "sym": "NMDC",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-04-23",
+   "entry": 66.87,
+   "exit": 78.1,
+   "qty": 498,
+   "bars": 21,
+   "ret": 16.8,
+   "pnl": 5594,
+   "rankIn": 8,
+   "reason": "rank 56"
+  },
+  {
+   "sym": "CHENNPETRO",
+   "sector": "Oil & Gas",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-05-09",
+   "entry": 869.5,
+   "exit": 847.68,
+   "qty": 38,
+   "bars": 32,
+   "ret": -2.51,
+   "pnl": -829,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "JPPOWER",
+   "sector": "Power",
+   "entryDate": "2023-12-15",
+   "exitDate": "2024-05-24",
+   "entry": 14.12,
+   "exit": 20.42,
+   "qty": 2360,
+   "bars": 105,
+   "ret": 44.6,
+   "pnl": 14864,
+   "rankIn": 6,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "RECLTD",
+   "sector": "Financial Services",
+   "entryDate": "2024-01-16",
+   "exitDate": "2024-05-24",
+   "entry": 438.61,
+   "exit": 553.22,
+   "qty": 75,
+   "bars": 84,
+   "ret": 26.13,
+   "pnl": 8596,
+   "rankIn": 6,
+   "reason": "rank 87"
+  },
+  {
+   "sym": "MEDANTA",
+   "sector": "Pharma",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-05-24",
+   "entry": 1212.17,
+   "exit": 1182.67,
+   "qty": 27,
+   "bars": 42,
+   "ret": -2.43,
+   "pnl": -796,
+   "rankIn": 10,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "PNB",
+   "sector": "Banks",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-05-24",
+   "entry": 116.72,
+   "exit": 126.26,
+   "qty": 285,
+   "bars": 42,
+   "ret": 8.17,
+   "pnl": 2718,
+   "rankIn": 12,
+   "reason": "rank 38"
+  },
+  {
+   "sym": "OFSS",
+   "sector": "IT",
+   "entryDate": "2024-04-23",
+   "exitDate": "2024-05-24",
+   "entry": 7357.77,
+   "exit": 7531.09,
+   "qty": 4,
+   "bars": 21,
+   "ret": 2.36,
+   "pnl": 693,
+   "rankIn": 6,
+   "reason": "rank 34"
+  },
+  {
+   "sym": "MCX",
+   "sector": "Capital Markets",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-06-04",
+   "entry": 636.66,
+   "exit": 642.83,
+   "qty": 52,
+   "bars": 49,
+   "ret": 0.97,
+   "pnl": 321,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BHEL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-06-04",
+   "entry": 219.13,
+   "exit": 246.18,
+   "qty": 152,
+   "bars": 49,
+   "ret": 12.35,
+   "pnl": 4112,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "HINDCOPPER",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-06-04",
+   "entry": 372.16,
+   "exit": 298.15,
+   "qty": 89,
+   "bars": 7,
+   "ret": -19.89,
+   "pnl": -6586,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "TRENT",
+   "sector": "Consumer & Retail",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-06-25",
+   "entry": 2641.06,
+   "exit": 3553.86,
+   "qty": 12,
+   "bars": 63,
+   "ret": 34.56,
+   "pnl": 10954,
+   "rankIn": 9,
+   "reason": "rank 38"
+  },
+  {
+   "sym": "SIGNATURE",
+   "sector": "Realty",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-06-25",
+   "entry": 1283.47,
+   "exit": 1410.98,
+   "qty": 25,
+   "bars": 21,
+   "ret": 9.93,
+   "pnl": 3188,
+   "rankIn": 3,
+   "reason": "rank 44"
+  },
+  {
+   "sym": "MOTILALOFS",
+   "sector": "Capital Markets",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-06-25",
+   "entry": 563.24,
+   "exit": 631.85,
+   "qty": 59,
+   "bars": 21,
+   "ret": 12.18,
+   "pnl": 4048,
+   "rankIn": 5,
+   "reason": "rank 41"
+  },
+  {
+   "sym": "NUVAMA",
+   "sector": "Capital Markets",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-06-25",
+   "entry": 953.88,
+   "exit": 998.18,
+   "qty": 34,
+   "bars": 21,
+   "ret": 4.64,
+   "pnl": 1506,
+   "rankIn": 7,
+   "reason": "rank 54"
+  },
+  {
+   "sym": "BSE",
+   "sector": "Capital Markets",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-06-25",
+   "entry": 911.4,
+   "exit": 838.92,
+   "qty": 36,
+   "bars": 21,
+   "ret": -7.95,
+   "pnl": -2609,
+   "rankIn": 9,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "POWERINDIA",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-07-19",
+   "entry": 11432.02,
+   "exit": 11173.56,
+   "qty": 2,
+   "bars": 17,
+   "ret": -2.26,
+   "pnl": -517,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ANANDRATHI",
+   "sector": "Financial Services",
+   "entryDate": "2023-12-15",
+   "exitDate": "2024-07-25",
+   "entry": 640.26,
+   "exit": 925.63,
+   "qty": 52,
+   "bars": 147,
+   "ret": 44.57,
+   "pnl": 14840,
+   "rankIn": 7,
+   "reason": "rank 76"
+  },
+  {
+   "sym": "INOXWIND",
+   "sector": "Power",
+   "entryDate": "2024-04-23",
+   "exitDate": "2024-07-25",
+   "entry": 150.15,
+   "exit": 164.2,
+   "qty": 222,
+   "bars": 63,
+   "ret": 9.36,
+   "pnl": 3120,
+   "rankIn": 3,
+   "reason": "rank 118"
+  },
+  {
+   "sym": "HINDZINC",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-07-25",
+   "entry": 664.9,
+   "exit": 610.53,
+   "qty": 50,
+   "bars": 21,
+   "ret": -8.18,
+   "pnl": -2718,
+   "rankIn": 8,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "HINDCOPPER",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-07-25",
+   "entry": 330.04,
+   "exit": 308.44,
+   "qty": 100,
+   "bars": 21,
+   "ret": -6.55,
+   "pnl": -2161,
+   "rankIn": 11,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "NATIONALUM",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-07-25",
+   "entry": 188.75,
+   "exit": 183.84,
+   "qty": 176,
+   "bars": 21,
+   "ret": -2.6,
+   "pnl": -864,
+   "rankIn": 19,
+   "reason": "rank 45"
+  },
+  {
+   "sym": "IRB",
+   "sector": "Construction",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-07-25",
+   "entry": 32.9,
+   "exit": 33.07,
+   "qty": 1013,
+   "bars": 21,
+   "ret": 0.49,
+   "pnl": 163,
+   "rankIn": 20,
+   "reason": "rank 58"
+  },
+  {
+   "sym": "SOBHA",
+   "sector": "Realty",
+   "entryDate": "2024-04-23",
+   "exitDate": "2024-08-02",
+   "entry": 1718.17,
+   "exit": 1729.1,
+   "qty": 19,
+   "bars": 69,
+   "ret": 0.64,
+   "pnl": 208,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BDL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-08-05",
+   "entry": 1547.67,
+   "exit": 1339.14,
+   "qty": 21,
+   "bars": 28,
+   "ret": -13.47,
+   "pnl": -4379,
+   "rankIn": 3,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "COCHINSHIP",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-02-16",
+   "exitDate": "2024-08-06",
+   "entry": 840.51,
+   "exit": 2287.01,
+   "qty": 39,
+   "bars": 113,
+   "ret": 172.1,
+   "pnl": 56414,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GRSE",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-08-13",
+   "entry": 2263.39,
+   "exit": 1948.37,
+   "qty": 14,
+   "bars": 13,
+   "ret": -13.92,
+   "pnl": -4410,
+   "rankIn": 3,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "IRFC",
+   "sector": "NBFC & Finance",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-08-26",
+   "entry": 175.87,
+   "exit": 180.78,
+   "qty": 189,
+   "bars": 42,
+   "ret": 2.79,
+   "pnl": 927,
+   "rankIn": 6,
+   "reason": "rank 134"
+  },
+  {
+   "sym": "MOTILALOFS",
+   "sector": "Capital Markets",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-08-26",
+   "entry": 578.17,
+   "exit": 758.96,
+   "qty": 57,
+   "bars": 21,
+   "ret": 31.27,
+   "pnl": 10305,
+   "rankIn": 14,
+   "reason": "rank 46"
+  },
+  {
+   "sym": "HUDCO",
+   "sector": "NBFC & Finance",
+   "entryDate": "2024-03-19",
+   "exitDate": "2024-09-03",
+   "entry": 177.42,
+   "exit": 273.04,
+   "qty": 187,
+   "bars": 111,
+   "ret": 53.9,
+   "pnl": 17882,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "IFCI",
+   "sector": "Financial Services",
+   "entryDate": "2024-06-25",
+   "exitDate": "2024-09-09",
+   "entry": 62.08,
+   "exit": 68.38,
+   "qty": 536,
+   "bars": 52,
+   "ret": 10.14,
+   "pnl": 3374,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "OIL",
+   "sector": "Oil & Gas",
+   "entryDate": "2024-04-23",
+   "exitDate": "2024-09-11",
+   "entry": 394.42,
+   "exit": 580.83,
+   "qty": 84,
+   "bars": 96,
+   "ret": 47.26,
+   "pnl": 15658,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NBCC",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-05-24",
+   "exitDate": "2024-09-24",
+   "entry": 97.31,
+   "exit": 115.97,
+   "qty": 342,
+   "bars": 84,
+   "ret": 19.18,
+   "pnl": 6382,
+   "rankIn": 10,
+   "reason": "rank 123"
+  },
+  {
+   "sym": "OFSS",
+   "sector": "IT",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-09-24",
+   "entry": 11100.73,
+   "exit": 11612.56,
+   "qty": 3,
+   "bars": 42,
+   "ret": 4.61,
+   "pnl": 1535,
+   "rankIn": 5,
+   "reason": "rank 91"
+  },
+  {
+   "sym": "ARE&M",
+   "sector": "Auto",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-09-24",
+   "entry": 1568.15,
+   "exit": 1361.95,
+   "qty": 21,
+   "bars": 42,
+   "ret": -13.15,
+   "pnl": -4330,
+   "rankIn": 11,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "EXIDEIND",
+   "sector": "Auto Ancillary",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-09-24",
+   "entry": 540.71,
+   "exit": 475.98,
+   "qty": 61,
+   "bars": 42,
+   "ret": -11.97,
+   "pnl": -3948,
+   "rankIn": 18,
+   "reason": "rank 61"
+  },
+  {
+   "sym": "AZAD",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-09-24",
+   "entry": 1633,
+   "exit": 1500.25,
+   "qty": 20,
+   "bars": 21,
+   "ret": -8.13,
+   "pnl": -2655,
+   "rankIn": 5,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "IREDA",
+   "sector": "Financial Services",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-09-24",
+   "entry": 253.93,
+   "exit": 227.01,
+   "qty": 131,
+   "bars": 21,
+   "ret": -10.6,
+   "pnl": -3527,
+   "rankIn": 7,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "GODFRYPHLP",
+   "sector": "FMCG",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-10-07",
+   "entry": 1433.63,
+   "exit": 2132.5,
+   "qty": 23,
+   "bars": 50,
+   "ret": 48.75,
+   "pnl": 16074,
+   "rankIn": 13,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "RVNL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-10-07",
+   "entry": 578.07,
+   "exit": 451.02,
+   "qty": 57,
+   "bars": 29,
+   "ret": -21.98,
+   "pnl": -7241,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PGEL",
+   "sector": "Durables & Building",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-10-07",
+   "entry": 521.93,
+   "exit": 537.84,
+   "qty": 63,
+   "bars": 29,
+   "ret": 3.05,
+   "pnl": 1002,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "INDUSTOWER",
+   "sector": "Telecom",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-10-07",
+   "entry": 433.9,
+   "exit": 360.61,
+   "qty": 76,
+   "bars": 29,
+   "ret": -16.89,
+   "pnl": -5570,
+   "rankIn": 14,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NAVA",
+   "sector": "Power",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-10-22",
+   "entry": 587.58,
+   "exit": 461.08,
+   "qty": 56,
+   "bars": 19,
+   "ret": -21.53,
+   "pnl": -7084,
+   "rankIn": 14,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "JYOTICNC",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-08-26",
+   "exitDate": "2024-10-23",
+   "entry": 1298.39,
+   "exit": 1031.55,
+   "qty": 25,
+   "bars": 41,
+   "ret": -20.55,
+   "pnl": -6671,
+   "rankIn": 3,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GRAVITA",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-10-24",
+   "entry": 2499.24,
+   "exit": 2051.62,
+   "qty": 13,
+   "bars": 21,
+   "ret": -17.91,
+   "pnl": -5819,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "POLICYBZR",
+   "sector": "Internet & Media",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-10-24",
+   "entry": 1841.51,
+   "exit": 1644.83,
+   "qty": 18,
+   "bars": 21,
+   "ret": -10.68,
+   "pnl": -3540,
+   "rankIn": 12,
+   "reason": "rank 42"
+  },
+  {
+   "sym": "MOTHERSON",
+   "sector": "Auto Ancillary",
+   "entryDate": "2024-07-25",
+   "exitDate": "2024-11-12",
+   "entry": 127.78,
+   "exit": 110.53,
+   "qty": 260,
+   "bars": 76,
+   "ret": -13.5,
+   "pnl": -4485,
+   "rankIn": 17,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "POWERINDIA",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-11-13",
+   "entry": 12818.35,
+   "exit": 12103.07,
+   "qty": 2,
+   "bars": 35,
+   "ret": -5.58,
+   "pnl": -1431,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "LTFOODS",
+   "sector": "FMCG",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-11-18",
+   "entry": 433.9,
+   "exit": 342.83,
+   "qty": 76,
+   "bars": 37,
+   "ret": -20.99,
+   "pnl": -6921,
+   "rankIn": 11,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "INOXWIND",
+   "sector": "Power",
+   "entryDate": "2024-10-24",
+   "exitDate": "2024-11-26",
+   "entry": 209.52,
+   "exit": 184.13,
+   "qty": 159,
+   "bars": 21,
+   "ret": -12.12,
+   "pnl": -4037,
+   "rankIn": 5,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "NEULANDLAB",
+   "sector": "Pharma",
+   "entryDate": "2024-10-24",
+   "exitDate": "2024-12-20",
+   "entry": 13681.89,
+   "exit": 13870.31,
+   "qty": 2,
+   "bars": 39,
+   "ret": 1.38,
+   "pnl": 377,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GLENMARK",
+   "sector": "Pharma",
+   "entryDate": "2024-09-24",
+   "exitDate": "2024-12-26",
+   "entry": 1700.05,
+   "exit": 1539.14,
+   "qty": 19,
+   "bars": 63,
+   "ret": -9.46,
+   "pnl": -3057,
+   "rankIn": 13,
+   "reason": "rank 38"
+  },
+  {
+   "sym": "TRENT",
+   "sector": "Consumer & Retail",
+   "entryDate": "2024-11-26",
+   "exitDate": "2024-12-26",
+   "entry": 4452.9,
+   "exit": 4702.07,
+   "qty": 7,
+   "bars": 21,
+   "ret": 5.6,
+   "pnl": 1744,
+   "rankIn": 11,
+   "reason": "rank 46"
+  },
+  {
+   "sym": "KALYANKJIL",
+   "sector": "Consumer & Retail",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-01-10",
+   "entry": 697.14,
+   "exit": 625.81,
+   "qty": 47,
+   "bars": 53,
+   "ret": -10.23,
+   "pnl": -3353,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "DEEPAKFERT",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2024-09-24",
+   "exitDate": "2025-01-13",
+   "entry": 1075.21,
+   "exit": 1069.89,
+   "qty": 31,
+   "bars": 75,
+   "ret": -0.49,
+   "pnl": -165,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PAYTM",
+   "sector": "Internet & Media",
+   "entryDate": "2024-11-26",
+   "exitDate": "2025-01-13",
+   "entry": 887.93,
+   "exit": 788.52,
+   "qty": 37,
+   "bars": 33,
+   "ret": -11.2,
+   "pnl": -3678,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "MOTILALOFS",
+   "sector": "Capital Markets",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-01-16",
+   "entry": 940.61,
+   "exit": 798.15,
+   "qty": 35,
+   "bars": 57,
+   "ret": -15.15,
+   "pnl": -4986,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "DIXON",
+   "sector": "Durables & Building",
+   "entryDate": "2024-09-24",
+   "exitDate": "2025-01-21",
+   "entry": 14362.36,
+   "exit": 15121.63,
+   "qty": 2,
+   "bars": 81,
+   "ret": 5.29,
+   "pnl": 1519,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PGEL",
+   "sector": "Durables & Building",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-01-21",
+   "entry": 592.99,
+   "exit": 804.74,
+   "qty": 56,
+   "bars": 60,
+   "ret": 35.71,
+   "pnl": 11858,
+   "rankIn": 1,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "KAYNES",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-01-21",
+   "entry": 5520.57,
+   "exit": 5968.88,
+   "qty": 6,
+   "bars": 60,
+   "ret": 8.12,
+   "pnl": 2690,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ZENTEC",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2024-09-24",
+   "exitDate": "2025-01-22",
+   "entry": 1711.76,
+   "exit": 1971.24,
+   "qty": 19,
+   "bars": 82,
+   "ret": 15.16,
+   "pnl": 4930,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GRAVITA",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-11-26",
+   "exitDate": "2025-01-24",
+   "entry": 2151.72,
+   "exit": 2069.84,
+   "qty": 15,
+   "bars": 42,
+   "ret": -3.81,
+   "pnl": -1228,
+   "rankIn": 2,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "PPLPHARMA",
+   "sector": "Pharma",
+   "entryDate": "2024-11-26",
+   "exitDate": "2025-01-24",
+   "entry": 249.22,
+   "exit": 232.7,
+   "qty": 133,
+   "bars": 42,
+   "ret": -6.63,
+   "pnl": -2198,
+   "rankIn": 10,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "ANANTRAJ",
+   "sector": "Realty",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-01-27",
+   "entry": 691.49,
+   "exit": 667.1,
+   "qty": 48,
+   "bars": 64,
+   "ret": -3.53,
+   "pnl": -1171,
+   "rankIn": 3,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "SARDAEN",
+   "sector": "Metals & Mining",
+   "entryDate": "2024-10-24",
+   "exitDate": "2025-04-08",
+   "entry": 461.79,
+   "exit": 438.34,
+   "qty": 72,
+   "bars": 112,
+   "ret": -5.08,
+   "pnl": -1688,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "CHAMBLFERT",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-05-30",
+   "entry": 696.14,
+   "exit": 550.17,
+   "qty": 47,
+   "bars": 20,
+   "ret": -20.97,
+   "pnl": -6861,
+   "rankIn": 11,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PGEL",
+   "sector": "Durables & Building",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-06-02",
+   "entry": 829.14,
+   "exit": 789.06,
+   "qty": 40,
+   "bars": 21,
+   "ret": -4.83,
+   "pnl": -1603,
+   "rankIn": 3,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "WELCORP",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-06-02",
+   "entry": 765.35,
+   "exit": 932.55,
+   "qty": 43,
+   "bars": 21,
+   "ret": 21.85,
+   "pnl": 7190,
+   "rankIn": 12,
+   "reason": "rank 90"
+  },
+  {
+   "sym": "AEGISLOG",
+   "sector": "Oil & Gas",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-06-02",
+   "entry": 775.36,
+   "exit": 788.72,
+   "qty": 42,
+   "bars": 21,
+   "ret": 1.72,
+   "pnl": 561,
+   "rankIn": 14,
+   "reason": "rank 103"
+  },
+  {
+   "sym": "BAJFINANCE",
+   "sector": "NBFC & Finance",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-06-16",
+   "entry": 8875.79,
+   "exit": 936.59,
+   "qty": 3,
+   "bars": 31,
+   "ret": -89.45,
+   "pnl": -23818,
+   "rankIn": 15,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "AVANTIFEED",
+   "sector": "FMCG",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-06-23",
+   "entry": 885.88,
+   "exit": 707.54,
+   "qty": 37,
+   "bars": 36,
+   "ret": -20.13,
+   "pnl": -6599,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "CARTRADE",
+   "sector": "Consumer Services",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-01",
+   "entry": 1770.85,
+   "exit": 1692.76,
+   "qty": 18,
+   "bars": 42,
+   "ret": -4.41,
+   "pnl": -1406,
+   "rankIn": 1,
+   "reason": "rank 89"
+  },
+  {
+   "sym": "LAURUSLABS",
+   "sector": "Pharma",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-01",
+   "entry": 621.48,
+   "exit": 744.93,
+   "qty": 53,
+   "bars": 42,
+   "ret": 19.86,
+   "pnl": 6543,
+   "rankIn": 6,
+   "reason": "rank 98"
+  },
+  {
+   "sym": "NAVINFLUOR",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-01",
+   "entry": 4545.41,
+   "exit": 4880.37,
+   "qty": 7,
+   "bars": 42,
+   "ret": 7.37,
+   "pnl": 2345,
+   "rankIn": 9,
+   "reason": "rank 34"
+  },
+  {
+   "sym": "BSE",
+   "sector": "Capital Markets",
+   "entryDate": "2025-06-02",
+   "exitDate": "2025-07-11",
+   "entry": 2697.34,
+   "exit": 2367.54,
+   "qty": 12,
+   "bars": 29,
+   "ret": -12.23,
+   "pnl": -3958,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "MAZDOCK",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-18",
+   "entry": 3001.09,
+   "exit": 2977.53,
+   "qty": 11,
+   "bars": 55,
+   "ret": -0.79,
+   "pnl": -259,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "LLOYDSME",
+   "sector": "Metals & Mining",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-30",
+   "entry": 1195.29,
+   "exit": 1515.92,
+   "qty": 27,
+   "bars": 63,
+   "ret": 26.82,
+   "pnl": 8657,
+   "rankIn": 2,
+   "reason": "rank 32"
+  },
+  {
+   "sym": "GRSE",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-07-01",
+   "exitDate": "2025-07-30",
+   "entry": 2987.67,
+   "exit": 2552.47,
+   "qty": 11,
+   "bars": 21,
+   "ret": -14.57,
+   "pnl": -4787,
+   "rankIn": 1,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "INTELLECT",
+   "sector": "IT",
+   "entryDate": "2025-07-01",
+   "exitDate": "2025-07-30",
+   "entry": 1141.51,
+   "exit": 1056.61,
+   "qty": 29,
+   "bars": 21,
+   "ret": -7.44,
+   "pnl": -2462,
+   "rankIn": 6,
+   "reason": "rank 140"
+  },
+  {
+   "sym": "REDINGTON",
+   "sector": "Services",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-07-31",
+   "entry": 252.18,
+   "exit": 249.82,
+   "qty": 132,
+   "bars": 64,
+   "ret": -0.93,
+   "pnl": -311,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "BDL",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-06-02",
+   "exitDate": "2025-08-01",
+   "entry": 1977.56,
+   "exit": 1562.85,
+   "qty": 16,
+   "bars": 44,
+   "ret": -20.97,
+   "pnl": -6635,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NH",
+   "sector": "Pharma",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-08-05",
+   "entry": 1762.44,
+   "exit": 1804.79,
+   "qty": 18,
+   "bars": 67,
+   "ret": 2.4,
+   "pnl": 762,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "SRF",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-09-01",
+   "entry": 2974.66,
+   "exit": 2893.45,
+   "qty": 11,
+   "bars": 84,
+   "ret": -2.73,
+   "pnl": -893,
+   "rankIn": 13,
+   "reason": "rank 114"
+  },
+  {
+   "sym": "MANAPPURAM",
+   "sector": "NBFC & Finance",
+   "entryDate": "2025-06-02",
+   "exitDate": "2025-09-01",
+   "entry": 237.71,
+   "exit": 274.59,
+   "qty": 140,
+   "bars": 63,
+   "ret": 15.52,
+   "pnl": 5163,
+   "rankIn": 4,
+   "reason": "rank 61"
+  },
+  {
+   "sym": "SOLARINDS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-07-01",
+   "exitDate": "2025-09-01",
+   "entry": 17221.79,
+   "exit": 14024.93,
+   "qty": 1,
+   "bars": 42,
+   "ret": -18.56,
+   "pnl": -3197,
+   "rankIn": 8,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "BSE",
+   "sector": "Capital Markets",
+   "entryDate": "2025-07-30",
+   "exitDate": "2025-09-01",
+   "entry": 2461.19,
+   "exit": 2177.13,
+   "qty": 13,
+   "bars": 21,
+   "ret": -11.54,
+   "pnl": -3693,
+   "rankIn": 10,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "AUBANK",
+   "sector": "Banks",
+   "entryDate": "2025-07-30",
+   "exitDate": "2025-09-01",
+   "entry": 747.42,
+   "exit": 720.47,
+   "qty": 44,
+   "bars": 21,
+   "ret": -3.61,
+   "pnl": -1186,
+   "rankIn": 11,
+   "reason": "rank 80"
+  },
+  {
+   "sym": "FORCEMOT",
+   "sector": "Auto",
+   "entryDate": "2025-05-02",
+   "exitDate": "2025-09-08",
+   "entry": 10077.59,
+   "exit": 17004.46,
+   "qty": 3,
+   "bars": 89,
+   "ret": 68.74,
+   "pnl": 20781,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PARADEEP",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-06-02",
+   "exitDate": "2025-09-08",
+   "entry": 176.45,
+   "exit": 184.44,
+   "qty": 188,
+   "bars": 68,
+   "ret": 4.53,
+   "pnl": 1502,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GLAXO",
+   "sector": "Pharma",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-09-30",
+   "entry": 2812.71,
+   "exit": 2655.71,
+   "qty": 11,
+   "bars": 21,
+   "ret": -5.58,
+   "pnl": -1727,
+   "rankIn": 12,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "GLENMARK",
+   "sector": "Pharma",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-09-30",
+   "entry": 1929.69,
+   "exit": 1949.77,
+   "qty": 17,
+   "bars": 21,
+   "ret": 1.04,
+   "pnl": 341,
+   "rankIn": 15,
+   "reason": "rank 51"
+  },
+  {
+   "sym": "GALLANTT",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-09-30",
+   "exitDate": "2025-10-24",
+   "entry": 656.33,
+   "exit": 526.66,
+   "qty": 50,
+   "bars": 16,
+   "ret": -19.76,
+   "pnl": -6484,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ANURAS",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-07-30",
+   "exitDate": "2025-10-31",
+   "entry": 1150.62,
+   "exit": 1072.59,
+   "qty": 28,
+   "bars": 63,
+   "ret": -6.78,
+   "pnl": -2185,
+   "rankIn": 8,
+   "reason": "rank 36"
+  },
+  {
+   "sym": "POWERINDIA",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-10-31",
+   "entry": 18970.41,
+   "exit": 17751.33,
+   "qty": 1,
+   "bars": 42,
+   "ret": -6.43,
+   "pnl": -1219,
+   "rankIn": 5,
+   "reason": "rank 49"
+  },
+  {
+   "sym": "EIDPARRY",
+   "sector": "FMCG",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-10-31",
+   "entry": 1131.59,
+   "exit": 1070.79,
+   "qty": 29,
+   "bars": 42,
+   "ret": -5.37,
+   "pnl": -1763,
+   "rankIn": 13,
+   "reason": "rank 86"
+  },
+  {
+   "sym": "CRAFTSMAN",
+   "sector": "Auto",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-10-31",
+   "entry": 7170.24,
+   "exit": 6669.98,
+   "qty": 4,
+   "bars": 42,
+   "ret": -6.98,
+   "pnl": -2001,
+   "rankIn": 14,
+   "reason": "rank 43"
+  },
+  {
+   "sym": "PARADEEP",
+   "sector": "Chemicals & Fertilisers",
+   "entryDate": "2025-09-30",
+   "exitDate": "2025-10-31",
+   "entry": 196.31,
+   "exit": 166.15,
+   "qty": 169,
+   "bars": 21,
+   "ret": -15.36,
+   "pnl": -5098,
+   "rankIn": 1,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "GODFRYPHLP",
+   "sector": "FMCG",
+   "entryDate": "2025-07-30",
+   "exitDate": "2025-11-14",
+   "entry": 3134.86,
+   "exit": 2952.86,
+   "qty": 10,
+   "bars": 72,
+   "ret": -5.81,
+   "pnl": -1820,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GABRIEL",
+   "sector": "Auto",
+   "entryDate": "2025-07-01",
+   "exitDate": "2025-11-17",
+   "entry": 844.01,
+   "exit": 1021.57,
+   "qty": 39,
+   "bars": 94,
+   "ret": 21.04,
+   "pnl": 6924,
+   "rankIn": 12,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "JMFINANCIL",
+   "sector": "Financial Services",
+   "entryDate": "2025-09-30",
+   "exitDate": "2025-11-21",
+   "entry": 159.94,
+   "exit": 139.85,
+   "qty": 208,
+   "bars": 35,
+   "ret": -12.56,
+   "pnl": -4179,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GMDCLTD",
+   "sector": "Metals & Mining",
+   "entryDate": "2025-10-31",
+   "exitDate": "2025-11-24",
+   "entry": 595.19,
+   "exit": 468.9,
+   "qty": 56,
+   "bars": 15,
+   "ret": -21.22,
+   "pnl": -7073,
+   "rankIn": 3,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "AIIL",
+   "sector": "Financial Services",
+   "entryDate": "2025-07-01",
+   "exitDate": "2025-11-25",
+   "entry": 499.23,
+   "exit": 524.17,
+   "qty": 66,
+   "bars": 100,
+   "ret": 5,
+   "pnl": 1646,
+   "rankIn": 11,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "HBLENGINE",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-10-31",
+   "exitDate": "2025-11-27",
+   "entry": 1005.71,
+   "exit": 876.18,
+   "qty": 33,
+   "bars": 18,
+   "ret": -12.88,
+   "pnl": -4274,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NETWEB",
+   "sector": "IT",
+   "entryDate": "2025-10-31",
+   "exitDate": "2025-12-01",
+   "entry": 4043.86,
+   "exit": 3213.77,
+   "qty": 8,
+   "bars": 20,
+   "ret": -20.53,
+   "pnl": -6641,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "SYRMA",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-09-01",
+   "exitDate": "2025-12-16",
+   "entry": 757.43,
+   "exit": 717.77,
+   "qty": 44,
+   "bars": 73,
+   "ret": -5.24,
+   "pnl": -1745,
+   "rankIn": 9,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GVT&D",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-09-30",
+   "exitDate": "2026-01-01",
+   "entry": 2964.94,
+   "exit": 3159.75,
+   "qty": 11,
+   "bars": 63,
+   "ret": 6.57,
+   "pnl": 2143,
+   "rankIn": 5,
+   "reason": "rank 64"
+  },
+  {
+   "sym": "DELHIVERY",
+   "sector": "Ports & Logistics",
+   "entryDate": "2025-10-31",
+   "exitDate": "2026-01-01",
+   "entry": 466.65,
+   "exit": 400,
+   "qty": 71,
+   "bars": 42,
+   "ret": -14.28,
+   "pnl": -4732,
+   "rankIn": 9,
+   "reason": "rank 110"
+  },
+  {
+   "sym": "CUPID",
+   "sector": "FMCG",
+   "entryDate": "2025-09-01",
+   "exitDate": "2026-01-05",
+   "entry": 34.57,
+   "exit": 77.89,
+   "qty": 964,
+   "bars": 86,
+   "ret": 125.29,
+   "pnl": 41760,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "ABDL",
+   "sector": "FMCG",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-01-09",
+   "entry": 599.5,
+   "exit": 501,
+   "qty": 55,
+   "bars": 27,
+   "ret": -16.43,
+   "pnl": -5418,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "CARTRADE",
+   "sector": "Consumer Services",
+   "entryDate": "2025-09-01",
+   "exitDate": "2026-01-20",
+   "entry": 2503.85,
+   "exit": 2520.71,
+   "qty": 13,
+   "bars": 96,
+   "ret": 0.67,
+   "pnl": 219,
+   "rankIn": 11,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "TDPOWERSYS",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-01-22",
+   "entry": 396.82,
+   "exit": 315.18,
+   "qty": 84,
+   "bars": 35,
+   "ret": -20.57,
+   "pnl": -6858,
+   "rankIn": 6,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "RBLBANK",
+   "sector": "Banks",
+   "entryDate": "2025-07-30",
+   "exitDate": "2026-02-03",
+   "entry": 262.14,
+   "exit": 304.29,
+   "qty": 127,
+   "bars": 126,
+   "ret": 16.08,
+   "pnl": 5353,
+   "rankIn": 6,
+   "reason": "rank 63"
+  },
+  {
+   "sym": "ABCAPITAL",
+   "sector": "NBFC & Finance",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-02-03",
+   "entry": 356.28,
+   "exit": 344.93,
+   "qty": 93,
+   "bars": 42,
+   "ret": -3.19,
+   "pnl": -1056,
+   "rankIn": 13,
+   "reason": "rank 35"
+  },
+  {
+   "sym": "ECLERX",
+   "sector": "Services",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-02-11",
+   "entry": 2401,
+   "exit": 1943.03,
+   "qty": 13,
+   "bars": 48,
+   "ret": -19.07,
+   "pnl": -5954,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "FORCEMOT",
+   "sector": "Auto",
+   "entryDate": "2025-10-31",
+   "exitDate": "2026-03-05",
+   "entry": 17680.48,
+   "exit": 21722.37,
+   "qty": 1,
+   "bars": 84,
+   "ret": 22.86,
+   "pnl": 4042,
+   "rankIn": 5,
+   "reason": "rank 82"
+  },
+  {
+   "sym": "ANANDRATHI",
+   "sector": "Financial Services",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-03-05",
+   "entry": 1464.59,
+   "exit": 1596.55,
+   "qty": 22,
+   "bars": 63,
+   "ret": 9.01,
+   "pnl": 2903,
+   "rankIn": 7,
+   "reason": "rank 101"
+  },
+  {
+   "sym": "HINDCOPPER",
+   "sector": "Metals & Mining",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-03-05",
+   "entry": 615.67,
+   "exit": 557.16,
+   "qty": 54,
+   "bars": 21,
+   "ret": -9.5,
+   "pnl": -3159,
+   "rankIn": 2,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "IDEA",
+   "sector": "Telecom",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-03-13",
+   "entry": 11.43,
+   "exit": 9.26,
+   "qty": 2917,
+   "bars": 27,
+   "ret": -19,
+   "pnl": -6333,
+   "rankIn": 7,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "M&MFIN",
+   "sector": "NBFC & Finance",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-03-19",
+   "entry": 362.99,
+   "exit": 311.03,
+   "qty": 91,
+   "bars": 31,
+   "ret": -14.31,
+   "pnl": -4728,
+   "rankIn": 10,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "LTF",
+   "sector": "Financial Services",
+   "entryDate": "2026-01-01",
+   "exitDate": "2026-03-23",
+   "entry": 317.73,
+   "exit": 247.28,
+   "qty": 104,
+   "bars": 54,
+   "ret": -22.17,
+   "pnl": -7327,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "THANGAMAYL",
+   "sector": "Durables & Building",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-03-23",
+   "entry": 3188.58,
+   "exit": 3154.06,
+   "qty": 10,
+   "bars": 33,
+   "ret": -1.08,
+   "pnl": -345,
+   "rankIn": 4,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "GMDCLTD",
+   "sector": "Metals & Mining",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-04-08",
+   "entry": 541.51,
+   "exit": 599.35,
+   "qty": 61,
+   "bars": 84,
+   "ret": 10.68,
+   "pnl": 3528,
+   "rankIn": 3,
+   "reason": "rank 54"
+  },
+  {
+   "sym": "BELRISE",
+   "sector": "Auto",
+   "entryDate": "2026-01-01",
+   "exitDate": "2026-04-08",
+   "entry": 184.35,
+   "exit": 193.92,
+   "qty": 180,
+   "bars": 63,
+   "ret": 5.19,
+   "pnl": 1723,
+   "rankIn": 4,
+   "reason": "rank 32"
+  },
+  {
+   "sym": "MTARTECH",
+   "sector": "Capital Goods & Defence",
+   "entryDate": "2025-12-02",
+   "exitDate": "2026-06-11",
+   "entry": 2531.49,
+   "exit": 6296.54,
+   "qty": 13,
+   "bars": 127,
+   "ret": 148.73,
+   "pnl": 48946,
+   "rankIn": 8,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "NATIONALUM",
+   "sector": "Metals & Mining",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-06-24",
+   "entry": 371.41,
+   "exit": 348.03,
+   "qty": 89,
+   "bars": 94,
+   "ret": -6.29,
+   "pnl": -2081,
+   "rankIn": 5,
+   "reason": "trailing stop"
+  },
+  {
+   "sym": "PFOCUS",
+   "sector": "Internet & Media",
+   "entryDate": "2025-10-31",
+   "exitDate": "2026-08-10",
+   "entry": 182.17,
+   "exit": 282.63,
+   "qty": 182,
+   "bars": 189,
+   "ret": 55.14,
+   "pnl": 18282,
+   "rankIn": 6,
+   "reason": "ineligible"
+  },
+  {
+   "sym": "ACUTAAS",
+   "sector": "Pharma",
+   "entryDate": "2026-02-03",
+   "exitDate": "2026-10-09",
+   "entry": 1972.65,
+   "exit": 3155.86,
+   "qty": 16,
+   "bars": 168,
+   "ret": 59.98,
+   "pnl": 18931,
+   "rankIn": 6,
+   "reason": "rank 66"
+  },
+  {
+   "sym": "ATHERENERG",
+   "sector": "Auto",
+   "entryDate": "2026-01-01",
+   "exitDate": "2026-10-23",
+   "entry": 739.61,
+   "exit": 1377.93,
+   "qty": 45,
+   "bars": 198,
+   "ret": 86.31,
+   "pnl": 28725,
+   "rankIn": 2,
+   "reason": "trailing stop"
+  }
+ ]
+}
