@@ -9,9 +9,12 @@
  * the US counterpart of the desk's ₹ crore turnover, so momentum.js's minTurnover means "$M" here. EDGAR tickers with a dot
  * (BRK.B) map to Yahoo's dash form (BRK-B); the store keeps the EDGAR spelling.
  *
- * Store: compounder/data/us/prices/YYYY.json.gz — the same shape as data/history/YYYY.json
+ * Store: compounder/data/us/prices/YYYY.json — the same shape as data/history/YYYY.json
  *   {year, dates:[...], symbols:{T:{o,h,l,c,v,t}}, index:{name:'^RUT', o,h,l,c}, splits:{T:{date:'num:den'}}}
- * so engine.buildBars() and momentum.js consume it unchanged. Gzipped because only the jobs read it (≈ 15 MB/yr uncompressed).
+ * so engine.buildBars() and momentum.js consume it unchanged. Plain JSON since 6 Nov 2026: the files were gzipped before, which
+ * made every daily rewrite of the current year a fresh 10 MB blob in git history (gzip defeats git's delta compression — about
+ * 2.4 GB of repository growth a year); as text, the day's appended bars pack to ~150 KB. Readers accept both forms; this script
+ * writes .json and removes the .json.gz of any year it rewrites, so the switch happens on the next run with nothing to upload.
  * No dependencies; Node 20+.
  */
 import fs from 'node:fs/promises';
@@ -62,8 +65,14 @@ async function chart(symbol, range) {
   return { error: 'rate limited', bars: [], splits: {} };
 }
 
-export async function readYear(y) { try { return JSON.parse(zlib.gunzipSync(await fs.readFile(path.join(DIR, y + '.json.gz'))).toString()); } catch { return null; } }
-async function writeYear(f) { await fs.mkdir(DIR, { recursive: true }); await fs.writeFile(path.join(DIR, f.year + '.json.gz'), zlib.gzipSync(JSON.stringify(f), { level: 9 })); }
+/** Read one year's file: .json first, else the older .json.gz. `dir` defaults to the store (tests pass a temp dir). */
+export async function readYear(y, dir) { const d = dir || DIR;
+  try { return JSON.parse(await fs.readFile(path.join(d, y + '.json'), 'utf8')); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+  try { return JSON.parse(zlib.gunzipSync(await fs.readFile(path.join(d, y + '.json.gz'))).toString()); } catch (e) { if (e.code !== 'ENOENT') throw e; return null; } }
+/** Write one year as plain JSON and drop the gzipped copy it replaces. */
+export async function writeYear(f, dir) { const d = dir || DIR; await fs.mkdir(d, { recursive: true }); await fs.writeFile(path.join(d, f.year + '.json'), JSON.stringify(f)); await fs.rm(path.join(d, f.year + '.json.gz'), { force: true }); }
+/** The years on disk, in either form, sorted and unique. */
+export async function yearsOnDisk(dir) { const d = dir || DIR; return [...new Set((await fs.readdir(d).catch(() => [])).filter(f => /^\d{4}\.json(\.gz)?$/.test(f)).map(f => f.slice(0, 4)))].sort(); }
 
 /** Merge bars for one symbol into the per-year files (in memory), creating date slots as needed. */
 export function mergeBars(files, sym, bars, isIndex) {
@@ -98,7 +107,7 @@ export async function run({ backfill, limit, symbols, years }) {
   for (const f of Object.values(files)) await writeYear(f);
   const meta = { asOf: new Date().toISOString().slice(0, 10), source: 'Yahoo Finance chart API (adjusted closes)', index: INDEX, symbols: log.ok, missing: log.missing.length, errors: log.errors.length,
     // every year on disk, not just the ones this run touched (an incremental run only loads the last two)
-    years: (await fs.readdir(DIR)).filter(f => /^\d{4}\.json\.gz$/.test(f)).map(f => f.slice(0, 4)).sort(),
+    years: await yearsOnDisk(),
     lastDate: Object.values(files).map(f => f.dates[f.dates.length - 1] || '').sort().pop() || null, missingList: log.missing.map(x => x[0]).slice(0, 200), errorList: log.errors.slice(0, 50) };
   await fs.writeFile(path.join(DIR, 'meta.json'), JSON.stringify(meta, null, 2));
   console.log(`prices: ${log.ok} symbols ok, ${log.missing.length} missing, ${log.errors.length} errors; years ${meta.years.join(' ')}; last ${meta.lastDate}`);

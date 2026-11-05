@@ -23,7 +23,9 @@ const from = arg('from'), to = arg('to');
 const HIST = arg('hist', path.join(ROOT, 'data', 'history'));
 const files = []; for (const f of (await fs.readdir(HIST).catch(() => []))) if (/^\d{4}\.json$/.test(f)) files.push(JSON.parse(await fs.readFile(path.join(HIST, f), 'utf8')));
 if (!files.length) { console.error('No history files in data/history/. Run the backfill first.'); process.exit(2); }
-const bars = E.buildBars(files, []); const N = bars.dates.length;
+const adjustments = JSON.parse(await fs.readFile(arg('adjust', path.join(ROOT, 'data', 'adjustments.json')), 'utf8').catch(() => 'null'));   // corporate actions (scripts/corporate-actions.mjs); optional
+const bars = E.buildBars(files, [], { adjustments }); const N = bars.dates.length;
+if (bars.adjusted) console.log(`corporate actions applied: ${bars.adjusted.events} events across ${bars.adjusted.symbols} symbols`);
 console.log(`history: ${N} days, ${bars.dates[0]} → ${bars.dates[N - 1]}, ${Pr.PAIRS.length} curated pairs`);
 
 const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(d);

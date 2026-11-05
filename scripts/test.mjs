@@ -123,6 +123,32 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   assert(rep2 && rep2.params.exit === 'ma10' && !('time stop' in rep2.byReason) && Object.keys(rep2.byReason).some(k => /10-day/.test(k)), 'backtest variants: ma10 exit replaces the time stop' + (bt2.status ? '\n' + bt2.stderr : ''));
   assert(rep2 && rep2.trades.every(t => t.score <= 85), 'backtest variants: score bumps removed (no trade can exceed 50+10+10+10+5)'); }
 
+// 6b. corporate actions: purpose parsing, verification against bars, and application at load (compounding, raw files untouched)
+{ const CA = await import('./corporate-actions.mjs');
+  const P = CA.parsePurpose;
+  assert(P('Bonus 1:1').factor === 2 && P('Bonus 3:2').factor === 2.5 && P('Bonus 1:1').type === 'bonus', 'bonus a:b → (a+b)/b');
+  assert(P('Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share').factor === 5 && P('Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share').type === 'split', 'split From Rs X To Rs Y → X/Y');
+  assert(Math.abs(P('Consolidation of Shares - From Re 1/- Per Share To Rs 10/- Per Share').factor - 0.1) < 1e-9, 'consolidation → below 1');
+  assert(P('Bonus 1:1 and Face Value Split From Rs 10 To Rs 5').factor === 4, 'bonus and split in one line compound');
+  assert(P('Dividend - Rs 5 Per Share').factor === 1 && P('Dividend - Rs 5 Per Share').type === 'dividend' && P('Rights 1:4 @ Premium Rs 50').type === 'rights' && P('Scheme of Arrangement').type === 'demerger', 'dividends, rights and demergers are not price factors');
+  assert(CA.isoDate('16-Sep-2021') === '2021-09-16' && CA.isoDate('16-SEP-2021') === '2021-09-16' && CA.isoDate('2021-09-16') === '2021-09-16' && CA.isoDate('16/09/2021') === '2021-09-16' && CA.isoDate('') === null, 'NSE date forms → ISO');
+  assert(JSON.stringify(CA.parseCSV('SYMBOL,"PURPOSE",EX-DATE\r\nABC,"Bonus 1:1, plus text",16-Sep-2021\n')) === JSON.stringify([['SYMBOL', 'PURPOSE', 'EX-DATE'], ['ABC', 'Bonus 1:1, plus text', '16-Sep-2021']]), 'CSV with quoted commas');
+  // synthetic bars: ABC trades at 100 until a 1:1 bonus on day 10 (then 50), and splits 10→2 on day 20 (then 10); XYZ has no gap
+  const dates = []; const d0 = new Date('2025-01-01T00:00:00Z'); while (dates.length < 30) { if (d0.getUTCDay() % 6) dates.push(d0.toISOString().slice(0, 10)); d0.setUTCDate(d0.getUTCDate() + 1); }
+  const px = i => i < 10 ? 100 : i < 20 ? 50 : 10; const abc = { o: dates.map((_, i) => px(i)), h: dates.map((_, i) => px(i) * 1.01), l: dates.map((_, i) => px(i) * 0.99), c: dates.map((_, i) => px(i)), v: dates.map(() => 1000), t: dates.map((_, i) => px(i) * 1000 / 1e7) };
+  const xyz = { o: dates.map(() => 40), h: dates.map(() => 41), l: dates.map(() => 39), c: dates.map(() => 40), v: dates.map(() => 500), t: dates.map(() => 0.002) };
+  const hf = { year: 2025, dates, symbols: { ABC: abc, XYZ: xyz }, index: null };
+  const raw = E.buildBars([hf], []);
+  const rows = [{ symbol: 'ABC', exDate: dates[10], purpose: 'Bonus 1:1' }, { symbol: 'ABC', exDate: dates[20], purpose: 'Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share' }, { symbol: 'XYZ', exDate: dates[15], purpose: 'Bonus 1:1' }, { symbol: 'ABC', exDate: '2024-06-01', purpose: 'Bonus 1:2' }, { symbol: 'ABC', exDate: '2027-01-05', purpose: 'Bonus 1:1' }, { symbol: 'NOPE', exDate: dates[5], purpose: 'Bonus 1:1' }, { symbol: 'ABC', exDate: dates[12], purpose: 'Dividend - Rs 2 Per Share' }, { symbol: 'XYZ', exDate: dates[3], purpose: 'Scheme of Arrangement' }];
+  const T = CA.buildTable(rows, raw, true);
+  assert(T.counts.parsed === 5 && T.counts.applied === 2 && T.counts.rejected === 1 && T.counts.unchecked === 1 && T.dropped.length === 1 && !T.symbols.NOPE, `verified 2, rejected 1 (XYZ has no gap), 1 after the last bar kept, 1 before the start dropped, unknown symbol ignored (${JSON.stringify(T.counts)})`);
+  assert(T.symbols.ABC.length === 3 && T.symbols.ABC[0].apply && T.symbols.ABC[0].observed === 2 && T.symbols.ABC[1].apply && T.symbols.ABC[1].observed === 5 && T.symbols.ABC[2].apply && T.symbols.ABC[2].observed == null, 'ABC: bonus observed 2, split observed 5, future bonus kept unverified');
+  assert(T.symbols.XYZ[0].apply === false && Math.abs(T.symbols.XYZ[0].observed - 1) < 0.1 && T.unhandled.demerger && T.unhandled.demerger.length === 1 && !T.unhandled.dividend, 'XYZ bonus rejected (observed ≈ 1); demerger listed as unhandled; dividends not listed');
+  const adj = E.buildBars([hf], [], { adjustments: { symbols: T.symbols } });
+  assert(adj.adjusted.events === 2 && adj.adjusted.symbols === 1 && adj.sym.ABC.c.every(c => Math.abs(c - 10) < 1e-6) && adj.sym.ABC.v[0] === 10000 && adj.sym.ABC.v[15] === 5000 && adj.sym.ABC.v[25] === 1000 && adj.sym.ABC.t[0] === abc.t[0], 'applied at load: ABC continuous at 10 across both events (factors compound), volume scaled, turnover unchanged; the event after the last bar waits');
+  assert(raw.sym.ABC.c[0] === 100 && hf.symbols.ABC.c[0] === 100 && adj.sym.XYZ.c[0] === 40, 'the raw history object and the unadjusted bars are untouched; rejected events are not applied');
+  const res2 = E.analyzeLatest([hf], [], E.DEFAULTS, {}, { symbols: T.symbols }); assert(res2.bars.adjusted && res2.bars.adjusted.events === 2, 'analyzeLatest passes adjustments through'); }
+
 // 7. digest: watch mode leads with momentum and lists setups without quantities; orders mode is unchanged
 { const blocks = { momentum: 'MOMENTUM (test)\n• #1 X', pairs: 'PAIRS (test)\n• none' };
   const w = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, blocks), o = E.digest(res, { ...E.DEFAULTS, swingMode: 'orders' }, blocks);

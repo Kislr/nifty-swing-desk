@@ -159,4 +159,14 @@ assert(JSON.stringify(f24.symbols.AAA.c) === '[10,null,11,null]' && JSON.stringi
 assert(JSON.stringify(f24.index.c) === '[2000,2010,2020,null]' && f24.index.name === '^RUT', 'index aligned and padded');
 const E2 = createRequire(import.meta.url)('../engine.js'); const bars = E2.buildBars([f24], []);
 assert(bars.dates.length === 4 && bars.sym.AAA.c[2] === 11 && bars.index.c[1] === 2010, 'engine.buildBars reads the US price file unchanged');
+// store format: .json written, .json.gz still readable and removed once its year is rewritten
+{ const fsP = await import('node:fs/promises'); const os = await import('node:os'); const pathM = await import('node:path'); const zlib = await import('node:zlib');
+  const tmp = await fsP.mkdtemp(pathM.join(os.tmpdir(), 'prices-'));
+  await fsP.writeFile(pathM.join(tmp, '2024.json.gz'), zlib.gzipSync(JSON.stringify(f24)));
+  const back = await P.readYear('2024', tmp); assert(back && back.dates.length === 4, 'readYear falls back to the gzipped form');
+  await P.writeYear(back, tmp); const names = (await fsP.readdir(tmp)).sort();
+  assert(names.join(',') === '2024.json' && (await P.readYear('2024', tmp)).dates.length === 4, 'writeYear writes plain JSON and drops the .gz it replaces');
+  await fsP.writeFile(pathM.join(tmp, '2023.json.gz'), zlib.gzipSync(JSON.stringify(Object.assign({}, f24, { year: 2023 }))));
+  assert((await P.yearsOnDisk(tmp)).join(',') === '2023,2024', 'yearsOnDisk lists both forms once');
+  await fsP.rm(tmp, { recursive: true, force: true }); }
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder price tests passed');

@@ -43,7 +43,8 @@ const dir = opt('data', path.join(ROOT, 'compounder', 'data', market)); const M 
 const universe = JSON.parse(await fs.readFile(path.join(dir, 'universe.json'), 'utf8'));
 const facts = {}; for (const f of await fs.readdir(path.join(dir, 'facts'))) if (f.endsWith('.json')) Object.assign(facts, JSON.parse(await fs.readFile(path.join(dir, 'facts', f), 'utf8')));
 const yearFiles = []; const pdir = path.join(dir, 'prices');
-for (const f of (await fs.readdir(pdir)).sort()) if (/^\d{4}\.json(\.gz)?$/.test(f)) { const raw = await fs.readFile(path.join(pdir, f)); yearFiles.push(JSON.parse((f.endsWith('.gz') ? zlib.gunzipSync(raw) : raw).toString())); }
+const seenYears = new Set();   // .json wins over an older .json.gz of the same year
+for (const f of (await fs.readdir(pdir)).sort()) if (/^\d{4}\.json(\.gz)?$/.test(f) && !seenYears.has(f.slice(0, 4))) { seenYears.add(f.slice(0, 4)); const raw = await fs.readFile(path.join(pdir, f)); yearFiles.push(JSON.parse((f.endsWith('.gz') ? zlib.gunzipSync(raw) : raw).toString())); }
 if (!yearFiles.length) { console.error('no price files in compounder/data/us/prices/ — run scripts/compounder-prices-us.mjs --backfill first'); process.exit(2); }
 const bars = E.buildBars(yearFiles, []); const N = bars.dates.length; const pos = {}; bars.dates.forEach((d, i) => (pos[d] = i));
 const byTicker = {}; for (const c of universe.companies) if (c.ticker) byTicker[c.ticker] = c.cik;

@@ -97,7 +97,8 @@ try {
   const snaps = [...hist, doc].sort((a, b) => a.date.localeCompare(b.date));
   const custom = (await readJSON(path.join(DATA, 'sectors.json'), { map: {} })).map || {};
   const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year);
-  const result = E.analyzeLatest(histFiles, snaps, config.risk, custom);
+  const adjustments = await readJSON(path.join(DATA, 'adjustments.json'), null);   // corporate actions, optional (scripts/corporate-actions.mjs)
+  const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
   const pairsBoard = Pr.boardAt(result.bars, result.bars.dates.length - 1, config.pairs || {});
   const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), pairs: Pr.digest(pairsBoard, E.fmt) });
