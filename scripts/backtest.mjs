@@ -5,13 +5,17 @@
  *   node scripts/backtest.mjs --from 2025-01-01 --to 2025-12-31
  *   node scripts/backtest.mjs --set minRR=2 --set maxPositions=6 --set minScore=60
  *   node scripts/backtest.mjs --setups breakout       # only 52W breakouts (or: pullback)
+ *   node scripts/backtest.mjs --set sectorBump=0 --set volumeBump=0   # score without the sector / volume points
+ *   node scripts/backtest.mjs --set exit=ma10         # exit on a close below the 10-day average instead of the time stop (or: ma20)
  *
  * Model (deliberately simple and conservative):
  *   - Each day's ACT signals are candidates for the NEXT day. A buy-stop at `entry` fills if the next
  *     day's high reaches it (at the open if the open is already above entry; skipped if the open gaps
  *     more than 3% above entry).
  *   - Exits, checked in this order each day: open below stop → exit at open; low ≤ stop → exit at stop;
- *     high ≥ target → exit at target (at the open if it gaps above); after `maxHold` bars → exit at close.
+ *     high ≥ target → exit at target (at the open if it gaps above); then the `exit` rule at the close:
+ *     `time` (default) after `maxHold` bars; `ma10` / `ma20` on a close below that moving average (no time
+ *     stop unless maxHold is also set explicitly).
  *   - Stop moves to breakeven once a close is ≥ entry + 1R (the rule on the site).
  *   - Max `maxPositions` open, never two in one sector, candidates taken in score order.
  *   - Costs: `costBps` round-trip (default 30 bps ≈ brokerage + STT + slippage for delivery trades).
@@ -27,7 +31,10 @@ const E = require(path.join(ROOT, 'engine.js'));
 const argv = process.argv.slice(2); const arg = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const sets = {}; argv.forEach((a, i) => { if (a === '--set') { const [k, v] = argv[i + 1].split('='); sets[k] = isNaN(+v) ? v : +v; } });
 const config = JSON.parse(await fs.readFile(path.join(ROOT, 'config.json'), 'utf8'));
-const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60 }, sets);
+const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60, exit: 'time', sectorBump: E.DEFAULTS.sectorBump, volumeBump: E.DEFAULTS.volumeBump }, sets);
+if (!/^(time|ma\d+)$/.test(String(P.exit))) { console.error(`--set exit= must be time, ma10, ma20 …; got ${P.exit}`); process.exit(2); }
+const maExit = P.exit === 'time' ? 0 : +String(P.exit).slice(2);
+const timeStop = (P.exit === 'time' || 'maxHold' in sets) ? P.maxHold : Infinity;
 const setupsFilter = arg('setups', 'all');
 const from = arg('from', '0000-00-00'), to = arg('to', '9999-99-99');
 
@@ -38,7 +45,7 @@ const custom = (JSON.parse(await fs.readFile(path.join(ROOT, 'data', 'sectors.js
 const bars = E.buildBars(files, []); const N = bars.dates.length;
 console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars.dates[0]} → ${bars.dates[N - 1]}${bars.index ? ', index bars present' : ', no index bars'}`);
 
-const settings = { capital: P.capital, riskPct: P.riskPct, minRR: P.minRR, maxPos: P.maxPos };
+const settings = { capital: P.capital, riskPct: P.riskPct, minRR: P.minRR, maxPos: P.maxPos, sectorBump: P.sectorBump, volumeBump: P.volumeBump };
 const open = []; const trades = []; let pending = []; const equityR = []; let cumR = 0;
 const sectorOf = s => E.sectorOf(s, custom);
 for (let i = P.warmup; i < N - 1; i++) {
@@ -50,7 +57,8 @@ for (let i = P.warmup; i < N - 1; i++) {
     else if (l != null && l <= p.stop) { exit = p.stop; reason = p.stop >= p.entry ? 'breakeven stop' : 'stop'; }
     else if (o != null && o >= p.target) { exit = o; reason = 'gap above target'; }
     else if (h != null && h >= p.target) { exit = p.target; reason = 'target'; }
-    else if (i - p.fillIdx >= P.maxHold) { exit = c; reason = 'time stop'; }
+    else if (maExit && (ma => ma != null && c < ma)(E.indicators.sma(B.c, maExit, i))) { exit = c; reason = `close below ${maExit}-day average`; }
+    else if (i - p.fillIdx >= timeStop) { exit = c; reason = 'time stop'; }
     if (exit != null) { const risk = p.entry - p.stop0; const cost = (p.entry + exit) * P.costBps / 2 / 10000; const R = (exit - p.entry - cost) / risk;
       trades.push({ sym: p.sym, sector: p.sector, setup: p.setup, score: p.score, entryDate: bars.dates[p.fillIdx], exitDate: date, entry: p.entry, stop: p.stop0, target: p.target, exit: +exit.toFixed(2), bars: i - p.fillIdx, R: +R.toFixed(3), pnl: +((exit - p.entry - cost) * p.qty).toFixed(0), reason });
       cumR += R; open.splice(open.indexOf(p), 1); continue; }
