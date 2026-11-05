@@ -149,6 +149,14 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   assert(raw.sym.ABC.c[0] === 100 && hf.symbols.ABC.c[0] === 100 && adj.sym.XYZ.c[0] === 40, 'the raw history object and the unadjusted bars are untouched; rejected events are not applied');
   const res2 = E.analyzeLatest([hf], [], E.DEFAULTS, {}, { symbols: T.symbols }); assert(res2.bars.adjusted && res2.bars.adjusted.events === 2, 'analyzeLatest passes adjustments through'); }
 
+// 6c. reminders: due on the date and for a week after; monthly / quarterly repeats; surfaced in the digest
+{ const R = [{ date: '2026-11-13', text: 'digest still late?' }, { date: '2026-12-01', text: 'monthly re-run', repeat: 'monthly' }, { date: '2027-01-05', text: 'quarterly corporate actions', repeat: 'quarterly' }, { date: '2026-10-01', text: 'old one-off' }];
+  assert(E.remindersDue(R, '2026-11-12') === null, 'nothing due the day before');
+  assert(/digest still late/.test(E.remindersDue(R, '2026-11-13')) && /digest still late/.test(E.remindersDue(R, '2026-11-19')) && E.remindersDue(R, '2026-11-20') === null, 'a one-off is due on its date and for seven days');
+  assert(/2027-03-01 \(monthly\)/.test(E.remindersDue(R, '2027-03-04')) && /2027-04-05 \(quarterly\)/.test(E.remindersDue(R, '2027-04-05')) && !/old one-off/.test(E.remindersDue(R, '2027-04-05')), 'repeats roll forward by month / quarter; an old one-off stays silent');
+  assert(E.remindersDue([], '2026-11-13') === null && E.remindersDue(undefined, '2026-11-13') === null, 'no list → no block');
+  const d = E.digest(res, E.DEFAULTS, { reminders: E.remindersDue(R, '2026-11-13') }); assert(/DESK CHECKS DUE/.test(d) && d.indexOf('DESK CHECKS DUE') > d.indexOf('WATCH'), 'digest carries the reminders block after the lists'); }
+
 // 7. digest: watch mode leads with momentum and lists setups without quantities; orders mode is unchanged
 { const blocks = { momentum: 'MOMENTUM (test)\n• #1 X', pairs: 'PAIRS (test)\n• none' };
   const w = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, blocks), o = E.digest(res, { ...E.DEFAULTS, swingMode: 'orders' }, blocks);
