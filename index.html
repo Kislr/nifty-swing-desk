@@ -223,19 +223,19 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
 
-  <section class="card">
-    <h2>Signal queue <span class="sub" id="queueSub"></span></h2>
-    <div class="tabs" role="tablist" id="tabs"></div>
-    <div id="queueNote" class="note" style="margin-bottom:10px" hidden>These are <b>conditional orders for the next session</b>, not stocks to buy at market. For each: place a buy-stop at the entry price with the stop-loss attached; if the price never reaches the entry tomorrow, the order expires and the setup is void. A name that was here today and is gone tomorrow was simply not triggered &mdash; nothing was lost. Every rule here is judged on the <a href="#backtestCard">backtest</a>, not on any single day.</div>
-    <div class="tbl-wrap"><table id="queueTbl"><thead></thead><tbody></tbody></table></div>
-    <div id="queueEmpty" class="empty" hidden></div>
-  </section>
-
   <section class="card" id="momCard">
     <h2>Momentum portfolio <span class="sub" id="momSub"></span></h2>
     <div id="momNote" class="note" style="margin-bottom:10px"></div>
     <div class="tbl-wrap"><table id="momTbl"><thead></thead><tbody></tbody></table></div>
     <div id="momEmpty" class="empty" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2>Swing setups <span class="sub" id="queueSub"></span></h2>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="queueNote" class="note" style="margin-bottom:10px" hidden>These are <b>conditional orders for the next session</b>, not stocks to buy at market. For each: place a buy-stop at the entry price with the stop-loss attached; if the price never reaches the entry tomorrow, the order expires and the setup is void. A name that was here today and is gone tomorrow was simply not triggered &mdash; nothing was lost. Every rule here is judged on the <a href="#backtestCard">backtest</a>, not on any single day.</div>
+    <div class="tbl-wrap"><table id="queueTbl"><thead></thead><tbody></tbody></table></div>
+    <div id="queueEmpty" class="empty" hidden></div>
   </section>
 
   <section class="card" id="pairsCard">
@@ -309,10 +309,10 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card" id="backtestCard">
-    <h2>What the rules have earned <span class="sub">walk-forward backtest, 2025-01 &rarr; 2026-10, costs included</span></h2>
-    <div class="note" style="margin-bottom:10px"><b>Momentum engine</b> (test window May 2025 &rarr; Oct 2026, a falling market): <b>+0.7%</b> against the Nifty's <b>&minus;7.1%</b>, max drawdown 14%, 64 trades, 34% winners. Across a 96-cell parameter sweep 83 cells beat the index over the same window and 47 made money outright. One falling year says it protected capital; it says nothing yet about how it compounds in a rising one. Full reports: <code>reports/momentum-*.md</code>.</div>
-    <div class="note" style="margin-bottom:10px"><b>Relationship stocks (pairs):</b> on the same history, buying the lagging twin and shorting the leader returned <b>+0.03% per trade</b> after costs over 93 trades (48% winners); buying the lagging twin alone was similar. Across a 162-cell sweep only the shortest estimation window was consistently positive, and only just. <b>No usable edge found</b> &mdash; the card above is a monitor, not a signal. Full reports: <code>reports/pairs-*.md</code>.</div>
-    <div class="note"><b>Swing engine:</b> over 157 trades the combined rules returned <b>&minus;0.06R per trade</b> (profit factor 0.87, 43% win rate, max drawdown 23R). Each setup alone is slightly positive at a 2R target (pullback +0.11R over 146 trades, breakout +0.05R over 123) and the difference between configurations is inside the noise of a two-year sample. Treat every row above as a hypothesis with roughly even odds and a small positive edge at best; the score (0&ndash;100) has <b>not</b> separated winners from losers so far. Full tables, parameter sweep and every trade: <code>reports/</code> in the repository. Run <code>node scripts/backtest.mjs</code> after any rule change.</div>
+    <h2>What the rules have earned <span class="sub">walk-forward backtests on five years, 2022-01 &rarr; 2026-11, costs included</span></h2>
+    <div class="note" style="margin-bottom:10px"><b>Momentum engine</b> (Jun 2022 &rarr; Oct 2026): <b>+106.9%</b> against the Nifty's <b>+39.7%</b>, 18.2% CAGR, 21% max drawdown, Sharpe 1.20, 246 trades; ahead of the index in four of five calendar years (behind only in 2025) and +3.9% in a 2026 that fell 12%. The regime gate is what kept it near flat in the falling year. This is the only list on the page with a positive record. Full reports: <code>reports/momentum-*.md</code>.</div>
+    <div class="note" style="margin-bottom:10px"><b>Relationship stocks (pairs):</b> buying the lagging twin and shorting the leader returned <b>&minus;0.09% per trade</b> after costs over 245 trades; buying the lagging twin alone +0.50%, mostly from the market rising. <b>No usable edge found</b> &mdash; the card above is a monitor, not a signal. Full reports: <code>reports/pairs-*.md</code>.</div>
+    <div class="note down"><b>Swing engine &mdash; demoted to watch only (5 Nov 2026):</b> over 419 trades the combined rules returned <b>&minus;0.08R per trade</b> (profit factor 0.84, 40% win rate, max drawdown 38R), negative in four of five years, with half of all exits the 15-day time stop. Tested one change at a time against that baseline: dropping the sector (+15) and volume (+10) score points, 428 trades, &minus;0.08R; exit on a close below the 10-day average, 766 trades, &minus;0.06R; below the 20-day, 481 trades, &minus;0.11R; breakouts only, 383 trades, &minus;0.02R (profit factor 0.97, the least bad, but +0.18R in 2023 and negative every other year). None reached the +0.1R over 300 trades the roadmap required, so setups are shown as levels to watch and the digest leads with momentum. The score (0&ndash;100) has <b>not</b> separated winners from losers. Full tables and every trade: <code>reports/backtest-2026-11-05.md</code> and <code>reports/swing-variants-2026-11-05.md</code>. Run <code>node scripts/backtest.mjs</code> after any rule change.</div>
   </section>
 
   <footer id="foot">This page applies fixed, published rules (sector leadership, relative strength, moving-average trend, 52-week breakouts, pullbacks in momentum names, ATR-based stops, candle confirmation, fixed-fraction sizing) to data you upload. It is a decision aid, not investment advice; nothing here is a recommendation to buy or sell. Figures are only as current as the last snapshot. Trading involves risk of loss — consult a SEBI-registered advisor for advice on your situation.</footer>

@@ -100,7 +100,7 @@ try {
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
   const pairsBoard = Pr.boardAt(result.bars, result.bars.dates.length - 1, config.pairs || {});
-  const text = E.digest(result, config.risk) + '\n\n' + M.digest(mom, E.fmt) + '\n\n' + Pr.digest(pairsBoard, E.fmt);
+  const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), pairs: Pr.digest(pairsBoard, E.fmt) });
   console.log('\n' + text + '\n');
 
   if (DRY) process.exit(0);

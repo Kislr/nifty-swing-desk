@@ -118,5 +118,16 @@ const bt = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'backtest.mjs
 assert(bt.status === 0 && /Overall/.test(bt.stdout), 'backtest runs end to end on synthetic history' + (bt.status ? '\n' + bt.stderr : ''));
 const rep = JSON.parse(await fs.readFile(path.join(tmp, 'out', (await fs.readdir(path.join(tmp, 'out'))).find(f => f.endsWith('.json'))), 'utf8'));
 assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), `backtest produced ${rep.trades.length} trades (synthetic data — numbers are meaningless)`);
+{ const bt2 = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'backtest.mjs'), '--hist', path.join(tmp, 'hist'), '--out', path.join(tmp, 'out2'), '--set', 'warmup=60', '--set', 'exit=ma10', '--set', 'sectorBump=0', '--set', 'volumeBump=0'], { encoding: 'utf8' });
+  const rep2 = bt2.status === 0 ? JSON.parse(await fs.readFile(path.join(tmp, 'out2', (await fs.readdir(path.join(tmp, 'out2'))).find(f => f.endsWith('.json'))), 'utf8')) : null;
+  assert(rep2 && rep2.params.exit === 'ma10' && !('time stop' in rep2.byReason) && Object.keys(rep2.byReason).some(k => /10-day/.test(k)), 'backtest variants: ma10 exit replaces the time stop' + (bt2.status ? '\n' + bt2.stderr : ''));
+  assert(rep2 && rep2.trades.every(t => t.score <= 85), 'backtest variants: score bumps removed (no trade can exceed 50+10+10+10+5)'); }
+
+// 7. digest: watch mode leads with momentum and lists setups without quantities; orders mode is unchanged
+{ const blocks = { momentum: 'MOMENTUM (test)\n• #1 X', pairs: 'PAIRS (test)\n• none' };
+  const w = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, blocks), o = E.digest(res, { ...E.DEFAULTS, swingMode: 'orders' }, blocks);
+  assert(w.indexOf('MOMENTUM') < w.indexOf('SWING SETUPS') && /watch only/.test(w) && !/ORDERS FOR TOMORROW|qty \d/.test(w) && w.indexOf('PAIRS') > w.indexOf('SWING SETUPS'), 'watch-mode digest: momentum first, setups as levels, pairs last');
+  assert(/ORDERS FOR TOMORROW/.test(o) && o.indexOf('ORDERS FOR TOMORROW') < o.indexOf('MOMENTUM') && !/SWING SETUPS/.test(o), 'orders-mode digest unchanged: orders first, then momentum');
+  assert(E.DEFAULTS.swingMode === 'watch', 'swing engine is in watch mode by default (demoted 5 Nov 2026 — change only with a passing backtest)'); }
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');
