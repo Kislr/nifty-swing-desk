@@ -134,6 +134,34 @@
     return { asOf, market, quality: passers, nearMiss, universe: rows, counts, screenVersion: screen.version };
   }
 
+  /** Whole-universe composite for the backtest (SCREEN.md "Decisions taken", 29 Oct 2026): rank EVERY screenable company, not only
+   *  the passers, so deciles are ~300 names rather than 2–4. Per trait, companies that pass the rule rank first (by the trait's rankOn
+   *  value), then those that fail it (by value) — so a failed trait scores, it is not "not applicable", and the thresholds still matter
+   *  (which is what makes the ±20% robustness test meaningful). A trait that cannot be computed gets the neutral midpoint rank: unknown
+   *  is neither rewarded nor punished. Composite = sum of the five ranks, lowest best. The quality list (all five pass) therefore
+   *  clusters at the top without being pinned there: a company that fails one rule narrowly and leads on the other four can outrank a
+   *  weak all-rounder — the share of the quality list inside the top decile is reported as the sanity check the decisions ask for.
+   *  `rows` are screenAt().universe rows that have enough fiscal years (r.reason == null); returns them sorted with
+   *  r.uRanks, r.uRankSum, r.uRank, r.decile (1 = best) added. `deciles` defaults to 10. `mode` 'pass-first' (default) or 'value'
+   *  (rank on the trait value alone, ignoring the thresholds — a diagnostic: if the two orderings test the same, the thresholds add nothing). */
+  function rankUniverse(rows, deciles, mode) {
+    const keys = { roce: -1, grossMargin: -1, growth: -1, cashConversion: -1, leverage: +1 };   // −1: higher is better
+    const N = rows.length; const mid = (N + 1) / 2; const passFirst = mode !== 'value';
+    for (const [k, dir] of Object.entries(keys)) {
+      const scored = rows.filter(r => r.traits[k] && r.traits[k].pass != null && typeof r.traits[k].rank === 'number');
+      scored.sort((a, b) => { const ta = a.traits[k], tb = b.traits[k]; if (passFirst && ta.pass !== tb.pass) return ta.pass ? -1 : 1; return dir * (ta.rank - tb.rank); });
+      scored.forEach((r, i) => { (r.uRanks || (r.uRanks = {}))[k] = i + 1; });
+      // failed but unrankable (e.g. net debt with EBITDA ≤ 0, 3-year net income ≤ 0): below every ranked failer, tied
+      const failedNoRank = rows.filter(r => r.traits[k] && r.traits[k].pass === false && typeof r.traits[k].rank !== 'number');
+      for (const r of failedNoRank) (r.uRanks || (r.uRanks = {}))[k] = scored.length + 1;
+      for (const r of rows) if (!r.uRanks || r.uRanks[k] == null) (r.uRanks || (r.uRanks = {}))[k] = mid;   // not computable: neutral
+    }
+    for (const r of rows) r.uRankSum = Object.values(r.uRanks).reduce((a, b) => a + b, 0);
+    rows.sort((a, b) => a.uRankSum - b.uRankSum || (passFirst && a.ok !== b.ok ? (a.ok ? -1 : 1) : 0));
+    const D = deciles || 10; rows.forEach((r, i) => { r.uRank = i + 1; r.decile = N ? Math.min(D, Math.floor(i * D / N) + 1) : null; });
+    return rows;
+  }
+
   /** Text block for the digest / report. */
   function digest(S, n) {
     const L = [`COMPOUNDER ${S.market.toUpperCase()} as of ${S.asOf} — ${S.counts.inBand} pass all five (of ${S.counts.enoughYears} with 5+ years; ${S.counts.nearMiss} near-misses)`];
@@ -141,5 +169,5 @@
     return L.join('\n');
   }
 
-  return { visibleYears, evaluate, screenAt, digest, debtOf };
+  return { visibleYears, evaluate, screenAt, rankUniverse, digest, debtOf };
 });
