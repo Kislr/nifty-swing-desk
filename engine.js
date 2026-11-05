@@ -157,7 +157,33 @@
    * bars:         {dates:[...], sym:{SYM:{o,h,l,c,v,t}}, index:{name,o,h,l,c}|null, extras:{date:{SYM:{h52,l52,d30,val,pct,prev}}}}
    * History (end-of-day) wins over a snapshot for the same date; snapshots fill the gaps. */
   const sameIndex = (a, b) => String(a || '').replace(/\s+/g, '').toUpperCase() === String(b || '').replace(/\s+/g, '').toUpperCase();
-  function buildBars(historyFiles, snaps) {
+  /* Corporate actions. Bhavcopy prices are raw: a 1:1 bonus shows as a 50% fall on the ex-date, which reads as a stop-out, an
+   * "avoid", or a momentum trailing-stop exit. data/adjustments.json (written by scripts/corporate-actions.mjs, verified against the
+   * history) lists, per symbol, {exDate, factor, apply}; for every bar BEFORE the ex-date, price ÷ factor and volume × factor, with
+   * several events compounding. Turnover (₹) is unchanged. The history files stay raw so the daily job can keep appending raw bars;
+   * the adjustment is applied here, at load, by everything that reads bars. Events with apply:false (not verified) are skipped. */
+  function applyAdjustments(bars, adj) {
+    const table = adj && adj.symbols ? adj.symbols : adj; if (!table || !bars.dates.length) return { events: 0, symbols: 0 };
+    let events = 0, symbols = 0;
+    for (const [s, list] of Object.entries(table)) { const B = bars.sym[s]; if (!B || !Array.isArray(list)) continue;
+      // an event whose ex-date is after the last bar is not applied yet: until then every bar, the latest included, is on the old basis
+      const last = bars.dates[bars.dates.length - 1];
+      const live = list.filter(e => e && e.apply !== false && e.exDate && e.exDate <= last && e.factor > 0 && e.factor !== 1).sort((a, b) => a.exDate < b.exDate ? -1 : 1); if (!live.length) continue;
+      symbols++; events += live.length;
+      // cumulative factor for a bar = product of the factors of every event whose ex-date is after the bar
+      let k = 0, cum = live.reduce((p, e) => p * e.factor, 1);
+      for (let i = 0; i < bars.dates.length; i++) { while (k < live.length && live[k].exDate <= bars.dates[i]) { cum /= live[k].factor; k++; } if (cum === 1) break;
+        if (B.c[i] == null) continue; for (const key of ['o', 'h', 'l', 'c']) if (B[key][i] != null) B[key][i] = +(B[key][i] / cum).toFixed(4); if (B.v[i] != null) B.v[i] = Math.round(B.v[i] * cum); } }
+    bars.adjusted = { events, symbols };
+    return bars.adjusted;
+  }
+
+  function buildBars(historyFiles, snaps, opts) {
+    const bars = buildBarsRaw(historyFiles, snaps);
+    if (opts && opts.adjustments) applyAdjustments(bars, opts.adjustments);
+    return bars;
+  }
+  function buildBarsRaw(historyFiles, snaps) {
     const dateSet = new Set();
     for (const f of historyFiles || []) for (const d of f.dates || []) dateSet.add(d);
     for (const s of snaps || []) dateSet.add(s.date);
@@ -353,8 +379,8 @@
   function rng(r) { return (r.high != null && r.low != null) ? r.high - r.low : null; }
 
   /** Convenience for the site and the job: history files + snapshots → analysis of the latest date. */
-  function analyzeLatest(historyFiles, snaps, settings, custom) {
-    const bars = buildBars(historyFiles, snaps); if (!bars.dates.length) return { signals: [], reg: null, board: null, universe: [], bars, snap: null, coverage: 0 };
+  function analyzeLatest(historyFiles, snaps, settings, custom, adjustments) {
+    const bars = buildBars(historyFiles, snaps, { adjustments }); if (!bars.dates.length) return { signals: [], reg: null, board: null, universe: [], bars, snap: null, coverage: 0 };
     const i = bars.dates.length - 1; const snap = (snaps || []).find(s => s.date === bars.dates[i]) || null;
     const res = analyzeAt(bars, i, { settings, custom, time: snap ? snap.time : null });
     res.bars = bars; res.snap = snap || { date: bars.dates[i], time: null, count: res.count, index: bars.index && bars.index.c[i] != null ? { name: bars.index.name, ltp: bars.index.c[i], pct: res.reg.idx } : null };
@@ -404,5 +430,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, indicators: { sma, atr, rsi, candles } };
 });

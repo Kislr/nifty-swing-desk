@@ -14,6 +14,7 @@
     "backtest:momentum": "node scripts/backtest-momentum.mjs",
     "backtest:pairs": "node scripts/backtest-pairs.mjs",
     "backtest:compounder": "node scripts/compounder-backtest-us.mjs",
+    "corporate-actions": "node scripts/corporate-actions.mjs",
     "test": "node scripts/test.mjs && node scripts/test-compounder.mjs",
     "compounder:us": "node scripts/compounder-fetch-us.mjs --all"
   }

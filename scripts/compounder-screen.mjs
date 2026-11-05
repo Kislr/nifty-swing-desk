@@ -18,14 +18,15 @@ const dir = path.join(ROOT, 'compounder', 'data', market);
 const universe = JSON.parse(await fs.readFile(path.join(dir, 'universe.json'), 'utf8'));
 const facts = {}; for (const f of await fs.readdir(path.join(dir, 'facts'))) if (f.endsWith('.json')) Object.assign(facts, JSON.parse(await fs.readFile(path.join(dir, 'facts', f), 'utf8')));
 
-// Prices (optional): compounder/data/<market>/prices/YYYY.json.gz in the desk's history shape → bars via engine.buildBars.
+// Prices (optional): compounder/data/<market>/prices/YYYY.json (or the older .json.gz) in the desk's history shape → bars via engine.buildBars.
 // From them: last close × cover-page shares = market cap, 20-day average dollar turnover = liquidity, and the momentum overlay.
 const E = require(path.join(ROOT, 'engine.js')); const MOM = require(path.join(ROOT, 'momentum.js'));
 const zlib = await import('node:zlib');
 let bars = null, prices = null, priceMeta = null;
 try {
   const pdir = path.join(dir, 'prices'); const yearFiles = [];
-  for (const f of (await fs.readdir(pdir)).sort()) if (/^\d{4}\.json\.gz$/.test(f)) yearFiles.push(JSON.parse(zlib.gunzipSync(await fs.readFile(path.join(pdir, f))).toString()));
+  const seen = new Set();
+  for (const f of (await fs.readdir(pdir)).sort()) if (/^\d{4}\.json(\.gz)?$/.test(f) && !seen.has(f.slice(0, 4))) { seen.add(f.slice(0, 4)); const raw = await fs.readFile(path.join(pdir, f)); yearFiles.push(JSON.parse((f.endsWith('.gz') ? zlib.gunzipSync(raw) : raw).toString())); }
   if (yearFiles.length) { bars = E.buildBars(yearFiles, []); priceMeta = JSON.parse(await fs.readFile(path.join(pdir, 'meta.json'), 'utf8')).asOf; }
 } catch (e) { if (e.code !== 'ENOENT') throw e; }
 if (bars) {
