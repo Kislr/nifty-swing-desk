@@ -122,7 +122,9 @@ function renderSectors(board, signals) {
   el.querySelectorAll('.sec-row').forEach(r => { const f = () => { const sec = r.dataset.sec || null; S.sector = (sec === null || S.sector === sec) ? null : sec; S.open = null; render(); }; r.onclick = f; r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(); } }; });
   $('secSub').innerHTML = (S.sector ? `filtered to <b>${esc(S.sector)}</b> — click it again or "All sectors" to clear` : (S.view === 'industries' ? 'click a sector to filter the queue and list its stocks' : 'click a sector to filter the queue')) + ' · <i class="sdot act"></i>order <i class="sdot alert"></i>alert <i class="sdot watch"></i>watch';
 }
-const TABS = [['act', 'Orders for tomorrow'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
+// Swing mode is a verdict of the backtest, not a user setting, so it is read from the engine's defaults, never from localStorage.
+const WATCH_ONLY = E.DEFAULTS.swingMode === 'watch';
+const TABS = [['act', WATCH_ONLY ? 'Setups (watch only)' : 'Orders for tomorrow'], ['alert', 'Set alerts'], ['watch', 'Watch'], ['avoid', 'Avoid']];
 const stripTags = s => s.replace(/<[^>]+>/g, '');
 function renderQueue(signals, reg) {
   const counts = {}, inSec = {}; signals.forEach(s => { counts[s.kind] = (counts[s.kind] || 0) + 1; if (S.sector && s.sector === S.sector) inSec[s.kind] = (inSec[s.kind] || 0) + 1; });
@@ -132,10 +134,11 @@ function renderQueue(signals, reg) {
   const tbl = $('queueTbl'), empty = $('queueEmpty');
   $('queueSub').textContent = S.snaps.length ? `${signals.length} flagged of ${Object.keys(S.snaps[S.snaps.length - 1].rows).length}` : '';
   const withLevels = S.tab !== 'avoid' && S.tab !== 'watch';
-  tbl.querySelector('thead').innerHTML = `<tr><th>Symbol</th><th>Setup</th><th class="r">Score</th><th class="r">LTP</th><th class="r">Today</th><th class="r">30D</th>${withLevels ? '<th class="r" title="Buy-stop price for the next session">Buy-stop</th><th class="r">Stop-loss</th><th class="r">Target</th><th class="r">Qty</th>' : '<th>Trigger / reason</th>'}<th></th></tr>`;
+  tbl.querySelector('thead').innerHTML = `<tr><th>Symbol</th><th>Setup</th><th class="r">Score</th><th class="r">LTP</th><th class="r">Today</th><th class="r">30D</th>${withLevels ? (WATCH_ONLY ? '<th class="r" title="The level the rule would have bought above">Trigger</th><th class="r" title="Below this the setup is void">Invalid below</th><th class="r">2R level</th><th class="r" title="What fixed-fraction sizing would give — for paper trades">Qty (paper)</th>' : '<th class="r" title="Buy-stop price for the next session">Buy-stop</th><th class="r">Stop-loss</th><th class="r">Target</th><th class="r">Qty</th>') : '<th>Trigger / reason</th>'}<th></th></tr>`;
   $('queueNote').hidden = S.tab !== 'act';
+  if (WATCH_ONLY) $('queueNote').innerHTML = '<b>Watch only — these are not orders.</b> Over five years (Jan 2022 &rarr; Nov 2026) the swing rules lost <b>&minus;0.08R per trade</b> across 419 trades, and none of the tested changes (dropping the sector and volume score points, exiting on a close below the 10- or 20-day average, breakouts only) got them to a positive expectancy. The rows stay so the levels can be watched and paper-traded through the journal, and so the rules can be re-tested; the list to act on is the <a href="#momCard">momentum portfolio</a> above. Details in the <a href="#backtestCard">backtest card</a>.';
   if (!rows.length) { tbl.querySelector('tbody').innerHTML = ''; empty.hidden = false;
-    const m = { act: 'No orders to place for tomorrow. That is the normal state — most days the right trade is no trade.', alert: 'No stocks within 2% of a 52-week high today.', watch: 'No momentum names in leading sectors today.', avoid: 'Nothing near its 52-week low.' };
+    const m = { act: WATCH_ONLY ? 'No swing setups today.' : 'No orders to place for tomorrow. That is the normal state — most days the right trade is no trade.', alert: 'No stocks within 2% of a 52-week high today.', watch: 'No momentum names in leading sectors today.', avoid: 'Nothing near its 52-week low.' };
     empty.innerHTML = S.snaps.length ? (S.sector ? `No ${TABS.find(t => t[0] === S.tab)[1].toLowerCase()} signals in <b>${esc(S.sector)}</b>${counts[S.tab] ? ` — ${counts[S.tab]} across all sectors.` : '.'} <button class="btn small" id="clearSec" style="margin-left:8px">Show all sectors</button>` : m[S.tab]) : 'The queue fills in once the daily job has written a snapshot (or you upload one below).';
     const cb = $('clearSec'); if (cb) cb.onclick = () => { S.sector = null; render(); }; return; }
   empty.hidden = true;

@@ -39,7 +39,12 @@
   const SECTOR_OF = {};
   for (const [sec, list] of Object.entries(SECTOR_LISTS)) list.split(/\s+/).forEach(s => (SECTOR_OF[s] = sec));
 
-  const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2, maxPos: 25 };
+  // sectorBump / volumeBump are the score points for "leading sector" and "volume ≥ 1.5× average"; the backtest
+  // overrides them (--set sectorBump=0) to test whether they earn their place (ROADMAP item 2).
+  // swingMode: 'watch' (5 Nov 2026) — the swing rules lost −0.08R/trade over 419 trades on five years and no single
+  // tested change fixed them (reports/backtest-2026-11-05.md), so setups are shown as levels to watch, not as orders,
+  // and the digest leads with the momentum list. Set back to 'orders' only after a backtest earns it.
+  const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2, maxPos: 25, sectorBump: 15, volumeBump: 10, swingMode: 'watch' };
   const F = ['open', 'high', 'low', 'prev', 'ltp', 'chg', 'pct', 'vol', 'val', 'h52', 'l52', 'd30'];
   const tick = x => Math.round(x * 20) / 20;
   const fmt = (n, d = 2) => (n == null || isNaN(n)) ? '—' : Number(n).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -290,10 +295,10 @@
       r.leader = board.leaders.has(r.sector); r.laggard = board.laggards.has(r.sector);
       const sec = esc(r.sector); const reasons = []; let score = 50;
       const bump = (n, why) => { score += n; reasons.push((n > 0 ? '+' : '') + n + ' ' + why); };
-      if (r.leader) bump(15, 'leading sector'); else if (r.laggard) bump(-10, 'lagging sector');
+      if (r.leader) { if (st.sectorBump) bump(st.sectorBump, 'leading sector'); } else if (r.laggard) bump(-10, 'lagging sector');
       if (r.rsPct != null) { if (r.rsPct >= 70) bump(10, `relative strength top ${Math.round(100 - r.rsPct)}%`); else if (r.rsPct <= 30) bump(-10, 'weak relative strength'); }
       if (r.trend === 'up') bump(10, 'price > 20-day > 50-day average'); else if (r.trend === 'down') bump(-10, 'below both moving averages');
-      if (r.relVol != null && r.relVol >= 1.5) bump(10, `volume ${r.relVol.toFixed(1)}× average`);
+      if (st.volumeBump && r.relVol != null && r.relVol >= 1.5) bump(st.volumeBump, `volume ${r.relVol.toFixed(1)}× average`);
       if (r.rsi != null && r.rsi >= 75) bump(-15, `RSI ${r.rsi.toFixed(0)} — extended`);
       const push = o => { let kind = o.kind;
         if (o.entry && r.candle.bull.length && !r.candle.bull.every(x => x === 'doji' || x === 'inside bar')) bump(5, 'bullish candle: ' + r.candle.bull.filter(x => x !== 'doji').join(', '));
@@ -367,20 +372,34 @@
     const label = t.status === 'closed' ? 'Closed' : (!last ? 'No data since entry' : stopHit && (!targetHit || stopHit <= targetHit) ? 'Stop hit ' + stopHit : targetHit ? 'Target touched ' + targetHit : 'Open');
     return { label, R, pnl, mark, last, stopHit, targetHit };
   }
-  function digest(result, settings) {
-    const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {});
+  /** Telegram text. `blocks` = { momentum, pairs } are the other engines' digests (strings); in swingMode 'watch'
+   *  the momentum list comes first and swing setups are listed as levels to watch, without quantities. */
+  function digest(result, settings, blocks) {
+    const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {}); blocks = blocks || {};
+    const watchOnly = st.swingMode === 'watch';
     const L = []; const snap = result.snap; const idx = snap && snap.index ? `${snap.index.name} ${fmt(snap.index.ltp)} (${pct(snap.index.pct)})` : 'index n/a';
     L.push(`Nifty Swing Desk — ${result.date}${result.time ? ' ' + result.time : ''}${reg.intraday ? ' (intraday)' : ''}`);
     L.push(`Tape: ${reg.state} · breadth ${reg.up}▲/${reg.down}▼ · ${idx} · history ${result.coverage}/250 bars`);
     const leaders = [...board.leaders]; L.push(`Leading sectors: ${leaders.length ? leaders.join(', ') : 'none qualify'}`);
+    if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
-    L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
-    act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
-    if (!act.length) L.push('• nothing — no trade is a valid outcome');
+    if (watchOnly) {
+      L.push('', `SWING SETUPS (${act.length}) — watch only, not orders: the rules lost −0.08R/trade over 419 trades on five years (reports/)`);
+      act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
+      if (!act.length) L.push('• none today');
+    } else {
+      L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
+      act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
+      if (!act.length) L.push('• nothing — no trade is a valid outcome');
+    }
     L.push('', `ALERTS (${alert.length})`); alert.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
     L.push('', `WATCH (${watch.length})`); watch.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}${s.trigger ? ': ' + s.trigger : ''}`)); if (!watch.length) L.push('• none');
-    L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
-    L.push('Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
+    if (watchOnly) L.push('', `Avoid list: ${by('avoid').length} names. [score] = 0–100 setup quality (has not separated winners from losers in the backtest).`);
+    else L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
+    if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
+    if (blocks.pairs) L.push('', blocks.pairs);
+    L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive five-year record; swing levels are for watching and paper trades.'
+      : 'Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
     return L.join('\n');
   }
 
