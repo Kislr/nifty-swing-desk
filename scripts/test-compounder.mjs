@@ -78,7 +78,50 @@ const S4 = C.screenAt({ universe: { companies: [{ cik: 4, ticker: 'DUAL', domest
 const r4 = S4.universe.find(r => r.ticker === 'DUAL');
 assert(r4.cap === 21000 && r4.inBand === false && /diluted/.test(r4.capSource), 'no cover-page count + price → price × diluted shares (200 × 105M = $21,000M, out of band), not the $5,000M float');
 assert(!S.universe.find(r => r.ticker === 'BNK'), 'financials excluded from the screen');
+// Whole-universe composite (backtest): passers first per trait, then failers by value, non-computable at the midpoint; deciles cut from the sum.
+{ const rows = C.screenAt({ universe: { companies: [1, 2, 3, 4].map(cik => ({ cik, ticker: 'T' + cik, domestic: true, financial: false })) }, facts: { 1: good, 2: Object.assign({}, levered, { cik: 2 }), 3: Object.assign({}, diluter, { cik: 3 }), 4: Object.assign({}, service, { cik: 4 }) } }, screen, '2025-06-01', 'us').universe;
+  const R = C.rankUniverse(rows, 2);
+  assert(R[0].ticker === 'T1' && R[0].decile === 1 && R[0].uRank === 1, 'the all-five passer ranks first');
+  assert(R.find(r => r.ticker === 'T2').uRanks.leverage > R.find(r => r.ticker === 'T1').uRanks.leverage && R.find(r => r.ticker === 'T2').uRanks.leverage <= 4, 'a failed trait scores (below every passer), it is not dropped');
+  assert(R.find(r => r.ticker === 'T4').uRanks.grossMargin === 2.5, 'a trait that cannot be computed sits at the midpoint rank');
+  assert(R.filter(r => r.decile === 1).length === 2 && R.filter(r => r.decile === 2).length === 2, 'deciles (here halves) are equal cuts of the ranking');
+  const V = C.rankUniverse(rows.map(r => Object.assign({}, r, { uRanks: null })), 2, 'value');
+  assert(V.every(r => r.uRankSum > 0) && V[0].uRank === 1, 'value mode ranks on trait values alone'); }
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder engine tests passed');
+
+// ---- backtest: end to end on a synthetic store (facts + prices + index) where the good companies are built to win ----
+{ const fsP = await import('node:fs/promises'); const os = await import('node:os'); const pathM = await import('node:path'); const { spawnSync } = await import('node:child_process');
+  const tmp = await fsP.mkdtemp(pathM.join(os.tmpdir(), 'compounder-bt-')); await fsP.mkdir(pathM.join(tmp, 'facts')); await fsP.mkdir(pathM.join(tmp, 'prices'));
+  // 6 good compounders (growth 12–17%), 6 levered, one good company with no prices at all, one good company whose prices stop in mid-2025
+  const cos = [], universe = [];
+  const add = (cik, ticker, facts) => { cos.push(Object.assign({}, facts, { cik, ticker, name: ticker })); universe.push({ cik, ticker, domestic: true, financial: false }); };
+  const grow = g => mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000 * Math.pow(g, i), cogs: 500 * Math.pow(g, i), ebit: 200 * Math.pow(g, i), ni: 150 * Math.pow(g, i), ocf: 180 * Math.pow(g, i), sharesOut: 20e6 })));
+  for (let k = 0; k < 6; k++) add(100 + k, 'G' + k, grow(1.12 + 0.01 * k));
+  // the levered six also have flat revenue, a shrinking gross margin and a 10% ROCE, so they fail three traits, not one
+  for (let k = 0; k < 6; k++) add(200 + k, 'B' + k, mk([2019, 2020, 2021, 2022, 2023, 2024].map((y, i) => yr(`${y}-12-31`, `${y + 1}-02-15`, { rev: 1000, cogs: 500 + 20 * i, ebit: 100 - k, ni: 60, ocf: 70, debtLT: 900 + 10 * k, cash: 50, sharesOut: 20e6 }))));
+  add(300, 'NP', grow(1.15)); add(301, 'LV', grow(1.15));
+  await fsP.writeFile(pathM.join(tmp, 'universe.json'), JSON.stringify({ asOf: '2026-03-01', screenable: universe.length, companies: universe }));
+  await fsP.writeFile(pathM.join(tmp, 'facts', '00.json'), JSON.stringify(Object.fromEntries(cos.map(c => [c.cik, c]))));
+  // weekday bars 2024-01-02 → 2026-10-30: good names drift +0.08%/day, levered ones −0.04%/day, the index +0.02%/day
+  const files = {}; const d = new Date('2024-01-02T00:00:00Z'); let n = 0; const px = {}; for (const c of cos) px[c.ticker] = 100; let idx = 2000;
+  while (d <= new Date('2026-10-30T00:00:00Z')) { const dow = d.getUTCDay(); if (dow !== 0 && dow !== 6) { const ds = d.toISOString().slice(0, 10); const y = ds.slice(0, 4); const f = files[y] || (files[y] = { year: +y, dates: [], symbols: {}, index: { name: '^RUT', o: [], h: [], l: [], c: [] }, splits: {} });
+      f.dates.push(ds); idx *= 1.0002; for (const a of ['o', 'h', 'l', 'c']) f.index[a].push(+idx.toFixed(2));
+      for (const c of cos) { if (c.ticker === 'NP') continue; if (c.ticker === 'LV' && ds > '2025-06-15') continue; const drift = c.ticker.startsWith('B') ? 0.9996 : 1.0008; px[c.ticker] *= drift * (1 + 0.004 * Math.sin(n * (1 + c.cik % 7))); const p = +px[c.ticker].toFixed(3);
+        const S = f.symbols[c.ticker] || (f.symbols[c.ticker] = { o: [], h: [], l: [], c: [], v: [], t: [] }); const k = f.dates.length - 1; for (const a of ['o', 'h', 'l', 'c', 'v', 't']) while (S[a].length < k) S[a].push(null); S.o.push(p); S.h.push(p); S.l.push(p); S.c.push(p); S.v.push(1e6); S.t.push(+(p * 1e6 / 1e6).toFixed(3)); }
+      n++; } d.setUTCDate(d.getUTCDate() + 1); }
+  for (const f of Object.values(files)) { const N = f.dates.length; for (const S of Object.values(f.symbols)) for (const a of ['o', 'h', 'l', 'c', 'v', 't']) while (S[a].length < N) S[a].push(null); await fsP.writeFile(pathM.join(tmp, 'prices', f.year + '.json'), JSON.stringify(f)); }
+  const bt = spawnSync(process.execPath, [new URL('./compounder-backtest-us.mjs', import.meta.url).pathname, '--data', tmp, '--out', pathM.join(tmp, 'out'), '--deciles', '2', '--no-robustness'], { encoding: 'utf8' });
+  assert(bt.status === 0 && /Verdict/.test(bt.stdout), 'compounder backtest runs end to end on a synthetic store' + (bt.status ? '\n' + bt.stderr : ''));
+  if (bt.status === 0) { const rep = JSON.parse(await fsP.readFile(pathM.join(tmp, 'out', (await fsP.readdir(pathM.join(tmp, 'out'))).find(f => f.endsWith('.json'))), 'utf8'));
+    const c0 = rep.cohorts[0]; const c25 = rep.cohorts.find(c => c.date >= '2025-04-01'); const cLeft = rep.cohorts.find(c => c.date <= '2025-06-15' && c.exitDate > '2025-06-15');
+    assert(rep.cohorts.length >= 4 && c0.date === '2024-04-01' && c0.portfolios.passers.n === 0 && rep.cohorts.every(c => c.date.slice(8) <= '03'), `cohorts start when five fiscal years are visible (ranked, no passers yet: the 5-year CAGR needs six), on the first trading day of a quarter (${rep.cohorts.map(c => c.date).join(', ')})`);
+    assert(rep.summary.topBeatsBottom === 1 && rep.summary.top.meanExcess > 0 && rep.summary.bottom.meanExcess < 0, 'top half (the compounders) beats the bottom half (the levered) in every cohort and beats the index');
+    assert(c25 && c25.portfolios.passers.n >= 6 && c25.qualityInTop >= 0.8 && c25.portfolios.top.tickers.filter(t => /^G|^LV/.test(t)).length >= 6 && c25.portfolios.bottom.tickers.every(t => /^B/.test(t)), 'once six years are visible the quality list sits inside the top decile, and the bottom decile is the levered companies');
+    assert(c0.gap.noPrice === 1 && c0.gap.byBucket['$1–2B'].noPrice + c0.gap.byBucket['$2–10B'].noPrice === 1, 'a filer with no price history is counted in the survivor gap, in its cap bucket');
+    assert(cLeft && cLeft.gap.leftDuringHold === 1 && cLeft.portfolios.top.left === 1 && rep.gap.tags.left['still filing'] >= 1, 'a name that stops trading during the hold is sold at its last close, counted and tagged from the EDGAR store');
+    assert(rep.summary.verdict === 'PASS' && rep.summary.criteria.robust.tested === false, 'pass criteria evaluated; robustness reported as not run'); }
+  if (process.env.KEEP) console.log("kept", tmp); else await fsP.rm(tmp, { recursive: true, force: true }); }
+if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder backtest tests passed');
 
 // ---- prices: Yahoo chart parsing (adjustment, New York dates, splits, EDGAR→Yahoo symbol mapping) ----
 const P = await import('./compounder-prices-us.mjs');
