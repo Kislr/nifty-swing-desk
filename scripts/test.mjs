@@ -135,6 +135,12 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   assert(rep.trades.every(t => { const B = bars.sym[t.sym], k = pos[t.entryDate]; return t.entry <= B.h[k] && t.entry >= B.l[k]; }) && rep.trades.some(t => t.entry !== bars.sym[t.sym].c[pos[t.entryDate]]), 'backtest fill=next: entries sit inside the next day\'s range and are not simply its close');
   const bad = await runBt('out5', ['--set', 'fill=open']); assert(bad.failed === 2, 'backtest rejects an unknown fill mode'); }
 
+// 6a2. the momentum and pairs backtest scripts run end to end and write their reports (6 Nov 2026: backtest-momentum.mjs had `const OUT` behind a // comment and died at the write)
+for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backtest-pairs.mjs', 'pairs-']]) { const out = path.join(tmp, 'out-' + prefix.replace('-', ''));
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', script), '--hist', path.join(tmp, 'hist'), '--out', out], { encoding: 'utf8' });
+  const written = r.status === 0 ? await fs.readdir(out).catch(() => []) : [];
+  assert(r.status === 0 && written.some(f => f.startsWith(prefix) && f.endsWith('.md')) && written.some(f => f.startsWith(prefix) && f.endsWith('.json')), `${script} runs end to end and writes its report` + (r.status ? '\n' + String(r.stderr).split('\n').slice(0, 6).join('\n') : '')); }
+
 // 6b. corporate actions: purpose parsing, verification against bars, and application at load (compounding, raw files untouched)
 { const CA = await import('./corporate-actions.mjs');
   const P = CA.parsePurpose;
