@@ -47,6 +47,6 @@ The five NIFTY 50 bars were taken from NSE's index history (the endpoint `script
 
 With them in place the gate reads from the index on every day: closed through 4 Nov (23,960.6 against a 200-day average of 24,008.7), **open on 5 Nov (24,536.6 against 24,002.4)**. All nine swing runs above were repeated after the fill and are trade-for-trade unchanged; the momentum backtest is unchanged too (233 trades, +138.8%, 22.1% CAGR, 20.0% max drawdown).
 
-Found on the way, not fixed: `scripts/backtest-momentum.mjs` stops with `OUT is not defined` when it writes its report — on line 41 the `const OUT = …` statement sits behind a `//` comment on the same line. The fix is a line break before `const OUT`.
+Found on the way and fixed in the same change: `scripts/backtest-momentum.mjs` and `scripts/backtest-pairs.mjs` both stopped with `OUT is not defined` when writing their reports — `const OUT = …` sat behind a `//` comment on the same line (momentum line 41, pairs line 35). A line break in each fixes it, and `scripts/test.mjs` now runs both end to end.
 
 Reproduce: `node scripts/backtest.mjs <flags>` with data/adjustments.json present.
