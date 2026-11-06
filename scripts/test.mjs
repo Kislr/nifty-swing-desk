@@ -122,6 +122,18 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   const rep2 = bt2.status === 0 ? JSON.parse(await fs.readFile(path.join(tmp, 'out2', (await fs.readdir(path.join(tmp, 'out2'))).find(f => f.endsWith('.json'))), 'utf8')) : null;
   assert(rep2 && rep2.params.exit === 'ma10' && !('time stop' in rep2.byReason) && Object.keys(rep2.byReason).some(k => /10-day/.test(k)), 'backtest variants: ma10 exit replaces the time stop' + (bt2.status ? '\n' + bt2.stderr : ''));
   assert(rep2 && rep2.trades.every(t => t.score <= 85), 'backtest variants: score bumps removed (no trade can exceed 50+10+10+10+5)'); }
+// 6a. regime gate and close fill (6 Nov 2026): defaults off; gated trades only on gate-open signal days; close fills at the signal day's close
+{ const runBt = async (name, extra) => { const b = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'backtest.mjs'), '--hist', path.join(tmp, 'hist'), '--out', path.join(tmp, name), '--set', 'warmup=60', ...extra], { encoding: 'utf8' });
+    return b.status === 0 ? JSON.parse(await fs.readFile(path.join(tmp, name, (await fs.readdir(path.join(tmp, name))).find(f => f.endsWith('.json'))), 'utf8')) : { failed: b.status }; };
+  const pos = Object.fromEntries(bars.dates.map((d, i) => [d, i])); const ic = bars.index.c; const avg = (n, i) => ic.slice(i - n + 1, i + 1).reduce((p, c) => p + c, 0) / n;
+  assert(rep.params.gate === 0 && rep.params.fill === 'next' && !rep.gate, 'backtest defaults: no gate, buy-stop next day');
+  const g = await runBt('out3', ['--set', 'gate=50']);
+  assert(g.trades && g.gate && g.gate.open > 0 && g.gate.closed > 0 && g.gate.skipped > 0, `backtest gate: open on ${g.gate && g.gate.open} days, closed on ${g.gate && g.gate.closed}, ${g.gate && g.gate.skipped} signals not ordered`);
+  assert(g.trades && g.trades.length > 0 && g.trades.every(t => { const k = pos[t.entryDate] - 1; return ic[k] > avg(50, k); }), 'backtest gate: every trade was signalled on a day the index closed above its own 50-day average (independent check)');
+  const cl = await runBt('out4', ['--set', 'fill=close']);
+  assert(cl.trades && cl.trades.length > 0 && cl.trades.every(t => t.entry === bars.sym[t.sym].c[pos[t.entryDate]]), 'backtest fill=close: every entry is the close of its entry date');
+  assert(rep.trades.every(t => { const B = bars.sym[t.sym], k = pos[t.entryDate]; return t.entry <= B.h[k] && t.entry >= B.l[k]; }) && rep.trades.some(t => t.entry !== bars.sym[t.sym].c[pos[t.entryDate]]), 'backtest fill=next: entries sit inside the next day\'s range and are not simply its close');
+  const bad = await runBt('out5', ['--set', 'fill=open']); assert(bad.failed === 2, 'backtest rejects an unknown fill mode'); }
 
 // 6b. corporate actions: purpose parsing, verification against bars, and application at load (compounding, raw files untouched)
 { const CA = await import('./corporate-actions.mjs');
