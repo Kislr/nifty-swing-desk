@@ -7,6 +7,8 @@
  *   node scripts/backtest.mjs --setups breakout       # only 52W breakouts (or: pullback)
  *   node scripts/backtest.mjs --set sectorBump=0 --set volumeBump=0   # score without the sector / volume points
  *   node scripts/backtest.mjs --set exit=ma10         # exit on a close below the 10-day average instead of the time stop (or: ma20)
+ *   node scripts/backtest.mjs --set gate=200          # regime gate: new orders only while the Nifty is above its 200-day average
+ *   node scripts/backtest.mjs --set fill=close        # enter at the signal day's close instead of a buy-stop the next day
  *
  * Model (deliberately simple and conservative):
  *   - Each day's ACT signals are candidates for the NEXT day. A buy-stop at `entry` fills if the next
@@ -19,6 +21,12 @@
  *   - Stop moves to breakeven once a close is ≥ entry + 1R (the rule on the site).
  *   - Max `maxPositions` open, never two in one sector, candidates taken in score order.
  *   - Costs: `costBps` round-trip (default 30 bps ≈ brokerage + STT + slippage for delivery trades).
+ *   - `gate=N` (default 0 = off): a signal from day i's close becomes an order only if the momentum engine's gate
+ *     (index close above its N-day average, breadth fallback) is open on day i. Closed or not yet computable → no
+ *     order. Open positions are untouched and leave on their normal exits.
+ *   - `fill=close` (default `next`): an act signal on day i is filled at day i's close, same stop price, risk =
+ *     fill − stop, target = fill + minRR × risk; exits start on day i + 1. Optimistic: it assumes the full day's bar
+ *     is known at the moment of buying, which a pre-close run would not have.
  * Writes reports/backtest-<stamp>.md and .json. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -28,11 +36,14 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const E = require(path.join(ROOT, 'engine.js'));
+const M = require(path.join(ROOT, 'momentum.js'));
 const argv = process.argv.slice(2); const arg = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const sets = {}; argv.forEach((a, i) => { if (a === '--set') { const [k, v] = argv[i + 1].split('='); sets[k] = isNaN(+v) ? v : +v; } });
 const config = JSON.parse(await fs.readFile(path.join(ROOT, 'config.json'), 'utf8'));
-const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60, exit: 'time', sectorBump: E.DEFAULTS.sectorBump, volumeBump: E.DEFAULTS.volumeBump }, sets);
+const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60, exit: 'time', sectorBump: E.DEFAULTS.sectorBump, volumeBump: E.DEFAULTS.volumeBump, gate: 0, fill: 'next' }, sets);
 if (!/^(time|ma\d+)$/.test(String(P.exit))) { console.error(`--set exit= must be time, ma10, ma20 …; got ${P.exit}`); process.exit(2); }
+if (!/^(next|close)$/.test(String(P.fill))) { console.error(`--set fill= must be next or close; got ${P.fill}`); process.exit(2); }
+if (!(Number.isInteger(P.gate) && P.gate >= 0)) { console.error(`--set gate= must be a whole number of days (0 = off); got ${P.gate}`); process.exit(2); }
 const maExit = P.exit === 'time' ? 0 : +String(P.exit).slice(2);
 const timeStop = (P.exit === 'time' || 'maxHold' in sets) ? P.maxHold : Infinity;
 const setupsFilter = arg('setups', 'all');
@@ -50,6 +61,14 @@ console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars
 const settings = { capital: P.capital, riskPct: P.riskPct, minRR: P.minRR, maxPos: P.maxPos, sectorBump: P.sectorBump, volumeBump: P.volumeBump };
 const open = []; const trades = []; let pending = []; const equityR = []; let cumR = 0;
 const sectorOf = s => E.sectorOf(s, custom);
+// regime gate at the close of day i (momentum.js gateAt: only bars up to i). Not computable counts as closed.
+const gateStats = { open: 0, closed: 0, undefined: 0, index: 0, breadth: 0, skipped: 0, firstDefined: null };
+const gateAt = i => { if (!P.gate) return true; const g = M.gateAt(bars, i, { gateSma: P.gate });
+  if (g.open == null) { gateStats.undefined++; return false; } if (!gateStats.firstDefined) gateStats.firstDefined = bars.dates[i];
+  gateStats[g.source] = (gateStats[g.source] || 0) + 1; gateStats[g.open ? 'open' : 'closed']++; return g.open; };
+const tryFill = (q, fill, i) => { const stop = q.stop, risk = fill - stop; if (!(risk > 0)) return false;
+  const target = fill + P.minRR * risk; const sz = E.sizing(fill, stop, q.reg, settings); if (!sz || sz.qty < 1) return false;
+  open.push({ sym: q.sym, sector: q.sector, setup: q.setup, score: q.score, entry: fill, stop, stop0: stop, target, qty: sz.qty, fillIdx: i }); return true; };
 for (let i = P.warmup; i < N - 1; i++) {
   const date = bars.dates[i]; if (date < from || date > to) continue;
   // 1. manage open positions on day i (bars of day i)
@@ -71,15 +90,17 @@ for (let i = P.warmup; i < N - 1; i++) {
     const B = bars.sym[q.sym]; const o = B.o[i], h = B.h[i]; if (o == null || h == null) continue;
     let fill = null; if (o >= q.entry) { if (o <= q.entry * 1.03) fill = o; } else if (h >= q.entry) fill = q.entry;
     if (fill == null) continue;
-    const stop = q.stop, risk = fill - stop; if (!(risk > 0)) continue;
-    const target = fill + P.minRR * risk; const sz = E.sizing(fill, stop, q.reg, settings); if (!sz || sz.qty < 1) continue;
-    open.push({ sym: q.sym, sector: q.sector, setup: q.setup, score: q.score, entry: fill, stop, stop0: stop, target, qty: sz.qty, fillIdx: i }); }
+    tryFill(q, fill, i); }
   pending = [];
   // 3. generate tomorrow's orders from today's close
-  const res = E.analyzeAt(bars, i, { settings, custom });
+  const res = E.analyzeAt(bars, i, { settings, custom }); const gateOpen = gateAt(i);
   for (const s of res.signals) { if (s.kind !== 'act' || s.score < P.minScore) continue; if (setupsFilter !== 'all' && !s.setup.toLowerCase().includes(setupsFilter)) continue;
+    if (!gateOpen) { gateStats.skipped++; continue; }
     pending.push({ sym: s.sym, sector: s.sector, setup: s.setup, score: s.score, entry: s.entry, stop: s.stop, reg: res.reg }); }
   pending.sort((a, b) => b.score - a.score);
+  // fill=close: take today's signals at today's close (same slot and sector limits, score order); nothing carries over
+  if (P.fill === 'close') { for (const q of pending) { if (open.length >= P.maxPositions) break; if (open.some(x => x.sym === q.sym || x.sector === q.sector)) continue;
+    const c = bars.sym[q.sym].c[i]; if (c == null) continue; tryFill(q, c, i); } pending = []; }
   equityR.push({ date, cumR: +cumR.toFixed(2), open: open.length });
   if ((i - P.warmup) % 50 === 0) process.stdout.write(`\r${date}  trades ${trades.length}  cumR ${cumR.toFixed(1)}   `);
 }
@@ -101,9 +122,11 @@ const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adj
 const md = [`# Backtest — ${stamp}`, '', `History ${bars.dates[P.warmup]} → ${bars.dates[N - 1]} (${N} days, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P)}. Setups: ${setupsFilter}.`, '',
   '## Overall', '', hdr, row('all', all), '', '## By setup', '', hdr, ...Object.entries(bySetup).map(([k, v]) => row(k, v)), '', '## By score band', '', hdr, ...Object.entries(byScore).map(([k, v]) => row(k, v)), '', '## By year', '', hdr, ...Object.entries(byYear).map(([k, v]) => row(k, v)), '',
   '## Exit reasons', '', ...Object.entries(byReason).map(([k, v]) => `- ${k}: ${v}`), '',
+  ...(P.gate ? ['## Regime gate', '', `Nifty above its ${P.gate}-day average: open on ${gateStats.open} days, closed on ${gateStats.closed}, not yet computable on ${gateStats.undefined} (first computable ${gateStats.firstDefined || '—'}; ${gateStats.index} days read from the index, ${gateStats.breadth} from the breadth fallback). ${gateStats.skipped} act signals were not turned into orders.`, ''] : []),
+  ...(P.fill === 'close' ? ['## Fill', '', 'Entries are at the signal day\'s close, not a buy-stop the next day. This assumes the whole day\'s bar is known when buying; a run before the close would see less.', ''] : []),
   '## How to read this', '', 'Expectancy is the average R (multiple of the initial risk) per trade after costs; above +0.2R with a profit factor above 1.3 over 100+ trades is a system worth trading small. Max DD is the deepest peak-to-trough fall in cumulative R: with 1% risk per trade, 10R of drawdown ≈ 10% of capital. The P&L column uses fixed-fraction sizing at the configured capital with no compounding. Fewer than ~60 trades in a slice is noise.',
   '', 'Known simplifications: fills assume the stop order is working at the open; no partial exits; survivorship bias if the universe list is today\'s constituents (names that left the index are absent); corporate actions (splits, bonuses) are not adjusted in bhavcopy data and can produce false stop-outs on ex-dates.'].join('\n');
 const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 await fs.writeFile(path.join(OUT, `backtest-${stamp}.md`), md);
-await fs.writeFile(path.join(OUT, `backtest-${stamp}.json`), JSON.stringify({ params: P, overall: all, bySetup, byYear, byScore, byReason, equityR, trades }, null, 1));
+await fs.writeFile(path.join(OUT, `backtest-${stamp}.json`), JSON.stringify({ params: P, overall: all, bySetup, byYear, byScore, byReason, ...(P.gate ? { gate: gateStats } : {}), equityR, trades }, null, 1));
 console.log(md.split('\n').slice(0, 12).join('\n')); console.log(`\nfull report: reports/backtest-${stamp}.md (and .json with every trade)`);
