@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-11-06",
+  "asOf": "2026-11-07",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
-  "symbols": 3148,
-  "missing": 4,
+  "symbols": 3146,
+  "missing": 6,
   "errors": 0,
   "years": [
     "2014",
@@ -20,12 +20,14 @@
     "2025",
     "2026"
   ],
-  "lastDate": "2026-11-05",
+  "lastDate": "2026-11-06",
   "missingList": [
     "BZH",
     "CCO",
+    "WEAV",
     "ACVA",
-    "ATKR"
+    "ATKR",
+    "ACA"
   ],
   "errorList": []
 }
