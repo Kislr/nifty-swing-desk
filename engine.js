@@ -416,7 +416,7 @@
     return ['DESK CHECKS DUE', ...due.map(r => `• ${r.date}${r.repeat ? ' (' + r.repeat + ')' : ''} — ${r.text}`)].join('\n');
   }
 
-  /** Telegram text. `blocks` = { momentum, pairs, reminders } are the other engines' digests (strings); in swingMode 'watch'
+  /** Telegram text. `blocks` = { momentum, reminders } are the other engines' digests (strings); in swingMode 'watch'
    *  the momentum list comes first and swing setups are listed as levels to watch, without quantities. */
   /** Tag swing signals whose symbol is in the momentum engine's top `topRank` (default 30, the engine's holdRank).
    *  Sets s.momRank on every such signal and s.tag = 'momentum pullback' on pullback buys — the one slice of the swing
@@ -457,7 +457,6 @@
     if (watchOnly) L.push('', `Avoid list: ${by('avoid').length} names. [score] = 0–100 setup quality (has not separated winners from losers in the backtest).`);
     else L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
     if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
-    if (blocks.pairs) L.push('', blocks.pairs);
     if (blocks.reminders) L.push('', blocks.reminders);
     L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive ten-year record; momentum pullbacks are the one swing slice that passed its backtest and are being paper-traded; other swing levels are for watching.'
       : 'Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');

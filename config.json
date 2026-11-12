@@ -21,12 +21,12 @@
     },
     {
       "date": "2026-12-01",
-      "text": "Monthly: re-run the three backtests on the month's new bars (npm run backtest:momentum && npm run backtest && npm run backtest:pairs) and compare with the previous month's reports; push.",
+      "text": "Monthly: re-run the two backtests on the month's new bars (npm run backtest:momentum -- --benchmarks && npm run backtest) and compare with the previous month's reports; push.",
       "repeat": "monthly"
     },
     {
       "date": "2027-01-05",
-      "text": "Quarterly: from home, npm run corporate-actions (new bonuses/splits), then the three backtests; check every workflow's actions/* versions and Node version are still supported.",
+      "text": "Quarterly: from home, npm run corporate-actions (new bonuses/splits), then the two backtests; check every workflow's actions/* versions and Node version are still supported.",
       "repeat": "quarterly"
     },
     {
