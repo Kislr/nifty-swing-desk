@@ -1,0 +1,122 @@
+{
+ "_about": "Hand entries for press releases whose NIFTY 500 change is in prose or a non-standard table, read by scripts/membership.mjs. Keys are file names in data/membership/src/. `amend` edits the parsed section (`included`/`excluded` with `add`/`remove`, optional `effective`); `replace` supplies the sections outright; `ignore` drops the file. `renames` are symbol changes missing from NSE's symbolchange.csv, in its own terms (old → new, effective). Every entry quotes the sentence it rests on.",
+ "renames": [
+  {
+   "from": "BURGERKING",
+   "to": "RBA",
+   "date": "2022-02-14",
+   "why": "Burger King India Ltd. renamed Restaurant Brands Asia Ltd.; the NSE symbol change is not in symbolchange.csv. The 24 Feb 2022 release lists 'Restaurant Brands Asia Ltd. RBA' as a NIFTY 500 exclusion effective 31 Mar 2022; BURGERKING was included on 29 Apr 2021."
+  },
+  {
+   "from": "PHILIPCARB",
+   "to": "PCBL",
+   "date": "2022-02-01",
+   "why": "Phillips Carbon Black Ltd. renamed PCBL Ltd. (symbol PHILIPCARB → PCBL, early 2022; exact date not in symbolchange.csv, any date between the 28 Sep 2018 inclusion and today works for the chain). PCBL is in today's list with no inclusion of its own; PHILIPCARB was included on 28 Sep 2018."
+  }
+ ],
+ "ind_prs28082017.pdf": {
+  "note": "The 29 Aug 2017 release reschedules one of this release's pairs — Reliance Capital out, Max Financial in — to 5 Sep 2017 ('the IMSC has decided to reschedule replacement of Reliance Capital Ltd. in various indices ... effective from September 05, 2017'), and that release carries its own NIFTY 500 table, so the pair is removed here to avoid counting it twice.",
+  "amend": {
+   "excluded": {
+    "remove": [
+     "RELCAPITAL"
+    ]
+   },
+   "included": {
+    "remove": [
+     "MFSL"
+    ]
+   }
+  }
+ },
+ "ind_prs28022024.pdf": {
+  "note": "19 Mar 2024 release, revocation table: 'the Committee has decided to revoke its earlier decision to include IREDA announced on February 28, 2024' — NIFTY 500 row: IREDA 'Inclusion revoked', V-Guard Industries Ltd. VGUARD 'Exclusion revoked'. IREDA was included at the next review (23 Aug 2024).",
+  "amend": {
+   "included": {
+    "remove": [
+     "IREDA"
+    ]
+   },
+   "excluded": {
+    "remove": [
+     "VGUARD"
+    ]
+   }
+  }
+ },
+ "ind_prs23082024.pdf": {
+  "note": "25 Sep 2024 release, revocation table: 'The Committee has decided to revoke its decision to exclude IDEA from various indices following the recalculation of security's impact cost by NSE' — NIFTY 500 rows: Vodafone Idea Ltd. IDEA 'Exclusion revoked', Prism Johnson Ltd. PRSMJOHNSN 'Exclusion'. Same effective date, 30 Sep 2024.",
+  "amend": {
+   "excluded": {
+    "remove": [
+     "IDEA"
+    ],
+    "add": [
+     "PRSMJOHNSN"
+    ]
+   }
+  }
+ },
+ "ind_prs23082024_1.pdf": {
+  "note": "Prose plus an index list: 'Tata Motors Ltd., A Ordinary Shares - DVR (Symbol: TATAMTRDVR) shall be excluded from the following indices' — Sr. 3 Nifty 500 — 'effective from August 30, 2024 (close of August 29, 2024)'. The DVR was a NIFTY 500 constituent from before 2017 (never in a table), which is why the index held 501 securities until then.",
+  "replace": [
+   {
+    "effective": "2024-08-30",
+    "excluded": [
+     "TATAMTRDVR"
+    ],
+    "included": []
+   }
+  ]
+ },
+ "ind_prs23042026.pdf": {
+  "note": "Vedanta demerger: four placeholder securities 'with dummy Symbols DUMMYVEDL1, DUMMYVEDL2, DUMMYVEDL3 and DUMMYVEDL4 ... shall be included (with equal weights) at zero price' in Nifty 500 (Sr. 6) effective 30 Apr 2026. Placeholders, not tradable names: ignored, so the member count is not disturbed; the real listings of the resulting companies arrive through their own releases.",
+  "ignore": true
+ },
+ "ind_prs16022017.pdf": {
+  "note": "The 7 Mar 2017 release brings three of this review's pairs forward: 'effective from March 16, 2017 (close of March 15, 2017) instead of March 31, 2017' — SBBJ, MYSOREBANK, SBT out (trading suspended on amalgamation into SBI), FRETAIL, MAXINDIA, MGL in. That release carries its own NIFTY 500 table (ind_prs07032017), so the pairs are removed here.",
+  "amend": {
+   "excluded": {
+    "remove": [
+     "SBBJ",
+     "MYSOREBANK",
+     "SBT"
+    ]
+   },
+   "included": {
+    "remove": [
+     "FRETAIL",
+     "MAXINDIA",
+     "MGL"
+    ]
+   }
+  }
+ },
+ "ind_prs21022018.pdf": {
+  "note": "The 6 Mar 2018 release brings one pair forward: Videocon Industries out, Eris Lifesciences in, 'effective from March 13, 2018 (close of March 12, 2018)' instead of 2 April. ind_prs06032018 carries that pair, so it is removed here.",
+  "amend": {
+   "excluded": {
+    "remove": [
+     "VIDEOIND"
+    ]
+   },
+   "included": {
+    "remove": [
+     "ERIS"
+    ]
+   }
+  }
+ },
+ "ind_prs12032020.pdf": {
+  "note": "Announced for 27 March 2020 (GAYAPROJ out, SHILPAMED in) and never applied: the 13 May 2020 release (ind_prs13052020, not in the folder) declared the replacements effective March 27, 2020 void and the review was re-done effective 26 June 2020 (ind_prs10062020). Only the Yes Bank removal of 19 March (ind_prs16032020) stood.",
+  "ignore": true
+ },
+ "ind_prs19032020.pdf": {
+  "note": "Announced for 27 March 2020 (ALKYLAMINE in) and never applied: the 13 May 2020 release (ind_prs13052020, not in the folder) declared the replacements effective March 27, 2020 void and the review was re-done effective 26 June 2020 (ind_prs10062020). Only the Yes Bank removal of 19 March (ind_prs16032020) stood.",
+  "ignore": true
+ },
+ "ind_prs23082021.pdf": {
+  "note": "Scanned image, no text layer. Superseded in full by the 15 Sep 2021 release: 'The earlier list of replacement of these indices published through a press release on August 23, 2021 stands replaced with the list given hereunder' (REITs and InvITs taken back out). ind_prs15092021 carries the final NIFTY 500 table.",
+  "ignore": true
+ }
+}

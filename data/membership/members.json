@@ -1,0 +1,7842 @@
+{
+ "asOf": "2026-11-12",
+ "from": "2017-01-23",
+ "built": "2026-11-12",
+ "sources": {
+  "releases": 142,
+  "events": 74,
+  "renames": 52
+ },
+ "events": [
+  {
+   "date": "2017-01-23",
+   "file": "ind_prs16012017.pdf",
+   "add": [
+    "ADVENZYMES",
+    "ASAHIINDIA",
+    "RBLBANK",
+    "UJJIVAN"
+   ],
+   "drop": [
+    "DISHMAN",
+    "MFSL",
+    "OCL",
+    "SFCL"
+   ]
+  },
+  {
+   "date": "2017-03-16",
+   "file": "ind_prs07032017.pdf",
+   "add": [
+    "FRETAIL",
+    "MAXINDIA",
+    "MGL"
+   ],
+   "drop": [
+    "SBBJ",
+    "MYSOREBANK",
+    "SBT"
+   ]
+  },
+  {
+   "date": "2017-03-31",
+   "file": "ind_prs16022017.pdf",
+   "add": [
+    "DBL",
+    "ENDURANCE",
+    "FMGOETZE",
+    "GHCL",
+    "GNFC",
+    "GUJALKALI",
+    "ICICILIFE",
+    "KNRCON",
+    "LTM",
+    "LTTS",
+    "MINDACORP",
+    "UNOMINDA",
+    "NAVNETEDUL",
+    "NAVA",
+    "PARAGMILK",
+    "QUESS",
+    "RATNAMANI",
+    "SHILPI",
+    "STLTECH",
+    "SUDARSCHEM",
+    "TATAINVEST",
+    "THYROCARE"
+   ],
+   "drop": [
+    "ALOKTEXT",
+    "BRFL",
+    "BRIGADE",
+    "DYNAMATECH",
+    "FLFL",
+    "INGERRAND",
+    "ANDHRAPAP",
+    "JPPOWER",
+    "JPINFRATEC",
+    "JSWHL",
+    "KSB",
+    "LAOPALA",
+    "LITL",
+    "LINDEINDIA",
+    "MAHLIFE",
+    "MAYURUNIQ",
+    "VIYASH",
+    "SHOPERSTOP",
+    "SIMPLEXINF",
+    "SINTEX",
+    "SITINET",
+    "SUPRAJIT"
+   ]
+  },
+  {
+   "date": "2017-05-26",
+   "file": "ind_prs27042017.pdf",
+   "add": [
+    "LAURUSLABS",
+    "PNBHOUSING",
+    "VBL"
+   ],
+   "drop": [
+    "ABIRLANUVO",
+    "GRASIM",
+    "TUBEINVEST"
+   ]
+  },
+  {
+   "date": "2017-06-23",
+   "file": "ind_prs15062017.pdf",
+   "add": [
+    "SFL"
+   ],
+   "drop": [
+    "IIFL"
+   ]
+  },
+  {
+   "date": "2017-09-05",
+   "file": "ind_prs29082017.pdf",
+   "add": [
+    "MFSL"
+   ],
+   "drop": [
+    "RELCAPITAL"
+   ]
+  },
+  {
+   "date": "2017-09-29",
+   "file": "ind_prs28082017.pdf",
+   "add": [
+    "DMART",
+    "BRFL",
+    "BRIGADE",
+    "BSE",
+    "FLFL",
+    "HERITGFOOD",
+    "IFBIND",
+    "ITDC",
+    "DHANI",
+    "INGERRAND",
+    "ITI",
+    "JPPOWER",
+    "JINDALSAW",
+    "JSLHISAR",
+    "JSL",
+    "LINDEINDIA",
+    "NFL",
+    "RUPA",
+    "SHOPERSTOP",
+    "SUPRAJIT",
+    "SUPPETRO",
+    "TIMETECHNO",
+    "UNITEDBNK",
+    "VESUVIUS"
+   ],
+   "drop": [
+    "AMTEKAUTO",
+    "ANANTRAJ",
+    "ASAHIINDIA",
+    "FDC",
+    "FMGOETZE",
+    "GRINDWELL",
+    "HMVL",
+    "HONAUT",
+    "JMTAUTOLTD",
+    "KNRCON",
+    "NITINFIRE",
+    "ORISSAMINE",
+    "PUNJLLOYD",
+    "RATNAMANI",
+    "RELAXO",
+    "RIIL",
+    "ROLTA",
+    "RUCHISOYA",
+    "STCINDIA",
+    "VEEDOL",
+    "TRITURBINE",
+    "VSTIND",
+    "WONDERLA",
+    "ZYDUSWELL"
+   ]
+  },
+  {
+   "date": "2017-10-30",
+   "file": "ind_prs16102017.pdf",
+   "add": [
+    "HUDCO"
+   ],
+   "drop": [
+    "FRETAIL"
+   ]
+  },
+  {
+   "date": "2017-11-13",
+   "file": "ind_prs03112017.pdf",
+   "add": [
+    "AUBANK",
+    "RELAXO"
+   ],
+   "drop": [
+    "SUNDARMFIN",
+    "SHILPI"
+   ]
+  },
+  {
+   "date": "2017-11-20",
+   "file": "ind_prs10112017.pdf",
+   "add": [
+    "STARCEMENT"
+   ],
+   "drop": [
+    "GAYAPROJ"
+   ]
+  },
+  {
+   "date": "2018-02-05",
+   "file": "ind_prs08012018.pdf",
+   "add": [
+    "COCHINSHIP",
+    "HATSUN",
+    "RELCAPITAL",
+    "CHOLAHLDNG"
+   ],
+   "drop": [
+    "CESC",
+    "FORTIS",
+    "POLARIS",
+    "STAR"
+   ]
+  },
+  {
+   "date": "2018-03-13",
+   "file": "ind_prs06032018.pdf",
+   "add": [
+    "ERIS"
+   ],
+   "drop": [
+    "VIDEOIND"
+   ]
+  },
+  {
+   "date": "2018-04-02",
+   "file": "ind_prs21022018.pdf",
+   "add": [
+    "ABCAPITAL",
+    "ASAHIINDIA",
+    "CDSL",
+    "DCAL",
+    "DIXON",
+    "GICRE",
+    "GODREJAGRO",
+    "GRAPHITE",
+    "GRASIM",
+    "HEGAM",
+    "HSCL",
+    "HONAUT",
+    "ICICIGI",
+    "IIFL",
+    "IEX",
+    "KNRCON",
+    "MASFIN",
+    "NESCO",
+    "RHFL",
+    "SADBHIN",
+    "SBILIFE",
+    "SIS",
+    "SHANKARA",
+    "SPTL"
+   ],
+   "drop": [
+    "ADANIENT",
+    "AHLUCONT",
+    "APARINDS",
+    "ASTRAZEN",
+    "CORPBANK",
+    "DALMIABHA",
+    "DHANUKA",
+    "EPL",
+    "ICRA",
+    "IGARASHI",
+    "INGERRAND",
+    "LINDEINDIA",
+    "MONSANTO",
+    "NAVNETEDUL",
+    "SCHNEIDER",
+    "SHARDACROP",
+    "SHILPAMED",
+    "SNOWMAN",
+    "SOMANYCERA",
+    "SUPRAJIT",
+    "SUPPETRO",
+    "UNITEDBNK",
+    "VESUVIUS",
+    "ZENSARTECH"
+   ]
+  },
+  {
+   "date": "2018-06-29",
+   "file": "ind_prs24052018.pdf",
+   "add": [
+    "FRETAIL",
+    "KIOCL",
+    "TIINDIA"
+   ],
+   "drop": [
+    "ARVIND",
+    "COX&KINGS",
+    "TATACOMM"
+   ]
+  },
+  {
+   "date": "2018-06-29",
+   "file": "ind_prs20062018.pdf",
+   "add": [
+    "ASTERDM"
+   ],
+   "drop": [
+    "HTMEDIA"
+   ]
+  },
+  {
+   "date": "2018-08-08",
+   "file": "ind_prs01082018.pdf",
+   "add": [
+    "BDL"
+   ],
+   "drop": [
+    "TECHNO"
+   ]
+  },
+  {
+   "date": "2018-09-28",
+   "file": "ind_prs28082018.pdf",
+   "add": [
+    "BANDHANBNK",
+    "ELGIEQUIP",
+    "EXCELCROP",
+    "FDC",
+    "GALAXYSURF",
+    "GAYAPROJ",
+    "GRINDWELL",
+    "HDFCLIFE",
+    "HAL",
+    "ISEC",
+    "LEMONTREE",
+    "LINDEINDIA",
+    "LUXIND",
+    "MAHLOG",
+    "MONSANTO",
+    "PCBL",
+    "NAM-INDIA",
+    "STAR",
+    "SUNDARMFIN",
+    "TEAMLEASE",
+    "NIACL",
+    "VENKEYS",
+    "VMART",
+    "ZENSARTECH",
+    "ZYDUSWELL"
+   ],
+   "drop": [
+    "ABAN",
+    "ASAHIINDIA",
+    "BAJAJHIND",
+    "BALLARPUR",
+    "BFUTILITIE",
+    "BGRENERGY",
+    "TATASTLBSL",
+    "BRFL",
+    "DBREALTY",
+    "ACLGATI",
+    "HDIL",
+    "JBFIND",
+    "JINDALPOLY",
+    "KESORAMIND",
+    "KITEX",
+    "KWALITY",
+    "MTNL",
+    "MARKSANS",
+    "RAMCOSYS",
+    "RTNPOWER",
+    "RELIGARE",
+    "SFL",
+    "SMLMAH",
+    "UNITECH",
+    "ZEELEARN"
+   ]
+  },
+  {
+   "date": "2018-09-28",
+   "file": "ind_prs31082018.pdf",
+   "add": [
+    "SHILPAMED"
+   ],
+   "drop": [
+    "BSOFT"
+   ]
+  },
+  {
+   "date": "2018-12-28",
+   "file": "ind_prs14122018.pdf",
+   "add": [
+    "ADANIGREEN",
+    "FORTIS",
+    "RITES",
+    "SFL",
+    "VARROC"
+   ],
+   "drop": [
+    "BHARATFIN",
+    "CAPF",
+    "ABREL",
+    "AGI",
+    "IIFL"
+   ]
+  },
+  {
+   "date": "2019-01-28",
+   "file": "ind_prs21012019.pdf",
+   "add": [
+    "CORPBANK",
+    "CREDITACC"
+   ],
+   "drop": [
+    "DENABANK",
+    "VIJAYABANK"
+   ]
+  },
+  {
+   "date": "2019-03-29",
+   "file": "ind_prs25022019.pdf",
+   "add": [
+    "AAVAS",
+    "ASTRAZEN",
+    "MAHABANK",
+    "CESC",
+    "COX&KINGS",
+    "DEEPAKNTR",
+    "EPL",
+    "FINEORG",
+    "HDFCAMC",
+    "ICRA",
+    "IBULLSLTD",
+    "INDOSTAR",
+    "IRCON",
+    "JAMNAAUTO",
+    "JKPAPER",
+    "KEI",
+    "KIRLOSENG",
+    "MAHSCOOTER",
+    "MAHSEAMLES",
+    "ORIENTELEC",
+    "SHARDACROP",
+    "SUPRAJIT",
+    "TCNSBRANDS",
+    "TRITURBINE",
+    "VSTIND"
+   ],
+   "drop": [
+    "SECURKLOUD",
+    "AARTIIND",
+    "DEN",
+    "DREDGECORP",
+    "EROSMEDIA",
+    "EVEREADY",
+    "GREENPLY",
+    "GVKPIL",
+    "HCL-INSYS",
+    "HCC",
+    "IL&FSTRANS",
+    "ICIL",
+    "JKIL",
+    "JPPOWER",
+    "BOSCH-HCIL",
+    "MANPASAND",
+    "MCLEODRUSS",
+    "NAVKARCORP",
+    "PFS",
+    "RNAVAL",
+    "SADBHIN",
+    "TATASTLLP",
+    "TEXRAIL",
+    "TVSSRICHAK",
+    "UNICHEMLAB"
+   ]
+  },
+  {
+   "date": "2019-04-15",
+   "file": "ind_prs08042019.pdf",
+   "add": [
+    "TVSHLTD"
+   ],
+   "drop": [
+    "EXCELCROP"
+   ]
+  },
+  {
+   "date": "2019-06-28",
+   "file": "ind_prs13062019.pdf",
+   "add": [
+    "CHALET",
+    "DALBHARAT"
+   ],
+   "drop": [
+    "GFLLIMITED",
+    "MONSANTO"
+   ]
+  },
+  {
+   "date": "2019-09-24",
+   "file": "ind_prs17092019_1.pdf",
+   "add": [
+    "VAIBHAVGBL"
+   ],
+   "drop": [
+    "JETAIRWAYS"
+   ]
+  },
+  {
+   "date": "2019-09-27",
+   "file": "ind_prs28082019.pdf",
+   "add": [
+    "ABBOTINDIA",
+    "ATGL",
+    "AMBER",
+    "ARVINDFASN",
+    "BAYERCROP",
+    "BSOFT",
+    "CGCL",
+    "DEN",
+    "FMGOETZE",
+    "GARFIBRES",
+    "BOSCH-HCIL",
+    "KPITTECH",
+    "METROPOLIS",
+    "MCX",
+    "NESTLEIND",
+    "RHIM",
+    "POLYCAB",
+    "RVNL",
+    "RATNAMANI",
+    "TCIEXP",
+    "TECHNOE"
+   ],
+   "drop": [
+    "ABB",
+    "DEEPAKFERT",
+    "GDL",
+    "GSKCONS",
+    "GRUH",
+    "INDOCO",
+    "INOXWIND",
+    "JPASSOCIAT",
+    "KIOCL",
+    "RKFORGE",
+    "RCOM",
+    "RHFL",
+    "RUPA",
+    "SHANKARA",
+    "SHARDACROP",
+    "SCI",
+    "SPTL",
+    "SREINFRA",
+    "TNPL",
+    "TATACOFFEE",
+    "TRITURBINE"
+   ]
+  },
+  {
+   "date": "2019-09-27",
+   "file": "ind_prs17092019.pdf",
+   "add": [
+    "IIFL"
+   ],
+   "drop": [
+    "THOMASCOOK"
+   ]
+  },
+  {
+   "date": "2019-12-26",
+   "file": "ind_prs18122019.pdf",
+   "add": [
+    "AFFLE",
+    "MIDHANI",
+    "RESPONIND"
+   ],
+   "drop": [
+    "CGPOWER",
+    "COFFEEDAY",
+    "COX&KINGS"
+   ]
+  },
+  {
+   "date": "2019-12-27",
+   "file": "ind_prs16122019.pdf",
+   "add": [
+    "AARTIIND",
+    "ASAHIINDIA",
+    "INDIAMART",
+    "SPANDANA",
+    "SPICEJET",
+    "TRITURBINE",
+    "WESTLIFE"
+   ],
+   "drop": [
+    "ALBK",
+    "ANDHRABANK",
+    "CORPBANK",
+    "MAXINDIA",
+    "ORIENTBANK",
+    "SYNDIBANK",
+    "TATACHEM"
+   ]
+  },
+  {
+   "date": "2019-12-27",
+   "file": "ind_prs19122019.pdf",
+   "add": [
+    "KENNAMET",
+    "TASTYBITE"
+   ],
+   "drop": [
+    "DEN",
+    "HATHWAY"
+   ]
+  },
+  {
+   "date": "2020-01-16",
+   "file": "ind_prs09012020.pdf",
+   "add": [
+    "TATASTLBSL"
+   ],
+   "drop": [
+    "SUVEN"
+   ]
+  },
+  {
+   "date": "2020-03-19",
+   "file": "ind_prs16032020.pdf",
+   "add": [
+    "SWSOLAR"
+   ],
+   "drop": [
+    "YESBANK"
+   ]
+  },
+  {
+   "date": "2020-06-26",
+   "file": "ind_prs10062020.pdf",
+   "add": [
+    "ABB",
+    "ALKYLAMINE",
+    "BHARATRAS",
+    "ABREL",
+    "CSBBANK",
+    "DHANUKA",
+    "ESABINDIA",
+    "GRSE",
+    "GMMPFAUDLR",
+    "FLUOROCHEM",
+    "HATHWAY",
+    "360ONE",
+    "IRCTC",
+    "INDOCO",
+    "INGERRAND",
+    "KSB",
+    "LAOPALA",
+    "POLYMED",
+    "SCHNEIDER",
+    "VIYASH",
+    "SCI",
+    "SUMICHEM",
+    "TATACOMM",
+    "UJJIVANSFB",
+    "VESUVIUS"
+   ],
+   "drop": [
+    "CHALET",
+    "DHFL",
+    "FMGOETZE",
+    "FLFL",
+    "GAYAPROJ",
+    "IBULLSLTD",
+    "CEMPRO",
+    "JISLJALEQS",
+    "KENNAMET",
+    "KIRLOSENG",
+    "LAKSHVILAS",
+    "POONAWALLA",
+    "NETWORK18",
+    "PARAGMILK",
+    "PCJEWELLER",
+    "RELCAPITAL",
+    "RELINFRA",
+    "RPOWER",
+    "RESPONIND",
+    "SHK",
+    "SHILPAMED",
+    "TVSHLTD",
+    "TECHNOE",
+    "TRITURBINE",
+    "WABAG"
+   ]
+  },
+  {
+   "date": "2020-07-31",
+   "file": "ind_prs02072020_1.pdf",
+   "add": [
+    "SBICARD"
+   ],
+   "drop": [
+    "VEDL"
+   ]
+  },
+  {
+   "date": "2020-09-14",
+   "file": "ind_prs07092020.pdf",
+   "add": [
+    "JTEKTINDIA"
+   ],
+   "drop": [
+    "ASAHIINDIA"
+   ]
+  },
+  {
+   "date": "2020-09-25",
+   "file": "ind_prs20082020.pdf",
+   "add": [
+    "AARTIDRUGS",
+    "POWERINDIA",
+    "ADANIENT",
+    "ALEMBICLTD",
+    "ALOKINDS",
+    "CHALET",
+    "GAEL",
+    "HUHTAMAKI",
+    "IOLCP",
+    "NAVNETEDUL",
+    "POLYPLEX",
+    "SHILPAMED",
+    "SOLARA",
+    "SUPPETRO",
+    "COHANCE",
+    "TATACHEM",
+    "YESBANK"
+   ],
+   "drop": [
+    "ADANIPOWER",
+    "GVT&D",
+    "HEXAWARE",
+    "HIMATSEIDE",
+    "IFCI",
+    "ITDC",
+    "INDOSTAR",
+    "INTELLECT",
+    "JUBLPHARMA",
+    "KPRMILL",
+    "CIEINDIA",
+    "NAVA",
+    "SADBHAV",
+    "RENUKA",
+    "TAKE",
+    "TIMETECHNO",
+    "VESUVIUS"
+   ]
+  },
+  {
+   "date": "2020-09-25",
+   "file": "ind_prs07092020.pdf",
+   "add": [
+    "NOCIL",
+    "PSPPROJECT",
+    "SWARAJENG",
+    "TATACOFFEE"
+   ],
+   "drop": [
+    "ARVINDFASN",
+    "KPITTECH",
+    "REPCOHOME",
+    "SPANDANA"
+   ]
+  },
+  {
+   "date": "2020-11-02",
+   "file": "ind_prs26102020.pdf",
+   "add": [
+    "NETWORK18"
+   ],
+   "drop": [
+    "ALLCARGO"
+   ]
+  },
+  {
+   "date": "2020-11-25",
+   "file": "ind_prs18112020.pdf",
+   "add": [
+    "CIEINDIA"
+   ],
+   "drop": [
+    "CCAVENUE"
+   ]
+  },
+  {
+   "date": "2021-03-31",
+   "file": "ind_prs23022021.pdf",
+   "add": [
+    "ANGELONE",
+    "ASAHIINDIA",
+    "BALAMINES",
+    "CAMS",
+    "HAPPSTMNDS",
+    "HEMIPROP",
+    "ICIL",
+    "INTELLECT",
+    "KPRMILL",
+    "KPITTECH",
+    "MAXHEALTH",
+    "MAZDOCK",
+    "PRINCEPIPE",
+    "RESPONIND",
+    "ROSSARI",
+    "ROUTE",
+    "SHARDACROP",
+    "SPANDANA",
+    "TVSHLTD",
+    "TANLA",
+    "TRITURBINE",
+    "UTIAMC",
+    "VALIANTORG",
+    "VEDL"
+   ],
+   "drop": [
+    "BOMDYEING",
+    "CARERATING",
+    "CHENNPETRO",
+    "DBCORP",
+    "ESABINDIA",
+    "GMDCLTD",
+    "HATHWAY",
+    "HERITGFOOD",
+    "ICRA",
+    "JAGRAN",
+    "JAICORPLTD",
+    "J&KBANK",
+    "KTKBANK",
+    "KOLTEPATIL",
+    "NAVNETEDUL",
+    "OMAXE",
+    "ORIENTCEM",
+    "PRAJIND",
+    "PSPPROJECT",
+    "PTC",
+    "SOUTHBANK",
+    "SWARAJENG",
+    "TVTODAY",
+    "VRLLOG"
+   ]
+  },
+  {
+   "date": "2021-04-29",
+   "file": "ind_prs22042021.pdf",
+   "add": [
+    "RBA",
+    "CCAVENUE"
+   ],
+   "drop": [
+    "GHCL",
+    "TATASTLBSL"
+   ]
+  },
+  {
+   "date": "2021-06-30",
+   "file": "ind_prs15062021.pdf",
+   "add": [
+    "GLAND"
+   ],
+   "drop": [
+    "MOTHERSON"
+   ]
+  },
+  {
+   "date": "2021-09-30",
+   "file": "ind_prs15092021.pdf",
+   "add": [
+    "ANURAS",
+    "CGPOWER",
+    "EQUITASBNK",
+    "FACT",
+    "HATHWAY",
+    "HIKAL",
+    "HGS",
+    "HOMEFIRST",
+    "IRFC",
+    "INDIGOPNTS",
+    "JUBLINGREA",
+    "JUBLPHARMA",
+    "KALYANKJIL",
+    "LXCHEM",
+    "LODHA",
+    "MASTEK",
+    "NAZARA",
+    "POONAWALLA",
+    "PRAJIND",
+    "RAILTEL",
+    "TATASTLLP",
+    "TTML"
+   ],
+   "drop": [
+    "JSWDULUX",
+    "BALMLAWRIE",
+    "BLISSGVS",
+    "DISHTV",
+    "DCAL",
+    "FCONSUMER",
+    "GRSE",
+    "GVPIL",
+    "GULFOILLUB",
+    "HSCL",
+    "HUHTAMAKI",
+    "JTEKTINDIA",
+    "MAHSCOOTER",
+    "MAHSEAMLES",
+    "MASFIN",
+    "RAYMOND",
+    "RESPONIND",
+    "SHOPERSTOP",
+    "TVSHLTD",
+    "SWANCORP",
+    "TATAINVEST",
+    "VSTIND"
+   ]
+  },
+  {
+   "date": "2021-10-29",
+   "file": "ind_prs22102021.pdf",
+   "add": [
+    "SONACOMS"
+   ],
+   "drop": [
+    "GMRAIRPORT"
+   ]
+  },
+  {
+   "date": "2022-03-31",
+   "file": "ind_prs24022022_1.pdf",
+   "add": [
+    "ABSLAMC",
+    "ALLCARGO",
+    "APTUS",
+    "BORORENEW",
+    "BCG",
+    "MAPMYINDIA",
+    "CHEMPLASTS",
+    "CLEAN",
+    "DEVYANI",
+    "EASEMYTRIP",
+    "NYKAA",
+    "GRINFRA",
+    "ALIVUS",
+    "GOCOLORS",
+    "HLEGLAS",
+    "KIMS",
+    "LATENTVIEW",
+    "MEDPLUS",
+    "METROBRAND",
+    "NUVOCO",
+    "PAYTM",
+    "POLICYBZR",
+    "PRIVISCL",
+    "RTNINDIA",
+    "SAPPHIRE",
+    "SAREGAMA",
+    "RENUKA",
+    "SHYAMMETL",
+    "STARHEALTH",
+    "TATAINVEST",
+    "VIJAYA",
+    "ETERNAL"
+   ],
+   "drop": [
+    "ALEMBICLTD",
+    "ASHOKA",
+    "BAJAJCON",
+    "BHARATRAS",
+    "CGCL",
+    "DCBBANK",
+    "DHANUKA",
+    "FRETAIL",
+    "GILLETTE",
+    "GREAVESCOT",
+    "HEIDELBERG",
+    "INGERRAND",
+    "IOLCP",
+    "JINDALSAW",
+    "JKTYRE",
+    "BOSCH-HCIL",
+    "KSCL",
+    "KSB",
+    "LAOPALA",
+    "LEMONTREE",
+    "MINDACORP",
+    "MIDHANI",
+    "NFL",
+    "NILKAMAL",
+    "SCHNEIDER",
+    "SHARDACROP",
+    "SPANDANA",
+    "STARCEMENT",
+    "TASTYBITE",
+    "UJJIVAN",
+    "UJJIVANSFB",
+    "VALIANTORG"
+   ]
+  },
+  {
+   "date": "2022-04-07",
+   "file": "ind_prs06042022.pdf",
+   "add": [
+    "MTARTECH"
+   ],
+   "drop": [
+    "SUPPETRO"
+   ]
+  },
+  {
+   "date": "2022-04-12",
+   "file": "ind_prs05042022_1.pdf",
+   "add": [
+    "CGCL"
+   ],
+   "drop": [
+    "BEML"
+   ]
+  },
+  {
+   "date": "2022-05-04",
+   "file": "ind_prs05042022.pdf",
+   "add": [
+    "GMRAIRPORT"
+   ],
+   "drop": [
+    "AARTIIND"
+   ]
+  },
+  {
+   "date": "2022-05-31",
+   "file": "ind_prs24052022.pdf",
+   "add": [
+    "TRIVENI"
+   ],
+   "drop": [
+    "JSLHISAR"
+   ]
+  },
+  {
+   "date": "2022-08-08",
+   "file": "ind_prs11072022.pdf",
+   "add": [
+    "CAMPUS",
+    "DELHIVERY",
+    "LICI"
+   ],
+   "drop": [
+    "NMDC",
+    "PEL",
+    "SHRIRAMCIT"
+   ]
+  },
+  {
+   "date": "2022-09-30",
+   "file": "ind_prs01092022.pdf",
+   "add": [
+    "AWL",
+    "AETHER",
+    "BHARATRAS",
+    "DEEPAKFERT",
+    "GREENPANEL",
+    "JBMA",
+    "MAHLIFE",
+    "MSUMI",
+    "NIITLTD",
+    "OLECTRA",
+    "PATANJALI",
+    "RAYMOND",
+    "MOTHERSON",
+    "SHARDACROP",
+    "SWANCORP",
+    "TEJASNET",
+    "TCI",
+    "MANYAVAR"
+   ],
+   "drop": [
+    "ADVENZYMES",
+    "ERIS",
+    "ALIVUS",
+    "HATHWAY",
+    "HEMIPROP",
+    "ICIL",
+    "IRCON",
+    "MINDTREE",
+    "NESCO",
+    "RAILTEL",
+    "VIYASH",
+    "SOLARA",
+    "SPICEJET",
+    "STAR",
+    "TATASTLLP",
+    "UCOBANK",
+    "VAKRANGEE",
+    "VENKEYS"
+   ]
+  },
+  {
+   "date": "2022-09-30",
+   "file": "ind_prs16092022.pdf",
+   "add": [
+    "SHOPERSTOP"
+   ],
+   "drop": [
+    "EQUITAS"
+   ]
+  },
+  {
+   "date": "2022-12-30",
+   "file": "ind_prs06122022.pdf",
+   "add": [
+    "BEML",
+    "LEMONTREE",
+    "UCOBANK"
+   ],
+   "drop": [
+    "ALLCARGO",
+    "NIITLTD",
+    "SCI"
+   ]
+  },
+  {
+   "date": "2022-12-30",
+   "file": "ind_prs22122022.pdf",
+   "add": [
+    "RAINBOW"
+   ],
+   "drop": [
+    "SAREGAMA"
+   ]
+  },
+  {
+   "date": "2023-02-17",
+   "file": "ind_prs09022023_1.pdf",
+   "add": [
+    "PPLPHARMA"
+   ],
+   "drop": [
+    "INOXLEISUR"
+   ]
+  },
+  {
+   "date": "2023-03-31",
+   "file": "ind_prs17022023_1.pdf",
+   "add": [
+    "AARTIIND",
+    "ADANIPOWER",
+    "APARINDS",
+    "ACI",
+    "BIKAJI",
+    "BLS",
+    "CRAFTSMAN",
+    "DATAPATTNS",
+    "FIVESTAR",
+    "MEDANTA",
+    "INGERRAND",
+    "JINDWORLD",
+    "KENNAMET",
+    "RUSTOMJEE",
+    "KFINTECH",
+    "KSB",
+    "EPIGRAL",
+    "NMDC",
+    "PEL",
+    "TMB"
+   ],
+   "drop": [
+    "ABSLAMC",
+    "ALOKINDS",
+    "ASTRAZEN",
+    "BHARATRAS",
+    "CAPLIPOINT",
+    "DHANI",
+    "DBL",
+    "HATSUN",
+    "INDOCO",
+    "MOIL",
+    "PRIVISCL",
+    "PGHL",
+    "SFL",
+    "SHILPAMED",
+    "SIS",
+    "SUDARSCHEM",
+    "SYMPHONY",
+    "TATACOFFEE",
+    "THYROCARE",
+    "WOCKPHARMA"
+   ]
+  },
+  {
+   "date": "2023-04-28",
+   "file": "ind_prs19042023_1.pdf",
+   "add": [
+    "ERIS",
+    "NSLNISP"
+   ],
+   "drop": [
+    "BAJAJELEC",
+    "EDELWEISS"
+   ]
+  },
+  {
+   "date": "2023-07-13",
+   "file": "ind_prs04072023.pdf",
+   "add": [
+    "MANKIND"
+   ],
+   "drop": [
+    "HDFC"
+   ]
+  },
+  {
+   "date": "2023-09-29",
+   "file": "ind_prs17082023.pdf",
+   "add": [
+    "ALLCARGO",
+    "ALOKINDS",
+    "GILLETTE",
+    "ALIVUS",
+    "GPIL",
+    "IRCON",
+    "JINDALSAW",
+    "KAYNES",
+    "KIRLFER",
+    "MINDACORP",
+    "PGHL",
+    "SAFARI",
+    "SAREGAMA",
+    "SFL",
+    "SYMPHONY",
+    "SYRMA",
+    "UJJIVANSFB",
+    "USHAMART"
+   ],
+   "drop": [
+    "BASF",
+    "GARFIBRES",
+    "GODREJAGRO",
+    "GREENPANEL",
+    "HIKAL",
+    "HGS",
+    "IFBIND",
+    "EMBDL",
+    "JINDWORLD",
+    "KENNAMET",
+    "RUSTOMJEE",
+    "MAHLOG",
+    "NOCIL",
+    "TMB",
+    "TCIEXP",
+    "TCNSBRANDS",
+    "TCI",
+    "UFLEX"
+   ]
+  },
+  {
+   "date": "2023-10-26",
+   "file": "ind_prs17102023.pdf",
+   "add": [
+    "CONCORDBIO"
+   ],
+   "drop": [
+    "KIRLFER"
+   ]
+  },
+  {
+   "date": "2024-03-28",
+   "file": "ind_prs28022024.pdf",
+   "add": [
+    "ACE",
+    "ANANDRATHI",
+    "ASTRAZEN",
+    "CAPLIPOINT",
+    "CELLO",
+    "CHENNPETRO",
+    "DOMS",
+    "ELECON",
+    "GRSE",
+    "GMDCLTD",
+    "HAPPYFORGE",
+    "HBLENGINE",
+    "HSCL",
+    "HONASA",
+    "INOXWIND",
+    "JAIBALAJI",
+    "J&KBANK",
+    "JIOFIN",
+    "JSWINFRA",
+    "JWL",
+    "LLOYDSME",
+    "MAHSEAMLES",
+    "NUVAMA",
+    "RRKABEL",
+    "RAILTEL",
+    "RKFORGE",
+    "SBFC",
+    "SCHNEIDER",
+    "SIGNATURE",
+    "TMB",
+    "TATATECH",
+    "TITAGARH",
+    "TVSSCS"
+   ],
+   "drop": [
+    "AARTIDRUGS",
+    "BCG",
+    "DELTACORP",
+    "EPIGRAL",
+    "GRINFRA",
+    "GALAXYSURF",
+    "GOCOLORS",
+    "GUJALKALI",
+    "HLEGLAS",
+    "CCAVENUE",
+    "INGERRAND",
+    "JAMNAAUTO",
+    "LMW",
+    "LUXIND",
+    "NAZARA",
+    "ORIENTELEC",
+    "PFIZER",
+    "POLYPLEX",
+    "PGHL",
+    "RAIN",
+    "RALLIS",
+    "RELAXO",
+    "ROSSARI",
+    "SHARDACROP",
+    "SFL",
+    "SHOPERSTOP",
+    "SUPRAJIT",
+    "SYMPHONY",
+    "TEAMLEASE",
+    "TTKPRESTIG",
+    "VINATIORGA",
+    "VMART",
+    "ZYDUSWELL"
+   ]
+  },
+  {
+   "date": "2024-08-30",
+   "file": "ind_prs23082024_1.pdf",
+   "add": [],
+   "drop": [
+    "TATAMTRDVR"
+   ]
+  },
+  {
+   "date": "2024-09-30",
+   "file": "ind_prs23082024.pdf",
+   "add": [
+    "AADHARHFC",
+    "ABSLAMC",
+    "ANANTRAJ",
+    "BASF",
+    "BHARTIHEXA",
+    "GRINFRA",
+    "GVT&D",
+    "GODIGIT",
+    "GODREJAGRO",
+    "IFCI",
+    "INDGN",
+    "IREDA",
+    "INOXINDIA",
+    "JPPOWER",
+    "JKTYRE",
+    "JYOTICNC",
+    "KIRLOSBROS",
+    "KIRLOSENG",
+    "NETWEB",
+    "NEWGEN",
+    "PFIZER",
+    "PTCIL",
+    "SCI",
+    "TBOTEK",
+    "TECHNOE",
+    "DBREALTY",
+    "VINATIORGA"
+   ],
+   "drop": [
+    "AETHER",
+    "ALLCARGO",
+    "ANURAS",
+    "BORORENEW",
+    "CSBBANK",
+    "DCMSHRIRAM",
+    "EPL",
+    "FDC",
+    "ALIVUS",
+    "GMMPFAUDLR",
+    "HAPPYFORGE",
+    "INDIGOPNTS",
+    "JAIBALAJI",
+    "JKPAPER",
+    "KRBL",
+    "LXCHEM",
+    "MHRIL",
+    "MEDPLUS",
+    "MTARTECH",
+    "PRINCEPIPE",
+    "RBA",
+    "SAFARI",
+    "STLTECH",
+    "SUNTECK",
+    "TMB",
+    "VAIBHAVGBL",
+    "PRSMJOHNSN"
+   ]
+  },
+  {
+   "date": "2024-10-10",
+   "file": "ind_prs04102024.pdf",
+   "add": [
+    "EMCURE"
+   ],
+   "drop": [
+    "IDFC"
+   ]
+  },
+  {
+   "date": "2024-10-16",
+   "file": "ind_prs10102024.pdf",
+   "add": [
+    "AKUMS"
+   ],
+   "drop": [
+    "TV18BRDCST"
+   ]
+  },
+  {
+   "date": "2025-03-21",
+   "file": "ind_prs17032025.pdf",
+   "add": [
+    "RAYMONDLSL"
+   ],
+   "drop": [
+    "ISEC"
+   ]
+  },
+  {
+   "date": "2025-03-28",
+   "file": "ind_prs21022025.pdf",
+   "add": [
+    "ACMESOLAR",
+    "AFCONS",
+    "ALIVUS",
+    "AIIL",
+    "BAJAJHFL",
+    "FIRSTCRY",
+    "DCMSHRIRAM",
+    "GRAVITA",
+    "HYUNDAI",
+    "IGIL",
+    "IKS",
+    "JSWHL",
+    "LTFOODS",
+    "NAVA",
+    "NEULANDLAB",
+    "NIVABUPA",
+    "NTPCGREEN",
+    "OLAELEC",
+    "PGEL",
+    "PREMIERENE",
+    "RPOWER",
+    "SAGILITY",
+    "SAILIFE",
+    "SARDAEN",
+    "SWIGGY",
+    "TARIL",
+    "VMM",
+    "WAAREEENER",
+    "WOCKPHARMA",
+    "ZENTEC"
+   ],
+   "drop": [
+    "ACI",
+    "AVANTIFEED",
+    "BALAMINES",
+    "BIRLACORPN",
+    "CELLO",
+    "CHEMPLASTS",
+    "CIEINDIA",
+    "EASEMYTRIP",
+    "EQUITASBNK",
+    "FINEORG",
+    "GRINFRA",
+    "GRINDWELL",
+    "GAEL",
+    "GSFC",
+    "JKLAKSHMI",
+    "KSB",
+    "MAHLIFE",
+    "METROBRAND",
+    "NUVOCO",
+    "PGHH",
+    "RAJESHEXPO",
+    "RATNAMANI",
+    "SANOFI",
+    "SPARC",
+    "SUNDRMFAST",
+    "TVSSCS",
+    "UJJIVANSFB",
+    "VIPIND",
+    "VARROC",
+    "VINATIORGA"
+   ]
+  },
+  {
+   "date": "2025-04-11",
+   "file": "ind_prs04042025_2.pdf",
+   "add": [
+    "SUNDRMFAST"
+   ],
+   "drop": [
+    "QUESS"
+   ]
+  },
+  {
+   "date": "2025-09-23",
+   "file": "ind_prs15092025_1.pdf",
+   "add": [
+    "RELINFRA"
+   ],
+   "drop": [
+    "PEL"
+   ]
+  },
+  {
+   "date": "2025-09-30",
+   "file": "ind_prs22082025.pdf",
+   "add": [
+    "ABLBL",
+    "AEGISVOPAK",
+    "JSWDULUX",
+    "ATHERENERG",
+    "BLUEJET",
+    "CHOICEIN",
+    "AGARWALEYE",
+    "FORCEMOT",
+    "HEXT",
+    "ITCHOTELS",
+    "KSB",
+    "MAHSCOOTER",
+    "NUVOCO",
+    "ONESOURCE",
+    "PGHH",
+    "THELEELA",
+    "ENRIN",
+    "VENTIVE"
+   ],
+   "drop": [
+    "ALIVUS",
+    "GNFC",
+    "GPPL",
+    "JSWHL",
+    "JUSTDIAL",
+    "KANSAINER",
+    "KNRCON",
+    "MASTEK",
+    "NETWORK18",
+    "PNCINFRA",
+    "RTNINDIA",
+    "RAYMONDLSL",
+    "RAYMOND",
+    "ROUTE",
+    "RENUKA",
+    "SWSOLAR",
+    "TANLA",
+    "WESTLIFE"
+   ]
+  },
+  {
+   "date": "2025-12-31",
+   "file": "ind_prs11122025.pdf",
+   "add": [
+    "JSWCEMENT"
+   ],
+   "drop": [
+    "SKFINDIA"
+   ]
+  },
+  {
+   "date": "2026-03-30",
+   "file": "ind_prs23022026.pdf",
+   "add": [
+    "ACUTAAS",
+    "CPPLUS",
+    "ABDL",
+    "ANTHEM",
+    "ANURAS",
+    "BELRISE",
+    "GROWW",
+    "CANHLIFE",
+    "CARTRADE",
+    "CEMPRO",
+    "EMMVEE",
+    "GABRIEL",
+    "GALLANTT",
+    "HDBFS",
+    "ICICIAMC",
+    "JAINREC",
+    "LENSKART",
+    "LGEINDIA",
+    "MEESHO",
+    "PARADEEP",
+    "PWL",
+    "PINELABS",
+    "PIRAMALFIN",
+    "SPLPETRO",
+    "TATACAP",
+    "TMCV",
+    "TEGA",
+    "TENNIND",
+    "TRAVELFOOD",
+    "URBANCO",
+    "ZYDUSWELL"
+   ],
+   "drop": [
+    "AKUMS",
+    "APLLTD",
+    "ALKYLAMINE",
+    "ALOKINDS",
+    "ASTRAZEN",
+    "BASF",
+    "CAMPUS",
+    "CENTURYPLY",
+    "CERA",
+    "AGARWALEYE",
+    "FINPIPE",
+    "GODREJAGRO",
+    "GUJENERGY",
+    "HAPPSTMNDS",
+    "INOXINDIA",
+    "JYOTHYLAB",
+    "KIRLOSBROS",
+    "KSB",
+    "MAHSCOOTER",
+    "MAHSEAMLES",
+    "METROPOLIS",
+    "PRAJIND",
+    "PGHH",
+    "RCF",
+    "RELINFRA",
+    "SUNDRMFAST",
+    "TRIVENI",
+    "DBREALTY",
+    "MANYAVAR",
+    "VENTIVE",
+    "VGUARD"
+   ]
+  },
+  {
+   "date": "2026-05-12",
+   "file": "ind_prs04052026.pdf",
+   "add": [
+    "CIEINDIA"
+   ],
+   "drop": [
+    "GSPL"
+   ]
+  },
+  {
+   "date": "2026-07-17",
+   "file": "ind_prs13072026_1.pdf",
+   "add": [
+    "PFOCUS"
+   ],
+   "drop": [
+    "JBCHEPHARM"
+   ]
+  },
+  {
+   "date": "2026-09-30",
+   "file": "ind_prs10082026.pdf",
+   "add": [
+    "AETHER",
+    "AVANTIFEED",
+    "AZAD",
+    "BAGMANE",
+    "BHARATCOAL",
+    "BBOX",
+    "BIRET",
+    "CMPDI",
+    "CLEANMAX",
+    "CUPID",
+    "EMBASSY",
+    "FRACTAL",
+    "INOXINDIA",
+    "KIRLOSBROS",
+    "KSB",
+    "MTARTECH",
+    "PRIVISCL",
+    "RUBICON",
+    "SANSERA",
+    "SHRIPISTON",
+    "STLTECH",
+    "TDPOWERSYS",
+    "THANGAMAYL",
+    "VAML",
+    "VISL",
+    "VOGL",
+    "VEDPOWER"
+   ],
+   "drop": [
+    "3MINDIA",
+    "ABFRL",
+    "ABLBL",
+    "BAYERCROP",
+    "BIKAJI",
+    "BLUEDART",
+    "BLUEJET",
+    "BBTC",
+    "MAPMYINDIA",
+    "CHALET",
+    "DCMSHRIRAM",
+    "ERIS",
+    "GODIGIT",
+    "INDGN",
+    "JSWDULUX",
+    "JUBLPHARMA",
+    "LATENTVIEW",
+    "THELEELA",
+    "NEWGEN",
+    "NIVABUPA",
+    "PFIZER",
+    "SAPPHIRE",
+    "SAREGAMA",
+    "SBFC",
+    "SONATSOFTW",
+    "SPLPETRO",
+    "TRAVELFOOD"
+   ]
+  }
+ ],
+ "symbols": {
+  "DISHMAN": [
+   [
+    null,
+    "2017-01-23"
+   ]
+  ],
+  "MFSL": [
+   [
+    null,
+    "2017-01-23"
+   ],
+   [
+    "2017-09-05",
+    null
+   ]
+  ],
+  "OCL": [
+   [
+    null,
+    "2017-01-23"
+   ]
+  ],
+  "SFCL": [
+   [
+    null,
+    "2017-01-23"
+   ]
+  ],
+  "SBBJ": [
+   [
+    null,
+    "2017-03-16"
+   ]
+  ],
+  "MYSOREBANK": [
+   [
+    null,
+    "2017-03-16"
+   ]
+  ],
+  "SBT": [
+   [
+    null,
+    "2017-03-16"
+   ]
+  ],
+  "ALOKTEXT": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "BRFL": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2018-09-28"
+   ]
+  ],
+  "BRIGADE": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    null
+   ]
+  ],
+  "DYNAMATECH": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "FLFL": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2020-06-26"
+   ]
+  ],
+  "INGERRAND": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ],
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ],
+   [
+    "2023-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "ANDHRAPAP": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "JPPOWER": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2019-03-29"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "JPINFRATEC": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "JSWHL": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2025-03-28",
+    "2025-09-30"
+   ]
+  ],
+  "KSB": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ],
+   [
+    "2023-03-31",
+    "2025-03-28"
+   ],
+   [
+    "2025-09-30",
+    "2026-03-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "LAOPALA": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ]
+  ],
+  "LITL": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "LINDEINDIA": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ],
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "MAHLIFE": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2022-09-30",
+    "2025-03-28"
+   ]
+  ],
+  "MAYURUNIQ": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "VIYASH": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2020-06-26",
+    "2022-09-30"
+   ]
+  ],
+  "SHOPERSTOP": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2021-09-30"
+   ],
+   [
+    "2022-09-30",
+    "2024-03-28"
+   ]
+  ],
+  "SIMPLEXINF": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "SINTEX": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "SITINET": [
+   [
+    null,
+    "2017-03-31"
+   ]
+  ],
+  "SUPRAJIT": [
+   [
+    null,
+    "2017-03-31"
+   ],
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ],
+   [
+    "2019-03-29",
+    "2024-03-28"
+   ]
+  ],
+  "ABIRLANUVO": [
+   [
+    null,
+    "2017-05-26"
+   ]
+  ],
+  "GRASIM": [
+   [
+    null,
+    "2017-05-26"
+   ],
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "TUBEINVEST": [
+   [
+    null,
+    "2017-05-26"
+   ]
+  ],
+  "IIFL": [
+   [
+    null,
+    "2017-06-23"
+   ],
+   [
+    "2018-04-02",
+    "2018-12-28"
+   ],
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "RELCAPITAL": [
+   [
+    null,
+    "2017-09-05"
+   ],
+   [
+    "2018-02-05",
+    "2020-06-26"
+   ]
+  ],
+  "AMTEKAUTO": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "ANANTRAJ": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "ASAHIINDIA": [
+   [
+    "2017-01-23",
+    "2017-09-29"
+   ],
+   [
+    "2018-04-02",
+    "2018-09-28"
+   ],
+   [
+    "2019-12-27",
+    "2020-09-14"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "FDC": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2018-09-28",
+    "2024-09-30"
+   ]
+  ],
+  "FMGOETZE": [
+   [
+    "2017-03-31",
+    "2017-09-29"
+   ],
+   [
+    "2019-09-27",
+    "2020-06-26"
+   ]
+  ],
+  "GRINDWELL": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2018-09-28",
+    "2025-03-28"
+   ]
+  ],
+  "HMVL": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "HONAUT": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "JMTAUTOLTD": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "KNRCON": [
+   [
+    "2017-03-31",
+    "2017-09-29"
+   ],
+   [
+    "2018-04-02",
+    "2025-09-30"
+   ]
+  ],
+  "NITINFIRE": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "ORISSAMINE": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "PUNJLLOYD": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "RATNAMANI": [
+   [
+    "2017-03-31",
+    "2017-09-29"
+   ],
+   [
+    "2019-09-27",
+    "2025-03-28"
+   ]
+  ],
+  "RELAXO": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2017-11-13",
+    "2024-03-28"
+   ]
+  ],
+  "RIIL": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "ROLTA": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "RUCHISOYA": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "STCINDIA": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "VEEDOL": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "TRITURBINE": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2019-03-29",
+    "2019-09-27"
+   ],
+   [
+    "2019-12-27",
+    "2020-06-26"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "VSTIND": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2019-03-29",
+    "2021-09-30"
+   ]
+  ],
+  "WONDERLA": [
+   [
+    null,
+    "2017-09-29"
+   ]
+  ],
+  "ZYDUSWELL": [
+   [
+    null,
+    "2017-09-29"
+   ],
+   [
+    "2018-09-28",
+    "2024-03-28"
+   ],
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "FRETAIL": [
+   [
+    "2017-03-16",
+    "2017-10-30"
+   ],
+   [
+    "2018-06-29",
+    "2022-03-31"
+   ]
+  ],
+  "SUNDARMFIN": [
+   [
+    null,
+    "2017-11-13"
+   ],
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "SHILPI": [
+   [
+    "2017-03-31",
+    "2017-11-13"
+   ]
+  ],
+  "GAYAPROJ": [
+   [
+    null,
+    "2017-11-20"
+   ],
+   [
+    "2018-09-28",
+    "2020-06-26"
+   ]
+  ],
+  "CESC": [
+   [
+    null,
+    "2018-02-05"
+   ],
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "FORTIS": [
+   [
+    null,
+    "2018-02-05"
+   ],
+   [
+    "2018-12-28",
+    null
+   ]
+  ],
+  "POLARIS": [
+   [
+    null,
+    "2018-02-05"
+   ]
+  ],
+  "STAR": [
+   [
+    null,
+    "2018-02-05"
+   ],
+   [
+    "2018-09-28",
+    "2022-09-30"
+   ]
+  ],
+  "VIDEOIND": [
+   [
+    null,
+    "2018-03-13"
+   ]
+  ],
+  "ADANIENT": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2020-09-25",
+    null
+   ]
+  ],
+  "AHLUCONT": [
+   [
+    null,
+    "2018-04-02"
+   ]
+  ],
+  "APARINDS": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "ASTRAZEN": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2019-03-29",
+    "2023-03-31"
+   ],
+   [
+    "2024-03-28",
+    "2026-03-30"
+   ]
+  ],
+  "CORPBANK": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2019-01-28",
+    "2019-12-27"
+   ]
+  ],
+  "DALMIABHA": [
+   [
+    null,
+    "2018-04-02"
+   ]
+  ],
+  "DHANUKA": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ]
+  ],
+  "EPL": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2019-03-29",
+    "2024-09-30"
+   ]
+  ],
+  "ICRA": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2019-03-29",
+    "2021-03-31"
+   ]
+  ],
+  "IGARASHI": [
+   [
+    null,
+    "2018-04-02"
+   ]
+  ],
+  "MONSANTO": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2018-09-28",
+    "2019-06-28"
+   ]
+  ],
+  "NAVNETEDUL": [
+   [
+    "2017-03-31",
+    "2018-04-02"
+   ],
+   [
+    "2020-09-25",
+    "2021-03-31"
+   ]
+  ],
+  "SCHNEIDER": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "SHARDACROP": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2019-03-29",
+    "2019-09-27"
+   ],
+   [
+    "2021-03-31",
+    "2022-03-31"
+   ],
+   [
+    "2022-09-30",
+    "2024-03-28"
+   ]
+  ],
+  "SHILPAMED": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2018-09-28",
+    "2020-06-26"
+   ],
+   [
+    "2020-09-25",
+    "2023-03-31"
+   ]
+  ],
+  "SNOWMAN": [
+   [
+    null,
+    "2018-04-02"
+   ]
+  ],
+  "SOMANYCERA": [
+   [
+    null,
+    "2018-04-02"
+   ]
+  ],
+  "SUPPETRO": [
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ],
+   [
+    "2020-09-25",
+    "2022-04-07"
+   ]
+  ],
+  "UNITEDBNK": [
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ]
+  ],
+  "VESUVIUS": [
+   [
+    "2017-09-29",
+    "2018-04-02"
+   ],
+   [
+    "2020-06-26",
+    "2020-09-25"
+   ]
+  ],
+  "ZENSARTECH": [
+   [
+    null,
+    "2018-04-02"
+   ],
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "ARVIND": [
+   [
+    null,
+    "2018-06-29"
+   ]
+  ],
+  "COX&KINGS": [
+   [
+    null,
+    "2018-06-29"
+   ],
+   [
+    "2019-03-29",
+    "2019-12-26"
+   ]
+  ],
+  "TATACOMM": [
+   [
+    null,
+    "2018-06-29"
+   ],
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "HTMEDIA": [
+   [
+    null,
+    "2018-06-29"
+   ]
+  ],
+  "TECHNO": [
+   [
+    null,
+    "2018-08-08"
+   ]
+  ],
+  "ABAN": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "BAJAJHIND": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "BALLARPUR": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "BFUTILITIE": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "BGRENERGY": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "TATASTLBSL": [
+   [
+    null,
+    "2018-09-28"
+   ],
+   [
+    "2020-01-16",
+    "2021-04-29"
+   ]
+  ],
+  "DBREALTY": [
+   [
+    null,
+    "2018-09-28"
+   ],
+   [
+    "2024-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "ACLGATI": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "HDIL": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "JBFIND": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "JINDALPOLY": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "KESORAMIND": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "KITEX": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "KWALITY": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "MTNL": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "MARKSANS": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "RAMCOSYS": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "RTNPOWER": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "RELIGARE": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "SFL": [
+   [
+    "2017-06-23",
+    "2018-09-28"
+   ],
+   [
+    "2018-12-28",
+    "2023-03-31"
+   ],
+   [
+    "2023-09-29",
+    "2024-03-28"
+   ]
+  ],
+  "SMLMAH": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "UNITECH": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "ZEELEARN": [
+   [
+    null,
+    "2018-09-28"
+   ]
+  ],
+  "BSOFT": [
+   [
+    null,
+    "2018-09-28"
+   ],
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "BHARATFIN": [
+   [
+    null,
+    "2018-12-28"
+   ]
+  ],
+  "CAPF": [
+   [
+    null,
+    "2018-12-28"
+   ]
+  ],
+  "ABREL": [
+   [
+    null,
+    "2018-12-28"
+   ],
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "AGI": [
+   [
+    null,
+    "2018-12-28"
+   ]
+  ],
+  "DENABANK": [
+   [
+    null,
+    "2019-01-28"
+   ]
+  ],
+  "VIJAYABANK": [
+   [
+    null,
+    "2019-01-28"
+   ]
+  ],
+  "SECURKLOUD": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "AARTIIND": [
+   [
+    null,
+    "2019-03-29"
+   ],
+   [
+    "2019-12-27",
+    "2022-05-04"
+   ],
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "DEN": [
+   [
+    null,
+    "2019-03-29"
+   ],
+   [
+    "2019-09-27",
+    "2019-12-27"
+   ]
+  ],
+  "DREDGECORP": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "EROSMEDIA": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "EVEREADY": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "GREENPLY": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "GVKPIL": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "HCL-INSYS": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "HCC": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "IL&FSTRANS": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "ICIL": [
+   [
+    null,
+    "2019-03-29"
+   ],
+   [
+    "2021-03-31",
+    "2022-09-30"
+   ]
+  ],
+  "JKIL": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "BOSCH-HCIL": [
+   [
+    null,
+    "2019-03-29"
+   ],
+   [
+    "2019-09-27",
+    "2022-03-31"
+   ]
+  ],
+  "MANPASAND": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "MCLEODRUSS": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "NAVKARCORP": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "PFS": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "RNAVAL": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "SADBHIN": [
+   [
+    "2018-04-02",
+    "2019-03-29"
+   ]
+  ],
+  "TATASTLLP": [
+   [
+    null,
+    "2019-03-29"
+   ],
+   [
+    "2021-09-30",
+    "2022-09-30"
+   ]
+  ],
+  "TEXRAIL": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "TVSSRICHAK": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "UNICHEMLAB": [
+   [
+    null,
+    "2019-03-29"
+   ]
+  ],
+  "EXCELCROP": [
+   [
+    "2018-09-28",
+    "2019-04-15"
+   ]
+  ],
+  "GFLLIMITED": [
+   [
+    null,
+    "2019-06-28"
+   ]
+  ],
+  "JETAIRWAYS": [
+   [
+    null,
+    "2019-09-24"
+   ]
+  ],
+  "ABB": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "DEEPAKFERT": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "GDL": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "GSKCONS": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "GRUH": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "INDOCO": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2020-06-26",
+    "2023-03-31"
+   ]
+  ],
+  "INOXWIND": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "JPASSOCIAT": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "KIOCL": [
+   [
+    "2018-06-29",
+    "2019-09-27"
+   ]
+  ],
+  "RKFORGE": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "RCOM": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "RHFL": [
+   [
+    "2018-04-02",
+    "2019-09-27"
+   ]
+  ],
+  "RUPA": [
+   [
+    "2017-09-29",
+    "2019-09-27"
+   ]
+  ],
+  "SHANKARA": [
+   [
+    "2018-04-02",
+    "2019-09-27"
+   ]
+  ],
+  "SCI": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2020-06-26",
+    "2022-12-30"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "SPTL": [
+   [
+    "2018-04-02",
+    "2019-09-27"
+   ]
+  ],
+  "SREINFRA": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "TNPL": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "TATACOFFEE": [
+   [
+    null,
+    "2019-09-27"
+   ],
+   [
+    "2020-09-25",
+    "2023-03-31"
+   ]
+  ],
+  "THOMASCOOK": [
+   [
+    null,
+    "2019-09-27"
+   ]
+  ],
+  "CGPOWER": [
+   [
+    null,
+    "2019-12-26"
+   ],
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "COFFEEDAY": [
+   [
+    null,
+    "2019-12-26"
+   ]
+  ],
+  "ALBK": [
+   [
+    null,
+    "2019-12-27"
+   ]
+  ],
+  "ANDHRABANK": [
+   [
+    null,
+    "2019-12-27"
+   ]
+  ],
+  "MAXINDIA": [
+   [
+    "2017-03-16",
+    "2019-12-27"
+   ]
+  ],
+  "ORIENTBANK": [
+   [
+    null,
+    "2019-12-27"
+   ]
+  ],
+  "SYNDIBANK": [
+   [
+    null,
+    "2019-12-27"
+   ]
+  ],
+  "TATACHEM": [
+   [
+    null,
+    "2019-12-27"
+   ],
+   [
+    "2020-09-25",
+    null
+   ]
+  ],
+  "HATHWAY": [
+   [
+    null,
+    "2019-12-27"
+   ],
+   [
+    "2020-06-26",
+    "2021-03-31"
+   ],
+   [
+    "2021-09-30",
+    "2022-09-30"
+   ]
+  ],
+  "SUVEN": [
+   [
+    null,
+    "2020-01-16"
+   ]
+  ],
+  "YESBANK": [
+   [
+    null,
+    "2020-03-19"
+   ],
+   [
+    "2020-09-25",
+    null
+   ]
+  ],
+  "CHALET": [
+   [
+    "2019-06-28",
+    "2020-06-26"
+   ],
+   [
+    "2020-09-25",
+    "2026-09-30"
+   ]
+  ],
+  "DHFL": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "IBULLSLTD": [
+   [
+    "2019-03-29",
+    "2020-06-26"
+   ]
+  ],
+  "CEMPRO": [
+   [
+    null,
+    "2020-06-26"
+   ],
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "JISLJALEQS": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "KENNAMET": [
+   [
+    "2019-12-27",
+    "2020-06-26"
+   ],
+   [
+    "2023-03-31",
+    "2023-09-29"
+   ]
+  ],
+  "KIRLOSENG": [
+   [
+    "2019-03-29",
+    "2020-06-26"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "LAKSHVILAS": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "POONAWALLA": [
+   [
+    null,
+    "2020-06-26"
+   ],
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "NETWORK18": [
+   [
+    null,
+    "2020-06-26"
+   ],
+   [
+    "2020-11-02",
+    "2025-09-30"
+   ]
+  ],
+  "PARAGMILK": [
+   [
+    "2017-03-31",
+    "2020-06-26"
+   ]
+  ],
+  "PCJEWELLER": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "RELINFRA": [
+   [
+    null,
+    "2020-06-26"
+   ],
+   [
+    "2025-09-23",
+    "2026-03-30"
+   ]
+  ],
+  "RPOWER": [
+   [
+    null,
+    "2020-06-26"
+   ],
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "RESPONIND": [
+   [
+    "2019-12-26",
+    "2020-06-26"
+   ],
+   [
+    "2021-03-31",
+    "2021-09-30"
+   ]
+  ],
+  "SHK": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "TVSHLTD": [
+   [
+    "2019-04-15",
+    "2020-06-26"
+   ],
+   [
+    "2021-03-31",
+    "2021-09-30"
+   ]
+  ],
+  "TECHNOE": [
+   [
+    "2019-09-27",
+    "2020-06-26"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "WABAG": [
+   [
+    null,
+    "2020-06-26"
+   ]
+  ],
+  "VEDL": [
+   [
+    null,
+    "2020-07-31"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "ADANIPOWER": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "GVT&D": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "HEXAWARE": [
+   [
+    null,
+    "2020-09-25"
+   ]
+  ],
+  "HIMATSEIDE": [
+   [
+    null,
+    "2020-09-25"
+   ]
+  ],
+  "IFCI": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "ITDC": [
+   [
+    "2017-09-29",
+    "2020-09-25"
+   ]
+  ],
+  "INDOSTAR": [
+   [
+    "2019-03-29",
+    "2020-09-25"
+   ]
+  ],
+  "INTELLECT": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "JUBLPHARMA": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2021-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "KPRMILL": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "CIEINDIA": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2020-11-25",
+    "2025-03-28"
+   ],
+   [
+    "2026-05-12",
+    null
+   ]
+  ],
+  "NAVA": [
+   [
+    "2017-03-31",
+    "2020-09-25"
+   ],
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "SADBHAV": [
+   [
+    null,
+    "2020-09-25"
+   ]
+  ],
+  "RENUKA": [
+   [
+    null,
+    "2020-09-25"
+   ],
+   [
+    "2022-03-31",
+    "2025-09-30"
+   ]
+  ],
+  "TAKE": [
+   [
+    null,
+    "2020-09-25"
+   ]
+  ],
+  "TIMETECHNO": [
+   [
+    "2017-09-29",
+    "2020-09-25"
+   ]
+  ],
+  "ARVINDFASN": [
+   [
+    "2019-09-27",
+    "2020-09-25"
+   ]
+  ],
+  "KPITTECH": [
+   [
+    "2019-09-27",
+    "2020-09-25"
+   ],
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "REPCOHOME": [
+   [
+    null,
+    "2020-09-25"
+   ]
+  ],
+  "SPANDANA": [
+   [
+    "2019-12-27",
+    "2020-09-25"
+   ],
+   [
+    "2021-03-31",
+    "2022-03-31"
+   ]
+  ],
+  "ALLCARGO": [
+   [
+    null,
+    "2020-11-02"
+   ],
+   [
+    "2022-03-31",
+    "2022-12-30"
+   ],
+   [
+    "2023-09-29",
+    "2024-09-30"
+   ]
+  ],
+  "CCAVENUE": [
+   [
+    null,
+    "2020-11-25"
+   ],
+   [
+    "2021-04-29",
+    "2024-03-28"
+   ]
+  ],
+  "BOMDYEING": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "CARERATING": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "CHENNPETRO": [
+   [
+    null,
+    "2021-03-31"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "DBCORP": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "ESABINDIA": [
+   [
+    "2020-06-26",
+    "2021-03-31"
+   ]
+  ],
+  "GMDCLTD": [
+   [
+    null,
+    "2021-03-31"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "HERITGFOOD": [
+   [
+    "2017-09-29",
+    "2021-03-31"
+   ]
+  ],
+  "JAGRAN": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "JAICORPLTD": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "J&KBANK": [
+   [
+    null,
+    "2021-03-31"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "KTKBANK": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "KOLTEPATIL": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "OMAXE": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "ORIENTCEM": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "PRAJIND": [
+   [
+    null,
+    "2021-03-31"
+   ],
+   [
+    "2021-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "PSPPROJECT": [
+   [
+    "2020-09-25",
+    "2021-03-31"
+   ]
+  ],
+  "PTC": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "SOUTHBANK": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "SWARAJENG": [
+   [
+    "2020-09-25",
+    "2021-03-31"
+   ]
+  ],
+  "TVTODAY": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "VRLLOG": [
+   [
+    null,
+    "2021-03-31"
+   ]
+  ],
+  "GHCL": [
+   [
+    "2017-03-31",
+    "2021-04-29"
+   ]
+  ],
+  "MOTHERSON": [
+   [
+    null,
+    "2021-06-30"
+   ],
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "JSWDULUX": [
+   [
+    null,
+    "2021-09-30"
+   ],
+   [
+    "2025-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "BALMLAWRIE": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "BLISSGVS": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "DISHTV": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "DCAL": [
+   [
+    "2018-04-02",
+    "2021-09-30"
+   ]
+  ],
+  "FCONSUMER": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "GRSE": [
+   [
+    "2020-06-26",
+    "2021-09-30"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "GVPIL": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "GULFOILLUB": [
+   [
+    null,
+    "2021-09-30"
+   ]
+  ],
+  "HSCL": [
+   [
+    "2018-04-02",
+    "2021-09-30"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "HUHTAMAKI": [
+   [
+    "2020-09-25",
+    "2021-09-30"
+   ]
+  ],
+  "JTEKTINDIA": [
+   [
+    "2020-09-14",
+    "2021-09-30"
+   ]
+  ],
+  "MAHSCOOTER": [
+   [
+    "2019-03-29",
+    "2021-09-30"
+   ],
+   [
+    "2025-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "MAHSEAMLES": [
+   [
+    "2019-03-29",
+    "2021-09-30"
+   ],
+   [
+    "2024-03-28",
+    "2026-03-30"
+   ]
+  ],
+  "MASFIN": [
+   [
+    "2018-04-02",
+    "2021-09-30"
+   ]
+  ],
+  "RAYMOND": [
+   [
+    null,
+    "2021-09-30"
+   ],
+   [
+    "2022-09-30",
+    "2025-09-30"
+   ]
+  ],
+  "SWANCORP": [
+   [
+    null,
+    "2021-09-30"
+   ],
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "TATAINVEST": [
+   [
+    "2017-03-31",
+    "2021-09-30"
+   ],
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "GMRAIRPORT": [
+   [
+    null,
+    "2021-10-29"
+   ],
+   [
+    "2022-05-04",
+    null
+   ]
+  ],
+  "ALEMBICLTD": [
+   [
+    "2020-09-25",
+    "2022-03-31"
+   ]
+  ],
+  "ASHOKA": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "BAJAJCON": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "BHARATRAS": [
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ],
+   [
+    "2022-09-30",
+    "2023-03-31"
+   ]
+  ],
+  "CGCL": [
+   [
+    "2019-09-27",
+    "2022-03-31"
+   ],
+   [
+    "2022-04-12",
+    null
+   ]
+  ],
+  "DCBBANK": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "GILLETTE": [
+   [
+    null,
+    "2022-03-31"
+   ],
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "GREAVESCOT": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "HEIDELBERG": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "IOLCP": [
+   [
+    "2020-09-25",
+    "2022-03-31"
+   ]
+  ],
+  "JINDALSAW": [
+   [
+    "2017-09-29",
+    "2022-03-31"
+   ],
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "JKTYRE": [
+   [
+    null,
+    "2022-03-31"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "KSCL": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "LEMONTREE": [
+   [
+    "2018-09-28",
+    "2022-03-31"
+   ],
+   [
+    "2022-12-30",
+    null
+   ]
+  ],
+  "MINDACORP": [
+   [
+    "2017-03-31",
+    "2022-03-31"
+   ],
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "MIDHANI": [
+   [
+    "2019-12-26",
+    "2022-03-31"
+   ]
+  ],
+  "NFL": [
+   [
+    "2017-09-29",
+    "2022-03-31"
+   ]
+  ],
+  "NILKAMAL": [
+   [
+    null,
+    "2022-03-31"
+   ]
+  ],
+  "STARCEMENT": [
+   [
+    "2017-11-20",
+    "2022-03-31"
+   ]
+  ],
+  "TASTYBITE": [
+   [
+    "2019-12-27",
+    "2022-03-31"
+   ]
+  ],
+  "UJJIVAN": [
+   [
+    "2017-01-23",
+    "2022-03-31"
+   ]
+  ],
+  "UJJIVANSFB": [
+   [
+    "2020-06-26",
+    "2022-03-31"
+   ],
+   [
+    "2023-09-29",
+    "2025-03-28"
+   ]
+  ],
+  "VALIANTORG": [
+   [
+    "2021-03-31",
+    "2022-03-31"
+   ]
+  ],
+  "BEML": [
+   [
+    null,
+    "2022-04-12"
+   ],
+   [
+    "2022-12-30",
+    null
+   ]
+  ],
+  "JSLHISAR": [
+   [
+    "2017-09-29",
+    "2022-05-31"
+   ]
+  ],
+  "NMDC": [
+   [
+    null,
+    "2022-08-08"
+   ],
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "PEL": [
+   [
+    null,
+    "2022-08-08"
+   ],
+   [
+    "2023-03-31",
+    "2025-09-23"
+   ]
+  ],
+  "SHRIRAMCIT": [
+   [
+    null,
+    "2022-08-08"
+   ]
+  ],
+  "ADVENZYMES": [
+   [
+    "2017-01-23",
+    "2022-09-30"
+   ]
+  ],
+  "ERIS": [
+   [
+    "2018-03-13",
+    "2022-09-30"
+   ],
+   [
+    "2023-04-28",
+    "2026-09-30"
+   ]
+  ],
+  "ALIVUS": [
+   [
+    "2022-03-31",
+    "2022-09-30"
+   ],
+   [
+    "2023-09-29",
+    "2024-09-30"
+   ],
+   [
+    "2025-03-28",
+    "2025-09-30"
+   ]
+  ],
+  "HEMIPROP": [
+   [
+    "2021-03-31",
+    "2022-09-30"
+   ]
+  ],
+  "IRCON": [
+   [
+    "2019-03-29",
+    "2022-09-30"
+   ],
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "MINDTREE": [
+   [
+    null,
+    "2022-09-30"
+   ]
+  ],
+  "NESCO": [
+   [
+    "2018-04-02",
+    "2022-09-30"
+   ]
+  ],
+  "RAILTEL": [
+   [
+    "2021-09-30",
+    "2022-09-30"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "SOLARA": [
+   [
+    "2020-09-25",
+    "2022-09-30"
+   ]
+  ],
+  "SPICEJET": [
+   [
+    "2019-12-27",
+    "2022-09-30"
+   ]
+  ],
+  "UCOBANK": [
+   [
+    null,
+    "2022-09-30"
+   ],
+   [
+    "2022-12-30",
+    null
+   ]
+  ],
+  "VAKRANGEE": [
+   [
+    null,
+    "2022-09-30"
+   ]
+  ],
+  "VENKEYS": [
+   [
+    "2018-09-28",
+    "2022-09-30"
+   ]
+  ],
+  "EQUITAS": [
+   [
+    null,
+    "2022-09-30"
+   ]
+  ],
+  "NIITLTD": [
+   [
+    "2022-09-30",
+    "2022-12-30"
+   ]
+  ],
+  "SAREGAMA": [
+   [
+    "2022-03-31",
+    "2022-12-30"
+   ],
+   [
+    "2023-09-29",
+    "2026-09-30"
+   ]
+  ],
+  "INOXLEISUR": [
+   [
+    null,
+    "2023-02-17"
+   ]
+  ],
+  "ABSLAMC": [
+   [
+    "2022-03-31",
+    "2023-03-31"
+   ],
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "ALOKINDS": [
+   [
+    "2020-09-25",
+    "2023-03-31"
+   ],
+   [
+    "2023-09-29",
+    "2026-03-30"
+   ]
+  ],
+  "CAPLIPOINT": [
+   [
+    null,
+    "2023-03-31"
+   ],
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "DHANI": [
+   [
+    "2017-09-29",
+    "2023-03-31"
+   ]
+  ],
+  "DBL": [
+   [
+    "2017-03-31",
+    "2023-03-31"
+   ]
+  ],
+  "HATSUN": [
+   [
+    "2018-02-05",
+    "2023-03-31"
+   ]
+  ],
+  "MOIL": [
+   [
+    null,
+    "2023-03-31"
+   ]
+  ],
+  "PRIVISCL": [
+   [
+    "2022-03-31",
+    "2023-03-31"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "PGHL": [
+   [
+    null,
+    "2023-03-31"
+   ],
+   [
+    "2023-09-29",
+    "2024-03-28"
+   ]
+  ],
+  "SIS": [
+   [
+    "2018-04-02",
+    "2023-03-31"
+   ]
+  ],
+  "SUDARSCHEM": [
+   [
+    "2017-03-31",
+    "2023-03-31"
+   ]
+  ],
+  "SYMPHONY": [
+   [
+    null,
+    "2023-03-31"
+   ],
+   [
+    "2023-09-29",
+    "2024-03-28"
+   ]
+  ],
+  "THYROCARE": [
+   [
+    "2017-03-31",
+    "2023-03-31"
+   ]
+  ],
+  "WOCKPHARMA": [
+   [
+    null,
+    "2023-03-31"
+   ],
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "BAJAJELEC": [
+   [
+    null,
+    "2023-04-28"
+   ]
+  ],
+  "EDELWEISS": [
+   [
+    null,
+    "2023-04-28"
+   ]
+  ],
+  "HDFC": [
+   [
+    null,
+    "2023-07-13"
+   ]
+  ],
+  "BASF": [
+   [
+    null,
+    "2023-09-29"
+   ],
+   [
+    "2024-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "GARFIBRES": [
+   [
+    "2019-09-27",
+    "2023-09-29"
+   ]
+  ],
+  "GODREJAGRO": [
+   [
+    "2018-04-02",
+    "2023-09-29"
+   ],
+   [
+    "2024-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "GREENPANEL": [
+   [
+    "2022-09-30",
+    "2023-09-29"
+   ]
+  ],
+  "HIKAL": [
+   [
+    "2021-09-30",
+    "2023-09-29"
+   ]
+  ],
+  "HGS": [
+   [
+    "2021-09-30",
+    "2023-09-29"
+   ]
+  ],
+  "IFBIND": [
+   [
+    "2017-09-29",
+    "2023-09-29"
+   ]
+  ],
+  "EMBDL": [
+   [
+    null,
+    "2023-09-29"
+   ]
+  ],
+  "JINDWORLD": [
+   [
+    "2023-03-31",
+    "2023-09-29"
+   ]
+  ],
+  "RUSTOMJEE": [
+   [
+    "2023-03-31",
+    "2023-09-29"
+   ]
+  ],
+  "MAHLOG": [
+   [
+    "2018-09-28",
+    "2023-09-29"
+   ]
+  ],
+  "NOCIL": [
+   [
+    "2020-09-25",
+    "2023-09-29"
+   ]
+  ],
+  "TMB": [
+   [
+    "2023-03-31",
+    "2023-09-29"
+   ],
+   [
+    "2024-03-28",
+    "2024-09-30"
+   ]
+  ],
+  "TCIEXP": [
+   [
+    "2019-09-27",
+    "2023-09-29"
+   ]
+  ],
+  "TCNSBRANDS": [
+   [
+    "2019-03-29",
+    "2023-09-29"
+   ]
+  ],
+  "TCI": [
+   [
+    "2022-09-30",
+    "2023-09-29"
+   ]
+  ],
+  "UFLEX": [
+   [
+    null,
+    "2023-09-29"
+   ]
+  ],
+  "KIRLFER": [
+   [
+    "2023-09-29",
+    "2023-10-26"
+   ]
+  ],
+  "AARTIDRUGS": [
+   [
+    "2020-09-25",
+    "2024-03-28"
+   ]
+  ],
+  "BCG": [
+   [
+    "2022-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "DELTACORP": [
+   [
+    null,
+    "2024-03-28"
+   ]
+  ],
+  "EPIGRAL": [
+   [
+    "2023-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "GRINFRA": [
+   [
+    "2022-03-31",
+    "2024-03-28"
+   ],
+   [
+    "2024-09-30",
+    "2025-03-28"
+   ]
+  ],
+  "GALAXYSURF": [
+   [
+    "2018-09-28",
+    "2024-03-28"
+   ]
+  ],
+  "GOCOLORS": [
+   [
+    "2022-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "GUJALKALI": [
+   [
+    "2017-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "HLEGLAS": [
+   [
+    "2022-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "JAMNAAUTO": [
+   [
+    "2019-03-29",
+    "2024-03-28"
+   ]
+  ],
+  "LMW": [
+   [
+    null,
+    "2024-03-28"
+   ]
+  ],
+  "LUXIND": [
+   [
+    "2018-09-28",
+    "2024-03-28"
+   ]
+  ],
+  "NAZARA": [
+   [
+    "2021-09-30",
+    "2024-03-28"
+   ]
+  ],
+  "ORIENTELEC": [
+   [
+    "2019-03-29",
+    "2024-03-28"
+   ]
+  ],
+  "PFIZER": [
+   [
+    null,
+    "2024-03-28"
+   ],
+   [
+    "2024-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "POLYPLEX": [
+   [
+    "2020-09-25",
+    "2024-03-28"
+   ]
+  ],
+  "RAIN": [
+   [
+    null,
+    "2024-03-28"
+   ]
+  ],
+  "RALLIS": [
+   [
+    null,
+    "2024-03-28"
+   ]
+  ],
+  "ROSSARI": [
+   [
+    "2021-03-31",
+    "2024-03-28"
+   ]
+  ],
+  "TEAMLEASE": [
+   [
+    "2018-09-28",
+    "2024-03-28"
+   ]
+  ],
+  "TTKPRESTIG": [
+   [
+    null,
+    "2024-03-28"
+   ]
+  ],
+  "VINATIORGA": [
+   [
+    null,
+    "2024-03-28"
+   ],
+   [
+    "2024-09-30",
+    "2025-03-28"
+   ]
+  ],
+  "VMART": [
+   [
+    "2018-09-28",
+    "2024-03-28"
+   ]
+  ],
+  "TATAMTRDVR": [
+   [
+    null,
+    "2024-08-30"
+   ]
+  ],
+  "AETHER": [
+   [
+    "2022-09-30",
+    "2024-09-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "ANURAS": [
+   [
+    "2021-09-30",
+    "2024-09-30"
+   ],
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "BORORENEW": [
+   [
+    "2022-03-31",
+    "2024-09-30"
+   ]
+  ],
+  "CSBBANK": [
+   [
+    "2020-06-26",
+    "2024-09-30"
+   ]
+  ],
+  "DCMSHRIRAM": [
+   [
+    null,
+    "2024-09-30"
+   ],
+   [
+    "2025-03-28",
+    "2026-09-30"
+   ]
+  ],
+  "GMMPFAUDLR": [
+   [
+    "2020-06-26",
+    "2024-09-30"
+   ]
+  ],
+  "HAPPYFORGE": [
+   [
+    "2024-03-28",
+    "2024-09-30"
+   ]
+  ],
+  "INDIGOPNTS": [
+   [
+    "2021-09-30",
+    "2024-09-30"
+   ]
+  ],
+  "JAIBALAJI": [
+   [
+    "2024-03-28",
+    "2024-09-30"
+   ]
+  ],
+  "JKPAPER": [
+   [
+    "2019-03-29",
+    "2024-09-30"
+   ]
+  ],
+  "KRBL": [
+   [
+    null,
+    "2024-09-30"
+   ]
+  ],
+  "LXCHEM": [
+   [
+    "2021-09-30",
+    "2024-09-30"
+   ]
+  ],
+  "MHRIL": [
+   [
+    null,
+    "2024-09-30"
+   ]
+  ],
+  "MEDPLUS": [
+   [
+    "2022-03-31",
+    "2024-09-30"
+   ]
+  ],
+  "MTARTECH": [
+   [
+    "2022-04-07",
+    "2024-09-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "PRINCEPIPE": [
+   [
+    "2021-03-31",
+    "2024-09-30"
+   ]
+  ],
+  "RBA": [
+   [
+    "2021-04-29",
+    "2024-09-30"
+   ]
+  ],
+  "SAFARI": [
+   [
+    "2023-09-29",
+    "2024-09-30"
+   ]
+  ],
+  "STLTECH": [
+   [
+    "2017-03-31",
+    "2024-09-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "SUNTECK": [
+   [
+    null,
+    "2024-09-30"
+   ]
+  ],
+  "VAIBHAVGBL": [
+   [
+    "2019-09-24",
+    "2024-09-30"
+   ]
+  ],
+  "PRSMJOHNSN": [
+   [
+    null,
+    "2024-09-30"
+   ]
+  ],
+  "IDFC": [
+   [
+    null,
+    "2024-10-10"
+   ]
+  ],
+  "TV18BRDCST": [
+   [
+    null,
+    "2024-10-16"
+   ]
+  ],
+  "ISEC": [
+   [
+    "2018-09-28",
+    "2025-03-21"
+   ]
+  ],
+  "ACI": [
+   [
+    "2023-03-31",
+    "2025-03-28"
+   ]
+  ],
+  "AVANTIFEED": [
+   [
+    null,
+    "2025-03-28"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "BALAMINES": [
+   [
+    "2021-03-31",
+    "2025-03-28"
+   ]
+  ],
+  "BIRLACORPN": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "CELLO": [
+   [
+    "2024-03-28",
+    "2025-03-28"
+   ]
+  ],
+  "CHEMPLASTS": [
+   [
+    "2022-03-31",
+    "2025-03-28"
+   ]
+  ],
+  "EASEMYTRIP": [
+   [
+    "2022-03-31",
+    "2025-03-28"
+   ]
+  ],
+  "EQUITASBNK": [
+   [
+    "2021-09-30",
+    "2025-03-28"
+   ]
+  ],
+  "FINEORG": [
+   [
+    "2019-03-29",
+    "2025-03-28"
+   ]
+  ],
+  "GAEL": [
+   [
+    "2020-09-25",
+    "2025-03-28"
+   ]
+  ],
+  "GSFC": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "JKLAKSHMI": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "METROBRAND": [
+   [
+    "2022-03-31",
+    "2025-03-28"
+   ]
+  ],
+  "NUVOCO": [
+   [
+    "2022-03-31",
+    "2025-03-28"
+   ],
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "PGHH": [
+   [
+    null,
+    "2025-03-28"
+   ],
+   [
+    "2025-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "RAJESHEXPO": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "SANOFI": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "SPARC": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "SUNDRMFAST": [
+   [
+    null,
+    "2025-03-28"
+   ],
+   [
+    "2025-04-11",
+    "2026-03-30"
+   ]
+  ],
+  "TVSSCS": [
+   [
+    "2024-03-28",
+    "2025-03-28"
+   ]
+  ],
+  "VIPIND": [
+   [
+    null,
+    "2025-03-28"
+   ]
+  ],
+  "VARROC": [
+   [
+    "2018-12-28",
+    "2025-03-28"
+   ]
+  ],
+  "QUESS": [
+   [
+    "2017-03-31",
+    "2025-04-11"
+   ]
+  ],
+  "GNFC": [
+   [
+    "2017-03-31",
+    "2025-09-30"
+   ]
+  ],
+  "GPPL": [
+   [
+    null,
+    "2025-09-30"
+   ]
+  ],
+  "JUSTDIAL": [
+   [
+    null,
+    "2025-09-30"
+   ]
+  ],
+  "KANSAINER": [
+   [
+    null,
+    "2025-09-30"
+   ]
+  ],
+  "MASTEK": [
+   [
+    "2021-09-30",
+    "2025-09-30"
+   ]
+  ],
+  "PNCINFRA": [
+   [
+    null,
+    "2025-09-30"
+   ]
+  ],
+  "RTNINDIA": [
+   [
+    "2022-03-31",
+    "2025-09-30"
+   ]
+  ],
+  "RAYMONDLSL": [
+   [
+    "2025-03-21",
+    "2025-09-30"
+   ]
+  ],
+  "ROUTE": [
+   [
+    "2021-03-31",
+    "2025-09-30"
+   ]
+  ],
+  "SWSOLAR": [
+   [
+    "2020-03-19",
+    "2025-09-30"
+   ]
+  ],
+  "TANLA": [
+   [
+    "2021-03-31",
+    "2025-09-30"
+   ]
+  ],
+  "WESTLIFE": [
+   [
+    "2019-12-27",
+    "2025-09-30"
+   ]
+  ],
+  "SKFINDIA": [
+   [
+    null,
+    "2025-12-31"
+   ]
+  ],
+  "AKUMS": [
+   [
+    "2024-10-16",
+    "2026-03-30"
+   ]
+  ],
+  "APLLTD": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "ALKYLAMINE": [
+   [
+    "2020-06-26",
+    "2026-03-30"
+   ]
+  ],
+  "CAMPUS": [
+   [
+    "2022-08-08",
+    "2026-03-30"
+   ]
+  ],
+  "CENTURYPLY": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "CERA": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "AGARWALEYE": [
+   [
+    "2025-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "FINPIPE": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "GUJENERGY": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "HAPPSTMNDS": [
+   [
+    "2021-03-31",
+    "2026-03-30"
+   ]
+  ],
+  "INOXINDIA": [
+   [
+    "2024-09-30",
+    "2026-03-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "JYOTHYLAB": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "KIRLOSBROS": [
+   [
+    "2024-09-30",
+    "2026-03-30"
+   ],
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "METROPOLIS": [
+   [
+    "2019-09-27",
+    "2026-03-30"
+   ]
+  ],
+  "RCF": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "TRIVENI": [
+   [
+    "2022-05-31",
+    "2026-03-30"
+   ]
+  ],
+  "MANYAVAR": [
+   [
+    "2022-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "VENTIVE": [
+   [
+    "2025-09-30",
+    "2026-03-30"
+   ]
+  ],
+  "VGUARD": [
+   [
+    null,
+    "2026-03-30"
+   ]
+  ],
+  "GSPL": [
+   [
+    null,
+    "2026-05-12"
+   ]
+  ],
+  "JBCHEPHARM": [
+   [
+    null,
+    "2026-07-17"
+   ]
+  ],
+  "3MINDIA": [
+   [
+    null,
+    "2026-09-30"
+   ]
+  ],
+  "ABFRL": [
+   [
+    null,
+    "2026-09-30"
+   ]
+  ],
+  "ABLBL": [
+   [
+    "2025-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "BAYERCROP": [
+   [
+    "2019-09-27",
+    "2026-09-30"
+   ]
+  ],
+  "BIKAJI": [
+   [
+    "2023-03-31",
+    "2026-09-30"
+   ]
+  ],
+  "BLUEDART": [
+   [
+    null,
+    "2026-09-30"
+   ]
+  ],
+  "BLUEJET": [
+   [
+    "2025-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "BBTC": [
+   [
+    null,
+    "2026-09-30"
+   ]
+  ],
+  "MAPMYINDIA": [
+   [
+    "2022-03-31",
+    "2026-09-30"
+   ]
+  ],
+  "GODIGIT": [
+   [
+    "2024-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "INDGN": [
+   [
+    "2024-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "LATENTVIEW": [
+   [
+    "2022-03-31",
+    "2026-09-30"
+   ]
+  ],
+  "THELEELA": [
+   [
+    "2025-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "NEWGEN": [
+   [
+    "2024-09-30",
+    "2026-09-30"
+   ]
+  ],
+  "NIVABUPA": [
+   [
+    "2025-03-28",
+    "2026-09-30"
+   ]
+  ],
+  "SAPPHIRE": [
+   [
+    "2022-03-31",
+    "2026-09-30"
+   ]
+  ],
+  "SBFC": [
+   [
+    "2024-03-28",
+    "2026-09-30"
+   ]
+  ],
+  "SONATSOFTW": [
+   [
+    null,
+    "2026-09-30"
+   ]
+  ],
+  "SPLPETRO": [
+   [
+    "2026-03-30",
+    "2026-09-30"
+   ]
+  ],
+  "TRAVELFOOD": [
+   [
+    "2026-03-30",
+    "2026-09-30"
+   ]
+  ],
+  "ACC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ADANIENSOL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ADANIPORTS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AEGISLOG": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AIAENG": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AJANTPHARM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ALKEM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AMBUJACEM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "APLAPOLLO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "APOLLOHOSP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "APOLLOTYRE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ARE&M": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ASHOKLEY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ASIANPAINT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ASTRAL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ATUL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AUROPHARMA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "AXISBANK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BAJAJ-AUTO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BAJAJFINSV": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BAJAJHLDNG": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BAJFINANCE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BALKRISIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BALRAMCHIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BANKBARODA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BANKINDIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BATAINDIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BERGEPAINT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BHARATFORG": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BHARTIARTL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BHEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BIOCON": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BLUESTARCO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BOSCHLTD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BPCL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "BRITANNIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CANBK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CANFINHOME": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CARBORUNIV": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CASTROLIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CCL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CEATLTD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CENTRALBK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CHAMBLFERT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CHOLAFIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CIPLA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "COALINDIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "COFORGE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "COLPAL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CONCOR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "COROMANDEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CRISIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CROMPTON": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CUB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CUMMINSIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "CYIENT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "DABUR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "DIVISLAB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "DLF": [
+   [
+    null,
+    null
+   ]
+  ],
+  "DRREDDY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "DUMMYHEG": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ECLERX": [
+   [
+    null,
+    null
+   ]
+  ],
+  "EICHERMOT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "EIDPARRY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "EIHOTEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "EMAMILTD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ENGINERSIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ESCORTS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "EXIDEIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "FEDERALBNK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "FINCABLES": [
+   [
+    null,
+    null
+   ]
+  ],
+  "FSL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GAIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GESHIP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GLAXO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GLENMARK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GODFRYPHLP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GODREJCP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GODREJIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GODREJPROP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "GRANULES": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HAVELLS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HCLTECH": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HDFCBANK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HEROMOTOCO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HFCL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HINDALCO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HINDCOPPER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HINDPETRO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HINDUNILVR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "HINDZINC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ICICIBANK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IDBI": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IDEA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IDFCFIRSTB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IGL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDHOTEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDIACEM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDIANB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDIGO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDUSINDBK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INDUSTOWER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "INFY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IOB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IOC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IPCALAB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "IRB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ITC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JINDALSTEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JKCEMENT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JMFINANCIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JSWENERGY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JSWSTEEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "JUBLFOOD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "KAJARIACER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "KARURVYSYA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "KEC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "KOTAKBANK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "KPIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "LALPATHLAB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "LICHSGFIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "LT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "LTF": [
+   [
+    null,
+    null
+   ]
+  ],
+  "LUPIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "M&M": [
+   [
+    null,
+    null
+   ]
+  ],
+  "M&MFIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MANAPPURAM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MARICO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MARUTI": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MMTC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MOTILALOFS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MPHASIS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MRF": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MRPL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "MUTHOOTFIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NATCOPHARM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NATIONALUM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NAUKRI": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NAVINFLUOR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NBCC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NCC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NH": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NHPC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NLCINDIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "NTPC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "OBEROIRLTY": [
+   [
+    null,
+    null
+   ]
+  ],
+  "OFSS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "OIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ONGC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PAGEIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PERSISTENT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PETRONET": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PFC": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PHOENIXLTD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PIDILITIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PIIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PNB": [
+   [
+    null,
+    null
+   ]
+  ],
+  "POWERGRID": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PRESTIGE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "PVRINOX": [
+   [
+    null,
+    null
+   ]
+  ],
+  "RADICO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "RAMCOCEM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "RECLTD": [
+   [
+    null,
+    null
+   ]
+  ],
+  "REDINGTON": [
+   [
+    null,
+    null
+   ]
+  ],
+  "RELIANCE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SAIL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SAMMAANCAP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SBIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SCHAEFFLER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SHREECEM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SHRIRAMFIN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SIEMENS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SJVN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SOBHA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SOLARINDS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SRF": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SUNPHARMA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SUNTV": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SUPREMEIND": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SUZLON": [
+   [
+    null,
+    null
+   ]
+  ],
+  "SYNGENE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TATACONSUM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TATAELXSI": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TATAPOWER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TATASTEEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TCS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TECHM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "THERMAX": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TIMKEN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TITAN": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TMPV": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TORNTPHARM": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TORNTPOWER": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TRENT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TRIDENT": [
+   [
+    null,
+    null
+   ]
+  ],
+  "TVSMOTOR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "UBL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ULTRACEMCO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "UNIONBANK": [
+   [
+    null,
+    null
+   ]
+  ],
+  "UNITDSPR": [
+   [
+    null,
+    null
+   ]
+  ],
+  "UPL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "VOLTAS": [
+   [
+    null,
+    null
+   ]
+  ],
+  "VTL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "WELCORP": [
+   [
+    null,
+    null
+   ]
+  ],
+  "WELSPUNLIV": [
+   [
+    null,
+    null
+   ]
+  ],
+  "WHIRLPOOL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "WIPRO": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ZEEL": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ZFCVINDIA": [
+   [
+    null,
+    null
+   ]
+  ],
+  "ZYDUSLIFE": [
+   [
+    null,
+    null
+   ]
+  ],
+  "RBLBANK": [
+   [
+    "2017-01-23",
+    null
+   ]
+  ],
+  "MGL": [
+   [
+    "2017-03-16",
+    null
+   ]
+  ],
+  "ENDURANCE": [
+   [
+    "2017-03-31",
+    null
+   ]
+  ],
+  "ICICILIFE": [
+   [
+    "2017-03-31",
+    null
+   ]
+  ],
+  "LTM": [
+   [
+    "2017-03-31",
+    null
+   ]
+  ],
+  "LTTS": [
+   [
+    "2017-03-31",
+    null
+   ]
+  ],
+  "UNOMINDA": [
+   [
+    "2017-03-31",
+    null
+   ]
+  ],
+  "LAURUSLABS": [
+   [
+    "2017-05-26",
+    null
+   ]
+  ],
+  "PNBHOUSING": [
+   [
+    "2017-05-26",
+    null
+   ]
+  ],
+  "VBL": [
+   [
+    "2017-05-26",
+    null
+   ]
+  ],
+  "DMART": [
+   [
+    "2017-09-29",
+    null
+   ]
+  ],
+  "BSE": [
+   [
+    "2017-09-29",
+    null
+   ]
+  ],
+  "ITI": [
+   [
+    "2017-09-29",
+    null
+   ]
+  ],
+  "JSL": [
+   [
+    "2017-09-29",
+    null
+   ]
+  ],
+  "HUDCO": [
+   [
+    "2017-10-30",
+    null
+   ]
+  ],
+  "AUBANK": [
+   [
+    "2017-11-13",
+    null
+   ]
+  ],
+  "COCHINSHIP": [
+   [
+    "2018-02-05",
+    null
+   ]
+  ],
+  "CHOLAHLDNG": [
+   [
+    "2018-02-05",
+    null
+   ]
+  ],
+  "ABCAPITAL": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "CDSL": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "DIXON": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "GICRE": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "GRAPHITE": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "HEGAM": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "ICICIGI": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "IEX": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "SBILIFE": [
+   [
+    "2018-04-02",
+    null
+   ]
+  ],
+  "TIINDIA": [
+   [
+    "2018-06-29",
+    null
+   ]
+  ],
+  "ASTERDM": [
+   [
+    "2018-06-29",
+    null
+   ]
+  ],
+  "BDL": [
+   [
+    "2018-08-08",
+    null
+   ]
+  ],
+  "BANDHANBNK": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "ELGIEQUIP": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "HDFCLIFE": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "HAL": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "PCBL": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "NAM-INDIA": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "NIACL": [
+   [
+    "2018-09-28",
+    null
+   ]
+  ],
+  "ADANIGREEN": [
+   [
+    "2018-12-28",
+    null
+   ]
+  ],
+  "RITES": [
+   [
+    "2018-12-28",
+    null
+   ]
+  ],
+  "CREDITACC": [
+   [
+    "2019-01-28",
+    null
+   ]
+  ],
+  "AAVAS": [
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "MAHABANK": [
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "DEEPAKNTR": [
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "HDFCAMC": [
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "KEI": [
+   [
+    "2019-03-29",
+    null
+   ]
+  ],
+  "DALBHARAT": [
+   [
+    "2019-06-28",
+    null
+   ]
+  ],
+  "ABBOTINDIA": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "ATGL": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "AMBER": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "MCX": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "NESTLEIND": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "RHIM": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "POLYCAB": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "RVNL": [
+   [
+    "2019-09-27",
+    null
+   ]
+  ],
+  "AFFLE": [
+   [
+    "2019-12-26",
+    null
+   ]
+  ],
+  "INDIAMART": [
+   [
+    "2019-12-27",
+    null
+   ]
+  ],
+  "FLUOROCHEM": [
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "360ONE": [
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "IRCTC": [
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "POLYMED": [
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "SUMICHEM": [
+   [
+    "2020-06-26",
+    null
+   ]
+  ],
+  "SBICARD": [
+   [
+    "2020-07-31",
+    null
+   ]
+  ],
+  "POWERINDIA": [
+   [
+    "2020-09-25",
+    null
+   ]
+  ],
+  "COHANCE": [
+   [
+    "2020-09-25",
+    null
+   ]
+  ],
+  "ANGELONE": [
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "CAMS": [
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "MAXHEALTH": [
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "MAZDOCK": [
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "UTIAMC": [
+   [
+    "2021-03-31",
+    null
+   ]
+  ],
+  "GLAND": [
+   [
+    "2021-06-30",
+    null
+   ]
+  ],
+  "FACT": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "HOMEFIRST": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "IRFC": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "JUBLINGREA": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "KALYANKJIL": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "LODHA": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "TTML": [
+   [
+    "2021-09-30",
+    null
+   ]
+  ],
+  "SONACOMS": [
+   [
+    "2021-10-29",
+    null
+   ]
+  ],
+  "APTUS": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "CLEAN": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "DEVYANI": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "NYKAA": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "KIMS": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "PAYTM": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "POLICYBZR": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "SHYAMMETL": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "STARHEALTH": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "VIJAYA": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "ETERNAL": [
+   [
+    "2022-03-31",
+    null
+   ]
+  ],
+  "DELHIVERY": [
+   [
+    "2022-08-08",
+    null
+   ]
+  ],
+  "LICI": [
+   [
+    "2022-08-08",
+    null
+   ]
+  ],
+  "AWL": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "JBMA": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "MSUMI": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "OLECTRA": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "PATANJALI": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "TEJASNET": [
+   [
+    "2022-09-30",
+    null
+   ]
+  ],
+  "RAINBOW": [
+   [
+    "2022-12-30",
+    null
+   ]
+  ],
+  "PPLPHARMA": [
+   [
+    "2023-02-17",
+    null
+   ]
+  ],
+  "BLS": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "CRAFTSMAN": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "DATAPATTNS": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "FIVESTAR": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "MEDANTA": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "KFINTECH": [
+   [
+    "2023-03-31",
+    null
+   ]
+  ],
+  "NSLNISP": [
+   [
+    "2023-04-28",
+    null
+   ]
+  ],
+  "MANKIND": [
+   [
+    "2023-07-13",
+    null
+   ]
+  ],
+  "GPIL": [
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "KAYNES": [
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "SYRMA": [
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "USHAMART": [
+   [
+    "2023-09-29",
+    null
+   ]
+  ],
+  "CONCORDBIO": [
+   [
+    "2023-10-26",
+    null
+   ]
+  ],
+  "ACE": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "ANANDRATHI": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "DOMS": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "ELECON": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "HBLENGINE": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "HONASA": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "JIOFIN": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "JSWINFRA": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "JWL": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "LLOYDSME": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "NUVAMA": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "RRKABEL": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "SIGNATURE": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "TATATECH": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "TITAGARH": [
+   [
+    "2024-03-28",
+    null
+   ]
+  ],
+  "AADHARHFC": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "BHARTIHEXA": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "IREDA": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "JYOTICNC": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "NETWEB": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "PTCIL": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "TBOTEK": [
+   [
+    "2024-09-30",
+    null
+   ]
+  ],
+  "EMCURE": [
+   [
+    "2024-10-10",
+    null
+   ]
+  ],
+  "ACMESOLAR": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "AFCONS": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "AIIL": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "BAJAJHFL": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "FIRSTCRY": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "GRAVITA": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "HYUNDAI": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "IGIL": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "IKS": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "LTFOODS": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "NEULANDLAB": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "NTPCGREEN": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "OLAELEC": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "PGEL": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "PREMIERENE": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "SAGILITY": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "SAILIFE": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "SARDAEN": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "SWIGGY": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "TARIL": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "VMM": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "WAAREEENER": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "ZENTEC": [
+   [
+    "2025-03-28",
+    null
+   ]
+  ],
+  "AEGISVOPAK": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "ATHERENERG": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "CHOICEIN": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "FORCEMOT": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "HEXT": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "ITCHOTELS": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "ONESOURCE": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "ENRIN": [
+   [
+    "2025-09-30",
+    null
+   ]
+  ],
+  "JSWCEMENT": [
+   [
+    "2025-12-31",
+    null
+   ]
+  ],
+  "ACUTAAS": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "CPPLUS": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "ABDL": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "ANTHEM": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "BELRISE": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "GROWW": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "CANHLIFE": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "CARTRADE": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "EMMVEE": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "GABRIEL": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "GALLANTT": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "HDBFS": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "ICICIAMC": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "JAINREC": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "LENSKART": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "LGEINDIA": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "MEESHO": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "PARADEEP": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "PWL": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "PINELABS": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "PIRAMALFIN": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "TATACAP": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "TMCV": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "TEGA": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "TENNIND": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "URBANCO": [
+   [
+    "2026-03-30",
+    null
+   ]
+  ],
+  "PFOCUS": [
+   [
+    "2026-07-17",
+    null
+   ]
+  ],
+  "AZAD": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "BAGMANE": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "BHARATCOAL": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "BBOX": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "BIRET": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "CMPDI": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "CLEANMAX": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "CUPID": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "EMBASSY": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "FRACTAL": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "RUBICON": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "SANSERA": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "SHRIPISTON": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "TDPOWERSYS": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "THANGAMAYL": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "VAML": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "VISL": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "VOGL": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ],
+  "VEDPOWER": [
+   [
+    "2026-09-30",
+    null
+   ]
+  ]
+ }
+}
