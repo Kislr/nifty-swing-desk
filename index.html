@@ -97,7 +97,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .field.w-110{width:110px} .field.w-150{width:150px}
 .note{font-size:12.5px;color:var(--fg-2);background:var(--surface-2);border-radius:6px;padding:8px 10px;line-height:1.5}
 .note.warn{background:var(--warn-soft);color:var(--fg)}
-.note.down{background:var(--down-soft);color:var(--fg)}
+.note.down{background:var(--down-soft);color:var(--fg)} .note.up{background:var(--up-soft);color:var(--fg)}
 .rules{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
 .rules li{display:flex;gap:10px;align-items:flex-start;font-size:13px}
 .rules .tick{flex:none;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:11px;color:var(--up);margin-top:1px}
@@ -152,7 +152,7 @@ tr.detail td{background:var(--surface-2);white-space:normal;padding:12px 14px 14
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--surface-2);color:var(--fg-2);letter-spacing:.02em}
 .score{display:inline-block;min-width:34px;text-align:center;font-family:var(--font-num);font-size:12px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--surface-2);color:var(--fg-2)}
 .score.hi{background:var(--up-soft);color:var(--up)} .score.mid{background:var(--accent-soft);color:var(--accent)} .score.lo{color:var(--fg-3)}
-.tag.act{background:var(--up-soft);color:var(--up)} .tag.alert{background:var(--accent-soft);color:var(--accent)} .tag.watch{background:var(--warn-soft);color:var(--warn)} .tag.avoid{background:var(--down-soft);color:var(--down)}
+.tag.mom{background:var(--up);color:#fff;margin-left:6px} .tag.momq{color:var(--fg-3);margin-left:6px} .tag.act{background:var(--up-soft);color:var(--up)} .tag.alert{background:var(--accent-soft);color:var(--accent)} .tag.watch{background:var(--warn-soft);color:var(--warn)} .tag.avoid{background:var(--down-soft);color:var(--down)}
 .range{position:relative;width:90px;height:6px;background:var(--surface-2);border-radius:3px;display:inline-block;vertical-align:middle}
 .range .mk{position:absolute;top:-3px;width:3px;height:12px;border-radius:2px;background:var(--fg-2);margin-left:-1.5px}
 .range.hi .mk{background:var(--up)} .range.lo .mk{background:var(--down)}
@@ -274,7 +274,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
         <div class="field w-110"><label for="jStop">Stop ₹</label><input id="jStop" type="number" step="0.05"></div>
         <div class="field w-110"><label for="jTarget">Target ₹</label><input id="jTarget" type="number" step="0.05"></div>
         <div class="field w-110"><label for="jQty">Qty</label><input id="jQty" type="number" step="1"></div>
-        <div class="field w-150"><label for="jSetup">Setup</label><select id="jSetup"><option>Breakout</option><option>Pullback</option><option>Momentum</option><option>Other</option></select></div>
+        <div class="field w-150"><label for="jSetup">Setup</label><select id="jSetup"><option>Momentum pullback</option><option>Breakout</option><option>Pullback</option><option>Momentum</option><option>Other</option></select></div>
         <button class="btn primary" id="jAdd">Log trade</button>
       </div>
       <div class="tbl-wrap" style="margin-top:12px"><table id="jTbl"><thead></thead><tbody></tbody></table></div>
@@ -313,6 +313,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     <h2>What the rules have earned <span class="sub">walk-forward backtests on five years, 2022-01 &rarr; 2026-11, costs included</span></h2>
     <div class="note" style="margin-bottom:10px"><b>Momentum engine</b> (Jun 2022 &rarr; Nov 2026, corporate-action-adjusted history): <b>+138.8%</b> against the Nifty's <b>+46.0%</b>, 22.1% CAGR, 20% max drawdown, Sharpe 1.48, 233 trades; ahead of the index in four of five calendar years (behind only in 2025) and +3.5% in a 2026 that fell 8%. Before the adjustment it read +106.9%: 13 of its exits were bonus ex-dates that looked like 20% falls, not falls. The regime gate is what kept it near flat in the falling year. This is the only list on the page with a positive record. Full reports: <code>reports/momentum-2026-11-05.md</code> (and the unadjusted <code>momentum-2026-10-30.md</code>).</div>
     <div class="note" style="margin-bottom:10px"><b>Relationship stocks (pairs):</b> buying the lagging twin and shorting the leader returned <b>&minus;0.05% per trade</b> after costs over 248 trades on adjusted history; buying the lagging twin alone +0.46%, mostly from the market rising. <b>No usable edge found</b> &mdash; the card above is a monitor, not a signal. Full reports: <code>reports/pairs-*.md</code>.</div>
+    <div class="note up"><b>Momentum pullbacks &mdash; the first swing slice to pass (12 Nov 2026):</b> the same pullback rule, taken only on names the momentum engine ranks in its top 30 that day, made <b>+0.16R per trade over 638 trades</b> on ten years of adjusted history (profit factor 1.39, 21R max drawdown, seven of ten years positive) against +0.02R for the rule on the whole universe. Caveats: 2020 supplied 45R of the 100R (without it +0.10R, the bar exactly), and the filter inherits the momentum list's survivorship bias. So: paper trades, logged as <b>Momentum pullback</b>, until the point-in-time membership work confirms it; then re-promotion for this slice only. Breakouts inside the list did not pass (+0.08R). Hypothesis and tables: <code>reports/swing-hypotheses-2026-11-12.md</code>, <code>reports/swing-universe-2026-11-12-adjusted.md</code>.</div>
     <div class="note down"><b>Swing engine &mdash; watch only (5 Nov 2026):</b> on corporate-action-adjusted history the combined rules are <b>breakeven after costs</b>: +0.01R per trade over 433 trades, profit factor 1.02, max drawdown 23R, positive in 2023&ndash;25 and negative in 2022 and 2026, with 46% of exits the 15-day time stop. (Unadjusted they read &minus;0.08R over 419 trades &mdash; bonus ex-dates were being counted as stop-outs.) The same tests one change at a time, re-run on adjusted history: no sector / volume score points &minus;0.03R; exit below the 10-day average &minus;0.08R; below the 20-day &minus;0.17R; breakouts only <b>+0.04R</b> over 376 trades, profit factor 1.09, the best &mdash; and still +0.26R in 2023 with three of the other four years negative. None reaches the +0.1R over 300 trades the roadmap requires, so setups stay levels to watch and the digest leads with momentum. The score (0&ndash;100) has <b>not</b> separated winners from losers. Full tables and every trade: <code>reports/backtest-2026-11-05-adjusted.md</code>, <code>reports/swing-variants-2026-11-05-adjusted.md</code>, and the unadjusted <code>backtest-2026-11-05.md</code> / <code>swing-variants-2026-11-05.md</code>. Run <code>node scripts/backtest.mjs</code> after any rule change.</div>
   </section>
 

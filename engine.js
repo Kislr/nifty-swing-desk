@@ -416,6 +416,17 @@
 
   /** Telegram text. `blocks` = { momentum, pairs, reminders } are the other engines' digests (strings); in swingMode 'watch'
    *  the momentum list comes first and swing setups are listed as levels to watch, without quantities. */
+  /** Tag swing signals whose symbol is in the momentum engine's top `topRank` (default 30, the engine's holdRank).
+   *  Sets s.momRank on every such signal and s.tag = 'momentum pullback' on pullback buys — the one slice of the swing
+   *  rules that passed its backtest (12 Nov 2026: +0.16R over 638 trades, reports/swing-universe-2026-11-12-adjusted.md).
+   *  Tagged pullbacks move to the front of the act list, in score order; everything else keeps its order. Returns the count. */
+  function tagMomentum(signals, ranked, topRank) {
+    const N = topRank || 30; const rank = {}; for (const r of ranked || []) if (r.rank <= N) rank[r.sym] = r.rank;
+    let n = 0; for (const s of signals) { delete s.momRank; delete s.tag; if (rank[s.sym] == null) continue; s.momRank = rank[s.sym]; if (s.setup === 'Pullback buy') { s.tag = 'momentum pullback'; if (s.kind === 'act') n++; } }
+    const order = { act: 0, alert: 1, watch: 2, avoid: 3 };
+    signals.sort((a, b) => order[a.kind] - order[b.kind] || ((b.tag === 'momentum pullback') - (a.tag === 'momentum pullback')) || b.score - a.score || (b.row.val || 0) - (a.row.val || 0));
+    return n;
+  }
   function digest(result, settings, blocks) {
     const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {}); blocks = blocks || {};
     const watchOnly = st.swingMode === 'watch';
@@ -426,12 +437,17 @@
     if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
-      L.push('', `SWING SETUPS (${act.length}) — watch only, not orders: breakeven after costs over five years (+0.01R/trade, 433 trades; reports/)`);
-      act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
-      if (!act.length) L.push('• none today');
+      const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade over 638 backtested trades (reports/swing-universe-2026-11-12-adjusted.md). Still watch mode until the membership check; log them in the journal as "Momentum pullback"`);
+      mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
+      if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
+      else L.push('  (as backtested: at most 4 open at once, one per sector, taken in score order; stop to breakeven at +1R; out after 15 bars if neither level is hit)');
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — watch only, not orders: breakeven after costs over ten years (−0.01R/trade, 885 trades; reports/)`);
+      rest.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
+      if (!rest.length) L.push('• none today');
     } else {
       L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
-      act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
+      act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.tag ? ' ★ momentum pullback' : ''} — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
       if (!act.length) L.push('• nothing — no trade is a valid outcome');
     }
     L.push('', `ALERTS (${alert.length})`); alert.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
@@ -441,11 +457,11 @@
     if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
     if (blocks.pairs) L.push('', blocks.pairs);
     if (blocks.reminders) L.push('', blocks.reminders);
-    L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive five-year record; swing levels are for watching and paper trades.'
+    L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive ten-year record; momentum pullbacks are the one swing slice that passed its backtest and are being paper-traded; other swing levels are for watching.'
       : 'Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
     return L.join('\n');
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, digest, remindersDue, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, tagMomentum, digest, remindersDue, indicators: { sma, atr, rsi, candles } };
 });
