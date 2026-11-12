@@ -87,7 +87,15 @@ const cb = { o: [100, 95], h: [101, 103], l: [94, 94.5], c: [95, 102], v: [1, 1]
   const sim = M.simulate(bars, { topN: 5 }, custom, { capital: 500000 }); const st = M.stats(sim);
   assert(sim.trades.length > 0 && sim.equity.length === bars.dates.length - sim.warmup, `momentum simulation ran (${sim.trades.length} trades, synthetic data — numbers are meaningless)`);
   assert(Math.abs(sim.equity[sim.equity.length - 1].value - st.final) < 1 && st.maxDrawdown >= 0 && st.maxDrawdown <= 1, 'momentum stats consistent with the equity curve');
-  assert(/MOMENTUM/.test(M.digest(sel, E.fmt)), 'momentum digest renders'); }
+  assert(/MOMENTUM/.test(M.digest(sel, E.fmt)), 'momentum digest renders');
+  // compound option (6 Nov 2026 finding: fixed slots leave profits idle). Fixed mode: no buy ever exceeds capital / topN.
+  // Compound mode: same first rebalance, later buys sized from current equity, and the slot actually moves with equity.
+  assert(sim.trades.every(t => (t.entry * t.qty) <= 500000 / 5 + 1e-6) && sim.equity.every(e => e.invested >= 0 && e.invested <= e.value + 1), 'fixed slots: every buy ≤ capital ÷ topN; invested never exceeds equity');
+  const cmp = M.simulate(bars, { topN: 5, compound: true }, custom, { capital: 500000 }); const cst = M.stats(cmp);
+  const firstDay = sim.trades.reduce((d, t) => t.entryDate < d ? t.entryDate : d, '9999'); const firstSet = s => s.trades.filter(t => t.entryDate === firstDay).map(t => t.sym + t.qty).sort().join();
+  assert(firstSet(sim) === firstSet(cmp), 'compound: the first rebalance buys the same names in the same sizes (equity = capital before any trade)');
+  const slotOk = cmp.trades.every(t => { const k = cmp.equity.findIndex(e => e.date === t.entryDate); const eqPrev = k > 0 ? cmp.equity[k - 1].value : 500000; return t.entry * t.qty <= eqPrev * 1.5 / 5 + t.entry; });
+  assert(slotOk && cmp.trades.some(t => Math.abs(t.entry * t.qty - 500000 / 5) > t.entry * 2) && cst.final > 0 && cst.atWork > 0 && cst.atWork <= 1, `compound: buys follow equity, not starting capital (fixed ${(st.totalReturn * 100).toFixed(1)}%, reinvested ${(cst.totalReturn * 100).toFixed(1)}%, synthetic)`); }
 
 // 3e. pairs engine: a constructed cointegrated pair passes, a random walk pair fails, stretch detection works
 { let x = 11; const rnd = () => (x = (x * 1103515245 + 12345) % 2147483648) / 2147483648 - 0.5;
