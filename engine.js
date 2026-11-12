@@ -440,7 +440,7 @@
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
-      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade over 638 backtested trades on today's names, +0.12R over 603 on point-in-time NIFTY 500 members (reports/swing-membership-2026-11-12-adjusted-members.md; on the bar only with 2020). Still watch mode until the past-members price load; log them in the journal as "Momentum pullback"`);
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade on today's names but +0.09R over 594 trades on the names actually in the NIFTY 500 each day (reports/swing-membership-2026-11-12-adjusted-members.md) — under the +0.1R bar, so watch mode stands; log them in the journal as "Momentum pullback" if you paper-trade them`);
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: at most 4 open at once, one per sector, taken in score order; stop to breakeven at +1R; out after 15 bars if neither level is hit)');
