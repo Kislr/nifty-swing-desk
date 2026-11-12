@@ -5,11 +5,20 @@
  *   node scripts/backfill.mjs --from 2023-01-01 --to 2024-12-31
  *   node scripts/backfill.mjs --years 2                    # last 2 years
  *   node scripts/backfill.mjs --from 2025-01-01 --universe nifty500   # (default) | nifty50 | all
+ *   node scripts/backfill.mjs --years 10 --members                     # past members: add every name that was ever in the index
  *
  * Writes data/history/<year>.json (aligned OHLCV+turnover per symbol, plus NIFTY 50 index bars),
  * refreshes data/sectors.json from the Nifty 500 constituent list (industry → sector), and skips any
- * date already present, so you can stop and re-run. Run it from your own computer (NSE's archive host
- * refuses most cloud IPs). Expect ~1 second per trading day: two years ≈ 10 minutes.
+ * date already present, so you can stop and re-run (a saved day missing its NIFTY 50 bar gets the bar
+ * filled in without a re-fetch). Run it from your own computer (NSE's archive host refuses most cloud
+ * IPs). Expect ~1 second per trading day: two years ≈ 10 minutes.
+ *
+ * --members (12 Nov 2026, ROADMAP item 5c): the universe is every symbol that was ever a NIFTY 500 member
+ * according to data/membership/members.json, days already saved are visited again and only the symbols
+ * still missing a close that day are added, and a bhavcopy symbol is stored under today's ticker by
+ * following NSE's symbolchange.csv (plus the renames in data/membership/overrides.json) forward from
+ * that day — so a company renamed since gets its pre-rename bars too. Nothing already in the files is
+ * rewritten. Ten years is one fetch per trading day again, about an hour; progress is saved every 20 days.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -30,9 +39,20 @@ const todayIST = () => new Date(Date.now() + 330 * 60000);
 
 let from = arg('from'), to = arg('to', iso(todayIST())); const years = arg('years');
 if (!from && years) { const d = todayIST(); d.setUTCFullYear(d.getUTCFullYear() - Number(years)); from = iso(d); }
-if (!from) { console.error('usage: node scripts/backfill.mjs --from YYYY-MM-DD [--to YYYY-MM-DD] | --years N'); process.exit(2); }
-const universeMode = arg('universe', 'nifty500');
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (!from && isMain) { console.error('usage: node scripts/backfill.mjs --from YYYY-MM-DD [--to YYYY-MM-DD] | --years N [--members]'); process.exit(2); }
+const universeMode = arg('universe', 'nifty500'); const membersMode = argv.includes('--members');
 const pause = Number(arg('pause', '900'));
+
+/** --members: the rows to add for one day. `rows` are the bhavcopy's EQ rows; `canon(sym, date)` maps a symbol as it
+ *  stood that day to today's ticker; `ever` is the set of today's tickers that were ever members; `has(sym)` says whether
+ *  the file already holds a close for that ticker on the day. Returns { rows: snapRows keyed by today's ticker, renamed }. */
+export function membersRows(rows, date, { ever, canon, has }) {
+  const out = {}; let renamed = 0;
+  for (const r of rows) { if (!(r.c > 0)) continue; const c = canon(r.sym, date); const sym = c.sym; if (!ever.has(sym) || has(sym)) continue; if (sym !== r.sym) renamed++;
+    out[sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; }
+  return { rows: out, renamed };
+}
 
 /* ---------- minimal zip reader (single-entry zip, deflate or stored) ---------- */
 function unzipFirst(buf) {
@@ -100,23 +120,37 @@ async function constituents(mode) {
 async function readJSON(p, fb) { try { return JSON.parse(await fs.readFile(p, 'utf8')); } catch { return fb; } }
 
 /* ---------- main ---------- */
+async function main() {
 await fs.mkdir(HIST, { recursive: true });
 const { set: universe, industries } = await constituents(universeMode);
+// --members: every ticker that was ever a member, and the rename chain so old bhavcopy symbols land under today's ticker
+let members = null;
+if (membersMode) { const MB = await import('./membership.mjs'); const M = await readJSON(path.join(DATA, 'membership', 'members.json'), null);
+  if (!M) { console.error('--members needs data/membership/members.json. Build it first: node scripts/membership.mjs'); process.exit(2); }
+  const changes = MB.parseSymbolChanges(await fs.readFile(path.join(DATA, 'membership', 'src', 'symbolchange.csv'), 'utf8')); const ov = await readJSON(path.join(DATA, 'membership', 'overrides.json'), {});
+  for (const r of ov.renames || []) { (changes[r.from] || (changes[r.from] = [])).push({ to: r.to, date: r.date }); changes[r.from].sort((a, b) => a.date < b.date ? -1 : 1); }
+  members = { ever: new Set(Object.keys(M.symbols)), canon: (sym, date) => MB.canonical(sym, date, changes) };
+  console.log(`members mode: ${members.ever.size} tickers were ever NIFTY 500 members (${M.from} → ${M.asOf}); saved days are revisited for the ones still missing`); }
 const index = await fetchIndexHistory(from, to);
 const files = {}; const loadYear = async y => files[y] || (files[y] = await readJSON(path.join(HIST, y + '.json'), { year: Number(y), dates: [], symbols: {}, index: null }));
-let d = new Date(from); const end = new Date(to); let added = 0, skipped = 0, holidays = 0, failures = 0;
+let d = new Date(from); const end = new Date(to); let added = 0, skipped = 0, holidays = 0, failures = 0, filled = 0, indexFilled = 0, renamedRows = 0;
 while (d <= end) {
   const date = iso(d); const dow = d.getUTCDay(); d = new Date(d.getTime() + 86400000);
   if (dow === 0 || dow === 6) continue;
-  const yf = await loadYear(date.slice(0, 4));
-  if (yf.dates.includes(date)) { skipped++; continue; }
+  const yf = await loadYear(date.slice(0, 4)); const k = yf.dates.indexOf(date); const ix = index[date];
+  if (k >= 0 && !membersMode) { skipped++;
+    if (ix && (!yf.index || yf.index.c[k] == null)) { E.appendSnapshotToHistory(yf, { date, rows: {}, index: { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } }); indexFilled++; }   // gap (a): a saved day without its index bar
+    continue; }
   try {
     const rows = await fetchBhav(date);
     if (!rows) { holidays++; continue; }
-    const snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; }
-    const ix = index[date]; const snap = { date, rows: snapRows, index: ix ? { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } : null };
-    E.appendSnapshotToHistory(yf, snap); added++;
-    if (added % 20 === 0) { await fs.writeFile(path.join(HIST, yf.year + '.json'), JSON.stringify(yf)); console.log(`${date}: ${Object.keys(snapRows).length} symbols (saved, ${added} days added so far)`); }
+    let snapRows;
+    if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; renamedRows += r.renamed; }
+    else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
+    const snap = { date, rows: snapRows, index: ix ? { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } : null };
+    const n = Object.keys(snapRows).length; if (k >= 0 && !n && !(ix && (!yf.index || yf.index.c[k] == null))) { skipped++; await sleep(pause); continue; }   // members mode: nothing missing that day
+    E.appendSnapshotToHistory(yf, snap); if (k >= 0) { filled++; if (ix && (!yf.index || yf.index.c[k] == null)) indexFilled++; } else added++;
+    if ((added + filled) % 20 === 0) { await fs.writeFile(path.join(HIST, yf.year + '.json'), JSON.stringify(yf)); console.log(`${date}: ${n} symbols (saved, ${added} days added, ${filled} days topped up so far)`); }
   } catch (e) { failures++; console.warn(`${date}: failed (${e.message})`); if (failures > 15) { console.error('too many failures — NSE may be blocking this IP; wait and re-run (progress is saved)'); break; } }
   await sleep(pause);
 }
@@ -127,4 +161,6 @@ if (Object.keys(industries).length) { const sec = await readJSON(path.join(DATA,
   await fs.writeFile(path.join(DATA, 'sectors.json'), JSON.stringify(sec, null, 1)); console.log(`sectors.json: +${n} industry mappings`); }
 const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] }); idx.historyYears = (await fs.readdir(HIST)).filter(f => /^\d{4}\.json$/.test(f)).map(f => Number(f.slice(0, 4))).sort();
 await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify(idx, null, 1));
-console.log(`done: ${added} days added, ${skipped} already present, ${holidays} holidays/weekends skipped, ${failures} failures. History years: ${idx.historyYears.join(', ')}`);
+console.log(`done: ${added} days added${membersMode ? `, ${filled} saved days topped up with missing members (${renamedRows} rows stored under a later ticker)` : ''}, ${skipped} already present${indexFilled ? ` (${indexFilled} given their missing NIFTY 50 bar)` : ''}, ${holidays} holidays/weekends skipped, ${failures} failures. History years: ${idx.historyYears.join(', ')}`);
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

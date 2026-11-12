@@ -7,6 +7,7 @@
  *   node scripts/backtest-momentum.mjs --sweep               # a fixed grid of lookback / topN / trail / gate, one table
  *   node scripts/backtest-momentum.mjs --benchmarks          # also NSE's total-return indices (data/benchmarks/) over the same window
  *   node scripts/backtest-momentum.mjs --benchmarks path/to/dir
+ *   node scripts/backtest-momentum.mjs --members           # rank and trade only that day's NIFTY 500 members (data/membership/members.json)
  *
  * Model: ranks on each rebalance day's close and buys at that close plus half the round-trip cost (a conservative
  * stand-in for the next open); trailing stops are checked on closes. Equal weight = capital / topN, fixed for the run
@@ -17,12 +18,18 @@
  * `--benchmarks` loads niftyindices.com total-return files from data/benchmarks/ (see scripts/benchmarks.mjs) and measures
  * each index over the test window exactly as the equity curve is measured — a row per index in the Overall table, a
  * column per index in the by-year table, and a section comparing the reinvested run with the investable momentum indices.
+ * `--members [file]` applies the point-in-time membership list built by scripts/membership.mjs: on every day only the
+ * names in the index that day are ranked, so a holding that leaves the index is unranked at the next rebalance and exits
+ * as 'ineligible'. Names that left the index before the history was loaded have no bars until the owner's price load
+ * for past members, so until then the option removes future members only (the report says how many names it saw).
+ * The report file gets a `-members` suffix so it never overwrites the plain run.
  * Writes reports/momentum-<stamp>.md and .json. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import * as BM from './benchmarks.mjs';
+import { membershipFilter, membersOn } from './membership.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -43,10 +50,17 @@ console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars
 
 const pc = (x, d = 1) => x == null ? '—' : (x * 100).toFixed(d) + '%';
 const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(d);
-const run = params => { const sim = M.simulate(bars, params, custom, { from, to, capital }); return { sim, st: M.stats(sim) }; };
+const run = params => { const sim = M.simulate(bars, params, custom, { from, to, capital, filter: MEM ? membershipFilter(MEM) : null, stale: MEM ? 20 : 0 }); return { sim, st: M.stats(sim) }; };   // with --members a name with no close for 20 bars has stopped trading
 const row = (name, st) => `| ${name} | ${st.n} | ${pc(st.totalReturn)} | ${pc(st.cagr)} | ${pc(st.indexReturn)} | ${pc(st.maxDrawdown)} | ${f(st.sharpe)} | ${st.winRate == null ? '—' : pc(st.winRate, 0)} | ${f(st.avgBars, 0)} | ${pc(st.inMarket, 0)} | ${pc(st.atWork, 0)} |`;
 const hdr = '| run | trades | total return | CAGR | Nifty (same period) | max DD | Sharpe | win rate | avg bars | time in market | equity at work |\n|---|---|---|---|---|---|---|---|---|---|---|';
-const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '');   // adjusted-history runs get their own file name
+// --members [file]: point-in-time NIFTY 500 membership; the filter goes into every rankAt through simulate's opts.
+let MEM = null, memStats = null;
+if (flag('members')) { const v = arg('members'); const file = v && !v.startsWith('--') ? path.resolve(v) : path.join(ROOT, 'data', 'membership', 'members.json');
+  MEM = JSON.parse(await fs.readFile(file, 'utf8').catch(() => { console.error(`--members: cannot read ${file}. Build it first: node scripts/membership.mjs`); process.exit(2); }));
+  const ever = Object.keys(MEM.symbols); const withBars = ever.filter(s => bars.sym[s]); const todayOnly = Object.keys(bars.sym).filter(s => !MEM.symbols[s]);
+  memStats = { from: MEM.from, asOf: MEM.asOf, events: MEM.events.length, everMembers: ever.length, everWithBars: withBars.length, barsNotMembers: todayOnly.length, membersOnFirstDay: membersOn(MEM, bars.dates[0] < MEM.from ? MEM.from : bars.dates[0]).filter(s => bars.sym[s]).length };
+  console.log(`membership: ${memStats.events} events ${MEM.from} → ${MEM.asOf}; ${memStats.everMembers} names were ever members, ${memStats.everWithBars} of them have bars (the rest await the past-members price load); ${memStats.barsNotMembers} symbols with bars were never members`); }
+const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : '');   // adjusted-history and members runs get their own file names
 const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 
 // --benchmarks [dir]: NSE total-return indices, stitched from the one-year files the site serves. Optional; nothing changes without the flag.
@@ -86,7 +100,7 @@ if (bm.length) {
   for (const b of bm) { if (!b.w || !b.w.covered) { against.push(`- **${b.S.name}**: files cover ${b.w.first} → ${b.w.last}, not the test window — nothing to compare.`); continue; }
     const ahead = years.filter(y => b.yr[y] && reinY(y) > b.yr[y].ret).length, scored = years.filter(y => b.yr[y]).length; const gap = rein.cagr - b.w.cagr;
     against.push(`- **${b.S.name}** — ${pc(b.w.totalReturn)} total, ${pc(b.w.cagr)} a year, max drawdown ${pc(b.w.maxDrawdown)}, Sharpe ${f(b.w.sharpe)}. Reinvested run: ${pc(rein.totalReturn)}, ${pc(rein.cagr)} a year, drawdown ${pc(rein.maxDrawdown)}, Sharpe ${f(rein.sharpe)} — **${gap >= 0 ? '+' : ''}${pc(gap)} a year ${gap >= 0 ? 'ahead of' : 'behind'} the index**, ahead in ${ahead} of ${scored} calendar years${b.S.ntr && BM.windowStats(b.S, st.start, st.end, 'ntr').covered ? ` (Net TR, after dividend tax: ${pc(BM.windowStats(b.S, st.start, st.end, 'ntr').totalReturn)} total)` : ''}.`); }
-  against.push('', 'Read with three caveats. The engine\'s row still runs on today\'s Nifty 500 constituents, so it carries survivorship bias the indices do not — the membership work sizes that, and until it is done the gap above is an upper bound. The indices are before fund costs: an index fund or ETF lags its index by its expense ratio and tracking error, which is small for the Nifty 50 and larger for the momentum indices (semi-annual reconstitution, higher turnover). And both momentum indices are back-calculated before their launch — Nifty200 Momentum 30 since 25 Aug 2020, Nifty500 Momentum 50 since June 2024 — so their early years are a published methodology replayed on history, not a live record; the engine\'s backtest is the same kind of number.', '');
+  against.push('', `Read with three caveats. ${MEM ? 'The engine\'s row ranks only each day\'s NIFTY 500 members, so names that entered the index later are no longer bought on their pre-entry run-up; but names that left the index before the history was loaded still have no bars, so the second half of the survivorship correction is still to come and the gap above is still an upper bound.' : 'The engine\'s row still runs on today\'s Nifty 500 constituents, so it carries survivorship bias the indices do not — the membership work sizes that, and until it is done the gap above is an upper bound.'} The indices are before fund costs: an index fund or ETF lags its index by its expense ratio and tracking error, which is small for the Nifty 50 and larger for the momentum indices (semi-annual reconstitution, higher turnover). And both momentum indices are back-calculated before their launch — Nifty200 Momentum 30 since 25 Aug 2020, Nifty500 Momentum 50 since June 2024 — so their early years are a published methodology replayed on history, not a live record; the engine's backtest is the same kind of number.`, '');
 }
 const bySym = {}; for (const t of sim.trades) { const s = bySym[t.sym] || (bySym[t.sym] = { n: 0, pnl: 0 }); s.n++; s.pnl += t.pnl; }
 const topSyms = Object.entries(bySym).sort((a, b) => b[1].pnl - a[1].pnl); const fmtS = ([s, v]) => `${s} (${v.n}×, ₹${Math.round(v.pnl).toLocaleString('en-IN')})`;
@@ -96,11 +110,12 @@ const md = [`# Momentum backtest — ${stamp}`, '', `History ${bars.dates[0]} �
   '## By year', '', `| year | ${P.compound ? 'reinvested' : 'fixed slots'} | ${P.compound ? 'fixed slots' : 'reinvested'} | Nifty 50 |${bm.map(b => ` ${BM.shortName(b.S.name)} TR |`).join('')}`, '|---|---|---|---|' + bm.map(() => '---|').join(''), ...yr, '',
   bm.length ? '"TR" columns are NSE\'s total-return indices (dividends reinvested); the Nifty 50 column is the price index from the bars. Years are calendar years inside the test window; the first is partial.' : null, bm.length ? '' : null,
   ...against,
+  ...(MEM ? ['## Universe: point-in-time NIFTY 500 membership', '', `Ranked only the names in the index on each day (\`data/membership/members.json\`: ${memStats.events} events, ${MEM.from} → ${MEM.asOf}, built by \`scripts/membership.mjs\` from NSE's press releases). ${memStats.everMembers} names were members at some point in that window; ${memStats.everWithBars} of them have bars in the history and ${memStats.everMembers - memStats.everWithBars} do not yet (they left the index before the history was loaded — the owner's price load for past members fills them in). ${memStats.barsNotMembers} symbols in the history were never members. On the first day of the history ${memStats.membersOnFirstDay} of the members had bars. A holding with no close for 20 bars in a row is closed at its last close as "stopped trading" (on today's constituents that is a hole in the history files; after the past-members load it is a delisting). Until the past members have bars this option removes the future members only — names that entered the index later and were being ranked on their pre-entry run-up — so the result is the half of the survivorship correction that makes the record worse; the other half (the names that fell out) usually makes it worse again.`, ''] : []),
   '## Exit reasons', '', ...Object.entries(st.byReason).map(([k, v]) => `- ${k}: ${v}`), '',
   '## Best and worst names', '', `Best: ${topSyms.slice(0, 5).map(fmtS).join(', ')}`, '', `Worst: ${topSyms.slice(-5).reverse().map(fmtS).join(', ')}`, '',
   '## How to read this', '', 'A momentum portfolio is judged against the index over the same window, on drawdown as much as on return, because the whole point is to be out (gate closed, stops hit) when the market falls. CAGR and Sharpe over fewer than ~3 years are indicative only. Win rate matters less than for the swing engine: momentum makes its money from a few large winners and many small, quick losses — expect 40–50% winners. "Time in market" below 100% is the gate and the stops doing their job; if it is very low the gate is too tight.',
   '', 'Known simplifications: fills at the rebalance close (plus half the round-trip cost); no dividends; survivorship bias if the universe is today\'s Nifty 500; corporate actions are adjusted only when data/adjustments.json is present (otherwise a bonus or split looks like a crash and trips the trailing stop); under compounding, positions already open keep the size they were bought at — only new buys take the new slot.'].filter(l => l != null).join('\n');
 await fs.writeFile(path.join(OUT, `momentum-${stamp}.md`), md);
 await fs.writeFile(path.join(OUT, `momentum-${stamp}.json`), JSON.stringify({ params: P, stats: st, equity: sim.equity, trades: sim.trades, companion: { params: alt.sim.params, stats: alt.st, equity: alt.sim.equity },
-  benchmarks: bm.length ? bm.map(b => ({ name: b.S.name, files: b.S.files, series: { first: b.S.dates[0], last: b.S.dates[b.S.dates.length - 1], days: b.S.dates.length, netTR: !!b.S.ntr }, window: b.w, byYear: b.yr })) : undefined }, null, 1));
+  membership: memStats || undefined, benchmarks: bm.length ? bm.map(b => ({ name: b.S.name, files: b.S.files, series: { first: b.S.dates[0], last: b.S.dates[b.S.dates.length - 1], days: b.S.dates.length, netTR: !!b.S.ntr }, window: b.w, byYear: b.yr })) : undefined }, null, 1));
 console.log(md.split('\n').slice(0, 16).join('\n')); console.log(`\nfull report: reports/momentum-${stamp}.md (and .json with equity curve and every trade)`);
