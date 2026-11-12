@@ -67,13 +67,33 @@ node scripts/corporate-actions.mjs            # pulls NSE's corporate-actions li
 
 If NSE blocks the API, download the list by hand instead: nseindia.com → Corporates → Corporate Actions → set the date range → Download (.csv), then `node scripts/corporate-actions.mjs --csv ~/Downloads/CF-CA-equities-….csv`.
 
-The script checks every event against the bars — the close before the ex-date over the open on it should be about the factor — and applies only the ones that pass (within 12%). It writes `data/adjustments.json` and `reports/corporate-actions-DATE.md`, which lists what was applied, what was rejected and why, and the events it cannot reduce to one factor (demergers, rights, schemes of arrangement — dates on which a price gap is real but unadjustable). Then re-run the three backtests so the reports reflect adjusted history, and `git push` the lot:
+The script checks every event against the bars — the close before the ex-date over the open on it should be about the factor — and applies only the ones that pass (within 12%). It writes `data/adjustments.json` and `reports/corporate-actions-DATE.md`, which lists what was applied, what was rejected and why, and the events it cannot reduce to one factor (demergers, rights, schemes of arrangement — dates on which a price gap is real but unadjustable). Then re-run the two backtests so the reports reflect adjusted history, and `git push` the lot:
 
 ```
-npm run backtest:momentum && npm run backtest && npm run backtest:pairs
+npm run backtest:momentum -- --benchmarks && npm run backtest
 ```
 
 Expect the momentum numbers to move a little: some of its 20% trailing-stop exits were bonuses, not falls.
+
+## Past members — the home run (12 Nov 2026)
+
+The one thing that still gates every verdict. About an hour and a half of wall-clock, almost all of it the script waiting politely between requests; nothing to decide along the way.
+
+1. **Pull `main`** so you have `scripts/backfill.mjs --members`, `data/membership/members.json` and the `corporate-actions` script: `git pull`.
+2. **Check the starting point** (optional, ten seconds): `node -e "const M=require('./data/membership/members.json');console.log(Object.keys(M.symbols).length,'ever members')"` should print 895. `ls data/history/` should show 2016.json … 2026.json.
+3. **Run the load**, from home, in the repository folder:
+   `node scripts/backfill.mjs --years 10 --members`
+   It prints `members mode: 895 tickers were ever NIFTY 500 members (2017-01-23 → 2026-11-12)` first, then `index history: N days` (should be about 2,470; if it says *unavailable*, stop and re-run later — the index fill is part of the job). Then one line every 20 days it touches: `YYYY-MM-DD: n symbols (saved, a days added, b days topped up so far)`. Expect about 2,470 days topped up with 0–400 names each (many in 2017, few in 2026) and 0 days added. It saves as it goes; if it stops (`too many failures — NSE may be blocking this IP`), wait ten minutes and run the same command again — it skips nothing in members mode but adds only what is still missing, so a re-run is harmless and fast for days already complete.
+4. **Read the last line**: `done: 0 days added, N saved days topped up with missing members (R rows stored under a later ticker), …`. N should be in the hundreds or low thousands, R in the low thousands (renamed companies' pre-rename bars).
+5. **Corporate actions on the new names**: `node scripts/corporate-actions.mjs` — the bonus/split table is rebuilt for the larger universe; the report in `reports/corporate-actions-DATE.md` says how many events were applied (expect more than 192).
+6. **The two backtests that settle it**:
+   `node scripts/backtest-momentum.mjs --members --benchmarks`
+   `node scripts/backtest.mjs --members --set universe=momentum --setups pullback --from 2017-06-09`
+   Each writes a report with a `-members` suffix in `reports/`. The momentum report's Universe section should now say that all 895 ever-members have bars (or nearly so); if it still says ~500, the load did not take.
+7. **Commit everything**: `git add data/history data/adjustments.json reports && git commit -m "Past members loaded; backtests re-run on the full membership" && git push`. The history files roughly double in size; that is expected and happens once.
+8. **Tell the next session** (or me, in a new conversation) the two headline numbers: the momentum reinvested CAGR against NIFTY500 MOMENTUM 50 TR, and the pullback slice's expectancy and trade count. The decision rules are already written in `reports/membership-hypotheses-2026-11-12.md`; the session's job is only to read them off and write the verdict into the README.
+
+What not to do: do not run `--years 10` without `--members` (it would skip every saved day and add nothing); do not delete or hand-edit the history files first; do not run two copies at once.
 
 ## What gets written
 

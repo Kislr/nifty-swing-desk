@@ -12,7 +12,6 @@
     "backfill": "node scripts/backfill.mjs --years 2",
     "backtest": "node scripts/backtest.mjs",
     "backtest:momentum": "node scripts/backtest-momentum.mjs",
-    "backtest:pairs": "node scripts/backtest-pairs.mjs",
     "backtest:compounder": "node scripts/compounder-backtest-us.mjs",
     "corporate-actions": "node scripts/corporate-actions.mjs",
     "test": "node scripts/test.mjs && node scripts/test-compounder.mjs",
