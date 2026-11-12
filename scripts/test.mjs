@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js')); const Pr = require(path.join(ROOT, 'pairs.js'));
+const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js'));
 let fails = 0; const assert = (c, m) => { if (!c) { fails++; console.error('FAIL:', m); } else console.log('ok  ', m); };
 
 // 1. NSE API payload (shape served by /api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData)
@@ -99,21 +99,6 @@ const cb = { o: [100, 95], h: [101, 103], l: [94, 94.5], c: [95, 102], v: [1, 1]
   const bigger = cmp.trades.filter(t => t.entry * t.qty > 500000 / 5 + t.entry).length;   // a buy larger than the fixed slot by more than one share: impossible in fixed mode
   assert(slotOk && bigger > 0 && fxL.trades.every(t => t.entry * t.qty <= 500000 / 5 + 1e-6) && cst.final !== M.stats(fxL).final && cst.atWork > 0 && cst.atWork <= 1, `compound: ${bigger} buy(s) larger than the fixed slot and a different end value (fixed ₹${M.stats(fxL).final}, reinvested ₹${cst.final}, synthetic)`); }
 
-// 3e. pairs engine: a constructed cointegrated pair passes, a random walk pair fails, stretch detection works
-{ let x = 11; const rnd = () => (x = (x * 1103515245 + 12345) % 2147483648) / 2147483648 - 0.5;
-  const n = 300; const dates = hf.dates.slice(0, n); const pa = [], pb = [], pw = []; let b = 100, e = 0, w = 100;
-  for (let i = 0; i < n; i++) { b *= 1 + rnd() * 0.02; e = 0.8 * e + rnd() * 0.02; pb.push(b); pa.push(2 * b * Math.exp(e)); w *= 1 + rnd() * 0.02; pw.push(w); } // A = 2·B·exp(stationary AR(1)) ; W = unrelated random walk
-  pa[n - 1] = pa[n - 1] * 0.975; // knock A down today → A lagging (about 2.5σ of the spread)
-  const mk = c => ({ o: c, h: c, l: c, c, v: c.map(() => 1e5), t: c.map(() => 10) });
-  const bp = E.buildBars([{ year: 2025, dates, symbols: { AA: mk(pa), BB: mk(pb), WW: mk(pw) }, index: null }], []);
-  const good = Pr.analyzePair(bp, 'AA', 'BB', n - 1), bad = Pr.analyzePair(bp, 'AA', 'WW', n - 1);
-  assert(good && good.cointegrated && Math.abs(good.beta - 1) < 0.15, `constructed pair is cointegrated (t ${good.tstat.toFixed(2)}, beta ${good.beta.toFixed(2)})`);
-  assert(good.stretched && good.cheap === 'AA' && good.z < -Pr.DEFAULTS.entryZ, 'the knocked-down leg is flagged as lagging');
-  assert(bad && !bad.cointegrated, `unrelated random walks are not cointegrated (t ${bad.tstat.toFixed(2)})`);
-  const sim = Pr.simulate(bp, {}, { pairs: [['AA', 'BB', 'test']], mode: 'pair' }); assert(Array.isArray(sim.trades) && Pr.stats(sim.trades).n >= 0, `pairs simulation runs (${sim.trades.length} trades, synthetic)`);
-  const board = Pr.boardAt(bp, n - 1, {}, [['AA', 'BB', 't'], ['AA', 'WW', 'u'], ['AA', 'ZZ', 'missing']]); assert(board.pairs[0].A === 'AA' && board.pairs[0].stretched && board.pairs[2].status === 'no history', 'board sorts stretched first and tolerates missing symbols');
-  assert(/PAIRS/.test(Pr.digest(board)), 'pairs digest renders'); }
-
 // 4. appendSnapshotToHistory keeps arrays aligned
 const f2 = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(f2, doc); E.appendSnapshotToHistory(f2, { date: '2026-10-15', rows: { KOTAKBANK: [1, 2, 0.5, 1, 1.5, 0, 0, 10, 1, null, null, null] }, index: null });
 assert(f2.dates.join() === '2026-10-15,2026-10-16' && f2.symbols.KOTAKBANK.c.join() === '1.5,450.3' && f2.symbols.BHARTIARTL.c[0] === null, 'history append aligns dates and pads gaps');
@@ -151,8 +136,8 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   assert(u.trades.length > 0 && u.trades.length < rep.trades.length && u.trades.every(t => { const k = pos[t.entryDate] - 1; const rk = rankOn(t.sym, k); return rk != null && rk <= 10 && bars.dates[k] >= u.universe.firstDefined; }), 'backtest universe=momentum:10: every trade was signalled on a day its symbol ranked in the momentum top 10 (independent check), none before the ranking existed');
   const badU = await runBt('out7', ['--set', 'universe=sector']); assert(badU.failed === 2, 'backtest rejects an unknown universe'); }
 
-// 6a2. the momentum and pairs backtest scripts run end to end and write their reports (6 Nov 2026: backtest-momentum.mjs had `const OUT` behind a // comment and died at the write)
-for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backtest-pairs.mjs', 'pairs-']]) { const out = path.join(tmp, 'out-' + prefix.replace('-', ''));
+// 6a2. the momentum backtest script runs end to end and writes its report (6 Nov 2026: it had `const OUT` behind a // comment and died at the write; pairs retired 12 Nov 2026)
+for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const out = path.join(tmp, 'out-' + prefix.replace('-', ''));
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', script), '--hist', path.join(tmp, 'hist'), '--out', out], { encoding: 'utf8' });
   const written = r.status === 0 ? await fs.readdir(out).catch(() => []) : [];
   assert(r.status === 0 && written.some(f => f.startsWith(prefix) && f.endsWith('.md')) && written.some(f => f.startsWith(prefix) && f.endsWith('.json')), `${script} runs end to end and writes its report` + (r.status ? '\n' + String(r.stderr).split('\n').slice(0, 6).join('\n') : '')); }
@@ -280,9 +265,9 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backte
   const d = E.digest(res, E.DEFAULTS, { reminders: E.remindersDue(R, '2026-11-13') }); assert(/DESK CHECKS DUE/.test(d) && d.indexOf('DESK CHECKS DUE') > d.indexOf('WATCH'), 'digest carries the reminders block after the lists'); }
 
 // 7. digest: watch mode leads with momentum and lists setups without quantities; orders mode is unchanged
-{ const blocks = { momentum: 'MOMENTUM (test)\n• #1 X', pairs: 'PAIRS (test)\n• none' };
+{ const blocks = { momentum: 'MOMENTUM (test)\n• #1 X' };
   const w = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, blocks), o = E.digest(res, { ...E.DEFAULTS, swingMode: 'orders' }, blocks);
-  assert(w.indexOf('MOMENTUM (') < w.indexOf('MOMENTUM PULLBACKS') && w.indexOf('MOMENTUM PULLBACKS') < w.indexOf('OTHER SWING SETUPS') && /watch only/.test(w) && !/ORDERS FOR TOMORROW/.test(w) && !/[^r] qty \d/.test(w) && w.indexOf('PAIRS') > w.indexOf('OTHER SWING SETUPS'), 'watch-mode digest: momentum list, then momentum pullbacks, then other setups as levels (no quantities except paper qty), pairs last');
+  assert(w.indexOf('MOMENTUM (') < w.indexOf('MOMENTUM PULLBACKS') && w.indexOf('MOMENTUM PULLBACKS') < w.indexOf('OTHER SWING SETUPS') && /watch only/.test(w) && !/ORDERS FOR TOMORROW/.test(w) && !/[^r] qty \d/.test(w), 'watch-mode digest: momentum list, then momentum pullbacks, then other setups as levels (no quantities except paper qty)');
   // 7a. momentum tagging (12 Nov 2026): pullbacks on names in the momentum top N are tagged, moved first and listed in their own digest block
   { const mk = (sym, setup, score, kind = 'act') => ({ sym, sector: 'S' + sym, kind, setup, score, entry: 100, stop: 95, target: 110, size: { qty: 7 }, row: { val: 1 }, reasons: [] });
     const sig = [mk('A', '52W breakout', 80), mk('B', 'Pullback buy', 60), mk('C', 'Pullback buy', 90), mk('D', 'Pullback buy', 70), mk('E', 'Pullback buy', 55, 'alert')];

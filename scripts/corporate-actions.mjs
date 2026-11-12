@@ -139,5 +139,5 @@ if (isMain) {
   if (flag('dry')) { console.log('\n(dry run: nothing written)'); process.exit(0); }
   await fs.writeFile(OUT, JSON.stringify(out, null, 1)); await fs.mkdir(path.join(ROOT, 'reports'), { recursive: true });
   await fs.writeFile(path.join(ROOT, 'reports', `corporate-actions-${out.asOf}.md`), L.join('\n') + '\n');
-  console.log(`\nwrote ${path.relative(ROOT, OUT)} and reports/corporate-actions-${out.asOf}.md. Next: npm run backtest:momentum, npm run backtest, npm run backtest:pairs — and git push all of it.`);
+  console.log(`\nwrote ${path.relative(ROOT, OUT)} and reports/corporate-actions-${out.asOf}.md. Next: npm run backtest:momentum, npm run backtest — and git push all of it.`);
 }
