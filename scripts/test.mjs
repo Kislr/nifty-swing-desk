@@ -157,6 +157,33 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backte
   const written = r.status === 0 ? await fs.readdir(out).catch(() => []) : [];
   assert(r.status === 0 && written.some(f => f.startsWith(prefix) && f.endsWith('.md')) && written.some(f => f.startsWith(prefix) && f.endsWith('.json')), `${script} runs end to end and writes its report` + (r.status ? '\n' + String(r.stderr).split('\n').slice(0, 6).join('\n') : '')); }
 
+// 6a4. benchmarks (12 Nov 2026): niftyindices.com total-return files stitched by scripts/benchmarks.mjs and reported by backtest-momentum.mjs --benchmarks
+{ const BM = await import('./benchmarks.mjs'); const D = bars.dates; const n = D.length; const tr = k => +(1000 * Math.pow(1.001, k)).toFixed(2);   // a known curve: +0.1% a day
+  const site = d => { const [y, m, dd] = d.split('-'); return `${dd} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+m - 1]} ${y}`; };   // the site's "12 Jun 2018"
+  const file = (name, lo, hi, ntr) => [`"IndexName","Date","Total Returns Index"${ntr ? ',"Net Total Return Index"' : ''}`, ...D.slice(lo, hi + 1).map((d, j) => `"${name}","${site(d)}","${tr(lo + j)}"${ntr ? `,"${(tr(lo + j) * 0.98).toFixed(2)}"` : ''}`).reverse()].join('\r\n') + '\r\n';   // newest first, CRLF, like the download
+  const mid = Math.floor(n / 2); const bdir = path.join(tmp, 'bench'); await fs.mkdir(bdir);
+  await fs.writeFile(path.join(bdir, 'TEST 50_Historical_TR_a.csv'), file('TEST 50', 0, mid, true)); await fs.writeFile(path.join(bdir, 'TEST 50_Historical_TR_b.csv'), file('TEST 50', mid, n - 1, true));   // the two files share the day `mid`
+  await fs.writeFile(path.join(bdir, 'TEST MOMENTUM 30_Historical_TR_a.csv'), file('TEST MOMENTUM 30', 0, n - 1, false));
+  assert(BM.isoDate('12 Jun 2018') === '2018-06-12' && BM.isoDate('05-Sep-2020') === '2020-09-05' && BM.isoDate('2021-01-04') === '2021-01-04' && BM.isoDate('Jun 2018') === null, 'benchmarks: the site\'s date form, dashed and ISO dates parse; junk is null');
+  const S = await BM.loadBenchmarks(bdir); const T = S['TEST 50'], TM = S['TEST MOMENTUM 30'];
+  assert(Object.keys(S).length === 2 && T && T.files === 2 && T.dates.length === n && T.dates[0] === D[0] && T.dates[n - 1] === D[n - 1] && T.dates.every((d, k) => d === D[k]) && !T.gaps.length, `benchmarks: two files stitched into one ascending series of ${T && T.dates.length} days, overlap day deduplicated, no gaps`);
+  assert(T.tr[0] === tr(0) && T.tr[mid] === tr(mid) && T.tr[n - 1] === tr(n - 1) && T.ntr && Math.abs(T.ntr[mid] - tr(mid) * 0.98) < 0.01 && TM.files === 1 && TM.ntr === null, 'benchmarks: TR values land on their dates, Net TR kept where the file has it and null for an index without the column');
+  const w = BM.windowStats(T, D[10], D[n - 1]); const exp = tr(n - 1) / tr(10) - 1;
+  assert(w.covered && w.days === n - 10 && Math.abs(w.totalReturn - exp) < 1e-9 && Math.abs(w.cagr - (Math.pow(1 + exp, 250 / (n - 11)) - 1)) < 1e-9 && w.maxDrawdown === 0 && w.sharpe > 0, `benchmarks: window stats on a rising curve — total ${(w.totalReturn * 100).toFixed(2)}% as expected, zero drawdown`);
+  const by = BM.byYear(T, D[10], D[n - 1]); const yrs = Object.keys(by); const chained = yrs.reduce((p, y) => p * (1 + by[y].ret), 1) - 1;
+  assert(yrs.length === 2 && yrs[0] === '2025' && yrs[1] === '2026' && Math.abs(chained - exp) < 1e-9 && by['2026'].start === by['2025'].end, 'benchmarks: calendar-year returns chain to the window total and hand over at the year end');
+  assert(BM.windowStats(T, '2010-01-01', D[5]).covered === false && BM.windowStats(TM, D[0], D[n - 1], 'ntr') === null && BM.valueAt(T, D[3]) === tr(3) && BM.valueAt(T, '2010-01-01') === null, 'benchmarks: a window before the series, or a missing Net TR column, is reported as not covered rather than as a number');
+  await fs.writeFile(path.join(bdir, 'TEST 50_Historical_TR_c.csv'), file('TEST 50', mid, mid, true).replace(tr(mid).toString(), (tr(mid) + 1).toString()));
+  assert(await BM.loadBenchmarks(bdir).then(() => false, e => /differs between files/.test(e.message)), 'benchmarks: two files that disagree about a day stop the load');
+  await fs.unlink(path.join(bdir, 'TEST 50_Historical_TR_c.csv'));
+  const out = path.join(tmp, 'out-momentum-bm'); const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'backtest-momentum.mjs'), '--hist', path.join(tmp, 'hist'), '--out', out, '--benchmarks', bdir], { encoding: 'utf8' });
+  const files = r.status === 0 ? await fs.readdir(out) : []; const md = files.length ? await fs.readFile(path.join(out, files.find(f => f.endsWith('.md'))), 'utf8') : ''; const js = files.length ? JSON.parse(await fs.readFile(path.join(out, files.find(f => f.endsWith('.json'))), 'utf8')) : null;
+  assert(r.status === 0 && /\| TEST 50 \(total return index\) \| — \| [\d.]+% \| [\d.]+% \| — \| 0\.0% \|/.test(md) && /\| year \| fixed slots \| reinvested \| Nifty 50 \| TEST 50 TR \| TEST Momentum 30 TR \|/.test(md) && /## Against NSE's own indices/.test(md) && /\*\*TEST MOMENTUM 30\*\* — /.test(md), 'backtest-momentum --benchmarks: a row per index in Overall, a column per index by year, and the comparison section' + (r.status ? '\n' + String(r.stderr).split('\n').slice(0, 6).join('\n') : ''));
+  if (js) { const pos = Object.fromEntries(D.map((d, k) => [d, k])); const b0 = js.benchmarks[0]; const want = tr(pos[js.stats.end]) / tr(pos[js.stats.start]) - 1;
+    assert(js.benchmarks.length === 2 && b0.name === 'TEST 50' && b0.window.start === js.stats.start && b0.window.end === js.stats.end && Math.abs(b0.window.totalReturn - want) < 1e-9 && Object.keys(b0.byYear).join() === Object.keys(js.stats.byYear).join(), `backtest-momentum --benchmarks: JSON carries each index measured over exactly the test window ${js.stats.start} → ${js.stats.end} (independent check), same years as the engine`); }
+  const plain = JSON.parse(await fs.readFile(path.join(tmp, 'out-momentum', (await fs.readdir(path.join(tmp, 'out-momentum'))).find(f => f.endsWith('.json'))), 'utf8'));
+  assert(!('benchmarks' in plain), 'backtest-momentum without --benchmarks: report unchanged (no benchmarks block)'); }
+
 // 6b. corporate actions: purpose parsing, verification against bars, and application at load (compounding, raw files untouched)
 { const CA = await import('./corporate-actions.mjs');
   const P = CA.parsePurpose;
