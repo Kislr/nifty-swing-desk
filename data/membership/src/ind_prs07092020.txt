@@ -1,0 +1,44 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs07092020.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, September 07, 2020
+
+                                 Replacements in Indices
+
+A. Replacement on account of shift to Z category:
+These changes shall become effective from September 14, 2020 (close of September 11, 2020).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Asahi India Glass Ltd.                             ASAHIINDIA
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      JTEKT India Ltd.                                   JTEKTINDIA
+
+D. Replacements on account of non-compliance of SEBI Portfolio Concentration Norms:
+These changes shall become effective from September 25, 2020 (close of September 24, 2020).
+
+2)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Arvind Fashions Ltd.                               ARVINDFASN
+       2      KPIT Technologies Ltd.                             KPITTECH
+       3      Repco Home Finance Ltd.                            REPCOHOME
+       4      Spandana Sphoorty Financial Ltd.                   SPANDANA
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      NOCIL Ltd.                                         NOCIL
+       2      PSP Projects Ltd.                                  PSPPROJECT
+       3      Swaraj Engines Ltd.                                SWARAJENG
+       4      Tata Coffee Ltd.                                   TATACOFFEE
+

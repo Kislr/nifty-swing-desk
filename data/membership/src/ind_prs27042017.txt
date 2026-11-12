@@ -1,0 +1,27 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs27042017.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, 27 April 2017
+
+                                 Replacements in Indices
+
+Replacements on account of schemes of arrangement (Grasim / Aditya Birla Nuvo merger, Tube Investments demerger).
+The changes shall become effective from May 26, 2017 (close of May 25, 2017).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Aditya Birla Nuvo Ltd.                             ABIRLANUVO
+       2      Grasim Industries Ltd.                             GRASIM
+       3      Tube Investments of India Ltd.                     TUBEINVEST
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Laurus Labs Ltd.                                   LAURUSLABS
+       2      PNB Housing Finance Ltd.                           PNBHOUSING
+       3      Varun Beverages Ltd.                               VBL
+

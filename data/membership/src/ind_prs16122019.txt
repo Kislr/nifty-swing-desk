@@ -1,0 +1,35 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs16122019.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, December 16, 2019
+
+                                 Replacements in Indices
+
+Replacements on account of schemes of arrangement (public-sector bank amalgamations, Max India demerger, Tata Chemicals demerger).
+These changes shall become effective from December 27, 2019 (close of December 26, 2019).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Allahabad Bank                                     ALBK
+       2      Andhra Bank                                        ANDHRABANK
+       3      Corporation Bank                                   CORPBANK
+       4      Max India Ltd.                                     MAXINDIA
+       5      Oriental Bank of Commerce                          ORIENTBANK
+       6      Syndicate Bank                                     SYNDIBANK
+       7      Tata Chemicals Ltd.                                TATACHEM
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Aarti Industries Ltd.                              AARTIIND
+       2      Asahi India Glass Ltd.                             ASAHIINDIA
+       3      Indiamart Intermesh Ltd.                           INDIAMART
+       4      Spandana Sphoorty Financial Ltd.                   SPANDANA
+       5      Spicejet Ltd.                                      SPICEJET
+       6      Triveni Turbine Ltd.                               TRITURBINE
+       7      Westlife Development Ltd.                          WESTLIFE
+
