@@ -1,16 +1,16 @@
 {
- "asOf": "2026-11-06",
+ "asOf": "2026-11-12",
  "source": "NSE corporate-actions API",
- "history": "2016-11-07 → 2026-11-05",
+ "history": "2016-11-07 → 2026-11-11",
  "rule": "for bars before exDate: price ÷ factor, volume × factor; apply:false events are skipped by engine.buildBars",
  "tolerance": 0.12,
  "counts": {
-  "rows": 22479,
-  "parsed": 215,
-  "applied": 192,
-  "rejected": 23,
+  "rows": 22526,
+  "parsed": 307,
+  "applied": 281,
+  "rejected": 26,
   "unchecked": 0,
-  "symbols": 150
+  "symbols": 223
  },
  "symbols": {
   "ONGC": [
@@ -22,6 +22,28 @@
     "source": "Bonus 1: 2",
     "observed": 1.5054,
     "checked": "2016-12-14 close 305.3 → 2016-12-15 open 202.8",
+    "apply": true
+   }
+  ],
+  "BALMLAWRIE": [
+   {
+    "exDate": "2016-12-26",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 4.2884,
+    "checked": "2016-12-23 close 1050.65 → 2016-12-26 open 245",
+    "apply": true
+   },
+   {
+    "exDate": "2019-12-26",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.5135,
+    "checked": "2019-12-24 close 192.9 → 2019-12-26 open 127.45",
     "apply": true
    }
   ],
@@ -66,6 +88,18 @@
     "source": "Bonus 1:2",
     "observed": 1.4841,
     "checked": "2024-07-01 close 713.85 → 2024-07-02 open 481",
+    "apply": true
+   }
+  ],
+  "GAYAPROJ": [
+   {
+    "exDate": "2017-02-10",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9037,
+    "checked": "2017-02-09 close 722.8 → 2017-02-10 open 147.4",
     "apply": true
    }
   ],
@@ -140,6 +174,18 @@
     "source": "Bonus 1:2",
     "observed": 1.4784,
     "checked": "2022-09-05 close 136.75 → 2022-09-06 open 92.5",
+    "apply": true
+   }
+  ],
+  "VGUARD": [
+   {
+    "exDate": "2017-03-15",
+    "type": "bonus",
+    "detail": "bonus 2:5",
+    "factor": 1.4,
+    "source": "Bonus 2:5",
+    "observed": 1.3595,
+    "checked": "2017-03-14 close 249.95 → 2017-03-15 open 183.85",
     "apply": true
    }
   ],
@@ -261,6 +307,18 @@
     "apply": true
    }
   ],
+  "ADVENZYMES": [
+   {
+    "exDate": "2017-05-25",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9125,
+    "checked": "2017-05-24 close 1855.95 → 2017-05-25 open 377.8",
+    "apply": true
+   }
+  ],
   "WIPRO": [
    {
     "exDate": "2017-06-13",
@@ -349,6 +407,28 @@
     "apply": true
    }
   ],
+  "KITEX": [
+   {
+    "exDate": "2017-06-22",
+    "type": "bonus",
+    "detail": "bonus 2:5",
+    "factor": 1.4,
+    "source": "Bonus 2:5",
+    "observed": 1.3405,
+    "checked": "2017-06-21 close 387.4 → 2017-06-22 open 289",
+    "apply": true
+   },
+   {
+    "exDate": "2025-01-17",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
+   }
+  ],
   "PETRONET": [
    {
     "exDate": "2017-07-03",
@@ -368,9 +448,9 @@
     "detail": "bonus 1:2",
     "factor": 1.5,
     "source": "Bonus 1:2",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 1.5054,
+    "checked": "2017-07-04 close 458.4 → 2017-07-05 open 304.5",
+    "apply": true
    },
    {
     "exDate": "2018-10-30",
@@ -378,9 +458,9 @@
     "detail": "bonus 1:2",
     "factor": 1.5,
     "source": "Bonus 1:2",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 1.4471,
+    "checked": "2018-10-29 close 228.5 → 2018-10-30 open 157.9",
+    "apply": true
    },
    {
     "exDate": "2022-10-03",
@@ -400,6 +480,50 @@
     "source": "Bonus 1:2",
     "observed": 1.4991,
     "checked": "2025-07-17 close 153.87 → 2025-07-18 open 102.64",
+    "apply": true
+   }
+  ],
+  "PCJEWELLER": [
+   {
+    "exDate": "2017-07-06",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9992,
+    "checked": "2017-07-05 close 501.8 → 2017-07-06 open 251",
+    "apply": true
+   },
+   {
+    "exDate": "2024-12-16",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
+   }
+  ],
+  "MHRIL": [
+   {
+    "exDate": "2017-07-10",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.3319,
+    "checked": "2017-07-07 close 652.65 → 2017-07-10 open 490",
+    "apply": true
+   },
+   {
+    "exDate": "2021-09-08",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.4106,
+    "checked": "2021-09-07 close 339.25 → 2021-09-08 open 240.5",
     "apply": true
    }
   ],
@@ -503,6 +627,50 @@
     "apply": true
    }
   ],
+  "SUNTECK": [
+   {
+    "exDate": "2017-07-25",
+    "type": "split",
+    "detail": "split ₹2 → ₹1",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 2/- Per Share To Rs 1/- Per Share",
+    "observed": 1.9872,
+    "checked": "2017-07-24 close 472.95 → 2017-07-25 open 238",
+    "apply": true
+   }
+  ],
+  "CCAVENUE": [
+   {
+    "exDate": "2017-08-31",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Annual General Meeting/Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
+    "observed": 9.9378,
+    "checked": "2017-08-30 close 1470.3 → 2017-08-31 open 147.95",
+    "apply": true
+   },
+   {
+    "exDate": "2021-03-18",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0654,
+    "checked": "2021-03-17 close 101 → 2021-03-18 open 48.9",
+    "apply": true
+   },
+   {
+    "exDate": "2022-03-14",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0814,
+    "checked": "2022-03-11 close 44.75 → 2022-03-14 open 21.5",
+    "apply": true
+   }
+  ],
   "RELIANCE": [
    {
     "exDate": "2017-09-07",
@@ -522,6 +690,18 @@
     "source": "Bonus 1:1",
     "observed": 1.9863,
     "checked": "2024-10-25 close 2655.7 → 2024-10-28 open 1337",
+    "apply": true
+   }
+  ],
+  "NESCO": [
+   {
+    "exDate": "2017-09-15",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.937,
+    "checked": "2017-09-14 close 2838.75 → 2017-09-15 open 575",
     "apply": true
    }
   ],
@@ -546,6 +726,30 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
     "observed": 5.0096,
     "checked": "2017-09-20 close 1880.1 → 2017-09-21 open 375.3",
+    "apply": true
+   }
+  ],
+  "MANPASAND": [
+   {
+    "exDate": "2017-09-27",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0045,
+    "checked": "2017-09-26 close 952.15 → 2017-09-27 open 475",
+    "apply": true
+   }
+  ],
+  "MOIL": [
+   {
+    "exDate": "2017-09-27",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9672,
+    "checked": "2017-09-26 close 390.4 → 2017-09-27 open 198.45",
     "apply": true
    }
   ],
@@ -580,9 +784,9 @@
     "detail": "split ₹10 → ₹1",
     "factor": 10,
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 9.9821,
+    "checked": "2017-09-27 close 306.95 → 2017-09-28 open 30.75",
+    "apply": true
    },
    {
     "exDate": "2025-02-14",
@@ -592,6 +796,30 @@
     "source": "Bonus 1:1",
     "observed": 1.9493,
     "checked": "2025-02-13 close 847.95 → 2025-02-14 open 435",
+    "apply": true
+   }
+  ],
+  "JAMNAAUTO": [
+   {
+    "exDate": "2017-10-05",
+    "type": "split",
+    "detail": "split ₹5 → ₹1",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share",
+    "observed": 4.9706,
+    "checked": "2017-10-04 close 270.9 → 2017-10-05 open 54.5",
+    "apply": true
+   }
+  ],
+  "HERITGFOOD": [
+   {
+    "exDate": "2017-10-10",
+    "type": "split",
+    "detail": "split ₹10 → ₹5",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
+    "observed": 1.9997,
+    "checked": "2017-10-09 close 1539.85 → 2017-10-10 open 770.05",
     "apply": true
    }
   ],
@@ -653,6 +881,18 @@
     "apply": true
    }
   ],
+  "VAKRANGEE": [
+   {
+    "exDate": "2017-12-21",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9631,
+    "checked": "2017-12-20 close 761.7 → 2017-12-21 open 388",
+    "apply": true
+   }
+  ],
   "M&M": [
    {
     "exDate": "2017-12-21",
@@ -662,6 +902,38 @@
     "source": "Bonus 1:1",
     "observed": 2.0101,
     "checked": "2017-12-20 close 1541.75 → 2017-12-21 open 767",
+    "apply": true
+   }
+  ],
+  "JINDWORLD": [
+   {
+    "exDate": "2017-12-26",
+    "type": "split",
+    "detail": "split ₹10 → ₹5",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
+    "observed": 1.9713,
+    "checked": "2017-12-22 close 1155.2 → 2017-12-26 open 586",
+    "apply": true
+   },
+   {
+    "exDate": "2018-10-31",
+    "type": "split",
+    "detail": "split ₹5 → ₹1",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share",
+    "observed": 4.6539,
+    "checked": "2018-10-30 close 328.1 → 2018-10-31 open 70.5",
+    "apply": true
+   },
+   {
+    "exDate": "2025-02-28",
+    "type": "bonus",
+    "detail": "bonus 4:1",
+    "factor": 5,
+    "source": "Bonus 4:1",
+    "observed": 4.7155,
+    "checked": "2025-02-27 close 344.7 → 2025-02-28 open 73.1",
     "apply": true
    }
   ],
@@ -687,6 +959,18 @@
     "apply": true
    }
   ],
+  "LAOPALA": [
+   {
+    "exDate": "2018-03-22",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0887,
+    "checked": "2018-03-21 close 649.6 → 2018-03-22 open 311",
+    "apply": true
+   }
+  ],
   "PCBL": [
    {
     "exDate": "2018-04-19",
@@ -694,9 +978,9 @@
     "detail": "split ₹10 → ₹2",
     "factor": 5,
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 4.9301,
+    "checked": "2018-04-18 close 1128.5 → 2018-04-19 open 228.9",
+    "apply": true
    },
    {
     "exDate": "2022-04-11",
@@ -733,6 +1017,18 @@
     "apply": true
    }
   ],
+  "GRUH": [
+   {
+    "exDate": "2018-06-06",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0536,
+    "checked": "2018-06-05 close 681.8 → 2018-06-06 open 332",
+    "apply": true
+   }
+  ],
   "UNITDSPR": [
    {
     "exDate": "2018-06-15",
@@ -740,9 +1036,21 @@
     "detail": "split ₹10 → ₹2",
     "factor": 5,
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 4.9734,
+    "checked": "2018-06-14 close 3455.3 → 2018-06-15 open 694.75",
+    "apply": true
+   }
+  ],
+  "EPL": [
+   {
+    "exDate": "2018-06-20",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9903,
+    "checked": "2018-06-19 close 246.8 → 2018-06-20 open 124",
+    "apply": true
    }
   ],
   "EMAMILTD": [
@@ -779,6 +1087,18 @@
     "apply": true
    }
   ],
+  "HIKAL": [
+   {
+    "exDate": "2018-06-22",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.406,
+    "checked": "2018-06-21 close 231.15 → 2018-06-22 open 164.4",
+    "apply": true
+   }
+  ],
   "AVANTIFEED": [
    {
     "exDate": "2018-06-26",
@@ -803,6 +1123,18 @@
     "apply": true
    }
   ],
+  "JYOTHYLAB": [
+   {
+    "exDate": "2018-06-28",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9607,
+    "checked": "2018-06-27 close 446.55 → 2018-06-28 open 227.75",
+    "apply": true
+   }
+  ],
   "UNOMINDA": [
    {
     "exDate": "2018-07-11",
@@ -810,9 +1142,9 @@
     "detail": "bonus 2:1",
     "factor": 3,
     "source": "Bonus 2:1/Dividend- Rs 1.60 Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 2.9141,
+    "checked": "2018-07-10 close 1247.25 → 2018-07-11 open 428",
+    "apply": true
    },
    {
     "exDate": "2022-07-07",
@@ -820,9 +1152,9 @@
     "detail": "bonus 1:1",
     "factor": 2,
     "source": "Bonus 1:1",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 1.8287,
+    "checked": "2022-07-06 close 969.2 → 2022-07-07 open 530",
+    "apply": true
    }
   ],
   "GICRE": [
@@ -834,6 +1166,30 @@
     "source": "Bonus 1:1/Dividend- Rs 13.5 Per Share",
     "observed": 2.043,
     "checked": "2018-07-11 close 764.1 → 2018-07-12 open 374",
+    "apply": true
+   }
+  ],
+  "ASHOKA": [
+   {
+    "exDate": "2018-07-12",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.4165,
+    "checked": "2018-07-11 close 239.95 → 2018-07-12 open 169.4",
+    "apply": true
+   }
+  ],
+  "BORORENEW": [
+   {
+    "exDate": "2018-08-02",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 4.0303,
+    "checked": "2018-08-01 close 1176.85 → 2018-08-02 open 292",
     "apply": true
    }
   ],
@@ -892,6 +1248,18 @@
     "source": "Bonus 1:1",
     "observed": 1.9945,
     "checked": "2018-09-10 close 3590.1 → 2018-09-11 open 1800",
+    "apply": true
+   }
+  ],
+  "IGARASHI": [
+   {
+    "exDate": "2018-09-27",
+    "type": "bonus",
+    "detail": "bonus 25:202",
+    "factor": 1.123762,
+    "source": "Bonus 25:202",
+    "observed": 1.0197,
+    "checked": "2018-09-26 close 703.15 → 2018-09-27 open 689.55",
     "apply": true
    }
   ],
@@ -971,6 +1339,18 @@
     "apply": true
    }
   ],
+  "GUJENERGY": [
+   {
+    "exDate": "2019-01-15",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9391,
+    "checked": "2019-01-14 close 669.25 → 2019-01-15 open 135.5",
+    "apply": true
+   }
+  ],
   "NTPC": [
    {
     "exDate": "2019-03-19",
@@ -980,6 +1360,28 @@
     "source": "Bonus 1:5",
     "observed": 1.1851,
     "checked": "2019-03-18 close 158.75 → 2019-03-19 open 133.95",
+    "apply": true
+   }
+  ],
+  "TTKPRESTIG": [
+   {
+    "exDate": "2019-05-15",
+    "type": "bonus",
+    "detail": "bonus 1:5",
+    "factor": 1.2,
+    "source": "Bonus 1:5",
+    "observed": 1.0962,
+    "checked": "2019-05-14 close 8216.1 → 2019-05-15 open 7494.8",
+    "apply": true
+   },
+   {
+    "exDate": "2021-12-14",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Face Value Split (Sub-Division) - From Rs 10 Per Share To Re 1 Per Share",
+    "observed": 9.5722,
+    "checked": "2021-12-13 close 11725.9 → 2021-12-14 open 1225",
     "apply": true
    }
   ],
@@ -1004,6 +1406,18 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
     "observed": 4.9569,
     "checked": "2019-06-13 close 1471.2 → 2019-06-14 open 296.8",
+    "apply": true
+   }
+  ],
+  "RELAXO": [
+   {
+    "exDate": "2019-06-26",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.015,
+    "checked": "2019-06-25 close 848.3 → 2019-06-26 open 421",
     "apply": true
    }
   ],
@@ -1215,6 +1629,42 @@
     "apply": true
    }
   ],
+  "SIS": [
+   {
+    "exDate": "2020-01-15",
+    "type": "split",
+    "detail": "split ₹10 → ₹5",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
+    "observed": 1.9614,
+    "checked": "2020-01-14 close 1014.05 → 2020-01-15 open 517",
+    "apply": true
+   }
+  ],
+  "VINATIORGA": [
+   {
+    "exDate": "2020-02-05",
+    "type": "split",
+    "detail": "split ₹2 → ₹1",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 2/- Per Share To Rs 1/- Per Share",
+    "observed": 1.976,
+    "checked": "2020-02-04 close 2024.9 → 2020-02-05 open 1024.75",
+    "apply": true
+   }
+  ],
+  "KTKBANK": [
+   {
+    "exDate": "2020-03-17",
+    "type": "bonus",
+    "detail": "bonus 1:10",
+    "factor": 1.1,
+    "source": "Bonus 1:10",
+    "observed": 1.042,
+    "checked": "2020-03-16 close 52.1 → 2020-03-17 open 50",
+    "apply": true
+   }
+  ],
   "IRCON": [
    {
     "exDate": "2020-04-03",
@@ -1268,9 +1718,9 @@
     "detail": "bonus 1:1",
     "factor": 2,
     "source": "Bonus 1:1",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 1.9439,
+    "checked": "2020-09-24 close 738.7 → 2020-09-25 open 380",
+    "apply": true
    }
   ],
   "LAURUSLABS": [
@@ -1282,6 +1732,52 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
     "observed": 4.8858,
     "checked": "2020-09-28 close 1460.85 → 2020-09-29 open 299",
+    "apply": true
+   }
+  ],
+  "AARTIDRUGS": [
+   {
+    "exDate": "2020-09-30",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 3.8097,
+    "checked": "2020-09-29 close 2938.4 → 2020-09-30 open 771.3",
+    "apply": true
+   }
+  ],
+  "GAEL": [
+   {
+    "exDate": "2020-10-01",
+    "type": "split",
+    "detail": "split ₹2 → ₹1",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 2/- Per Share To Re 1/- Per Share",
+    "observed": 1.9877,
+    "checked": "2020-09-30 close 217.65 → 2020-10-01 open 109.5",
+    "apply": true
+   },
+   {
+    "exDate": "2024-03-15",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.984,
+    "checked": "2024-03-14 close 366.85 → 2024-03-15 open 184.9",
+    "apply": true
+   }
+  ],
+  "HATSUN": [
+   {
+    "exDate": "2020-12-09",
+    "type": "bonus",
+    "detail": "bonus 1:3",
+    "factor": 1.333333,
+    "source": "Bonus 1:3",
+    "observed": 1.1755,
+    "checked": "2020-12-08 close 1039.1 → 2020-12-09 open 884",
     "apply": true
    }
   ],
@@ -1307,6 +1803,30 @@
     "apply": true
    }
   ],
+  "VALIANTORG": [
+   {
+    "exDate": "2020-12-24",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9752,
+    "checked": "2020-12-23 close 3318.4 → 2020-12-24 open 1680",
+    "apply": true
+   }
+  ],
+  "KNRCON": [
+   {
+    "exDate": "2021-02-03",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9071,
+    "checked": "2021-02-02 close 446.25 → 2021-02-03 open 234",
+    "apply": true
+   }
+  ],
   "DIXON": [
    {
     "exDate": "2021-03-18",
@@ -1317,6 +1837,64 @@
     "observed": 4.8905,
     "checked": "2021-03-17 close 20074.95 → 2021-03-18 open 4104.9",
     "apply": true
+   }
+  ],
+  "FINPIPE": [
+   {
+    "exDate": "2021-04-15",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9539,
+    "checked": "2021-04-13 close 698.5 → 2021-04-15 open 141",
+    "apply": true
+   }
+  ],
+  "VAIBHAVGBL": [
+   {
+    "exDate": "2021-05-07",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9347,
+    "checked": "2021-05-06 close 4367 → 2021-05-07 open 884.95",
+    "apply": true
+   }
+  ],
+  "ALKYLAMINE": [
+   {
+    "exDate": "2021-05-11",
+    "type": "split",
+    "detail": "split ₹5 → ₹2",
+    "factor": 2.5,
+    "source": "Face Value Split (Sub-Division) - From Rs 5/- Per Share To Rs 2/- Per Share",
+    "observed": 2.4805,
+    "checked": "2021-05-10 close 8282.45 → 2021-05-11 open 3339",
+    "apply": true
+   }
+  ],
+  "VEEDOL": [
+   {
+    "exDate": "2021-07-26",
+    "type": "split",
+    "detail": "split ₹5 → ₹2",
+    "factor": 2.5,
+    "source": "Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 2/- Per Share",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
+   },
+   {
+    "exDate": "2021-07-26",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
    }
   ],
   "POWERGRID": [
@@ -1350,6 +1928,40 @@
     "source": "Bonus 1:1",
     "observed": 1.9958,
     "checked": "2021-08-17 close 329.3 → 2021-08-18 open 165",
+    "apply": true
+   }
+  ],
+  "BCG": [
+   {
+    "exDate": "2021-08-18",
+    "type": "bonus",
+    "detail": "bonus 1:4",
+    "factor": 1.25,
+    "source": "Bonus 1:4",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
+   },
+   {
+    "exDate": "2022-03-15",
+    "type": "bonus",
+    "detail": "bonus 2:3",
+    "factor": 1.666667,
+    "source": "Bonus 2:3",
+    "observed": 1.5879,
+    "checked": "2022-03-14 close 102.1 → 2022-03-15 open 64.3",
+    "apply": true
+   }
+  ],
+  "MAHLIFE": [
+   {
+    "exDate": "2021-09-14",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "observed": 3.0174,
+    "checked": "2021-09-13 close 847.9 → 2021-09-14 open 281",
     "apply": true
    }
   ],
@@ -1491,6 +2103,60 @@
     "apply": true
    }
   ],
+  "HGS": [
+   {
+    "exDate": "2022-02-22",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.1029,
+    "checked": "2022-02-21 close 2733.8 → 2022-02-22 open 1300",
+    "apply": true
+   }
+  ],
+  "EASEMYTRIP": [
+   {
+    "exDate": "2022-02-28",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9206,
+    "checked": "2022-02-25 close 549.3 → 2022-02-28 open 286",
+    "apply": true
+   },
+   {
+    "exDate": "2022-11-21",
+    "type": "split",
+    "detail": "split ₹2 → ₹1",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 2/- Per Share To Re 1/- Per Share",
+    "observed": 7.2066,
+    "checked": "2022-11-18 close 381.95 → 2022-11-21 open 53",
+    "apply": false
+   },
+   {
+    "exDate": "2022-11-21",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 7.2066,
+    "checked": "2022-11-18 close 381.95 → 2022-11-21 open 53",
+    "apply": false
+   },
+   {
+    "exDate": "2024-11-29",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9161,
+    "checked": "2024-11-28 close 32.65 → 2024-11-29 open 17.04",
+    "apply": true
+   }
+  ],
   "RKFORGE": [
    {
     "exDate": "2022-03-14",
@@ -1537,6 +2203,18 @@
     "apply": true
    }
   ],
+  "SAREGAMA": [
+   {
+    "exDate": "2022-04-26",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
+    "observed": 9.8859,
+    "checked": "2022-04-25 close 4495.6 → 2022-04-26 open 454.75",
+    "apply": true
+   }
+  ],
   "BBOX": [
    {
     "exDate": "2022-05-13",
@@ -1561,6 +2239,50 @@
     "apply": true
    }
   ],
+  "NAZARA": [
+   {
+    "exDate": "2022-06-24",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.8087,
+    "checked": "2022-06-23 close 1041.8 → 2022-06-24 open 576",
+    "apply": true
+   },
+   {
+    "exDate": "2025-09-26",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 3.8351,
+    "checked": "2025-09-25 close 1116 → 2025-09-26 open 291",
+    "apply": false
+   },
+   {
+    "exDate": "2025-09-26",
+    "type": "split",
+    "detail": "split ₹4 → ₹2",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 4/- Per Share To Rs 2/- Per Share",
+    "observed": 3.8351,
+    "checked": "2025-09-25 close 1116 → 2025-09-26 open 291",
+    "apply": false
+   }
+  ],
+  "RATNAMANI": [
+   {
+    "exDate": "2022-06-30",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.3965,
+    "checked": "2022-06-29 close 2520.75 → 2022-06-30 open 1805",
+    "apply": true
+   }
+  ],
   "TORNTPHARM": [
    {
     "exDate": "2022-07-08",
@@ -1570,6 +2292,18 @@
     "source": "Bonus 1:1",
     "observed": 1.9725,
     "checked": "2022-07-07 close 2948.55 → 2022-07-08 open 1494.8",
+    "apply": true
+   }
+  ],
+  "GMMPFAUDLR": [
+   {
+    "exDate": "2022-07-11",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "observed": 2.8586,
+    "checked": "2022-07-08 close 4159.25 → 2022-07-11 open 1455",
     "apply": true
    }
   ],
@@ -1594,6 +2328,28 @@
     "source": "Bonus 1:3",
     "observed": 1.3269,
     "checked": "2022-08-16 close 137.4 → 2022-08-17 open 103.55",
+    "apply": true
+   }
+  ],
+  "SONATSOFTW": [
+   {
+    "exDate": "2022-09-08",
+    "type": "bonus",
+    "detail": "bonus 1:3",
+    "factor": 1.333333,
+    "source": "Bonus 1:3",
+    "observed": 1.2031,
+    "checked": "2022-09-07 close 714.65 → 2022-09-08 open 594",
+    "apply": true
+   },
+   {
+    "exDate": "2023-12-12",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9865,
+    "checked": "2023-12-11 close 1410.2 → 2023-12-12 open 709.9",
     "apply": true
    }
   ],
@@ -1663,6 +2419,18 @@
     "apply": true
    }
   ],
+  "HLEGLAS": [
+   {
+    "exDate": "2022-10-18",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9972,
+    "checked": "2022-10-17 close 3717.95 → 2022-10-18 open 744",
+    "apply": true
+   }
+  ],
   "TDPOWERSYS": [
    {
     "exDate": "2022-10-31",
@@ -1716,6 +2484,42 @@
     "source": "Bonus 1:2",
     "observed": 1.4753,
     "checked": "2025-07-17 close 64.47 → 2025-07-18 open 43.7",
+    "apply": true
+   }
+  ],
+  "MAHSEAMLES": [
+   {
+    "exDate": "2022-11-25",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.8562,
+    "checked": "2022-11-24 close 778.5 → 2022-11-25 open 419.4",
+    "apply": true
+   }
+  ],
+  "SFL": [
+   {
+    "exDate": "2022-12-21",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.89,
+    "checked": "2022-12-20 close 2593.1 → 2022-12-21 open 1372",
+    "apply": true
+   }
+  ],
+  "SPLPETRO": [
+   {
+    "exDate": "2023-01-06",
+    "type": "split",
+    "detail": "split ₹4 → ₹2",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 4/- Per Share To Rs 2/- Per Share",
+    "observed": 1.9974,
+    "checked": "2023-01-05 close 798.75 → 2023-01-06 open 399.9",
     "apply": true
    }
   ],
@@ -1799,6 +2603,18 @@
     "apply": true
    }
   ],
+  "KANSAINER": [
+   {
+    "exDate": "2023-07-04",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.4379,
+    "checked": "2023-07-03 close 461.55 → 2023-07-04 open 321",
+    "apply": true
+   }
+  ],
   "THANGAMAYL": [
    {
     "exDate": "2023-07-17",
@@ -1832,6 +2648,18 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
     "observed": 9.9543,
     "checked": "2023-08-03 close 1929.15 → 2023-08-04 open 193.8",
+    "apply": true
+   }
+  ],
+  "JBCHEPHARM": [
+   {
+    "exDate": "2023-09-18",
+    "type": "split",
+    "detail": "split ₹2 → ₹1",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 2/- Per Share To Re 1/- Per Share",
+    "observed": 2.0006,
+    "checked": "2023-09-15 close 2956.95 → 2023-09-18 open 1478",
     "apply": true
    }
   ],
@@ -1871,6 +2699,30 @@
     "apply": true
    }
   ],
+  "SAFARI": [
+   {
+    "exDate": "2023-12-12",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9711,
+    "checked": "2023-12-11 close 3936.25 → 2023-12-12 open 1997",
+    "apply": true
+   }
+  ],
+  "ALLCARGO": [
+   {
+    "exDate": "2024-01-02",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 3.8262,
+    "checked": "2024-01-01 close 329.05 → 2024-01-02 open 86",
+    "apply": true
+   }
+  ],
   "NESTLEIND": [
    {
     "exDate": "2024-01-05",
@@ -1902,6 +2754,30 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
     "observed": 1.9764,
     "checked": "2024-01-09 close 1338 → 2024-01-10 open 677",
+    "apply": true
+   }
+  ],
+  "NEWGEN": [
+   {
+    "exDate": "2024-01-12",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "apply": false,
+    "observed": null,
+    "checked": "no bars around the ex-date"
+   }
+  ],
+  "MASFIN": [
+   {
+    "exDate": "2024-02-22",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "observed": 2.7802,
+    "checked": "2024-02-21 close 983.65 → 2024-02-22 open 353.8",
     "apply": true
    }
   ],
@@ -2035,6 +2911,42 @@
     "apply": true
    }
   ],
+  "SAPPHIRE": [
+   {
+    "exDate": "2024-09-05",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.7969,
+    "checked": "2024-09-04 close 1683.7 → 2024-09-05 open 351",
+    "apply": true
+   }
+  ],
+  "VSTIND": [
+   {
+    "exDate": "2024-09-06",
+    "type": "bonus",
+    "detail": "bonus 10:1",
+    "factor": 11,
+    "source": "Bonus 10:1",
+    "observed": 9.3939,
+    "checked": "2024-09-05 close 4456.45 → 2024-09-06 open 474.4",
+    "apply": false
+   }
+  ],
+  "ANDHRAPAP": [
+   {
+    "exDate": "2024-09-11",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9531,
+    "checked": "2024-09-10 close 586.45 → 2024-09-11 open 118.4",
+    "apply": true
+   }
+  ],
   "KIMS": [
    {
     "exDate": "2024-09-13",
@@ -2078,9 +2990,9 @@
     "detail": "split ₹10 → ₹2",
     "factor": 5,
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 5.0499,
+    "checked": "2024-10-17 close 2570.4 → 2024-10-18 open 509",
+    "apply": true
    }
   ],
   "DRREDDY": [
@@ -2092,18 +3004,6 @@
     "source": "Face Value Split (Sub-Division) - From Rs 5/- Per Share To Re 1/- Per Share",
     "observed": 4.9354,
     "checked": "2024-10-25 close 6514.7 → 2024-10-28 open 1320",
-    "apply": true
-   }
-  ],
-  "NMDC": [
-   {
-    "exDate": "2024-12-27",
-    "type": "bonus",
-    "detail": "bonus 2:1",
-    "factor": 3,
-    "source": "Bonus 2:1",
-    "observed": 2.9851,
-    "checked": "2024-12-26 close 214.45 → 2024-12-27 open 71.84",
     "apply": true
    }
   ],
@@ -2119,6 +3019,30 @@
     "apply": true
    }
   ],
+  "NMDC": [
+   {
+    "exDate": "2024-12-27",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "observed": 2.9851,
+    "checked": "2024-12-26 close 214.45 → 2024-12-27 open 71.84",
+    "apply": true
+   }
+  ],
+  "GARFIBRES": [
+   {
+    "exDate": "2025-01-03",
+    "type": "bonus",
+    "detail": "bonus 4:1",
+    "factor": 5,
+    "source": "Bonus 4:1",
+    "observed": 4.8523,
+    "checked": "2025-01-02 close 4650.95 → 2025-01-03 open 958.5",
+    "apply": true
+   }
+  ],
   "SHRIRAMFIN": [
    {
     "exDate": "2025-01-10",
@@ -2128,6 +3052,18 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
     "observed": 4.9644,
     "checked": "2025-01-09 close 2809.85 → 2025-01-10 open 566",
+    "apply": true
+   }
+  ],
+  "JAIBALAJI": [
+   {
+    "exDate": "2025-01-17",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 5.084,
+    "checked": "2025-01-16 close 828.7 → 2025-01-17 open 163",
     "apply": true
    }
   ],
@@ -2165,6 +3101,18 @@
     "apply": true
    }
   ],
+  "IOLCP": [
+   {
+    "exDate": "2025-03-11",
+    "type": "split",
+    "detail": "split ₹10 → ₹2",
+    "factor": 5,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
+    "observed": 4.9906,
+    "checked": "2025-03-10 close 345.6 → 2025-03-11 open 69.25",
+    "apply": true
+   }
+  ],
   "ACUTAAS": [
    {
     "exDate": "2025-04-25",
@@ -2172,9 +3120,9 @@
     "detail": "split ₹10 → ₹5",
     "factor": 2,
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
-    "apply": false,
-    "observed": null,
-    "checked": "no bars around the ex-date"
+    "observed": 1.97,
+    "checked": "2025-04-24 close 2202.5 → 2025-04-25 open 1118",
+    "apply": true
    }
   ],
   "NAUKRI": [
@@ -2201,6 +3149,18 @@
     "apply": true
    }
   ],
+  "VESUVIUS": [
+   {
+    "exDate": "2025-06-10",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
+    "observed": 9.8968,
+    "checked": "2025-06-09 close 5898.5 → 2025-06-10 open 596",
+    "apply": true
+   }
+  ],
   "BAJFINANCE": [
    {
     "exDate": "2025-06-16",
@@ -2223,6 +3183,18 @@
     "apply": false
    }
   ],
+  "VMART": [
+   {
+    "exDate": "2025-06-23",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 3.9298,
+    "checked": "2025-06-20 close 3556.5 → 2025-06-23 open 905",
+    "apply": true
+   }
+  ],
   "ASHOKLEY": [
    {
     "exDate": "2025-07-16",
@@ -2232,6 +3204,18 @@
     "source": "Bonus 1:1",
     "observed": 2.0008,
     "checked": "2025-07-15 close 250.9 → 2025-07-16 open 125.4",
+    "apply": true
+   }
+  ],
+  "VRLLOG": [
+   {
+    "exDate": "2025-08-14",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9916,
+    "checked": "2025-08-13 close 557.65 → 2025-08-14 open 280",
     "apply": true
    }
   ],
@@ -2295,6 +3279,30 @@
     "apply": true
    }
   ],
+  "TIMETECHNO": [
+   {
+    "exDate": "2025-09-23",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9423,
+    "checked": "2025-09-22 close 477.8 → 2025-09-23 open 246",
+    "apply": true
+   }
+  ],
+  "SHILPAMED": [
+   {
+    "exDate": "2025-10-03",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9469,
+    "checked": "2025-10-01 close 778.75 → 2025-10-03 open 400",
+    "apply": true
+   }
+  ],
   "TATAINVEST": [
    {
     "exDate": "2025-10-14",
@@ -2331,6 +3339,18 @@
     "apply": true
    }
   ],
+  "THYROCARE": [
+   {
+    "exDate": "2025-11-28",
+    "type": "bonus",
+    "detail": "bonus 2:1",
+    "factor": 3,
+    "source": "Bonus 2:1",
+    "observed": 2.8924,
+    "checked": "2025-11-27 close 1475.1 → 2025-11-28 open 510",
+    "apply": true
+   }
+  ],
   "CAMS": [
    {
     "exDate": "2025-12-05",
@@ -2341,6 +3361,28 @@
     "observed": 4.9996,
     "checked": "2025-12-04 close 3956.7 → 2025-12-05 open 791.4",
     "apply": true
+   }
+  ],
+  "BHARATRAS": [
+   {
+    "exDate": "2025-12-12",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 3.8839,
+    "checked": "2025-12-11 close 9900 → 2025-12-12 open 2549",
+    "apply": false
+   },
+   {
+    "exDate": "2025-12-12",
+    "type": "split",
+    "detail": "split ₹10 → ₹5",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
+    "observed": 3.8839,
+    "checked": "2025-12-11 close 9900 → 2025-12-12 open 2549",
+    "apply": false
    }
   ],
   "LALPATHLAB": [
@@ -2415,6 +3457,18 @@
     "apply": true
    }
   ],
+  "METROPOLIS": [
+   {
+    "exDate": "2026-03-20",
+    "type": "bonus",
+    "detail": "bonus 3:1",
+    "factor": 4,
+    "source": "Bonus 3:1",
+    "observed": 3.8804,
+    "checked": "2026-03-19 close 1823.8 → 2026-03-20 open 470",
+    "apply": true
+   }
+  ],
   "LICI": [
    {
     "exDate": "2026-05-29",
@@ -2448,6 +3502,18 @@
     "source": "Bonus 5:1",
     "observed": 5.7164,
     "checked": "2026-06-23 close 16086 → 2026-06-24 open 2814",
+    "apply": true
+   }
+  ],
+  "JSWDULUX": [
+   {
+    "exDate": "2026-10-22",
+    "type": "split",
+    "detail": "split ₹10 → ₹1",
+    "factor": 10,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Re 1/- Per Share",
+    "observed": 9.9827,
+    "checked": "2026-10-21 close 2994.8 → 2026-10-22 open 300",
     "apply": true
    }
   ],
