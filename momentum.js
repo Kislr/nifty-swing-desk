@@ -16,6 +16,10 @@
  *                 slots from the top of the list. Between rebalances the only exit is the `trail` % stop from the
  *                 highest close since entry, checked daily. A position is also closed if its sector would exceed
  *                 `maxPerSector` names.
+ *   Sizing      = `compound: false` (default): every slot is starting capital ÷ topN for the whole run, profits sit as
+ *                 cash. `compound: true`: on each rebalance day the slot for new buys is current equity (cash + open
+ *                 positions at that close) ÷ topN, so profits are reinvested and losses shrink the next buys. Changes
+ *                 the measurement, not the rules: ranks, gate, stops and exits are identical in both modes.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -23,7 +27,7 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30 };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false };
 
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
   const stdev = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((p, c) => p + (c - m) * (c - m), 0) / (a.length - 1)); };
@@ -70,10 +74,12 @@
     return Object.assign(R, { picks });
   }
 
-  /** Walk-forward simulation over bars. Returns {trades, equity, params, warmup}. Equal weight = capital / topN per name. */
+  /** Walk-forward simulation over bars. Returns {trades, equity, params, warmup}. Equal weight = capital / topN per name,
+   *  or current equity / topN at each rebalance when P.compound is on. Each equity point carries `invested` (open
+   *  positions at that close) so the share of equity actually at work can be read off the curve. */
   function simulate(bars, params, custom, opts) {
     const P = Object.assign({}, DEFAULTS, params || {}); const N = bars.dates.length; const warmup = P.lookback + P.skip + 1; opts = opts || {};
-    const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; const slot = capital / P.topN;
+    const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
     const open = {}; const trades = []; const equity = []; let cash = capital; let lastReb = -Infinity; const cost = px => px * P.costBps / 2 / 10000;
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
       trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason }); delete open[sym]; };
@@ -86,13 +92,14 @@
       if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
         for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
           if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
+        if (P.compound) { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } slot = mv / P.topN; }
         if (R.gate.open !== false) { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
           for (const r of R.ranked) { if (Object.keys(open).length >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
             const px = r.ltp + cost(r.ltp); const qty = Math.floor(Math.min(slot, cash) / px); if (qty < 1) continue;
             cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, sector: r.sector, rank: r.rank }; } }
         else for (const sym of Object.keys(open)) { /* gate closed: hold, stops do the work */ } }
-      let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; }
-      equity.push({ date, value: +mv.toFixed(0), positions: Object.keys(open).length, gate: gateAt(bars, i, P).open, index: bars.index ? bars.index.c[i] : null });
+      let inv = 0; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; inv += (c != null ? c : open[sym].entry) * open[sym].qty; } const mv = cash + inv;
+      equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gateAt(bars, i, P).open, index: bars.index ? bars.index.c[i] : null });
     }
     for (const sym of Object.keys(open)) { const i = N - 1; const c = bars.sym[sym].c[i]; if (c != null) close(sym, i, c, 'end of data'); }
     return { trades, equity, params: P, warmup, capital };
@@ -107,7 +114,8 @@
     const t = sim.trades; const wins = t.filter(x => x.pnl > 0); const byReason = {}; for (const x of t) byReason[x.reason.replace(/^rank \d+$/, 'rank drop')] = (byReason[x.reason.replace(/^rank \d+$/, 'rank drop')] || 0) + 1;
     const byYear = {}; for (let k = 1; k < eq.length; k++) { const y = eq[k].date.slice(0, 4); const b = byYear[y] || (byYear[y] = { start: eq[k - 1].value, end: 0, idx0: eq[k - 1].index, idx1: null }); b.end = eq[k].value; b.idx1 = eq[k].index; }
     const inMarket = eq.filter(e => e.positions > 0).length / eq.length;
-    return { n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
+    const atWork = eq[0].invested != null ? mean(eq.map(e => e.value ? e.invested / e.value : 0)) : null;   // average share of equity in open positions
+    return { atWork, n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
       avgWin: wins.length ? mean(wins.map(x => x.ret)) : null, avgLoss: t.length - wins.length ? mean(t.filter(x => x.pnl <= 0).map(x => x.ret)) : null, avgBars: t.length ? mean(t.map(x => x.bars)) : null, byReason, byYear, inMarket, final: v1 };
   }
 
