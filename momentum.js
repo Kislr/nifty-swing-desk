@@ -43,12 +43,14 @@
     let above = 0, n = 0; for (const B of Object.values(bars.sym)) { const c = B.c[i]; if (c == null) continue; const sma = smaAt(B.c, 200, i); if (sma == null) continue; n++; if (c > sma) above++; }
     return n >= 50 ? { open: above / n > 0.5, breadth: above / n, n: P.gateSma, source: 'breadth' } : { open: null, source: 'none' };
   }
-  /** Rank the universe as of bar index i. Returns {date, gate, ranked, eligible, universe}. */
-  function rankAt(bars, i, params, custom) {
+  /** Rank the universe as of bar index i. Returns {date, gate, ranked, eligible, universe}.
+   *  `filter(sym, date)` → false drops a symbol before ranking (point-in-time index membership); the gate is unaffected. */
+  function rankAt(bars, i, params, custom, filter) {
     const P = Object.assign({}, DEFAULTS, params || {}); const date = bars.dates[i];
     const gate = gateAt(bars, i, P);
     const rows = [];
     for (const [s, B] of Object.entries(bars.sym)) {
+      if (filter && !filter(s, date)) continue;
       const end = i - P.skip, start = end - P.lookback; if (start < 0) continue;
       const c = B.c; if (c[i] == null || c[end] == null || c[start] == null) continue;
       const rets = []; let ok = true, hi = null;
@@ -68,17 +70,22 @@
   }
 
   /** The list to show / act on today: top N (respecting the per-sector cap) plus the gate. */
-  function selectAt(bars, i, params, custom) {
-    const R = rankAt(bars, i, params, custom); const P = R.params; const bySec = {}; const picks = [];
+  function selectAt(bars, i, params, custom, filter) {
+    const R = rankAt(bars, i, params, custom, filter); const P = R.params; const bySec = {}; const picks = [];
     for (const r of R.ranked) { const n = bySec[r.sector] || 0; if (n >= P.maxPerSector) { r.skipped = 'sector cap'; continue; } bySec[r.sector] = n + 1; picks.push(r); if (picks.length >= P.topN) break; }
     return Object.assign(R, { picks });
   }
 
   /** Walk-forward simulation over bars. Returns {trades, equity, params, warmup}. Equal weight = capital / topN per name,
    *  or current equity / topN at each rebalance when P.compound is on. Each equity point carries `invested` (open
-   *  positions at that close) so the share of equity actually at work can be read off the curve. */
+   *  positions at that close) so the share of equity actually at work can be read off the curve.
+   *  opts.filter(sym, date): point-in-time universe (see rankAt); a holding that drops out of it is unranked at the next
+   *  rebalance and leaves as 'ineligible', like any other name that fails the screen. opts.stale = N: a holding with no
+   *  close for N bars in a row (a delisting or suspension once past members' bars are loaded) is closed at its last
+   *  close as 'stopped trading'; off by default (0), because on today's constituents a long run of missing bars is a
+   *  hole in the history files, and the plain run should not change for a membership feature. */
   function simulate(bars, params, custom, opts) {
-    const P = Object.assign({}, DEFAULTS, params || {}); const N = bars.dates.length; const warmup = P.lookback + P.skip + 1; opts = opts || {};
+    const P = Object.assign({}, DEFAULTS, params || {}); const N = bars.dates.length; const warmup = P.lookback + P.skip + 1; opts = opts || {}; const filter = opts.filter || null; const stale = opts.stale || 0;
     const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
     const open = {}; const trades = []; const equity = []; let cash = capital; let lastReb = -Infinity; const cost = px => px * P.costBps / 2 / 10000;
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
@@ -86,22 +93,23 @@
     for (let i = warmup; i < N; i++) {
       const date = bars.dates[i]; if (date < from || date > to) continue;
       // 1. daily: trailing stops on open positions, marked on today's close
-      for (const sym of Object.keys(open)) { const p = open[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue; p.peak = Math.max(p.peak, c);
+      for (const sym of Object.keys(open)) { const p = open[sym]; const c = bars.sym[sym].c[i];
+        if (c == null) { if (stale && ++p.gap >= stale) close(sym, i, p.last, 'stopped trading'); continue; } p.gap = 0; p.last = c; p.peak = Math.max(p.peak, c);
         if (c < p.peak * (1 - P.trail / 100)) close(sym, i, c, 'trailing stop'); }
       // 2. rebalance day: rank, drop names below holdRank (or ineligible), fill free slots if the gate is open
-      if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
+      if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom, filter); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
         for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
           if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
         if (P.compound) { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } slot = mv / P.topN; }
         if (R.gate.open !== false) { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
           for (const r of R.ranked) { if (Object.keys(open).length >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
             const px = r.ltp + cost(r.ltp); const qty = Math.floor(Math.min(slot, cash) / px); if (qty < 1) continue;
-            cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, sector: r.sector, rank: r.rank }; } }
+            cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, last: r.ltp, gap: 0, sector: r.sector, rank: r.rank }; } }
         else for (const sym of Object.keys(open)) { /* gate closed: hold, stops do the work */ } }
       let inv = 0; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; inv += (c != null ? c : open[sym].entry) * open[sym].qty; } const mv = cash + inv;
       equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gateAt(bars, i, P).open, index: bars.index ? bars.index.c[i] : null });
     }
-    for (const sym of Object.keys(open)) { const i = N - 1; const c = bars.sym[sym].c[i]; if (c != null) close(sym, i, c, 'end of data'); }
+    for (const sym of Object.keys(open)) { const i = N - 1; const c = bars.sym[sym].c[i]; close(sym, i, c != null ? c : open[sym].last, 'end of data'); }
     return { trades, equity, params: P, warmup, capital };
   }
 

@@ -1,0 +1,23 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs06032018.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, March 06, 2018
+
+                                 Replacements in Indices
+
+Videocon Industries replaced ahead of the 2 April 2018 review that had listed the same pair.
+These changes shall become effective from March 13, 2018 (close of March 12, 2018).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Videocon Industries Ltd.                           VIDEOIND
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Eris Lifesciences Ltd.                             ERIS
+

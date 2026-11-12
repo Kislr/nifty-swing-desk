@@ -1,0 +1,27 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs07032017.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, 7 March 2017
+
+                                 Replacements in Indices
+
+Reschedules three of the pairs announced on 16 February 2017 (SBI associate banks suspended from trading).
+These changes shall become effective from March 16, 2017 (close of March 15, 2017) instead of March 31, 2017.
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      State Bank of Bikaner & Jaipur Ltd.                SBBJ
+       2      State Bank of Mysore                               MYSOREBANK
+       3      State Bank of Travancore                           SBT
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Future Retail Ltd.                                 FRETAIL
+       2      Max India Ltd.                                     MAXINDIA
+       3      Mahanagar Gas Ltd.                                 MGL
+

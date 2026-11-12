@@ -1,0 +1,55 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs20082020.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, August 20, 2020
+
+                                 Replacements in Indices
+
+Semi-annual review (the February 2020 review having been voided and re-done in June). * proposed voluntary delisting; # proposed scheme of arrangement.
+These changes shall become effective from September 25, 2020 (close of September 24, 2020).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Adani Power Ltd.*                                  ADANIPOWER
+       2      GE T&D India Ltd.                                  GET&D
+       3      Hexaware Technologies Ltd.*                        HEXAWARE
+       4      Himatsingka Seide Ltd.                             HIMATSEIDE
+       5      IFCI Ltd.                                          IFCI
+       6      India Tourism Development Corporation Ltd.         ITDC
+       7      IndoStar Capital Finance Ltd.                      INDOSTAR
+       8      Intellect Design Arena Ltd.                        INTELLECT
+       9      Jubilant Life Sciences Ltd.#                       JUBILANT
+      10      K.P.R. Mill Ltd.                                   KPRMILL
+      11      Mahindra CIE Automotive Ltd.                       MAHINDCIE
+      12      Nava Bharat Ventures Ltd.                          NBVENTURES
+      13      Sadbhav Engineering Ltd.                           SADBHAV
+      14      Shree Renuka Sugars Ltd.                           RENUKA
+      15      Take Solutions Ltd.                                TAKE
+      16      Time Technoplast Ltd.                              TIMETECHNO
+      17      Vesuvius India Ltd.                                VESUVIUS
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Aarti Drugs Ltd.                                   AARTIDRUGS
+       2      ABB Power Products and Systems India Ltd.          POWERINDIA
+       3      Adani Enterprises Ltd.                             ADANIENT
+       4      Alembic Ltd.                                       ALEMBICLTD
+       5      Alok Industries Ltd.                               ALOKINDS
+       6      Chalet Hotels Ltd.                                 CHALET
+       7      Gujarat Ambuja Exports Ltd.                        GAEL
+       8      Huhtamaki PPL Ltd.                                 PAPERPROD
+       9      IOL Chem and Pharma Ltd.                           IOLCP
+      10      Navneet Education Ltd.                             NAVNETEDUL
+      11      Polyplex Corporation Ltd.                          POLYPLEX
+      12      Shilpa Medicare Ltd.                               SHILPAMED
+      13      Solara Active Pharma Sciences Ltd.                 SOLARA
+      14      Supreme Petrochem Ltd.                             SUPPETRO
+      15      Suven Pharmaceuticals Ltd.                         SUVENPHAR
+      16      Tata Chemicals Ltd.                                TATACHEM
+      17      Yes Bank Ltd.                                      YESBANK
+

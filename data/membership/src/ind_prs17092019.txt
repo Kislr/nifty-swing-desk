@@ -1,0 +1,23 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs17092019.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, September 17, 2019
+
+                                 Replacements in Indices
+
+Scheme of arrangement: Thomas Cook (India) human-resources business demerged into Quess Corp.
+These changes shall become effective from September 27, 2019 (close of September 26, 2019).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Thomas Cook (India) Ltd.                           THOMASCOOK
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      IIFL Finance Ltd.                                  IIFL
+

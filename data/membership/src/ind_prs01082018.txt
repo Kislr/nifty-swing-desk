@@ -1,0 +1,23 @@
+[Text source. The PDF of this release is not in the folder: the cloud session that built the membership file could read niftyindices.com only as text. Transcribed from https://niftyindices.com/Press_Release/ind_prs01082018.pdf on 12 November 2026 — release date, effective-date sentence and the NIFTY 500 tables only. Replace with the PDF saved from a home connection; scripts/membership.mjs prefers the .pdf when both exist.]
+
+
+                                     PRESS RELEASE
+Mumbai, August 01, 2018
+
+                                 Replacements in Indices
+
+Single replacement.
+These changes shall become effective from August 08, 2018 (close of August 07, 2018).
+
+1)      NIFTY 500
+
+The following companies are being excluded:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Techno Electric & Engineering Company Ltd.         TECHNO
+
+The following companies are being included:
+
+     Sr. No.                 Company Name                                   Symbol
+       1      Bharat Dynamics Ltd.                               BDL
+
