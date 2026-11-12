@@ -91,12 +91,15 @@ Expect the momentum numbers to move a little: some of its 20% trailing-stop exit
 | `--from YYYY-MM-DD [--to YYYY-MM-DD]` | exact range |
 | `--universe nifty500` (default), `nifty50`, `all` | which symbols to keep; `all` stores every EQ-series stock (~2,000 names, ~4× the file size) |
 | `--pause 900` | milliseconds between requests; raise it if you get blocked |
+| `--members` | past members (12 Nov 2026): the universe becomes every ticker that was ever in NIFTY 500 according to `data/membership/members.json`; days already saved are visited again and only the names still missing that day are added, stored under today's ticker by following NSE's rename list forward from that day. Run `node scripts/backfill.mjs --years 10 --members` once from home (about an hour, one fetch per trading day, progress saved every 20 days), then `corporate-actions` again and the backtests with `--members`. Nothing already in the files is rewritten |
 
 ## Caveats worth knowing
 
 Bhavcopy prices are not adjusted for splits and bonuses. A 1:1 bonus shows as a 50% drop on the ex-date, which the engine will read as a stop-out, an "avoid" or a momentum trailing-stop exit. The fix is the corporate-actions step below; until it has been run, remember it when a backtest trade looks absurd.
 
-The constituent list is today's Nifty 500. Stocks that were in the index two years ago but have since left are not in the backfill, which flatters backtests slightly (survivorship bias). The report says so in its footer.
+The constituent list is today's Nifty 500. Stocks that were in the index two years ago but have since left are not in the backfill, which flatters backtests (survivorship bias) — on ten years the momentum engine's reinvested CAGR fell from 25.3% to 16.8% just from no longer ranking future members before they entered. `--members` is the fix for the other half: it adds the names that left. Until it has been run, the backtests' `--members` option can only remove the future members.
+
+A day saved without its NIFTY 50 bar now gets the bar on any later run that covers the date (the index history is fetched first and a saved day is topped up without re-fetching the bhavcopy). Renamed companies: in plain mode a bhavcopy row is stored under the symbol it carried that day, so a company renamed since has no bars before the rename under today's ticker; `--members` maps old symbols forward and fills those in too.
 
 NSE's index-history endpoint is sometimes unavailable from outside India. If the script says `index history unavailable`, everything still works: the regime uses breadth alone and relative strength is measured against the universe median instead of the Nifty. Re-running later fills the index in.
 

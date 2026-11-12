@@ -277,15 +277,17 @@
     return { qty, riskAmt, value: qty * entry, capped, riskActual: qty * perShare };
   }
   /** Analyse the universe as of bars index i.
-   *  opts: {settings, custom, time}. Returns {signals, reg, board, universe, date, coverage}. */
+   *  opts: {settings, custom, time, filter}. `filter(sym, date)` → false drops a symbol from the day's universe before
+   *  anything is computed (sector board, relative-strength percentiles, signals), so a point-in-time membership list
+   *  makes the whole analysis point-in-time. Returns {signals, reg, board, universe, date, coverage}. */
   function analyzeAt(bars, i, opts) {
-    opts = opts || {}; const st = Object.assign({}, DEFAULTS, opts.settings || {}); const custom = opts.custom || {}; const RR = st.minRR;
+    opts = opts || {}; const st = Object.assign({}, DEFAULTS, opts.settings || {}); const custom = opts.custom || {}; const RR = st.minRR; const filter = opts.filter;
     const date = bars.dates[i]; const ex = bars.extras[date] || {}; const time = opts.time || (ex.__index && ex.__index.time) || null;
     const idxB = bars.index; const idxRet20 = idxB && idxB.c[i] != null && idxB.c[i - 20] != null ? idxB.c[i] / idxB.c[i - 20] - 1 : null;
     const idxPct = ex.__index && ex.__index.pct != null ? ex.__index.pct : (idxB && idxB.c[i] != null && idxB.c[i - 1] != null ? (idxB.c[i] / idxB.c[i - 1] - 1) * 100 : null);
     const rows = [];
     for (const [s, B] of Object.entries(bars.sym)) {
-      const c = B.c[i]; if (c == null) continue; const e = ex[s] || {};
+      const c = B.c[i]; if (c == null) continue; if (filter && !filter(s, date)) continue; const e = ex[s] || {};
       const prev = e.prev != null ? e.prev : B.c[i - 1]; const r = { sym: s, sector: sectorOf(s, custom), open: B.o[i], high: B.h[i], low: B.l[i], ltp: c, prev, vol: B.v[i], val: e.val != null ? e.val : B.t[i] };
       r.pct = e.pct != null ? e.pct : (prev ? (c / prev - 1) * 100 : null); r.chg = prev != null ? c - prev : null;
       let bars250 = 0; for (let k = Math.max(0, i - 249); k <= i; k++) if (B.c[k] != null) bars250++;
@@ -438,7 +440,7 @@
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
-      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade over 638 backtested trades (reports/swing-universe-2026-11-12-adjusted.md). Still watch mode until the membership check; log them in the journal as "Momentum pullback"`);
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade over 638 backtested trades on today's names, +0.12R over 603 on point-in-time NIFTY 500 members (reports/swing-membership-2026-11-12-adjusted-members.md; on the bar only with 2020). Still watch mode until the past-members price load; log them in the journal as "Momentum pullback"`);
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: at most 4 open at once, one per sector, taken in score order; stop to breakeven at +1R; out after 15 bars if neither level is hit)');
