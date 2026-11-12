@@ -143,7 +143,13 @@ assert(rep.trades.length > 0 && rep.trades.every(t => typeof t.R === 'number'), 
   const cl = await runBt('out4', ['--set', 'fill=close']);
   assert(cl.trades && cl.trades.length > 0 && cl.trades.every(t => t.entry === bars.sym[t.sym].c[pos[t.entryDate]]), 'backtest fill=close: every entry is the close of its entry date');
   assert(rep.trades.every(t => { const B = bars.sym[t.sym], k = pos[t.entryDate]; return t.entry <= B.h[k] && t.entry >= B.l[k]; }) && rep.trades.some(t => t.entry !== bars.sym[t.sym].c[pos[t.entryDate]]), 'backtest fill=next: entries sit inside the next day\'s range and are not simply its close');
-  const bad = await runBt('out5', ['--set', 'fill=open']); assert(bad.failed === 2, 'backtest rejects an unknown fill mode'); }
+  const bad = await runBt('out5', ['--set', 'fill=open']); assert(bad.failed === 2, 'backtest rejects an unknown fill mode');
+  // 6a3. momentum universe (12 Nov 2026): orders only for names ranked ≤ N by momentum.js at the signal day's close; nothing before the ranking exists
+  const u = await runBt('out6', ['--set', 'universe=momentum:10']);
+  const rankOn = (sym, i) => { const r = M.rankAt(bars, i, {}, custom).ranked.find(x => x.sym === sym); return r ? r.rank : null; };
+  assert(u.trades && u.universe && u.universe.kept > 0 && u.universe.dropped > 0 && u.universe.firstDefined, `backtest universe=momentum:10: ${u.universe && u.universe.kept} signals kept, ${u.universe && u.universe.dropped} dropped, ranking first defined ${u.universe && u.universe.firstDefined}`);
+  assert(u.trades.length > 0 && u.trades.length < rep.trades.length && u.trades.every(t => { const k = pos[t.entryDate] - 1; const rk = rankOn(t.sym, k); return rk != null && rk <= 10 && bars.dates[k] >= u.universe.firstDefined; }), 'backtest universe=momentum:10: every trade was signalled on a day its symbol ranked in the momentum top 10 (independent check), none before the ranking existed');
+  const badU = await runBt('out7', ['--set', 'universe=sector']); assert(badU.failed === 2, 'backtest rejects an unknown universe'); }
 
 // 6a2. the momentum and pairs backtest scripts run end to end and write their reports (6 Nov 2026: backtest-momentum.mjs had `const OUT` behind a // comment and died at the write)
 for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backtest-pairs.mjs', 'pairs-']]) { const out = path.join(tmp, 'out-' + prefix.replace('-', ''));

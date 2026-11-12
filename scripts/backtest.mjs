@@ -9,6 +9,7 @@
  *   node scripts/backtest.mjs --set exit=ma10         # exit on a close below the 10-day average instead of the time stop (or: ma20)
  *   node scripts/backtest.mjs --set gate=200          # regime gate: new orders only while the Nifty is above its 200-day average
  *   node scripts/backtest.mjs --set fill=close        # enter at the signal day's close instead of a buy-stop the next day
+ *   node scripts/backtest.mjs --set universe=momentum # orders only for names in the momentum engine's top 30 that day (momentum:50 for top 50)
  *
  * Model (deliberately simple and conservative):
  *   - Each day's ACT signals are candidates for the NEXT day. A buy-stop at `entry` fills if the next
@@ -27,6 +28,10 @@
  *   - `fill=close` (default `next`): an act signal on day i is filled at day i's close, same stop price, risk =
  *     fill − stop, target = fill + minRR × risk; exits start on day i + 1. Optimistic: it assumes the full day's bar
  *     is known at the moment of buying, which a pre-close run would not have.
+ *   - `universe=momentum[:N]` (default `all`): a signal from day i's close becomes an order only if its symbol holds
+ *     rank ≤ N (default 30) in the momentum engine's ranking as of day i's close (momentum.js rankAt, default
+ *     parameters, only bars up to i). The ranking needs lookback + skip + 1 bars, so no order is placed before that;
+ *     the report names the first date it was defined so the unfiltered run can be repeated from the same date.
  * Writes reports/backtest-<stamp>.md and .json. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -40,10 +45,12 @@ const M = require(path.join(ROOT, 'momentum.js'));
 const argv = process.argv.slice(2); const arg = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const sets = {}; argv.forEach((a, i) => { if (a === '--set') { const [k, v] = argv[i + 1].split('='); sets[k] = isNaN(+v) ? v : +v; } });
 const config = JSON.parse(await fs.readFile(path.join(ROOT, 'config.json'), 'utf8'));
-const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60, exit: 'time', sectorBump: E.DEFAULTS.sectorBump, volumeBump: E.DEFAULTS.volumeBump, gate: 0, fill: 'next' }, sets);
+const P = Object.assign({ minRR: config.risk.minRR, capital: config.risk.capital, riskPct: config.risk.riskPct, maxPos: config.risk.maxPos, maxPositions: 4, maxHold: 15, minScore: 50, costBps: 30, warmup: 60, exit: 'time', sectorBump: E.DEFAULTS.sectorBump, volumeBump: E.DEFAULTS.volumeBump, gate: 0, fill: 'next', universe: 'all' }, sets);
 if (!/^(time|ma\d+)$/.test(String(P.exit))) { console.error(`--set exit= must be time, ma10, ma20 …; got ${P.exit}`); process.exit(2); }
 if (!/^(next|close)$/.test(String(P.fill))) { console.error(`--set fill= must be next or close; got ${P.fill}`); process.exit(2); }
 if (!(Number.isInteger(P.gate) && P.gate >= 0)) { console.error(`--set gate= must be a whole number of days (0 = off); got ${P.gate}`); process.exit(2); }
+const uniM = /^momentum(?::(\d+))?$/.exec(String(P.universe)); if (P.universe !== 'all' && !uniM) { console.error(`--set universe= must be all or momentum[:N]; got ${P.universe}`); process.exit(2); }
+const uniRank = uniM ? +(uniM[1] || 30) : 0;
 const maExit = P.exit === 'time' ? 0 : +String(P.exit).slice(2);
 const timeStop = (P.exit === 'time' || 'maxHold' in sets) ? P.maxHold : Infinity;
 const setupsFilter = arg('setups', 'all');
@@ -66,6 +73,12 @@ const gateStats = { open: 0, closed: 0, undefined: 0, index: 0, breadth: 0, skip
 const gateAt = i => { if (!P.gate) return true; const g = M.gateAt(bars, i, { gateSma: P.gate });
   if (g.open == null) { gateStats.undefined++; return false; } if (!gateStats.firstDefined) gateStats.firstDefined = bars.dates[i];
   gateStats[g.source] = (gateStats[g.source] || 0) + 1; gateStats[g.open ? 'open' : 'closed']++; return g.open; };
+// momentum universe: rank ≤ uniRank in momentum.js's ranking at the close of day i (only bars up to i). Undefined before the warm-up.
+const uniStats = { days: 0, undefined: 0, kept: 0, dropped: 0, firstDefined: null };
+const inUniverse = (() => { let cache = { i: -1, ranks: null }; return (sym, i) => { if (!uniRank) return true;
+  if (cache.i !== i) { const R = M.rankAt(bars, i, {}, custom); const ranks = {}; for (const r of R.ranked) ranks[r.sym] = r.rank; cache = { i, ranks, n: R.ranked.length }; uniStats.days++;
+    if (!cache.n) uniStats.undefined++; else if (!uniStats.firstDefined) uniStats.firstDefined = bars.dates[i]; }
+  const ok = cache.ranks[sym] != null && cache.ranks[sym] <= uniRank; uniStats[ok ? 'kept' : 'dropped']++; return ok; }; })();
 const tryFill = (q, fill, i) => { const stop = q.stop, risk = fill - stop; if (!(risk > 0)) return false;
   const target = fill + P.minRR * risk; const sz = E.sizing(fill, stop, q.reg, settings); if (!sz || sz.qty < 1) return false;
   open.push({ sym: q.sym, sector: q.sector, setup: q.setup, score: q.score, entry: fill, stop, stop0: stop, target, qty: sz.qty, fillIdx: i }); return true; };
@@ -96,6 +109,7 @@ for (let i = P.warmup; i < N - 1; i++) {
   const res = E.analyzeAt(bars, i, { settings, custom }); const gateOpen = gateAt(i);
   for (const s of res.signals) { if (s.kind !== 'act' || s.score < P.minScore) continue; if (setupsFilter !== 'all' && !s.setup.toLowerCase().includes(setupsFilter)) continue;
     if (!gateOpen) { gateStats.skipped++; continue; }
+    if (!inUniverse(s.sym, i)) continue;
     pending.push({ sym: s.sym, sector: s.sector, setup: s.setup, score: s.score, entry: s.entry, stop: s.stop, reg: res.reg }); }
   pending.sort((a, b) => b.score - a.score);
   // fill=close: take today's signals at today's close (same slot and sector limits, score order); nothing carries over
@@ -123,10 +137,11 @@ const md = [`# Backtest — ${stamp}`, '', `History ${bars.dates[P.warmup]} → 
   '## Overall', '', hdr, row('all', all), '', '## By setup', '', hdr, ...Object.entries(bySetup).map(([k, v]) => row(k, v)), '', '## By score band', '', hdr, ...Object.entries(byScore).map(([k, v]) => row(k, v)), '', '## By year', '', hdr, ...Object.entries(byYear).map(([k, v]) => row(k, v)), '',
   '## Exit reasons', '', ...Object.entries(byReason).map(([k, v]) => `- ${k}: ${v}`), '',
   ...(P.gate ? ['## Regime gate', '', `Nifty above its ${P.gate}-day average: open on ${gateStats.open} days, closed on ${gateStats.closed}, not yet computable on ${gateStats.undefined} (first computable ${gateStats.firstDefined || '—'}; ${gateStats.index} days read from the index, ${gateStats.breadth} from the breadth fallback). ${gateStats.skipped} act signals were not turned into orders.`, ''] : []),
+  ...(uniRank ? ['## Universe', '', `Momentum top ${uniRank}: of the act signals that reached this filter, ${uniStats.kept} were in the list and ${uniStats.dropped} were not (${uniStats.days} signal days; ranking undefined on ${uniStats.undefined} of them; first defined ${uniStats.firstDefined || '—'}). Repeat the unfiltered run with \`--from ${uniStats.firstDefined || '…'}\` for a same-window control.`, ''] : []),
   ...(P.fill === 'close' ? ['## Fill', '', 'Entries are at the signal day\'s close, not a buy-stop the next day. This assumes the whole day\'s bar is known when buying; a run before the close would see less.', ''] : []),
   '## How to read this', '', 'Expectancy is the average R (multiple of the initial risk) per trade after costs; above +0.2R with a profit factor above 1.3 over 100+ trades is a system worth trading small. Max DD is the deepest peak-to-trough fall in cumulative R: with 1% risk per trade, 10R of drawdown ≈ 10% of capital. The P&L column uses fixed-fraction sizing at the configured capital with no compounding. Fewer than ~60 trades in a slice is noise.',
   '', 'Known simplifications: fills assume the stop order is working at the open; no partial exits; survivorship bias if the universe list is today\'s constituents (names that left the index are absent); corporate actions (splits, bonuses) are not adjusted in bhavcopy data and can produce false stop-outs on ex-dates.'].join('\n');
 const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 await fs.writeFile(path.join(OUT, `backtest-${stamp}.md`), md);
-await fs.writeFile(path.join(OUT, `backtest-${stamp}.json`), JSON.stringify({ params: P, overall: all, bySetup, byYear, byScore, byReason, ...(P.gate ? { gate: gateStats } : {}), equityR, trades }, null, 1));
+await fs.writeFile(path.join(OUT, `backtest-${stamp}.json`), JSON.stringify({ params: P, overall: all, bySetup, byYear, byScore, byReason, ...(P.gate ? { gate: gateStats } : {}), ...(uniRank ? { universe: uniStats } : {}), equityR, trades }, null, 1));
 console.log(md.split('\n').slice(0, 12).join('\n')); console.log(`\nfull report: reports/backtest-${stamp}.md (and .json with every trade)`);
