@@ -194,7 +194,16 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-'], ['backte
 // 7. digest: watch mode leads with momentum and lists setups without quantities; orders mode is unchanged
 { const blocks = { momentum: 'MOMENTUM (test)\n• #1 X', pairs: 'PAIRS (test)\n• none' };
   const w = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, blocks), o = E.digest(res, { ...E.DEFAULTS, swingMode: 'orders' }, blocks);
-  assert(w.indexOf('MOMENTUM') < w.indexOf('SWING SETUPS') && /watch only/.test(w) && !/ORDERS FOR TOMORROW|qty \d/.test(w) && w.indexOf('PAIRS') > w.indexOf('SWING SETUPS'), 'watch-mode digest: momentum first, setups as levels, pairs last');
+  assert(w.indexOf('MOMENTUM (') < w.indexOf('MOMENTUM PULLBACKS') && w.indexOf('MOMENTUM PULLBACKS') < w.indexOf('OTHER SWING SETUPS') && /watch only/.test(w) && !/ORDERS FOR TOMORROW/.test(w) && !/[^r] qty \d/.test(w) && w.indexOf('PAIRS') > w.indexOf('OTHER SWING SETUPS'), 'watch-mode digest: momentum list, then momentum pullbacks, then other setups as levels (no quantities except paper qty), pairs last');
+  // 7a. momentum tagging (12 Nov 2026): pullbacks on names in the momentum top N are tagged, moved first and listed in their own digest block
+  { const mk = (sym, setup, score, kind = 'act') => ({ sym, sector: 'S' + sym, kind, setup, score, entry: 100, stop: 95, target: 110, size: { qty: 7 }, row: { val: 1 }, reasons: [] });
+    const sig = [mk('A', '52W breakout', 80), mk('B', 'Pullback buy', 60), mk('C', 'Pullback buy', 90), mk('D', 'Pullback buy', 70), mk('E', 'Pullback buy', 55, 'alert')];
+    const n = E.tagMomentum(sig, [{ sym: 'B', rank: 3 }, { sym: 'A', rank: 10 }, { sym: 'D', rank: 31 }, { sym: 'E', rank: 1 }], 30);
+    assert(n === 1 && sig.map(x => x.sym).join('') === 'BCADE' && sig[0].tag === 'momentum pullback' && sig[0].momRank === 3 && sig[2].momRank === 10 && !sig[2].tag && !sig[3].momRank && sig[4].tag && sig[4].kind === 'alert', `tagMomentum: B (pullback, rank 3) first and tagged; A (breakout, rank 10) ranked but not tagged; D (rank 31) untouched; order BCADE, ${n} act pullback tagged`);
+    const d = E.digest({ signals: sig, reg: res.reg, board: res.board, date: '2026-11-12', coverage: 250 }, { ...E.DEFAULTS, swingMode: 'watch' }, {});
+    const mp = d.slice(d.indexOf('MOMENTUM PULLBACKS'), d.indexOf('OTHER SWING SETUPS')), rest = d.slice(d.indexOf('OTHER SWING SETUPS'), d.indexOf('ALERTS'));
+    assert(/MOMENTUM PULLBACKS \(1\)/.test(mp) && /• B \[60\] momentum #3 — buy-stop 100\.00 tomorrow, stop 95\.00, 2R at 110\.00, paper qty 7/.test(mp) && /OTHER SWING SETUPS \(3\)/.test(rest) && /• C \[90\]/.test(rest) && /• A \[80\] momentum #10 — 52W breakout/.test(rest) && !/• B /.test(rest), 'digest: tagged pullback in its own block with paper qty; breakout in the list shows its rank under other setups');
+    E.tagMomentum(sig, [], 30); assert(sig.every(x => !x.tag && x.momRank == null) && sig.map(x => x.sym).join('') === 'CADBE', 'tagMomentum with an empty ranking clears tags and restores score order'); }
   assert(/ORDERS FOR TOMORROW/.test(o) && o.indexOf('ORDERS FOR TOMORROW') < o.indexOf('MOMENTUM') && !/SWING SETUPS/.test(o), 'orders-mode digest unchanged: orders first, then momentum');
   assert(E.DEFAULTS.swingMode === 'watch', 'swing engine is in watch mode by default (demoted 5 Nov 2026 — change only with a passing backtest)'); }
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));

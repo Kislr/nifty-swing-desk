@@ -100,6 +100,7 @@ try {
   const adjustments = await readJSON(path.join(DATA, 'adjustments.json'), null);   // corporate actions, optional (scripts/corporate-actions.mjs)
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
+  E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
   const pairsBoard = Pr.boardAt(result.bars, result.bars.dates.length - 1, config.pairs || {});
   const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), pairs: Pr.digest(pairsBoard, E.fmt), reminders: E.remindersDue(config.reminders, date) });
   console.log('\n' + text + '\n');
@@ -119,7 +120,7 @@ try {
   for (const old of dates.filter(d => !pruned.includes(d))) await fs.rm(path.join(SNAPS, old + '.json'), { force: true });
   const historyYears = (await fs.readdir(HISTDIR).catch(() => [])).filter(f => /^\d{4}\.json$/.test(f)).map(f => Number(f.slice(0, 4))).sort();
   await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify({ dates: pruned, latest: date, latestTime: time, index: config.index, historyYears, generatedAt: new Date().toISOString() }, null, 1));
-  const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
+  const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, tag: s.tag || null, momRank: s.momRank ?? null, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
   const momOut = { date: mom.date, gate: mom.gate, params: mom.params, picks: mom.picks.map(r => ({ rank: r.rank, sym: r.sym, sector: r.sector, ltp: r.ltp, ret: r.ret, ret1: r.ret1, ret6: r.ret6, ret12: r.ret12, offHigh: r.offHigh })) };
   await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, pairs: pairsBoard.pairs.map(p => ({ A: p.A, B: p.B, label: p.label, tstat: p.tstat ?? null, level: p.level ?? null, halfLife: p.halfLife ?? null, z: p.z ?? null, status: p.status, cheap: p.cheap ?? null, gapPct: p.gapPct ?? null })), digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
