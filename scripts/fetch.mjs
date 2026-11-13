@@ -7,6 +7,10 @@
  *   node scripts/fetch.mjs --dry      # fetch + compute, print digest, write nothing
  *
  * Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (optional) — set as GitHub Actions secrets.
+ *
+ * Paper book (13 Nov 2026): with config.paper = {from, capital?, benchmarks: [...]} the job also replays the momentum engine's
+ * rules from `from` on the history it already has (M.paperBook), saves each benchmark index's close for the day into
+ * data/benchmarks/live.json, prints a PAPER BOOK block in the digest and writes the book into latest.json for the site.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -67,14 +71,27 @@ async function loadHistory(limit) {
   return snaps;
 }
 const HISTDIR = path.join(DATA, 'history');
-async function loadHistoryFiles(year) { // this year and the previous one: enough for 52-week levels and all indicators
-  const out = []; for (const y of [year - 1, year]) { const f = await readJSON(path.join(HISTDIR, y + '.json'), null); if (f) out.push(f); } return out;
+async function loadHistoryFiles(year, fromYear) { // this year and the previous one: enough for 52-week levels and all indicators; back to the year before the paper book started, so the book can be replayed from its first day
+  const first = Math.min(year - 1, fromYear ? fromYear - 1 : year - 1); const out = []; for (let y = first; y <= year; y++) { const f = await readJSON(path.join(HISTDIR, y + '.json'), null); if (f) out.push(f); } return out;
 }
+const PAPER = config.paper || null; const LIVE_BM = path.join(DATA, 'benchmarks', 'live.json');   // paper book (13 Nov 2026): {from, capital?, benchmarks: [index names]}; the job saves those indices' closes here, one series per index
+/** Today's close of each benchmark index (price index, from the same market-watch call the universe comes from). Never fatal: a missing day is a gap in the comparison, not a failed job. */
+async function fetchBenchmarks(names, date) {
+  const out = {}; for (const name of names) { if (name === 'NIFTY 50') continue;   // NIFTY 50 is already the history's index series
+    try { const row = (await fetchIndex(name)).find(r => r.isIndex && r.sym === name.toUpperCase()); if (row && row.ltp > 0) out[name] = row.ltp; else console.warn(`benchmark ${name}: index row not found`); }
+    catch (e) { console.warn(`benchmark ${name}: fetch failed (${e.message}); no close saved for ${date}`); } }
+  return out;
+}
+/** Telegram caps a message at 4,096 characters; the digest passed that on 13 Nov 2026 when the paper book joined it, so a long
+ *  digest now goes as consecutive messages split at blank lines (E.chunks; a block is never cut in half unless it is itself over the cap). */
 async function telegram(text) {
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chat) { console.log('(telegram not configured)'); return; }
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: text.slice(0, 4000), disable_web_page_preview: true }) });
-  if (!res.ok) console.warn('telegram failed', res.status, await res.text());
+  const parts = E.chunks(text, 4000);
+  for (let k = 0; k < parts.length; k++) {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: (parts.length > 1 ? `(${k + 1}/${parts.length}) ` : '') + parts[k], disable_web_page_preview: true }) });
+    if (!res.ok) { console.warn('telegram failed', res.status, await res.text()); break; }
+  }
 }
 
 try {
@@ -96,12 +113,21 @@ try {
   const hist = (await loadHistory(config.historyDays || 90)).filter(s => s.date !== date);
   const snaps = [...hist, doc].sort((a, b) => a.date.localeCompare(b.date));
   const custom = (await readJSON(path.join(DATA, 'sectors.json'), { map: {} })).map || {};
-  const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year);
+  const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year, PAPER && PAPER.from ? Number(String(PAPER.from).slice(0, 4)) : null);
   const adjustments = await readJSON(path.join(DATA, 'adjustments.json'), null);   // corporate actions, optional (scripts/corporate-actions.mjs)
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
   E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
-  const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), reminders: E.remindersDue(config.reminders, date) });
+  // Paper book: the engine's rules replayed from PAPER.from on the same bars, beside the index funds (price indices saved day by day in data/benchmarks/live.json).
+  let paper = null, live = null, todayBm = {};
+  if (PAPER && PAPER.from) {
+    live = await readJSON(LIVE_BM, {}); todayBm = await fetchBenchmarks(PAPER.benchmarks || [], date);
+    const merged = JSON.parse(JSON.stringify(live)); for (const [name, px] of Object.entries(todayBm)) { (merged[name] = merged[name] || {})[date] = px; }
+    for (const name of PAPER.benchmarks || []) if (name !== 'NIFTY 50' && !merged[name]) merged[name] = {};
+    paper = M.paperBook(result.bars, config.momentum || {}, custom, { from: PAPER.from, capital: PAPER.capital || config.risk.capital, benchmarks: merged });
+    if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
+  }
+  const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), reminders: E.remindersDue(config.reminders, date) });
   console.log('\n' + text + '\n');
 
   if (DRY) process.exit(0);
@@ -112,6 +138,7 @@ try {
     await fs.mkdir(HISTDIR, { recursive: true });
     const yf = (await readJSON(path.join(HISTDIR, year + '.json'), null)) || { year, dates: [], symbols: {}, index: null };
     E.appendSnapshotToHistory(yf, doc); await fs.writeFile(path.join(HISTDIR, year + '.json'), JSON.stringify(yf));
+    if (live && Object.keys(todayBm).length) { for (const [name, px] of Object.entries(todayBm)) { (live[name] = live[name] || {})[date] = px; } await fs.mkdir(path.dirname(LIVE_BM), { recursive: true }); await fs.writeFile(LIVE_BM, JSON.stringify(live, null, 1)); }
   }
   const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] });
   const dates = [...new Set([...idx.dates, date])].sort();
@@ -121,7 +148,7 @@ try {
   await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify({ dates: pruned, latest: date, latestTime: time, index: config.index, historyYears, generatedAt: new Date().toISOString() }, null, 1));
   const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, tag: s.tag || null, momRank: s.momRank ?? null, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
   const momOut = { date: mom.date, gate: mom.gate, params: mom.params, picks: mom.picks.map(r => ({ rank: r.rank, sym: r.sym, sector: r.sector, ltp: r.ltp, ret: r.ret, ret1: r.ret1, ret6: r.ret6, ret12: r.ret12, offHigh: r.offHigh })) };
-  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, digest: text }, null, 1));
+  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, paper, digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
   const intraday = result.reg.intraday;
   if (!intraday || config.alertIntraday || FORCE) await telegram(text);

@@ -8,7 +8,7 @@
 <title>Nifty Swing Desk</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: a trading desk — status strip on top, then regime + sizing, sector board, signal queue, universe, journal, import. Figures in mono, UI in Manrope. */
+/* Layout: a trading desk — status strip on top, then regime + sizing, momentum list, signal queue, sector board (with the Industries / All stocks switch), universe, paper book, journal, import. Figures in mono, UI in Manrope. */
 :root{
   --bg:#f3f5f8; --surface:#ffffff; --surface-2:#e9edf3; --line:#d6dce6; --line-soft:#e6eaf1;
   --fg:#15202b; --fg-2:#4b5868; --fg-3:#7b879a;
@@ -192,7 +192,6 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
         <div class="eyebrow">NSE · Swing setups · rules engine</div>
         <h1>Nifty Swing Desk</h1>
       </div>
-      <span class="seg" role="group" aria-label="View"><button class="seg-btn" id="viewInd" data-view="industries" aria-pressed="true">Industries</button><button class="seg-btn" id="viewAll" data-view="all" aria-pressed="false">All stocks</button></span>
       <span id="pillRegime" class="pill"><span class="dot"></span>No data yet</span>
       <span id="pillIndex" class="pill"><span class="dot"></span>Index —</span>
       <span id="pillBreadth" class="pill"><span class="dot"></span>Breadth —</span>
@@ -240,7 +239,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card">
-    <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span></h2>
+    <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span><span class="seg" role="group" aria-label="View" style="margin-left:auto"><button class="seg-btn" id="viewInd" data-view="industries" aria-pressed="true">Industries</button><button class="seg-btn" id="viewAll" data-view="all" aria-pressed="false">All stocks</button></span></h2>
     <div class="sec-head"><span>Sector</span><span>Today avg %</span><span>30D avg</span><span>Breadth</span><span>Turnover</span></div>
     <div class="sectors" id="sectors"></div>
     <div id="secMore" style="margin-top:8px" hidden><button class="btn small" id="secMoreBtn"></button></div>
@@ -256,6 +255,14 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     </div>
     <div class="tbl-wrap"><table id="uniTbl"><thead></thead><tbody></tbody></table></div>
     <div id="uniEmpty" class="empty" hidden></div>
+  </section>
+
+  <section class="card" id="paperCard">
+    <h2>Paper book vs the index fund <span class="sub" id="paperSub"></span></h2>
+    <div class="stats" id="paperStats"></div>
+    <div id="paperNote" class="note" style="margin-top:12px" hidden></div>
+    <div class="tbl-wrap" style="margin-top:12px"><table id="paperTbl"><thead></thead><tbody></tbody></table></div>
+    <div id="paperEmpty" class="empty" hidden></div>
   </section>
 
   <section class="grid">

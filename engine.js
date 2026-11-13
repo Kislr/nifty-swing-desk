@@ -416,8 +416,8 @@
     return ['DESK CHECKS DUE', ...due.map(r => `• ${r.date}${r.repeat ? ' (' + r.repeat + ')' : ''} — ${r.text}`)].join('\n');
   }
 
-  /** Telegram text. `blocks` = { momentum, reminders } are the other engines' digests (strings); in swingMode 'watch'
-   *  the momentum list comes first and swing setups are listed as levels to watch, without quantities. */
+  /** Telegram text. `blocks` = { momentum, paper, reminders } are the other engines' digests (strings); in swingMode 'watch'
+   *  the momentum list comes first, then the paper book (13 Nov 2026), and swing setups are listed as levels to watch, without quantities. */
   /** Tag swing signals whose symbol is in the momentum engine's top `topRank` (default 30, the engine's holdRank).
    *  Sets s.momRank on every such signal and s.tag = 'momentum pullback' on pullback buys — the one slice of the swing
    *  rules that passed its backtest (12 Nov 2026: +0.16R over 638 trades, reports/swing-universe-2026-11-12-adjusted.md).
@@ -429,6 +429,13 @@
     signals.sort((a, b) => order[a.kind] - order[b.kind] || ((b.tag === 'momentum pullback') - (a.tag === 'momentum pullback')) || b.score - a.score || (b.row.val || 0) - (a.row.val || 0));
     return n;
   }
+  /** Split a long text into pieces of at most `max` characters at blank lines, for Telegram's 4,096-character cap (13 Nov 2026). */
+  function chunks(text, max) {
+    max = max || 4000; const out = []; let cur = '';
+    for (const block of String(text).split('\n\n')) { const piece = block.length > max ? block.slice(0, max) : block;
+      if (cur && (cur.length + 2 + piece.length) > max) { out.push(cur); cur = piece; } else cur = cur ? cur + '\n\n' + piece : piece; }
+    if (cur) out.push(cur); return out;
+  }
   function digest(result, settings, blocks) {
     const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {}); blocks = blocks || {};
     const watchOnly = st.swingMode === 'watch';
@@ -437,6 +444,7 @@
     L.push(`Tape: ${reg.state} · breadth ${reg.up}▲/${reg.down}▼ · ${idx} · history ${result.coverage}/250 bars`);
     const leaders = [...board.leaders]; L.push(`Leading sectors: ${leaders.length ? leaders.join(', ') : 'none qualify'}`);
     if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
+    if (blocks.paper) L.push('', blocks.paper);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
@@ -464,5 +472,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, tagMomentum, digest, remindersDue, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, tagMomentum, digest, chunks, remindersDue, indicators: { sma, atr, rsi, candles } };
 });

@@ -9,6 +9,15 @@
     "minRR": 2,
     "maxPos": 25
   },
+  "paper": {
+    "from": "2026-11-13",
+    "capital": 500000,
+    "benchmarks": [
+      "NIFTY500 MOMENTUM 50",
+      "NIFTY200 MOMENTUM 30",
+      "NIFTY 50"
+    ]
+  },
   "reminders": [
     {
       "date": "2026-11-13",
@@ -16,7 +25,7 @@
     },
     {
       "date": "2026-11-30",
-      "text": "Month-end: log this rebalance's momentum picks in the journal as paper trades; compare last month's paper trades with the backtest's expectancy.",
+      "text": "Month-end: check the paper book's month in latest.json against the fund (the book's picks are logged by the job, no manual entry needed); compare last month's momentum-pullback paper trades in the journal with the backtest's expectancy.",
       "repeat": "monthly"
     },
     {
@@ -31,11 +40,11 @@
     },
     {
       "date": "2027-02-05",
-      "text": "Three months of live momentum: the journal's paper record vs the adjusted backtest \u2014 is the live expectancy inside the backtest's range? Write the answer into ROADMAP.md."
+      "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Also the journal's momentum-pullback paper trades vs the backtest. Write the answer into ROADMAP.md."
     },
     {
       "date": "2027-05-05",
-      "text": "Six months live. If everything above is ticked, schedule the final audit session (README, Housekeeping: re-read every rule against its description, re-run everything from a clean clone)."
+      "text": "Six months of the paper book. Decide: behind the fund on return and not clearly better on drawdown → the desk stays a monitor and the fund stays the holding; ahead → the owner's call on real money. Then, if everything above is ticked, schedule the final audit session (README, Housekeeping)."
     }
   ]
 }
