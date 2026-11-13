@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-12",
+  "asOf": "2026-11-13",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
   "symbols": 3145,
@@ -20,7 +20,7 @@
     "2025",
     "2026"
   ],
-  "lastDate": "2026-11-11",
+  "lastDate": "2026-11-12",
   "missingList": [
     "NATH",
     "BZH",
