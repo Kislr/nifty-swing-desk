@@ -20,6 +20,14 @@
  *                 cash. `compound: true`: on each rebalance day the slot for new buys is current equity (cash + open
  *                 positions at that close) ÷ topN, so profits are reinvested and losses shrink the next buys. Changes
  *                 the measurement, not the rules: ranks, gate, stops and exits are identical in both modes.
+ *   Refill      = `refill: 'rebalance'` (default): a slot freed by a trailing stop stays empty until the next rebalance, and
+ *                 a rebalance that finds the gate closed buys nothing until the next one. `refill: 'close'`: on any day the
+ *                 gate is open and the book holds fewer than topN names, rank at that close and fill the free slots from the
+ *                 top of the list (same sector cap; exits unchanged — rank drops are still judged at rebalances only).
+ *                 Tested 13 Nov 2026 (reports/momentum-hypotheses-2026-11-13.md); off unless the backtest earns it.
+ *   Vol scaling = `volScale: false` (default). `true`: new buys are half the slot while the index's 20-bar realised
+ *                 volatility is above the median of that same series over the trailing 250 bars (the momentum-crash
+ *                 literature's fix; the 200-day gate is the crude version). Open positions are never resized. Same test.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -27,7 +35,7 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'rebalance', volScale: false, volWindow: 20, volMedian: 250, volFactor: 0.5 };
 
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
   const stdev = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((p, c) => p + (c - m) * (c - m), 0) / (a.length - 1)); };
@@ -42,6 +50,23 @@
       return { open: idx.c[j] > sma, index: idx.c[j], sma, n: P.gateSma, asOf: bars.dates[j], source: 'index' }; }
     let above = 0, n = 0; for (const B of Object.values(bars.sym)) { const c = B.c[i]; if (c == null) continue; const sma = smaAt(B.c, 200, i); if (sma == null) continue; n++; if (c > sma) above++; }
     return n >= 50 ? { open: above / n > 0.5, breadth: above / n, n: P.gateSma, source: 'breadth' } : { open: null, source: 'none' };
+  }
+  /** High-volatility flag per bar for `volScale`: true when the index's realised volatility over the last `volWindow` bars
+   *  (standard deviation of daily close-to-close returns) is above the median of that series over the trailing `volMedian`
+   *  bars, both computed on closes up to and including bar i only. null where the series is too short or there are no index
+   *  bars (→ full slot). Index days without a close carry the previous flag, as gateAt reads the latest index bar. */
+  function volFlags(bars, P) {
+    const N = bars.dates.length; const out = new Array(N).fill(null); const idx = bars.index; if (!idx) return out;
+    const js = [], cs = []; for (let j = 0; j < N; j++) if (idx.c[j] != null) { js.push(j); cs.push(idx.c[j]); }
+    const vols = new Array(cs.length).fill(null);
+    for (let k = P.volWindow; k < cs.length; k++) { const r = []; for (let m = k - P.volWindow + 1; m <= k; m++) r.push(cs[m] / cs[m - 1] - 1); vols[k] = stdev(r); }
+    let flag = null;
+    for (let k = 0; k < cs.length; k++) {
+      if (k >= P.volWindow + P.volMedian - 1 && vols[k] != null) { const w = vols.slice(k - P.volMedian + 1, k + 1).filter(v => v != null).sort((a, b) => a - b);
+        if (w.length) { const med = w.length % 2 ? w[(w.length - 1) / 2] : (w[w.length / 2 - 1] + w[w.length / 2]) / 2; flag = vols[k] > med; } }
+      const from = js[k], to = k + 1 < js.length ? js[k + 1] : N; for (let j = from; j < to; j++) out[j] = flag;
+    }
+    return out;
   }
   /** Rank the universe as of bar index i. Returns {date, gate, ranked, eligible, universe}.
    *  `filter(sym, date)` → false drops a symbol before ranking (point-in-time index membership); the gate is unaffected. */
@@ -89,27 +114,36 @@
     const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
     const open = {}; const trades = []; const equity = []; let cash = capital; let lastReb = -Infinity; const cost = px => px * P.costBps / 2 / 10000;
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
-      trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason }); delete open[sym]; };
+      trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size }); delete open[sym]; };
+    const vflag = P.volScale ? volFlags(bars, P) : null;   // high-volatility flag per bar, closes up to that bar only
+    const marked = i => { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } return mv; };
+    // Buy from the top of the ranking into the free slots: sector cap, then the slot (half of it while volatility is high), then the cash left.
+    const fill = (R, i, how) => { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
+      const half = !!(vflag && vflag[i]); const size = slot * (half ? P.volFactor : 1);
+      for (const r of R.ranked) { if (Object.keys(open).length >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
+        const px = r.ltp + cost(r.ltp); const qty = Math.floor(Math.min(size, cash) / px); if (qty < 1) continue;
+        cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, last: r.ltp, gap: 0, sector: r.sector, rank: r.rank, fill: how, size: half ? 'half' : 'full' }; } };
+    let lastI = N - 1;   // last bar inside the window: positions still open there are closed at that close, not at the end of the whole history
     for (let i = warmup; i < N; i++) {
-      const date = bars.dates[i]; if (date < from || date > to) continue;
+      const date = bars.dates[i]; if (date < from || date > to) continue; lastI = i;
       // 1. daily: trailing stops on open positions, marked on today's close
       for (const sym of Object.keys(open)) { const p = open[sym]; const c = bars.sym[sym].c[i];
         if (c == null) { if (stale && ++p.gap >= stale) close(sym, i, p.last, 'stopped trading'); continue; } p.gap = 0; p.last = c; p.peak = Math.max(p.peak, c);
         if (c < p.peak * (1 - P.trail / 100)) close(sym, i, c, 'trailing stop'); }
       // 2. rebalance day: rank, drop names below holdRank (or ineligible), fill free slots if the gate is open
+      const gate = gateAt(bars, i, P);
       if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom, filter); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
         for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
           if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
-        if (P.compound) { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } slot = mv / P.topN; }
-        if (R.gate.open !== false) { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
-          for (const r of R.ranked) { if (Object.keys(open).length >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
-            const px = r.ltp + cost(r.ltp); const qty = Math.floor(Math.min(slot, cash) / px); if (qty < 1) continue;
-            cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, last: r.ltp, gap: 0, sector: r.sector, rank: r.rank }; } }
-        else for (const sym of Object.keys(open)) { /* gate closed: hold, stops do the work */ } }
+        if (P.compound) slot = marked(i) / P.topN;
+        if (R.gate.open !== false) fill(R, i, 'rebalance'); }
+      // 2b. refill: 'close' — any other day the gate is open and the book is short, rank at this close and fill the free slots
+      else if (P.refill === 'close' && gate.open !== false && Object.keys(open).length < P.topN) { const R = selectAt(bars, i, P, custom, filter);
+        if (P.compound) slot = marked(i) / P.topN; fill(R, i, 'refill'); }
       let inv = 0; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; inv += (c != null ? c : open[sym].entry) * open[sym].qty; } const mv = cash + inv;
-      equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gateAt(bars, i, P).open, index: bars.index ? bars.index.c[i] : null });
+      equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gate.open, index: bars.index ? bars.index.c[i] : null, volHigh: P.volScale ? vflag[i] : undefined });
     }
-    for (const sym of Object.keys(open)) { const i = N - 1; const c = bars.sym[sym].c[i]; close(sym, i, c != null ? c : open[sym].last, 'end of data'); }
+    for (const sym of Object.keys(open)) { const i = lastI; const c = bars.sym[sym].c[i]; close(sym, i, c != null ? c : open[sym].last, 'end of data'); }   // (13 Nov 2026: was N - 1 even with --to, so a windowed run's last trades were marked at the final bar of the whole history)
     return { trades, equity, params: P, warmup, capital };
   }
 
@@ -123,7 +157,9 @@
     const byYear = {}; for (let k = 1; k < eq.length; k++) { const y = eq[k].date.slice(0, 4); const b = byYear[y] || (byYear[y] = { start: eq[k - 1].value, end: 0, idx0: eq[k - 1].index, idx1: null }); b.end = eq[k].value; b.idx1 = eq[k].index; }
     const inMarket = eq.filter(e => e.positions > 0).length / eq.length;
     const atWork = eq[0].invested != null ? mean(eq.map(e => e.value ? e.invested / e.value : 0)) : null;   // average share of equity in open positions
-    return { atWork, n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
+    const refills = t.filter(x => x.fill === 'refill').length, halfSized = t.filter(x => x.size === 'half').length;   // 13 Nov 2026 options; both 0 at the defaults
+    const volHighDays = eq.some(e => e.volHigh != null) ? eq.filter(e => e.volHigh === true).length / eq.length : null;
+    return { atWork, refills, halfSized, volHighDays, n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
       avgWin: wins.length ? mean(wins.map(x => x.ret)) : null, avgLoss: t.length - wins.length ? mean(t.filter(x => x.pnl <= 0).map(x => x.ret)) : null, avgBars: t.length ? mean(t.map(x => x.bars)) : null, byReason, byYear, inMarket, final: v1 };
   }
 
@@ -137,5 +173,5 @@
     return L.join('\n');
   }
 
-  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt };
+  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, volFlags };
 });
