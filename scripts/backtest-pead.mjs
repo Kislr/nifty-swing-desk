@@ -59,7 +59,7 @@ export function trade(bars, B, sym, R, P, hold) {
   const N = bars.dates.length; const i = R + 1; if (i >= N || B.o[i] == null || B.c[R] == null) return null;
   if (B.o[i] > B.c[R] * (1 + P.gapSkip)) return { skipped: 'gap' };
   const atr = E.indicators.atr(B, 14, R); if (atr == null) return { skipped: 'no ATR' };
-  const cost = px => px * P.costBps / 2 / 10000; const entry = B.o[i] + cost(B.o[i]); const stop = Math.max(entry - P.atrMult * atr, entry * (1 - P.stopFloor)); const risk = entry - stop;
+  const cost = px => px * P.costBps / 2 / 10000; const entry = B.o[i] + cost(B.o[i]); const stop = entry - Math.max(P.atrMult * atr, entry * P.stopFloor); const risk = entry - stop;   // 2 × ATR below the entry, at least 2% (engine.js's breakout stop). 13 Nov 2026: the first run had max() the wrong way round, so the stop was never more than 2% below — see the report
   let exit = null, exitI = null, reason = null, last = null;
   for (let k = i; k < N; k++) { if (B.c[k] == null) continue; last = k;
     if (k > i && B.o[k] != null && B.o[k] < stop) { exit = B.o[k]; exitI = k; reason = 'stop (gap)'; break; }
