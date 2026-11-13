@@ -95,6 +95,25 @@ The one thing that still gates every verdict. About an hour and a half of wall-c
 
 What not to do: do not run `--years 10` without `--members` (it would skip every saved day and add nothing); do not delete or hand-edit the history files first; do not run two copies at once.
 
+## Results dates — the home run for the PEAD test (13 Nov 2026)
+
+The post-earnings-announcement-drift test (`reports/pead-hypotheses-2026-11-13.md`) needs the date and time NSE published every quarterly result over the history. NSE has it; NSE refuses cloud IPs; so this is a home run, like the three before it. Budget about 25 minutes of wall-clock, almost all of it the script pausing between requests, plus a minute to read one table. Nothing to decide along the way — the hypothesis file already says how the result is read.
+
+1. **Pull `main`** so you have `scripts/results-dates.mjs` and `scripts/backtest-pead.mjs`: `git pull`.
+2. **Check the starting point** (ten seconds): `ls data/history/` shows 2016.json … 2026.json; `ls data/membership/src/symbolchange.csv` exists (it maps old tickers to today's, so a result filed under an old name lands on the right bars). If `symbolchange.csv` is missing, download it again from nsearchives.nseindia.com/content/equities/symbolchange.csv into that folder first.
+3. **Run the pull**, from home, in the repository folder:
+   `node scripts/results-dates.mjs`
+   It walks the history from the first bar (Nov 2016) to today in 90-day windows, first NSE's **financial-results** list (the one with the dissemination time), then the **board-meetings** list (meeting dates, the fallback for older filings). The first window of each prints `sample record keys: …` — glance at it; the script finds the symbol, the timestamp and the period by name pattern, and if the names it sees are unusual it will say so at the end. Every response is saved under `data/results/raw/` before it is parsed, so a parsing fix later needs no second evening. One line per window: `fr 2017-01-01 → 2017-03-31: 1,840 rows in 1 windows (0 empty)`. Roughly 40 windows per list.
+   If it stops with `NSE did not answer four times`, wait fifteen minutes and run the same command again: saved windows are skipped, so the second run is fast and only fetches what is missing. If NSE keeps refusing the API, use the pages' own downloads instead: on nseindia.com → Companies → Corporate filings → *Financial Results*, set the period to Quarterly and the dates to a year at a time, download the CSV for each year (about ten files), and run `node scripts/results-dates.mjs --csv CF-FR-equities-2017.csv --csv CF-FR-equities-2018.csv …` (the board-meetings page's CSVs go in the same list; the script tells them apart by their columns).
+4. **Read the coverage table** the script prints at the end (also `reports/results-dates-<date>.md`): one row per year with the number of events and of symbols. A complete year has about 1,800–2,200 events (450–550 names × four quarters). The line under the table names **the first year that looks complete** — that is where the PEAD window starts. If no year looks complete, the field patterns missed: send the `sample record keys` line to the next session and run `node scripts/results-dates.mjs --reparse` after the fix; nothing needs re-fetching.
+5. **Run the backtest** (ten seconds, no network):
+   `node scripts/backtest-pead.mjs`
+   It writes `reports/pead-<date>-adjusted-members.md` and `.json`. The first line under the title is the verdict — PASS, FAIL or INSUFFICIENT — with the reason, judged against the pass mark fixed in the hypothesis before the data existed (primary row ≥ +0.1R over 300+ trades; excess over the Nifty positive in six of the years with 20+ trades; no year above 40% of total R). Read the Coverage paragraph too: the reaction-day split (same day / next day / no time) should be mostly "next day", because most results come after the close.
+6. **Commit everything**: `git add data/results reports && git commit -m "Results dates loaded; PEAD backtest run" && git push`. `data/results/raw/` is a few megabytes of JSON; the events file is small.
+7. **Tell the next session** the verdict line and the first complete year. The decision rule is already written: pass → "Results drift" becomes a paper-mode swing setup for one results season; fail → PEAD is closed and the short-term reversal is next; insufficient → extend the coverage (step 3's CSV route reaches further back than the API on some lists) before anything is built.
+
+What not to do: do not hand-edit `data/results/events.json` (re-run with `--reparse` instead); do not run two copies at once; do not change the rule in `scripts/backtest-pead.mjs` before the first run has been read — the whole point of writing the hypothesis first is that the first number is the one that counts.
+
 ## What gets written
 
 `data/history/<year>.json` — one file per calendar year with aligned open/high/low/close/volume/turnover for every symbol in the universe, plus NIFTY 50 index bars (open/high/low/close) for the regime and relative-strength calculations. The site loads only the current and previous year; the backtest loads them all.

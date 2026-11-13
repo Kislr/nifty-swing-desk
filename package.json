@@ -13,6 +13,8 @@
     "backtest": "node scripts/backtest.mjs",
     "backtest:momentum": "node scripts/backtest-momentum.mjs",
     "backtest:compounder": "node scripts/compounder-backtest-us.mjs",
+    "backtest:pead": "node scripts/backtest-pead.mjs",
+    "results-dates": "node scripts/results-dates.mjs",
     "corporate-actions": "node scripts/corporate-actions.mjs",
     "test": "node scripts/test.mjs && node scripts/test-compounder.mjs",
     "compounder:us": "node scripts/compounder-fetch-us.mjs --all"
