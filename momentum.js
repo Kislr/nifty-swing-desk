@@ -24,10 +24,14 @@
  *                 a rebalance that finds the gate closed buys nothing until the next one. `refill: 'close'`: on any day the
  *                 gate is open and the book holds fewer than topN names, rank at that close and fill the free slots from the
  *                 top of the list (same sector cap; exits unchanged — rank drops are still judged at rebalances only).
- *                 Tested 13 Nov 2026 (reports/momentum-hypotheses-2026-11-13.md); off unless the backtest earns it.
- *   Vol scaling = `volScale: false` (default). `true`: new buys are half the slot while the index's 20-bar realised
- *                 volatility is above the median of that same series over the trailing 250 bars (the momentum-crash
- *                 literature's fix; the 200-day gate is the crude version). Open positions are never resized. Same test.
+ *                 Tested 13 Nov 2026 (reports/momentum-hypotheses-2026-11-13.md, momentum-refinements-2026-11-13-adjusted-members.md).
+ *   Vol scaling = `volScale: true` (default). New buys are half the slot while the index's 20-bar realised volatility is above
+ *                 the median of that same series over the trailing 250 bars (the momentum-crash literature's fix; the 200-day
+ *                 gate is the crude version). Open positions are never resized. Same test.
+ *                 Owner's decision, 13 Nov 2026: both switches ON as the engine's rules. The engine did not beat the momentum
+ *                 index fund on return from any start in 2020 or later, so the fund is the holding; the engine runs as a paper
+ *                 book (paperBook below, started 13 Nov 2026 by the daily job) beside the fund, to see whether the live record
+ *                 agrees. The 12 Nov verdict figures (switches off) stay reproducible with refill=rebalance volScale=false.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -35,7 +39,7 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'rebalance', volScale: false, volWindow: 20, volMedian: 250, volFactor: 0.5 };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5 };
 
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
   const stdev = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((p, c) => p + (c - m) * (c - m), 0) / (a.length - 1)); };
@@ -114,7 +118,7 @@
     const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
     const open = {}; const trades = []; const equity = []; let cash = capital; let lastReb = -Infinity; const cost = px => px * P.costBps / 2 / 10000;
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
-      trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size }); delete open[sym]; };
+      trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size, peak: +p.peak.toFixed(2) }); delete open[sym]; };
     const vflag = P.volScale ? volFlags(bars, P) : null;   // high-volatility flag per bar, closes up to that bar only
     const marked = i => { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } return mv; };
     // Buy from the top of the ranking into the free slots: sector cap, then the slot (half of it while volatility is high), then the cash left.
@@ -163,15 +167,57 @@
       avgWin: wins.length ? mean(wins.map(x => x.ret)) : null, avgLoss: t.length - wins.length ? mean(t.filter(x => x.pnl <= 0).map(x => x.ret)) : null, avgBars: t.length ? mean(t.map(x => x.bars)) : null, byReason, byYear, inMarket, final: v1 };
   }
 
+  /** The paper book (13 Nov 2026): the engine's rules run forward from `opts.from` on the live history, exactly as the
+   *  backtest runs them — a fresh book of `opts.capital` bought at the first close on or after `from`, then rebalances,
+   *  stops, refills and half-size buys day by day — so the daily job can print what the book holds, what it did today and
+   *  how it stands against the index funds since that day, with no human input and nothing to reconcile. Reinvested
+   *  (compound: true) unless params say otherwise, because that is the row the indices are compared with.
+   *  opts.benchmarks = { 'NIFTY500 MOMENTUM 50': { 'YYYY-MM-DD': close, ... }, ... } — price-index closes saved by the job;
+   *  NIFTY 50 comes from bars.index. Each is measured from the first close it has on or after the book's first day.
+   *  Returns null before the first day exists in the bars. */
+  function paperBook(bars, params, custom, opts) {
+    opts = opts || {}; const P = Object.assign({}, DEFAULTS, { compound: true }, params || {}); const from = opts.from; if (!from) return null;
+    const N = bars.dates.length; const last = N - 1; const today = bars.dates[last]; if (!N || today < from) return null;
+    const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20 }); const eq = sim.equity; if (!eq.length) return null;
+    const i0 = bars.dates.indexOf(eq[0].date); const value = eq[eq.length - 1].value; const st = stats(sim);
+    const positions = sim.trades.filter(t => t.reason === 'end of data' && t.exitDate === today).map(t => { const B = bars.sym[t.sym]; const lastPx = B && B.c[last] != null ? B.c[last] : t.exit;
+      return { sym: t.sym, sector: t.sector, entryDate: t.entryDate, entry: t.entry, qty: t.qty, last: lastPx, peak: t.peak, stop: +(t.peak * (1 - P.trail / 100)).toFixed(2), ret: +((lastPx / t.entry - 1) * 100).toFixed(2), bars: t.bars, fill: t.fill, size: t.size, rankIn: t.rankIn }; }).sort((a, b) => a.sym.localeCompare(b.sym));
+    const buys = sim.trades.filter(t => t.entryDate === today).map(t => ({ sym: t.sym, qty: t.qty, price: t.entry, size: t.size, fill: t.fill, rank: t.rankIn }));
+    const sells = sim.trades.filter(t => t.exitDate === today && t.reason !== 'end of data').map(t => ({ sym: t.sym, qty: t.qty, price: t.exit, ret: t.ret, pnl: t.pnl, reason: t.reason, entryDate: t.entryDate }));
+    const sinceReb = (last - i0) % P.rebalance; const nextRebalanceIn = sinceReb === 0 ? 0 : P.rebalance - sinceReb;
+    const gate = gateAt(bars, last, P); const volHigh = P.volScale ? volFlags(bars, P)[last] : null; const slot = value / P.topN;
+    const benchmarks = []; const first = eq[0].date;
+    if (bars.index) { let b = null; for (let i = i0; i <= last; i++) if (bars.index.c[i] != null) { b = { date: bars.dates[i], value: bars.index.c[i] }; break; }
+      if (b && bars.index.c[last] != null) benchmarks.push({ name: bars.index.name || 'NIFTY 50', from: b.date, fromValue: b.value, value: bars.index.c[last], ret: bars.index.c[last] / b.value - 1, kind: 'price index' }); }
+    for (const [name, series] of Object.entries(opts.benchmarks || {})) { const ds = Object.keys(series).filter(d => d >= first && d <= today).sort(); if (!ds.length) { benchmarks.push({ name, missing: true }); continue; }
+      const d0 = ds[0], d1 = ds[ds.length - 1]; benchmarks.push({ name, from: d0, fromValue: series[d0], asOf: d1, value: series[d1], ret: series[d1] / series[d0] - 1, kind: 'price index', stale: d1 !== today }); }
+    const inv = eq[eq.length - 1].invested;
+    return { from: first, to: today, days: eq.length, capital: sim.capital, value, ret: value / sim.capital - 1, maxDrawdown: st.maxDrawdown, invested: inv, investedShare: value ? inv / value : 0,
+      positions, buys, sells, gate, volHigh, slot: +slot.toFixed(0), halfSize: volHigh === true, nextRebalanceIn, trades: sim.trades.filter(t => t.reason !== 'end of data').length, params: P, benchmarks, equity: eq.map(e => ({ date: e.date, value: e.value, invested: e.invested, positions: e.positions })) };
+  }
+  /** Telegram block for the paper book. */
+  function paperDigest(pb, fmt) {
+    if (!pb) return null; const f = fmt || (n => Number(n).toFixed(2)); const pc = x => (x >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%'; const L = [];
+    const bm = pb.benchmarks.filter(b => !b.missing).map(b => `${b.name} ${pc(b.ret)}${b.stale ? ' (to ' + b.asOf + ')' : ''}`).join(' · ');
+    L.push(`PAPER BOOK — the engine's rules (both switches on) run forward since ${pb.from}, reinvested, beside the index fund: ₹${f(pb.capital, 0)} → ₹${f(pb.value, 0)} (${pc(pb.ret)}) after ${pb.days} day${pb.days === 1 ? '' : 's'}${bm ? ' · ' + bm : ''} · max drawdown ${(pb.maxDrawdown * 100).toFixed(1)}% · ${pb.positions.length} of ${pb.params.topN} names, ${Math.round(pb.investedShare * 100)}% invested`);
+    L.push(`• gate ${pb.gate.open == null ? 'n/a' : pb.gate.open ? 'OPEN' : 'CLOSED'}${pb.volHigh == null ? '' : pb.volHigh ? ' · Nifty 20-day volatility above its 1-year median → new buys at HALF size' : ' · volatility normal → full size'} · slot ₹${f(pb.slot, 0)}${pb.halfSize ? ' (₹' + f(pb.slot * pb.params.volFactor, 0) + ' today)' : ''} · next rebalance in ${pb.nextRebalanceIn} bar${pb.nextRebalanceIn === 1 ? '' : 's'}`);
+    if (pb.buys.length) L.push(`• BOUGHT today: ${pb.buys.map(b => `${b.sym} ${b.qty} @ ${f(b.price)}${b.size === 'half' ? ' (half)' : ''}${b.fill === 'refill' ? ' (refill)' : ''}`).join(', ')}`);
+    if (pb.sells.length) L.push(`• SOLD today: ${pb.sells.map(s => `${s.sym} ${s.qty} @ ${f(s.price)} (${s.reason}, ${s.ret >= 0 ? '+' : ''}${s.ret}%)`).join(', ')}`);
+    if (!pb.buys.length && !pb.sells.length) L.push('• no trades today');
+    if (pb.positions.length) L.push(`• holding (hold unless a close is below the stop): ${pb.positions.map(p => `${p.sym} ${p.ret >= 0 ? '+' : ''}${p.ret.toFixed(1)}% stop ${f(p.stop)}`).join(' · ')}`);
+    return L.join('\n');
+  }
+
   /** Text block for the Telegram digest. */
   function digest(sel, fmt) {
     const f = fmt || (n => Number(n).toFixed(2)); const L = [];
     L.push(`MOMENTUM (${sel.params.lookback}-bar, skip ${sel.params.skip}, top ${sel.params.topN}) — gate ${sel.gate.open == null ? 'n/a' : sel.gate.open ? 'OPEN' : 'CLOSED'}${sel.gate.sma != null ? ` (Nifty ${f(sel.gate.index)} vs ${sel.gate.n}-day ${f(sel.gate.sma)})` : sel.gate.breadth != null ? ` (${Math.round(sel.gate.breadth * 100)}% of stocks above their 200-day)` : ''}`);
     if (sel.gate.open === false) L.push('• no new buys while the index is below its average; holdings exit on trailing stops');
+    else if (sel.params.refill === 'close') L.push(`• rules: hold the top ${sel.params.topN} equal-weighted; a free slot is filled at today's close from the top of this list; ${sel.params.trail}% trailing stop from the highest close; names below rank ${sel.params.holdRank} leave at the monthly rebalance${sel.params.volScale ? '; new buys at half size while the Nifty\'s 20-day volatility is above its 1-year median' : ''}`);
     sel.picks.slice(0, sel.params.topN).forEach(r => L.push(`• #${r.rank} ${r.sym} — 6m ${r.ret6 != null ? (r.ret6 * 100).toFixed(0) + '%' : '—'}, 1m ${r.ret1 != null ? (r.ret1 * 100).toFixed(0) + '%' : '—'}, ${r.offHigh.toFixed(0)}% off high`));
     if (!sel.picks.length) L.push('• not enough history yet');
     return L.join('\n');
   }
 
-  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, volFlags };
+  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, volFlags, paperBook, paperDigest };
 });
