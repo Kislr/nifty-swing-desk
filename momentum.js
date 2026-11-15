@@ -199,12 +199,12 @@
   function paperDigest(pb, fmt) {
     if (!pb) return null; const f = fmt || (n => Number(n).toFixed(2)); const pc = x => (x >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%'; const L = [];
     const bm = pb.benchmarks.filter(b => !b.missing).map(b => `${b.name} ${pc(b.ret)}${b.stale ? ' (to ' + b.asOf + ')' : ''}`).join(' · ');
-    L.push(`PAPER BOOK — the engine's rules (both switches on) run forward since ${pb.from}, reinvested, beside the index fund: ₹${f(pb.capital, 0)} → ₹${f(pb.value, 0)} (${pc(pb.ret)}) after ${pb.days} day${pb.days === 1 ? '' : 's'}${bm ? ' · ' + bm : ''} · max drawdown ${(pb.maxDrawdown * 100).toFixed(1)}% · ${pb.positions.length} of ${pb.params.topN} names, ${Math.round(pb.investedShare * 100)}% invested`);
+    L.push(`PAPER BOOK — the engine's rules run forward since ${pb.from}, reinvested, beside the index fund: ₹${f(pb.capital, 0)} → ₹${f(pb.value, 0)} (${pc(pb.ret)}) after ${pb.days} day${pb.days === 1 ? '' : 's'}${bm ? ' · ' + bm : ''} · max drawdown ${(pb.maxDrawdown * 100).toFixed(1)}% · ${pb.positions.length} of ${pb.params.topN} names, ${Math.round(pb.investedShare * 100)}% invested`);
     L.push(`• gate ${pb.gate.open == null ? 'n/a' : pb.gate.open ? 'OPEN' : 'CLOSED'}${pb.volHigh == null ? '' : pb.volHigh ? ' · Nifty 20-day volatility above its 1-year median → new buys at HALF size' : ' · volatility normal → full size'} · slot ₹${f(pb.slot, 0)}${pb.halfSize ? ' (₹' + f(pb.slot * pb.params.volFactor, 0) + ' today)' : ''} · next rebalance in ${pb.nextRebalanceIn} bar${pb.nextRebalanceIn === 1 ? '' : 's'}`);
     if (pb.buys.length) L.push(`• BOUGHT today: ${pb.buys.map(b => `${b.sym} ${b.qty} @ ${f(b.price)}${b.size === 'half' ? ' (half)' : ''}${b.fill === 'refill' ? ' (refill)' : ''}`).join(', ')}`);
     if (pb.sells.length) L.push(`• SOLD today: ${pb.sells.map(s => `${s.sym} ${s.qty} @ ${f(s.price)} (${s.reason}, ${s.ret >= 0 ? '+' : ''}${s.ret}%)`).join(', ')}`);
     if (!pb.buys.length && !pb.sells.length) L.push('• no trades today');
-    if (pb.positions.length) L.push(`• holding (hold unless a close is below the stop): ${pb.positions.map(p => `${p.sym} ${p.ret >= 0 ? '+' : ''}${p.ret.toFixed(1)}% stop ${f(p.stop)}`).join(' · ')}`);
+    if (pb.positions.length) L.push(`• holding — name, return, stop (hold unless a close is below the stop): ${pb.positions.map(p => `${p.sym} ${p.ret >= 0 ? '+' : ''}${p.ret.toFixed(1)}% / ${f(p.stop)}`).join(' · ')}`);
     return L.join('\n');
   }
 
@@ -213,7 +213,7 @@
     const f = fmt || (n => Number(n).toFixed(2)); const L = [];
     L.push(`MOMENTUM (${sel.params.lookback}-bar, skip ${sel.params.skip}, top ${sel.params.topN}) — gate ${sel.gate.open == null ? 'n/a' : sel.gate.open ? 'OPEN' : 'CLOSED'}${sel.gate.sma != null ? ` (Nifty ${f(sel.gate.index)} vs ${sel.gate.n}-day ${f(sel.gate.sma)})` : sel.gate.breadth != null ? ` (${Math.round(sel.gate.breadth * 100)}% of stocks above their 200-day)` : ''}`);
     if (sel.gate.open === false) L.push('• no new buys while the index is below its average; holdings exit on trailing stops');
-    else if (sel.params.refill === 'close') L.push(`• rules: hold the top ${sel.params.topN} equal-weighted; a free slot is filled at today's close from the top of this list; ${sel.params.trail}% trailing stop from the highest close; names below rank ${sel.params.holdRank} leave at the monthly rebalance${sel.params.volScale ? '; new buys at half size while the Nifty\'s 20-day volatility is above its 1-year median' : ''}`);
+    else if (sel.params.refill === 'close') L.push(`• rules: top ${sel.params.topN} equal-weight; a free slot is refilled at the close; ${sel.params.trail}% trailing stop; out below rank ${sel.params.holdRank} at the monthly rebalance${sel.params.volScale ? '; half-size buys while Nifty volatility is high' : ''}`);   // one line; the full wording is on the site (15 Nov 2026: digest length)
     sel.picks.slice(0, sel.params.topN).forEach(r => L.push(`• #${r.rank} ${r.sym} — 6m ${r.ret6 != null ? (r.ret6 * 100).toFixed(0) + '%' : '—'}, 1m ${r.ret1 != null ? (r.ret1 * 100).toFixed(0) + '%' : '—'}, ${r.offHigh.toFixed(0)}% off high`));
     if (!sel.picks.length) L.push('• not enough history yet');
     return L.join('\n');

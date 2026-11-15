@@ -297,4 +297,6 @@ function wire() {
     S.settings = { ...E.DEFAULTS, ...(d.settings || {}) }; S.custom = d.custom || {}; S.journal = Array.isArray(d.journal) ? d.journal : []; S.manualSnaps = Array.isArray(d.manualSnaps) ? d.manualSnaps : []; save(); mergeSnaps(); render(); toast('Backup restored'); } catch { toast('That file is not a Swing Desk backup'); } e.target.value = ''; }; r.readAsText(f); });
 }
 load(); wire(); mergeSnaps(); render(); loadRepoData();
+// "What the rules have earned" is collapsed by default (15 Nov 2026); a link to #backtestCard opens it so the anchor still lands on the text.
+const openBacktest = () => { if (location.hash === '#backtestCard') { const d = $('backtestCard'); if (d && 'open' in d) d.open = true; } }; openBacktest(); window.addEventListener('hashchange', openBacktest);
 })();
