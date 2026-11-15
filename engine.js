@@ -447,26 +447,30 @@
     if (blocks.paper) L.push('', blocks.paper);
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
+      // 15 Nov 2026: the digest passed Telegram's 4,096-character cap once the paper book joined it, so in watch mode the swing
+      // blocks carry the levels and a one-line reading each; the backtest citations, the full lists and the counts beyond the
+      // caps live on the site. The momentum list and the paper book — the live record — are not trimmed.
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
-      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper-trade these: pullback buys on names in the momentum top 30 made +0.16R/trade on today's names but +0.09R over 594 trades on the names actually in the NIFTY 500 each day (reports/swing-membership-2026-11-12-adjusted-members.md) — under the +0.1R bar, so watch mode stands; log them in the journal as "Momentum pullback" if you paper-trade them`);
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper trades, not orders: +0.09R over 594 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-12-adjusted-members.md); log as "Momentum pullback"`);
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
-      else L.push('  (as backtested: at most 4 open at once, one per sector, taken in score order; stop to breakeven at +1R; out after 15 bars if neither level is hit)');
-      L.push('', `OTHER SWING SETUPS (${rest.length}) — watch only, not orders: breakeven after costs over ten years (−0.01R/trade, 885 trades; reports/)`);
-      rest.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
+      else L.push('  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)');
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: breakeven over ten years (−0.01R, 885 trades)${rest.length > 5 ? `; top 5 here, all ${rest.length} on the site` : ''}`);
+      rest.slice(0, 5).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!rest.length) L.push('• none today');
     } else {
       L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
       act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.tag ? ' ★ momentum pullback' : ''} — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
       if (!act.length) L.push('• nothing — no trade is a valid outcome');
     }
-    L.push('', `ALERTS (${alert.length})`); alert.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
+    const capA = watchOnly ? 4 : 8;   // breakout alerts are pre-setup triggers for a watch-only engine: four lines in watch mode, the rest on the site
+    L.push('', `ALERTS (${alert.length})${alert.length > capA ? ` — top ${capA}` : ''}`); alert.slice(0, capA).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
     L.push('', `WATCH (${watch.length})`); watch.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}${s.trigger ? ': ' + s.trigger : ''}`)); if (!watch.length) L.push('• none');
-    if (watchOnly) L.push('', `Avoid list: ${by('avoid').length} names. [score] = 0–100 setup quality (has not separated winners from losers in the backtest).`);
+    if (watchOnly) L.push('', `Avoid list: ${by('avoid').length} names. [score] = 0–100 setup quality (no edge in the backtest).`);
     else L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
     if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
     if (blocks.reminders) L.push('', blocks.reminders);
-    L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive ten-year record; momentum pullbacks are the one swing slice that passed its backtest and are being paper-traded; other swing levels are for watching.'
+    L.push('', watchOnly ? 'Rules engine output, not advice. Momentum is the only list with a positive ten-year record and the paper book is its live test; swing levels are for watching. Full lists on the site.'
       : 'Rules engine output, not advice. Orders are conditional on tomorrow\'s price; a setup that is gone tomorrow was not triggered.');
     return L.join('\n');
   }
