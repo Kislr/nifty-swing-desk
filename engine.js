@@ -144,6 +144,22 @@
     }
     return out;
   }
+  /* NSE's market-watch call wants an index's short code, not its display name: getIndicesData&symbol=NIFTY500 MOMENTUM 50 answers
+   * {"data":{}} (how the paper book's two index funds went unsaved from 13 to 17 Nov 2026), symbol=NIFTY500MOMENTM50 answers the
+   * constituents with the index row first, and that row carries the display name again. The codes come from NSE's own list
+   * (marketWatchApi?functionName=getIndexList → {data:{group:{display name: code}}}); the two the desk needs are also kept here
+   * so a failed list call costs nothing. Broad indices (NIFTY 50, NIFTY 500) are their own code. */
+  const INDEX_CODES = { 'NIFTY500 MOMENTUM 50': 'NIFTY500MOMENTM50', 'NIFTY200 MOMENTUM 30': 'NIFTY200MOMENTM30', 'NIFTY MIDCAP150 MOMENTUM 50': 'NIFTYM150MOMNTM50' };
+  function indexCode(name, list) {
+    const groups = list && list.data && typeof list.data === 'object' ? Object.values(list.data) : [];
+    for (const g of groups) { if (!g || typeof g !== 'object') continue; for (const [disp, code] of Object.entries(g)) if (code && (sameIndex(disp, name) || sameIndex(code, name))) return String(code); }
+    return INDEX_CODES[String(name || '').trim().toUpperCase()] || String(name || '');
+  }
+  /** An index's close and previous close from the rows of its own market-watch call: the row named like the index, else the one index row. */
+  function benchmarkClose(rows, name) {
+    const ix = (rows || []).filter(r => r && r.isIndex); const row = ix.find(r => sameIndex(r.sym, name)) || (ix.length === 1 ? ix[0] : null);
+    return row && row.ltp > 0 ? { close: row.ltp, prev: row.prev > 0 ? row.prev : null } : null;
+  }
   function toSnapshotDoc(rows, date, time, source) {
     const doc = { date, time: time || null, source: source || 'manual', savedAt: new Date().toISOString(), count: 0, rows: {}, index: null };
     for (const r of rows) {
@@ -401,6 +417,32 @@
     const label = t.status === 'closed' ? 'Closed' : (!last ? 'No data since entry' : stopHit && (!targetHit || stopHit <= targetHit) ? 'Stop hit ' + stopHit : targetHit ? 'Target touched ' + targetHit : 'Open');
     return { label, R, pnl, mark, last, stopHit, targetHit };
   }
+  /* Discretionary book (18 Nov 2026; owner's instruction of 13 Nov). The owner's hunches get their own journal setup so they are scored
+   * instead of argued about: a fixed budget — at most DISCRETIONARY.maxOpen open positions, each at half the normal risk and half the
+   * normal position cap — and one written sentence at entry saying why. It is read in R at the three- and six-month checks beside the
+   * momentum paper book and the index fund, and it never changes a rule in this file. */
+  const DISCRETIONARY = { setup: 'Discretionary', maxOpen: 2, sizeFactor: 0.5, minWhy: 12 };
+  /** Can this discretionary trade be logged? t = {entry, stop, qty?, why}. Returns { ok, reason, maxQty, open }: maxQty is the half-size
+   *  quantity (sizing() on half the risk and half the position cap); a missing qty is to be filled with it, a larger one is refused. */
+  function discretionaryCheck(journal, t, settings) {
+    const D = DISCRETIONARY; const st = Object.assign({}, DEFAULTS, settings || {});
+    const open = (journal || []).filter(x => x && x.setup === D.setup && x.status !== 'closed').length;
+    const sz = sizing(t.entry, t.stop, null, Object.assign({}, st, { riskPct: st.riskPct * D.sizeFactor, maxPos: st.maxPos * D.sizeFactor })); const maxQty = sz ? sz.qty : 0;
+    const fail = reason => ({ ok: false, reason, maxQty, open });
+    if (open >= D.maxOpen) return fail(`The discretionary book is full: ${open} of ${D.maxOpen} open. Close one before adding another.`);
+    if (String(t.why || '').trim().length < D.minWhy) return fail('A discretionary trade needs one written sentence saying why — it is what gets scored later.');
+    if (maxQty < 1) return fail('At half size this stop allows no shares: the stop is too far from the entry for the discretionary budget.');
+    if (t.qty != null && t.qty > maxQty) return fail(`Half size is at most ${maxQty} shares for this entry and stop (you entered ${t.qty}).`);
+    return { ok: true, reason: null, maxQty, open };
+  }
+  /** The journal read book by book, in R: Discretionary, Momentum pullback, and everything else. Closed trades give the expectancy;
+   *  open ones are marked at the last close. Returns [{book, open, closed, wins, totalR, avgR, openR}], only books that have trades. */
+  function bookStats(journal, bars) {
+    const bookOf = t => t.setup === DISCRETIONARY.setup ? DISCRETIONARY.setup : t.setup === 'Momentum pullback' ? 'Momentum pullback' : 'Other setups';
+    const by = {}; for (const t of journal || []) { if (!t) continue; const k = bookOf(t); const b = by[k] = by[k] || { book: k, open: 0, closed: 0, wins: 0, totalR: 0, openR: 0 };
+      const R = journalStatus(t, bars || { dates: [], sym: {} }).R; if (t.status === 'closed') { b.closed++; if (R != null) { b.totalR += R; if (R > 0) b.wins++; } } else { b.open++; if (R != null) b.openR += R; } }
+    return [DISCRETIONARY.setup, 'Momentum pullback', 'Other setups'].filter(k => by[k]).map(k => Object.assign(by[k], { avgR: by[k].closed ? by[k].totalR / by[k].closed : null }));
+  }
   /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'}]). A reminder is due from its
    *  date for `windowDays` (7) days, so a missed day still nags for a week; a repeating one is due around every occurrence. Returns
    *  the digest block or null. Edit or remove the entry in config.json once the check is done. */
@@ -436,9 +478,23 @@
       if (cur && (cur.length + 2 + piece.length) > max) { out.push(cur); cur = piece; } else cur = cur ? cur + '\n\n' + piece : piece; }
     if (cur) out.push(cur); return out;
   }
+  /** Caps on the watch-mode lists, loosest first (18 Nov 2026). digestFit walks down this ladder until the digest fits one Telegram
+   *  message; the momentum list, the paper book, the momentum pullbacks and the reminders are never trimmed. 0 = header and count only. */
+  const DIGEST_CAPS = [{ other: 5, alerts: 4, watch: 4 }, { other: 3, alerts: 3, watch: 3 }, { other: 3, alerts: 2, watch: 2 }, { other: 2, alerts: 0, watch: 0 }];
+  const TELEGRAM_MAX = 4096;
+  /** The digest at the loosest caps that fit `max` characters (Telegram's 4,096). Returns { text, level, fits }: level is the index
+   *  into DIGEST_CAPS that was used; when nothing fits (a day with a long BOUGHT / SOLD line), the untrimmed text comes back with
+   *  fits = false and the sender splits it at blank lines (chunks). Orders mode is never trimmed. */
+  function digestFit(result, settings, blocks, max) {
+    max = max || TELEGRAM_MAX; blocks = blocks || {}; const st = Object.assign({}, DEFAULTS, settings || {});
+    const full = digest(result, settings, blocks); if (full.length <= max || st.swingMode !== 'watch') return { text: full, level: 0, fits: full.length <= max };
+    for (let k = 1; k < DIGEST_CAPS.length; k++) { const t = digest(result, settings, Object.assign({}, blocks, { caps: DIGEST_CAPS[k] })); if (t.length <= max) return { text: t, level: k, fits: true }; }
+    return { text: full, level: 0, fits: false };
+  }
   function digest(result, settings, blocks) {
     const { signals, reg, board } = result; if (!reg) return 'No data.'; const st = Object.assign({}, DEFAULTS, settings || {}); blocks = blocks || {};
-    const watchOnly = st.swingMode === 'watch';
+    const watchOnly = st.swingMode === 'watch'; const caps = Object.assign({}, watchOnly ? DIGEST_CAPS[0] : { other: 8, alerts: 8, watch: 8 }, blocks.caps || {});
+    const top = (n, cap) => n > cap ? (cap ? ` — top ${cap}` : ' — on the site') : '';
     const L = []; const snap = result.snap; const idx = snap && snap.index ? `${snap.index.name} ${fmt(snap.index.ltp)} (${pct(snap.index.pct)})` : 'index n/a';
     L.push(`Nifty Swing Desk — ${result.date}${result.time ? ' ' + result.time : ''}${reg.intraday ? ' (intraday)' : ''}`);
     L.push(`Tape: ${reg.state} · breadth ${reg.up}▲/${reg.down}▼ · ${idx} · history ${result.coverage}/250 bars`);
@@ -455,17 +511,18 @@
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)');
-      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: breakeven over ten years (−0.01R, 885 trades)${rest.length > 5 ? `; top 5 here, all ${rest.length} on the site` : ''}`);
-      rest.slice(0, 5).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: breakeven over ten years (−0.01R, 885 trades)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
+      rest.slice(0, caps.other).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!rest.length) L.push('• none today');
     } else {
       L.push('', `ORDERS FOR TOMORROW (${act.length}) — buy-stop with stop-loss attached; cancel if not filled`);
       act.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.tag ? ' ★ momentum pullback' : ''} — ${s.setup}: buy-stop ${fmt(s.entry)}, stop-loss ${fmt(s.stop)}, target ${fmt(s.target)}${s.size ? `, qty ${s.size.qty}` : ''}`));
       if (!act.length) L.push('• nothing — no trade is a valid outcome');
     }
-    const capA = watchOnly ? 4 : 8;   // breakout alerts are pre-setup triggers for a watch-only engine: four lines in watch mode, the rest on the site
-    L.push('', `ALERTS (${alert.length})${alert.length > capA ? ` — top ${capA}` : ''}`); alert.slice(0, capA).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
-    L.push('', `WATCH (${watch.length})`); watch.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}${s.trigger ? ': ' + s.trigger : ''}`)); if (!watch.length) L.push('• none');
+    // breakout alerts and the watch list are pre-setup triggers for a watch-only engine: four lines each in watch mode (alerts since 15 Nov 2026,
+    // the watch list since 18 Nov — eight watch lines put both buy-free days of 16–17 Nov over the cap), the rest on the site
+    L.push('', `ALERTS (${alert.length})${top(alert.length, caps.alerts)}`); alert.slice(0, caps.alerts).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.trigger}`)); if (!alert.length) L.push('• none');
+    L.push('', `WATCH (${watch.length})${top(watch.length, caps.watch)}`); watch.slice(0, caps.watch).forEach(s => L.push(`• ${s.sym} [${s.score}] — ${s.setup}${s.trigger ? ': ' + s.trigger : ''}`)); if (!watch.length) L.push('• none');
     if (watchOnly) L.push('', `Avoid list: ${by('avoid').length} names. [score] = 0–100 setup quality (no edge in the backtest).`);
     else L.push('', `Avoid list: ${by('avoid').length} names. Risk/trade ₹${fmt(st.capital * st.riskPct / 100 * reg.sizeMult, 0)}${reg.sizeMult < 1 ? ' (halved: weak breadth)' : ''}. [score] = 0–100 setup quality.`);
     if (!watchOnly && blocks.momentum) L.push('', blocks.momentum);
@@ -476,5 +533,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, tagMomentum, digest, chunks, remindersDue, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
 });

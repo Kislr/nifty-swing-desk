@@ -20,8 +20,8 @@
   },
   "reminders": [
     {
-      "date": "2026-11-13",
-      "text": "A week on four cron slots: is the Telegram digest still arriving hours late? If yes, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping)."
+      "date": "2026-11-25",
+      "text": "A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work. If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping)."
     },
     {
       "date": "2026-11-30",
@@ -40,11 +40,11 @@
     },
     {
       "date": "2027-02-05",
-      "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Also the journal's momentum-pullback paper trades vs the backtest. Write the answer into ROADMAP.md."
+      "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Also the journal's momentum-pullback paper trades vs the backtest, and the Discretionary book's record in R (site → Performance → by book; Backup for the sentences written at entry). Write the answer into ROADMAP.md."
     },
     {
       "date": "2027-05-05",
-      "text": "Six months of the paper book. Decide: behind the fund on return and not clearly better on drawdown → the desk stays a monitor and the fund stays the holding; ahead → the owner's call on real money. Then, if everything above is ticked, schedule the final audit session (README, Housekeeping)."
+      "text": "Six months of the paper book. Decide: behind the fund on return and not clearly better on drawdown → the desk stays a monitor and the fund stays the holding; ahead → the owner's call on real money. Read the Discretionary book the same way: its expectancy in R beside the paper book and the fund — a record, never a reason to change a rule. Then, if everything above is ticked, schedule the final audit session (README, Housekeeping)."
     }
   ]
 }

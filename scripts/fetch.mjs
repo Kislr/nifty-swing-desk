@@ -35,9 +35,9 @@ async function nseSession() {
   const cookies = (res.headers.getSetCookie ? res.headers.getSetCookie() : []).map(c => c.split(';')[0]).join('; ');
   return cookies;
 }
-async function fetchIndex(indexName) {
+async function fetchIndex(indexName, attempts = 4) {
   let lastErr;
-  for (let attempt = 1; attempt <= 4; attempt++) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
       const cookie = await nseSession();
       await sleep(800);
@@ -75,11 +75,22 @@ async function loadHistoryFiles(year, fromYear) { // this year and the previous 
   const first = Math.min(year - 1, fromYear ? fromYear - 1 : year - 1); const out = []; for (let y = first; y <= year; y++) { const f = await readJSON(path.join(HISTDIR, y + '.json'), null); if (f) out.push(f); } return out;
 }
 const PAPER = config.paper || null; const LIVE_BM = path.join(DATA, 'benchmarks', 'live.json');   // paper book (13 Nov 2026): {from, capital?, benchmarks: [index names]}; the job saves those indices' closes here, one series per index
-/** Today's close of each benchmark index (price index, from the same market-watch call the universe comes from). Never fatal: a missing day is a gap in the comparison, not a failed job. */
+/** NSE's index list (display name → the short code the market-watch call takes). Best effort: E.indexCode falls back to the codes it carries. */
+async function fetchIndexList() {
+  try { const cookie = await nseSession(); await sleep(800);
+    const res = await fetch(`${BASE}/api/NextApi/apiClient/marketWatchApi?functionName=getIndexList`, { headers: { 'User-Agent': UA, 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Referer': BASE + '/market-data/live-equity-market', 'Cookie': cookie } });
+    const text = await res.text(); if (!res.ok || !text.trim().startsWith('{')) throw new Error(`HTTP ${res.status}`); return JSON.parse(text); }
+  catch (e) { console.warn(`index list unavailable (${e.message}); using the built-in index codes`); return null; }
+}
+/** Today's close (and the previous close) of each benchmark index — price index, from the same market-watch call the universe comes from.
+ *  The call wants NSE's short code (NIFTY500MOMENTM50), not the display name in config.json: with the display name it answers {"data":{}},
+ *  which is why no close was saved from 13 to 17 Nov 2026 (found 18 Nov). Never fatal: a missing day is a gap in the comparison, not a failed job. */
 async function fetchBenchmarks(names, date) {
-  const out = {}; for (const name of names) { if (name === 'NIFTY 50') continue;   // NIFTY 50 is already the history's index series
-    try { const row = (await fetchIndex(name)).find(r => r.isIndex && r.sym === name.toUpperCase()); if (row && row.ltp > 0) out[name] = row.ltp; else console.warn(`benchmark ${name}: index row not found`); }
-    catch (e) { console.warn(`benchmark ${name}: fetch failed (${e.message}); no close saved for ${date}`); } }
+  const out = {}; const wanted = names.filter(n => n !== 'NIFTY 50'); if (!wanted.length) return out;   // NIFTY 50 is already the history's index series
+  const list = await fetchIndexList();
+  for (const name of wanted) { const code = E.indexCode(name, list);
+    try { const bm = E.benchmarkClose(await fetchIndex(code, 2), name); if (bm) { out[name] = bm; console.log(`benchmark ${name} (${code}): ${bm.close}`); } else console.warn(`benchmark ${name} (${code}): index row not found; no close saved for ${date}`); }
+    catch (e) { console.warn(`benchmark ${name} (${code}): fetch failed (${e.message}); no close saved for ${date}`); } }
   return out;
 }
 /** Telegram caps a message at 4,096 characters; the digest passed that on 13 Nov 2026 when the paper book joined it, so a long
@@ -87,11 +98,12 @@ async function fetchBenchmarks(names, date) {
 async function telegram(text) {
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chat) { console.log('(telegram not configured)'); return; }
+  const send = async body => { const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: body, disable_web_page_preview: true }) });
+    if (!res.ok) console.warn('telegram failed', res.status, await res.text()); return res.ok; };
+  // One message whenever the text fits Telegram's cap (18 Nov 2026); if Telegram refuses it anyway, or it is longer, split at blank lines — 4,000 leaves room for the "(1/2) " prefix.
+  if (text.length <= E.TELEGRAM_MAX && await send(text)) return;
   const parts = E.chunks(text, 4000);
-  for (let k = 0; k < parts.length; k++) {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chat, text: (parts.length > 1 ? `(${k + 1}/${parts.length}) ` : '') + parts[k], disable_web_page_preview: true }) });
-    if (!res.ok) { console.warn('telegram failed', res.status, await res.text()); break; }
-  }
+  for (let k = 0; k < parts.length; k++) if (!await send((parts.length > 1 ? `(${k + 1}/${parts.length}) ` : '') + parts[k])) break;
 }
 
 try {
@@ -121,14 +133,18 @@ try {
   // Paper book: the engine's rules replayed from PAPER.from on the same bars, beside the index funds (price indices saved day by day in data/benchmarks/live.json).
   let paper = null, live = null, todayBm = {};
   if (PAPER && PAPER.from) {
-    live = await readJSON(LIVE_BM, {}); todayBm = await fetchBenchmarks(PAPER.benchmarks || [], date);
-    const merged = JSON.parse(JSON.stringify(live)); for (const [name, px] of Object.entries(todayBm)) { (merged[name] = merged[name] || {})[date] = px; }
+    live = await readJSON(LIVE_BM, {}); const got = await fetchBenchmarks(PAPER.benchmarks || [], date);
+    // The call also carries the previous close: if the last trading day's close is missing (a failed fetch that day), fill it — a one-day gap heals itself.
+    const prevDate = result.bars.dates.filter(d => d < date).pop();
+    for (const [name, bm] of Object.entries(got)) { todayBm[name] = { [date]: bm.close }; if (prevDate && bm.prev && !(live[name] && live[name][prevDate] != null)) { todayBm[name][prevDate] = bm.prev; console.log(`benchmark ${name}: filled ${prevDate} from the previous close (${bm.prev})`); } }
+    const merged = JSON.parse(JSON.stringify(live)); for (const [name, days] of Object.entries(todayBm)) Object.assign(merged[name] = merged[name] || {}, days);
     for (const name of PAPER.benchmarks || []) if (name !== 'NIFTY 50' && !merged[name]) merged[name] = {};
     paper = M.paperBook(result.bars, config.momentum || {}, custom, { from: PAPER.from, capital: PAPER.capital || config.risk.capital, benchmarks: merged });
     if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
   }
-  const text = E.digest(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), reminders: E.remindersDue(config.reminders, date) });
-  console.log('\n' + text + '\n');
+  // One Telegram message whenever possible: the watch-only lists give way first (E.DIGEST_CAPS); momentum, the paper book, the pullbacks and the reminders never do.
+  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
+  console.log('\n' + text + '\n'); console.log(`digest: ${text.length} characters, ${fit.fits ? 'one message' + (fit.level ? ` (lists trimmed to level ${fit.level})` : '') : 'over the cap — sent in parts'}`);
 
   if (DRY) process.exit(0);
   await fs.mkdir(SNAPS, { recursive: true });
@@ -138,7 +154,7 @@ try {
     await fs.mkdir(HISTDIR, { recursive: true });
     const yf = (await readJSON(path.join(HISTDIR, year + '.json'), null)) || { year, dates: [], symbols: {}, index: null };
     E.appendSnapshotToHistory(yf, doc); await fs.writeFile(path.join(HISTDIR, year + '.json'), JSON.stringify(yf));
-    if (live && Object.keys(todayBm).length) { for (const [name, px] of Object.entries(todayBm)) { (live[name] = live[name] || {})[date] = px; } await fs.mkdir(path.dirname(LIVE_BM), { recursive: true }); await fs.writeFile(LIVE_BM, JSON.stringify(live, null, 1)); }
+    if (live && Object.keys(todayBm).length) { for (const [name, days] of Object.entries(todayBm)) { const merged = Object.assign(live[name] || {}, days); live[name] = Object.fromEntries(Object.keys(merged).sort().map(d => [d, merged[d]])); } await fs.mkdir(path.dirname(LIVE_BM), { recursive: true }); await fs.writeFile(LIVE_BM, JSON.stringify(live, null, 1)); }
   }
   const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] });
   const dates = [...new Set([...idx.dates, date])].sort();
