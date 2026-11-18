@@ -2,11 +2,27 @@ name: Daily NSE snapshot
 
 on:
   schedule:
-    # Target 18:00 IST Mon–Fri (= 12:30 UTC). NSE closes 15:30 IST; the market-watch data settles by ~16:00.
-    # GitHub's scheduler ran the single 12:30 UTC slot 3–6 hours late every day in the week of 21–29 Oct 2026 (digest at 21:00–00:00 IST),
-    # so there are now four slots half an hour apart. The first one that actually runs saves the snapshot and sends the digest; the later
-    # ones see the same NSE timestamp and exit without doing anything (fetch.mjs: "snapshot unchanged"), so there is never a second digest.
-    # If this is still too late, the reliable fix is an outside clock that calls workflow_dispatch — see README, "When the digest is late".
+    # Target 18:00 IST Mon–Fri (= 12:30 UTC). NSE closes 15:30 IST; the market-watch table carries its final 16:00 stamp well before six.
+    # GitHub's free-tier scheduler does not start these on time. Measured from the run list: 3–6 hours late in the week of 21–29 Oct 2026,
+    # 7–9 hours in the first half of November, and on 16–17 Nov the four evening slots started 8h08–9h54 late (digest at 02:45–04:00 IST).
+    # Four slots half an hour apart cannot beat a delay that size, so since 18 Nov 2026 the schedule is a ladder: one slot an hour from
+    # 02:32 UTC, then the original four. Whatever the delay is that day (0 to ~10 hours), some slot starts shortly after 12:30 UTC:
+    #   - a run that starts between 03:15 and 12:30 UTC (08:45–18:00 IST: pre-open, market hours, data not final) stops at the gate step
+    #     below in a few seconds, without checking out the repository;
+    #   - the first run that starts after 12:30 UTC saves the snapshot and sends the digest;
+    #   - every later run sees the same NSE timestamp and exits (fetch.mjs: "snapshot unchanged"), so there is never a second digest.
+    # The gate applies to scheduled runs only; "Run workflow" (workflow_dispatch) always runs. If the scheduler's delay ever grows past
+    # ten hours, add earlier slots; the outside clock in the README ("When the digest is late") remains the exact fix.
+    - cron: '32 2 * * 1-5'
+    - cron: '32 3 * * 1-5'
+    - cron: '32 4 * * 1-5'
+    - cron: '32 5 * * 1-5'
+    - cron: '32 6 * * 1-5'
+    - cron: '32 7 * * 1-5'
+    - cron: '32 8 * * 1-5'
+    - cron: '32 9 * * 1-5'
+    - cron: '32 10 * * 1-5'
+    - cron: '32 11 * * 1-5'
     - cron: '32 12 * * 1-5'
     - cron: '2 13 * * 1-5'
     - cron: '32 13 * * 1-5'
@@ -30,17 +46,34 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # 03:15 UTC = minute 195, 12:30 UTC = minute 750. Outside that window the market is closed and the day's table is final
+      # (after 18:00 IST) or still yesterday's (before 08:45 IST), so the run proceeds and fetch.mjs decides whether there is anything new.
+      - name: Slot gate (scheduled runs wait for 18:00 IST)
+        id: gate
+        run: |
+          now=$(( 10#$(date -u +%H) * 60 + 10#$(date -u +%M) ))
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$now" -ge 195 ] && [ "$now" -lt 750 ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Slot ${{ github.event.schedule }} started at $(date -u +%H:%M) UTC, before 12:30 UTC (18:00 IST): nothing to do, a later slot sends the digest."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Slot ${{ github.event.schedule || 'manual' }} started at $(date -u +%H:%M) UTC: running."
+          fi
       - uses: actions/checkout@v7
+        if: steps.gate.outputs.run == 'true'
       - uses: actions/setup-node@v7
+        if: steps.gate.outputs.run == 'true'
         with:
           node-version: '20'
       - name: Fetch NSE data and compute signals
+        if: steps.gate.outputs.run == 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/fetch.mjs ${{ github.event.inputs.force == 'true' && '--force' || '' }}
       # pull --rebase first: if something was merged to main while this run was fetching, the push would otherwise be rejected and the run's data lost
       - name: Commit snapshot
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name "swing-desk-bot"
           git config user.email "swing-desk-bot@users.noreply.github.com"
