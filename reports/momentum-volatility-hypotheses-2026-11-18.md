@@ -67,3 +67,32 @@ A row that misses the mark but moves the way the claim says is recorded as a mea
 **Fail (any of the four):** the option stays in the code, off, reproducible with `--set volAdjust=true`. The result goes into the README and ROADMAP. Whether the rule is still worth running on the US store is decided from *how* it failed: if it bought drawdown with return as expected, it joins the "loses less" family that the compounder's third hypothesis has to be written for, and is tested there with a test that fits that claim; if it was simply worse on every count, it is closed here.
 
 Either way: no further volatility variant on this history.
+
+---
+
+## Result, 18 Nov 2026 — FAIL (2 of 4 conditions)
+
+Run after this file was committed (`node scripts/momentum-rank-compare.mjs --name voladjust` → `reports/momentum-voladjust-2026-11-18-adjusted-members.md` and `.json`). History to 17 Nov 2026, test window 12 Jun 2017 → 17 Nov 2026.
+
+| | row 1 — the paper book's rules | row 2 — `volAdjust: true` | NIFTY500 Momentum 50 TR |
+|---|---|---|---|
+| CAGR | 18.6% | **16.2%** | 17.3% |
+| Sharpe | 0.97 | **1.04** | 0.88 |
+| max drawdown | 27.3% | **25.1%** | 38.1% |
+| trades | 609 | 583 | — |
+| winners | 46% | **49%** | — |
+| stopped out | 39% | **30%** | — |
+| average trade | +5.4% | +4.8% | — |
+| best tenth of trades, average | +75.5% | +63.6% | — |
+
+Row 1 is the 13 Nov row three days later (18.7% / 0.98 then): nothing moved.
+
+**Against the mark.** CAGR 16.2% against the 19.3% required — **no**. Sharpe 1.04 above row 1's 0.97 — yes. Ahead of the fund from four of six cold starts — yes, by 0.1 to 1.7 points from 2018–2021 starts, and behind by 2.8 and 6.3 from 2022 and 2023. No year above 40% of the log return — **no**, 2021 is 42%. Fail, by the rule written first.
+
+**Against what was expected.** Every range written above held: winners 46% → 49% (expected 48–53), drawdown 27.3% → 25.1% (22–27), CAGR 18.6% → 16.2% (13–17), Sharpe 0.97 → 1.04 (0.90–1.05), stop-outs down by a quarter, holding period up. By year it was better in 2018 (+4.6 points), 2022 and 2025 as expected and worse in 2019, 2020 and 2023 as expected; 2021 was the one miss — expected worse, came in 5 points better. The full-window shortfall is 2017, 2023, 2024 and 2026 (7 to 9 points each).
+
+**What it says about the question that started it.** Ranking by return per unit of volatility does put the book among the winners more often — three points more — and gets it stopped out much less. It pays for that out of the right tail: the best tenth of its trades average 64% against 76%, and the book makes 2.4 points a year less. The win rate was never the constraint.
+
+**What is honest about the Sharpe.** 1.04 against 0.97 on nine and a half years is inside the noise (the standard error of a Sharpe over that span is about 0.3). Row 2 is above row 1 on Sharpe from all six cold starts and on CAGR from five, which is more than the full-window figures suggest, and the same pattern as every engine result since 12 Nov: ahead of the fund on windows that begin before 2022, behind on those that begin after.
+
+**Decision, by the rule above.** It failed the way the hypothesis said it would — return given up for a smoother path — not on every count. So: `volAdjust` stays in `momentum.js`, off; the paper book is not touched; no second paper book is started; no further volatility variant is run on this history. The rule joins the "loses less" family and gets one more reading, on the US store once it is survivor-complete, **with a test written for that claim** (drawdown and down-year excess against the index, not CAGR against a momentum fund) — the same test the compounder's third hypothesis needs. On NSE it is closed.
