@@ -178,6 +178,8 @@ tr.detail td{background:var(--surface-2);white-space:normal;padding:12px 14px 14
 /* journal */
 .jrow td .num{font-size:12.5px}
 .r-pos{color:var(--up);font-weight:600} .r-neg{color:var(--down);font-weight:600}
+.pos-list{display:flex;flex-direction:column} .pos-row{padding:9px 2px;border-top:1px solid var(--line-soft)} .pos-row:first-child{border-top:0}
+.pos-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px} .pos-line{margin-top:3px;font-size:13.5px;line-height:1.45}
 .jwhy{display:block;font-size:11.5px;color:var(--fg-3);white-space:normal;max-width:34ch;line-height:1.35}
 .books{min-width:0;width:100%} .books th,.books td{padding:5px 4px;font-size:12px} .books th{position:static;letter-spacing:.03em} .books td:first-child{white-space:normal}
 
@@ -276,6 +278,13 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     <div id="paperNote" class="note" style="margin-top:12px" hidden></div>
     <div class="tbl-wrap" style="margin-top:12px"><table id="paperTbl"><thead></thead><tbody></tbody></table></div>
     <div id="paperEmpty" class="empty" hidden></div>
+  </section>
+
+  <section class="card" id="positionsCard" hidden>
+    <h2>Open positions &mdash; today's line <span class="sub" id="posSub"></span><button class="btn small" id="posCopy" style="margin-left:auto" title="Copy the open positions as a config.json block, so the Telegram digest carries the same lines">Copy for the digest</button></h2>
+    <div class="note" style="margin-bottom:10px">One line per open journal trade, from the rules the backtest applies and nothing else: out at the stop or the target, stop to the entry price after a close at +1R, out at the close of the 15th bar for swing setups; a 20% trailing stop and the rank-30 rule for a momentum name. The line is the rule, not an opinion &mdash; and a trade the rule says to exit stays here until you close it in the journal. The digest shows these lines only for positions pasted into <code>config.json</code>, which is a public file.</div>
+    <div id="posTbl" class="pos-list"></div>
+    <textarea id="posJson" hidden readonly style="margin-top:10px"></textarea>
   </section>
 
   <section class="grid">
