@@ -353,5 +353,54 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
     E.tagMomentum(sig, [], 30); assert(sig.every(x => !x.tag && x.momRank == null) && sig.map(x => x.sym).join('') === 'CADBE', 'tagMomentum with an empty ranking clears tags and restores score order'); }
   assert(/ORDERS FOR TOMORROW/.test(o) && o.indexOf('ORDERS FOR TOMORROW') < o.indexOf('MOMENTUM') && !/SWING SETUPS/.test(o), 'orders-mode digest unchanged: orders first, then momentum');
   assert(E.DEFAULTS.swingMode === 'watch', 'swing engine is in watch mode by default (demoted 5 Nov 2026 — change only with a passing backtest)'); }
+// 8. benchmark index closes (18 Nov 2026): the market-watch call wants NSE's short code, not the display name — with the display name it
+//    answered {"data":{}} and no index-fund close was saved for the paper book's first three days. Shapes below are the ones NSE served on 18 Nov.
+{ const list = { data: { 'Broad Market Indices': { 'NIFTY 50': 'NIFTY 50', 'NIFTY 500': 'NIFTY 500' }, 'Strategy Market Indices': { 'NIFTY200 MOMENTUM 30': 'NIFTY200MOMENTM30', 'NIFTY500 MOMENTUM 50': 'NIFTY500MOMENTM50', 'NIFTY ALPHA 50': 'NIFTY ALPHA 50' } } };
+  assert(E.indexCode('NIFTY500 MOMENTUM 50', list) === 'NIFTY500MOMENTM50' && E.indexCode('NIFTY200 MOMENTUM 30', list) === 'NIFTY200MOMENTM30' && E.indexCode('NIFTY 500', list) === 'NIFTY 500', 'index code: display name → NSE short code from the index list');
+  assert(E.indexCode('NIFTY500 MOMENTUM 50', null) === 'NIFTY500MOMENTM50' && E.indexCode('nifty200 momentum 30', {}) === 'NIFTY200MOMENTM30' && E.indexCode('NIFTY 50', null) === 'NIFTY 50' && E.indexCode('NIFTY500MOMENTM50', list) === 'NIFTY500MOMENTM50', 'index code: built-in codes when the list is unavailable; a broad index and a code map to themselves');
+  const mk = (symbol, priority, lastPrice, previousClose) => ({ priority, symbol, identifier: symbol, open: lastPrice, dayHigh: lastPrice, dayLow: lastPrice, previousClose, lastPrice, change: 0, pChange: 0, totalTradedVolume: 1, totalTradedValue: 1, yearHigh: lastPrice, yearLow: lastPrice, perChange30d: 0, lastUpdateTime: '2026-11-18 16:00:00' });
+  const payload = { data: { timestamp: '18-Nov-2026 16:00:00', data: [mk('NIFTY500 MOMENTUM 50', 1, 53815.15, 54135.7), ...Array.from({ length: 50 }, (_, k) => mk('STK' + k, 0, 100 + k, 100))] } };
+  const bm = E.benchmarkClose(E.rowsFromNseApi(payload), 'NIFTY500 MOMENTUM 50');
+  assert(bm && bm.close === 53815.15 && bm.prev === 54135.7, 'benchmark close: the index row of its own market-watch call gives the close and the previous close');
+  assert(E.benchmarkClose(E.rowsFromNseApi({ data: {} }), 'NIFTY500 MOMENTUM 50') === null && E.benchmarkClose(E.rowsFromNseApi(payload), 'NIFTY200 MOMENTUM 30').close === 53815.15, 'benchmark close: an empty answer is null (no close saved); a lone index row is taken even if NSE renames it'); }
+
+// 9. one Telegram message whenever possible (18 Nov 2026): the watch-only lists give way, momentum / paper book / pullbacks / reminders never do
+{ const sig = []; const row = { val: 1 };
+  for (let k = 0; k < 4; k++) sig.push({ sym: 'PB' + k, kind: 'act', setup: 'Pullback buy', tag: 'momentum pullback', momRank: k + 1, score: 60, entry: 100, stop: 95, target: 110, size: { qty: 7 }, row });
+  for (let k = 0; k < 30; k++) sig.push({ sym: 'OTH' + k, kind: 'act', setup: '52W breakout', score: 70, entry: 100, stop: 95, target: 110, row });
+  for (let k = 0; k < 30; k++) sig.push({ sym: 'ALR' + k, kind: 'alert', setup: '52W breakout', score: 70, trigger: 'Close above 123.45', row });
+  for (let k = 0; k < 12; k++) sig.push({ sym: 'WAT' + k, kind: 'watch', setup: 'Sector leader', score: 70, trigger: 'Pullback that holds 1,091.95', row });
+  const R = { signals: sig, reg: res.reg, board: res.board, date: '2026-11-17', time: '16:00', coverage: 250 }; const W = { ...E.DEFAULTS, swingMode: 'watch' };
+  const d0 = E.digest(R, W, {});
+  assert((d0.match(/^• WAT/gm) || []).length === 4 && /WATCH \(12\) — top 4/.test(d0) && (d0.match(/^• ALR/gm) || []).length === 4 && (d0.match(/^• OTH/gm) || []).length === 5, 'watch-mode digest: four watch lines, four alerts, five other setups by default');
+  const pad = n => 'PAPER BOOK\n' + 'x'.repeat(n); const base = d0.length;
+  const f0 = E.digestFit(R, W, { paper: pad(E.TELEGRAM_MAX - base - 30) });
+  assert(f0.fits && f0.level === 0 && f0.text.length <= E.TELEGRAM_MAX, 'digestFit: a digest under the cap is returned untrimmed');
+  const f1 = E.digestFit(R, W, { paper: pad(E.TELEGRAM_MAX - base + 100), reminders: 'DESK CHECKS DUE\n• check' });
+  assert(f1.fits && f1.level > 0 && f1.text.length <= E.TELEGRAM_MAX && (f1.text.match(/^• PB/gm) || []).length === 4 && /DESK CHECKS DUE/.test(f1.text) && /PAPER BOOK/.test(f1.text) && (f1.text.match(/^• WAT/gm) || []).length < 4, `digestFit: a digest over the cap → lists trimmed to level ${f1.level}, one message of ${f1.text.length}; pullbacks, paper book and reminders intact`);
+  const lens = E.DIGEST_CAPS.map(c => E.digest(R, W, { caps: c }).length); assert(lens.every((n, k) => !k || n < lens[k - 1]), `digest caps: each level is shorter than the one before (${lens.join(' > ')})`);
+  const f3 = E.digestFit(R, W, { paper: pad(E.TELEGRAM_MAX - lens[2] + 20) });   // too long for level 2, fits level 3
+  assert(f3.fits && f3.level === 3 && /ALERTS \(30\) — on the site/.test(f3.text) && /WATCH \(12\) — on the site/.test(f3.text) && !/^• (ALR|WAT)/m.test(f3.text), 'digestFit: at the last level alerts and watch are counts only');
+  const f9 = E.digestFit(R, W, { paper: pad(E.TELEGRAM_MAX) });
+  assert(!f9.fits && f9.level === 0 && f9.text.length > E.TELEGRAM_MAX && (f9.text.match(/^• WAT/gm) || []).length === 4 && E.chunks(f9.text, 4000).length > 1, 'digestFit: when nothing fits the untrimmed digest comes back and is split into parts');
+  const o = E.digest(R, { ...E.DEFAULTS, swingMode: 'orders' }, {}); assert((o.match(/^• WAT/gm) || []).length === 8 && (o.match(/^• ALR/gm) || []).length === 8, 'orders-mode digest keeps eight alerts and eight watch lines'); }
+
+// 10. discretionary book (18 Nov 2026): two open at most, half size, one sentence; the journal is read book by book in R
+{ const S10 = { ...E.DEFAULTS, capital: 500000, riskPct: 1, maxPos: 25 }; const why = 'Order book doubled and the price has not moved.';
+  const full = E.sizing(200, 190, null, S10).qty; const c = E.discretionaryCheck([], { entry: 200, stop: 190, why }, S10);
+  assert(c.ok && c.maxQty === 250 && full === 500 && c.open === 0, `discretionary: half size is ${c.maxQty} shares where the rules would take ${full}`);
+  assert(E.discretionaryCheck([], { entry: 2000, stop: 1990, why }, S10).maxQty === 31, 'discretionary: the position cap is halved too (12.5% of capital)');
+  assert(!E.discretionaryCheck([], { entry: 200, stop: 190, qty: 251, why }, S10).ok && E.discretionaryCheck([], { entry: 200, stop: 190, qty: 250, why }, S10).ok, 'discretionary: a quantity above half size is refused');
+  assert(!E.discretionaryCheck([], { entry: 200, stop: 190, why: 'hunch' }, S10).ok && !E.discretionaryCheck([], { entry: 200, stop: 190 }, S10).ok, 'discretionary: the sentence saying why is required');
+  const J = [{ sym: 'AAA', setup: 'Discretionary', status: 'open', entry: 100, stop: 90, target: 120, qty: 10, date: '2026-11-18' }, { sym: 'BBB', setup: 'Discretionary', status: 'open', entry: 100, stop: 90, target: 120, qty: 10, date: '2026-11-18' },
+    { sym: 'CCC', setup: 'Discretionary', status: 'closed', entry: 100, stop: 90, exit: 115, target: 120, qty: 10, date: '2026-11-01' }, { sym: 'DDD', setup: 'Discretionary', status: 'closed', entry: 100, stop: 90, exit: 95, target: 120, qty: 10, date: '2026-11-01' },
+    { sym: 'EEE', setup: 'Momentum pullback', status: 'closed', entry: 50, stop: 45, exit: 60, target: 60, qty: 10, date: '2026-11-01' }, { sym: 'FFF', setup: 'Breakout', status: 'open', entry: 50, stop: 45, target: 60, qty: 10, date: '2026-11-18' }];
+  const full2 = E.discretionaryCheck(J, { entry: 200, stop: 190, why }, S10); assert(!full2.ok && full2.open === 2 && /2 of 2/.test(full2.reason), 'discretionary: a third open position is refused');
+  assert(E.discretionaryCheck(J.filter(t => t.sym !== 'BBB'), { entry: 200, stop: 190, why }, S10).ok, 'discretionary: closed trades and other setups do not count against the two');
+  const bars10 = { dates: ['2026-11-18', '2026-11-19'], sym: { AAA: { c: [100, 105], h: [101, 106], l: [99, 100] }, BBB: { c: [100, 95], h: [101, 100], l: [99, 94] } } };
+  const B = E.bookStats(J, bars10); const D = B.find(b => b.book === 'Discretionary'), P = B.find(b => b.book === 'Momentum pullback'), O = B.find(b => b.book === 'Other setups');
+  assert(B.length === 3 && B[0].book === 'Discretionary' && D.open === 2 && D.closed === 2 && D.wins === 1 && Math.abs(D.totalR - 1.0) < 1e-9 && Math.abs(D.avgR - 0.5) < 1e-9 && Math.abs(D.openR - 0) < 1e-9, 'book stats: the discretionary book in R — +1.5R and −0.5R closed, +0.5R and −0.5R open');
+  assert(P.closed === 1 && P.avgR === 2 && O.open === 1 && O.closed === 0 && O.avgR === null && E.bookStats([], bars10).length === 0, 'book stats: momentum pullbacks and other setups are separate books; an empty journal has none'); }
+
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');
