@@ -402,5 +402,54 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
   assert(B.length === 3 && B[0].book === 'Discretionary' && D.open === 2 && D.closed === 2 && D.wins === 1 && Math.abs(D.totalR - 1.0) < 1e-9 && Math.abs(D.avgR - 0.5) < 1e-9 && Math.abs(D.openR - 0) < 1e-9, 'book stats: the discretionary book in R — +1.5R and −0.5R closed, +0.5R and −0.5R open');
   assert(P.closed === 1 && P.avgR === 2 && O.open === 1 && O.closed === 0 && O.avgR === null && E.bookStats([], bars10).length === 0, 'book stats: momentum pullbacks and other setups are separate books; an empty journal has none'); }
 
+// 11. positions card, swing half (18 Nov 2026): one rule line per open trade — the backtest's management, bar for bar
+{ const D = ['2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-09', '2026-11-10', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-16', '2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20', '2026-11-23', '2026-11-24'];
+  const mk = closes => ({ o: closes.map(c => c), h: closes.map(c => c + 1), l: closes.map(c => c - 1), c: closes, v: closes.map(() => 1), t: closes.map(() => 10) });
+  const T = (setup, extra) => Object.assign({ sym: 'X', date: D[0], entry: 100, stop: 95, target: 110, qty: 10, setup }, extra || {});
+  const B = closes => ({ dates: D.slice(0, closes.length), sym: { X: mk(closes) } });
+  let p = E.positionLine(T('Breakout'), B([100]));
+  assert(p.action === 'wait' && /No close since entry/.test(p.text), 'position line: nothing to say until there is a close after the entry day');
+  p = E.positionLine(T('Breakout'), B([100, 101, 102]));
+  assert(p.action === 'hold' && p.stop === 95 && p.bars === 2 && /Hold — stop 95\.00/.test(p.text) && /breakeven on a close at 105\.00/.test(p.text) && /bar 2 of 15/.test(p.text), 'position line: hold, with the stop, the +1R level and the bar count');
+  p = E.positionLine(T('Breakout'), B([100, 101, 105.5]));
+  assert(p.action === 'raise' && p.stop === 100 && /Raise stop to 100\.00 \(breakeven\)/.test(p.text), 'position line: a close at +1R raises the stop to the entry that day');
+  p = E.positionLine(T('Breakout'), B([100, 101, 105.5, 104]));
+  assert(p.action === 'hold' && p.stop === 100 && /stop at breakeven 100\.00 since 2026-11-04/.test(p.text), 'position line: the day after, it is a hold with the stop at breakeven');
+  p = E.positionLine(T('Breakout'), B([100, 101, 105.5, 100.5]));
+  assert(p.action === 'exit' && p.exit.reason === 'breakeven stop' && p.exit.price === 100 && Math.abs(p.R) < 1e-9, 'position line: the low trades at the raised stop → out at breakeven, 0R');
+  p = E.positionLine(T('Pullback'), B([100, 99, 95.5]));
+  assert(p.action === 'exit' && p.exit.reason === 'stop' && p.exit.price === 95 && Math.abs(p.R + 1) < 1e-9 && /stop 95\.00 was hit on 2026-11-04 \(-1\.0R\)/.test(p.text), 'position line: the low trades at the stop → out at the stop, −1R');
+  p = E.positionLine(T('Pullback'), B([100, 99, 93]));
+  assert(p.action === 'exit' && p.exit.reason === 'gap through stop' && p.exit.price === 93, 'position line: an open below the stop → out at the open');
+  p = E.positionLine(T('Momentum pullback'), B([100, 103, 109.5]));
+  assert(p.action === 'exit' && p.exit.reason === 'target' && p.exit.price === 110 && Math.abs(p.R - 2) < 1e-9, 'position line: the high reaches the target → out at the target, +2R');
+  const flat = [100, ...Array.from({ length: 16 }, () => 101)];
+  p = E.positionLine(T('Breakout'), B(flat.slice(0, 15))); const p15 = E.positionLine(T('Breakout'), B(flat.slice(0, 16)));
+  assert(p.action === 'hold' && /bar 14 of 15/.test(p.text) && p15.action === 'exit' && p15.exit.reason === 'time stop' && p15.exit.date === D[15], 'position line: a swing trade is out at the close of its 15th bar');
+  const d17 = E.positionLine(T('Discretionary'), B(flat));
+  assert(d17.action === 'hold' && d17.bars === 16 && !/of 15/.test(d17.text), 'position line: a discretionary trade has the stop and the target but no time stop');
+  // a hand-bought momentum name: 20% trailing stop on closes, and the rank rule against today's ranking
+  let m = E.positionLine(T('Momentum', { stop: 80, target: 0 }), B([100, 110, 120]), { rank: { X: 4 } });
+  assert(m.action === 'raise' && m.stop === 96 && /Raise stop to 96\.00/.test(m.text) && /rank 4/.test(m.text), 'position line (momentum): the trailing stop follows the highest close');
+  m = E.positionLine(T('Momentum', { stop: 80, target: 0 }), B([100, 110, 120, 118]), { rank: { X: 4 } });
+  assert(m.action === 'hold' && m.stop === 96, 'position line (momentum): hold while the close is above the trailing stop');
+  m = E.positionLine(T('Momentum', { stop: 80, target: 0 }), B([100, 110, 120, 95]), { rank: { X: 4 } });
+  assert(m.action === 'exit' && m.exit.reason === 'trailing stop' && m.exit.date === D[3], 'position line (momentum): a close below the trailing stop is an exit');
+  m = E.positionLine(T('Momentum', { stop: 80, target: 0 }), B([100, 110, 120, 118]), { rank: { X: 41 }, holdRank: 30 }); const m2 = E.positionLine(T('Momentum', { stop: 80, target: 0 }), B([100, 110, 120, 118]), { rank: {} });
+  assert(m.action === 'exit' && /rank 41, below 30/.test(m.text) && m2.action === 'exit' && /no longer ranked/.test(m2.text), 'position line (momentum): below rank 30, or unranked, is out at the next rebalance');
+  // the digest block: only for positions in config.json; never trimmed by digestFit
+  assert(E.positionsDigest([], B([100, 101])) === null && E.positionsDigest(undefined, B([100, 101])) === null, 'positions digest: no block when config.json has no positions');
+  const blk = E.positionsDigest([T('Breakout', { sym: 'x' }), T('Pullback', { status: 'closed' })], B([100, 101, 105.5]));
+  assert(/^OPEN POSITIONS \(1\)/.test(blk) && /• X \[Breakout\] — Raise stop to 100\.00/.test(blk), 'positions digest: one rule line per open position, closed ones skipped, symbol upper-cased');
+  const dg = E.digest(res, { ...E.DEFAULTS, swingMode: 'watch' }, { momentum: 'MOMENTUM test', paper: 'PAPER BOOK test', positions: blk });
+  assert(dg.indexOf('PAPER BOOK test') < dg.indexOf('OPEN POSITIONS') && dg.indexOf('OPEN POSITIONS') < dg.indexOf('MOMENTUM PULLBACKS'), 'digest: open positions follow the paper book and precede the swing lists'); }
+
+// 12. risk-adjusted ranking (the volAdjust switch, tested as a hypothesis on 18 Nov 2026): a steady riser outranks a wilder one with the larger raw return
+{ const n = 200; const dates = []; let d = new Date('2025-01-01'); while (dates.length < n) { if (d.getUTCDay() % 6) dates.push(d.toISOString().slice(0, 10)); d = new Date(d.getTime() + 86400000); }
+  const series = (drift, amp) => { const c = []; let x = 100; for (let i = 0; i < n; i++) { x *= 1 + drift + (i % 2 ? amp : -amp); c.push(+x.toFixed(4)); } return { o: c, h: c, l: c, c, v: c.map(() => 1e6), t: c.map(() => 50) }; };
+  const bars12 = { dates, sym: { STEADY: series(0.002, 0.002), WILD: series(0.0026, 0.03) }, index: null };
+  const raw = M.rankAt(bars12, n - 1, { volAdjust: false, maxOffHigh: 100 }, {}), adj = M.rankAt(bars12, n - 1, { volAdjust: true, maxOffHigh: 100 }, {});
+  assert(raw.ranked[0].sym === 'WILD' && adj.ranked[0].sym === 'STEADY' && adj.ranked[0].vol < adj.ranked[1].vol, `ranking: raw return puts the wilder name first, return ÷ volatility the steadier one (scores ${adj.ranked.map(r => r.score.toFixed(1)).join(' v ')})`); }
+
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');

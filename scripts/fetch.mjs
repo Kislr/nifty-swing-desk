@@ -143,7 +143,9 @@ try {
     if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
   }
   // One Telegram message whenever possible: the watch-only lists give way first (E.DIGEST_CAPS); momentum, the paper book, the pullbacks and the reminders never do.
-  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
+  // Open positions pasted into config.json get one rule line each (E.positionLine); a hand-bought momentum name is read against today's ranking.
+  const rankOf = Object.fromEntries(mom.ranked.map(r => [r.sym, r.rank])); const positions = E.positionsDigest(config.positions, result.bars, { rank: rankOf, holdRank: (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank });
+  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), positions, reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
   console.log('\n' + text + '\n'); console.log(`digest: ${text.length} characters, ${fit.fits ? 'one message' + (fit.level ? ` (lists trimmed to level ${fit.level})` : '') : 'over the cap — sent in parts'}`);
 
   if (DRY) process.exit(0);

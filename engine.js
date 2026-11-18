@@ -417,6 +417,57 @@
     const label = t.status === 'closed' ? 'Closed' : (!last ? 'No data since entry' : stopHit && (!targetHit || stopHit <= targetHit) ? 'Stop hit ' + stopHit : targetHit ? 'Target touched ' + targetHit : 'Open');
     return { label, R, pnl, mark, last, stopHit, targetHit };
   }
+  /* Positions card, swing half (18 Nov 2026; owner's item of 5 Nov). For an open journal trade, one line a day — hold / raise the stop /
+   * exit — from the rules the backtest applies and nothing else, so it cannot editorialise:
+   *   swing setups (Momentum pullback, Breakout, Pullback): out if a day opens through or trades at the stop; out at the target (the 2R
+   *     level logged with the trade); stop to the entry price after a close at +1R or better; out at the close of the 15th bar held.
+   *     This is scripts/backtest.mjs's management, bar for bar. The 5 Nov note also wanted the stop trailed on the 20-day average above
+   *     +2R; the backtest sells at the target instead and every moving-average exit it tried was worse, so the card follows the backtest.
+   *   Momentum (a name bought off the momentum list by hand): 20% trailing stop from the highest close since entry, judged on closes;
+   *     out at the next rebalance once it is below rank `holdRank` (pass opts.rank = {SYM: rank} from the day's ranking).
+   *   Discretionary / Other: the stop, the target and the breakeven move, but no time stop — the owner's calls carry no holding rule.
+   * Days are read strictly after the entry date. Returns { action: 'hold'|'raise'|'exit'|'wait', stop, bars, R, text, exit }. */
+  const POSITION_RULES = { swing: ['Momentum pullback', 'Breakout', 'Pullback'], maxHold: 15, trail: 20, holdRank: 30 };
+  function positionLine(t, bars, opts) {
+    opts = opts || {}; const PR = POSITION_RULES; const B = bars && bars.sym ? bars.sym[t.sym] : null; const risk = t.entry - t.stop;
+    const base = { sym: t.sym, setup: t.setup || '', stop: t.stop, bars: 0, R: null, exit: null };
+    if (!B || !(risk > 0)) return Object.assign(base, { action: 'wait', text: !B ? 'No price history for this symbol' : 'Stop is not below the entry — no line' });
+    const days = []; for (let i = 0; i < bars.dates.length; i++) if (bars.dates[i] > t.date && B.c[i] != null) days.push(i);
+    if (!days.length) return Object.assign(base, { action: 'wait', text: `No close since entry yet — stop ${fmt(t.stop)} goes in with the order` });
+    const last = days[days.length - 1], lastDate = bars.dates[last], c = B.c[last]; const R = (c - t.entry) / risk; const sR = x => (x >= 0 ? '+' : '') + x.toFixed(1) + 'R';
+    if (t.setup === 'Momentum') {
+      let peak = t.entry, peakDate = t.date, hit = null;
+      for (const i of days) { if (B.c[i] > peak) { peak = B.c[i]; peakDate = bars.dates[i]; } if (!hit && B.c[i] < peak * (1 - PR.trail / 100)) hit = { date: bars.dates[i], price: B.c[i], reason: 'trailing stop' }; }
+      const stop = +(peak * (1 - PR.trail / 100)).toFixed(2); const out = Object.assign(base, { stop, bars: days.length, R });
+      if (hit) return Object.assign(out, { action: 'exit', exit: hit, text: `Exit — closed below the ${PR.trail}% trailing stop on ${hit.date} (${fmt(hit.price)})` });
+      const rk = opts.rank ? opts.rank[t.sym] : undefined; const hr = opts.holdRank || PR.holdRank;
+      if (opts.rank && (rk == null || rk > hr)) return Object.assign(out, { action: 'exit', exit: { date: lastDate, price: c, reason: 'rank' }, text: `Out at the next rebalance — ${rk == null ? 'no longer ranked' : 'rank ' + rk + ', below ' + hr}; until then the trailing stop is ${fmt(stop)}` });
+      return Object.assign(out, { action: peakDate === lastDate && days.length > 1 ? 'raise' : 'hold', text: `${peakDate === lastDate && days.length > 1 ? 'Raise stop to' : 'Hold — trailing stop'} ${fmt(stop)} (${PR.trail}% under the highest close, ${fmt(peak)} on ${peakDate})${rk != null ? `, rank ${rk}` : ''}` });
+    }
+    const timed = PR.swing.includes(t.setup); let stop = t.stop, raised = null, exit = null, n = 0;
+    for (const i of days) { n++; const o = B.o[i], h = B.h[i], l = B.l[i], cl = B.c[i]; const d = bars.dates[i];
+      if (o != null && o <= stop) exit = { date: d, price: o, reason: 'gap through stop' };
+      else if (l != null && l <= stop) exit = { date: d, price: stop, reason: stop >= t.entry ? 'breakeven stop' : 'stop' };
+      else if (t.target > 0 && o != null && o >= t.target) exit = { date: d, price: o, reason: 'gap above target' };
+      else if (t.target > 0 && h != null && h >= t.target) exit = { date: d, price: t.target, reason: 'target' };
+      else if (timed && n >= PR.maxHold) exit = { date: d, price: cl, reason: 'time stop' };
+      if (exit) break;
+      if (cl >= t.entry + risk && stop < t.entry) { stop = t.entry; raised = d; } }
+    const out = Object.assign(base, { stop, bars: n, R });
+    if (exit) { const xR = (exit.price - t.entry) / risk; const what = { 'gap through stop': `opened through the stop at ${fmt(exit.price)}`, 'stop': `stop ${fmt(exit.price)} was hit`, 'breakeven stop': `breakeven stop ${fmt(exit.price)} was hit`, 'gap above target': `opened above the target at ${fmt(exit.price)}`, 'target': `target ${fmt(exit.price)} was reached`, 'time stop': `${PR.maxHold} bars held, out at the close ${fmt(exit.price)}` }[exit.reason];
+      return Object.assign(out, { action: 'exit', exit, R: xR, text: `Exit — ${what} on ${exit.date} (${sR(xR)})` }); }
+    const left = timed ? `, bar ${n} of ${PR.maxHold}` : '';
+    if (raised === lastDate) return Object.assign(out, { action: 'raise', text: `Raise stop to ${fmt(stop)} (breakeven) — closed at ${sR(R)} today${t.target > 0 ? `; target ${fmt(t.target)}` : ''}${left}` });
+    if (raised) return Object.assign(out, { action: 'hold', text: `Hold — stop at breakeven ${fmt(stop)} since ${raised}, now ${sR(R)}${t.target > 0 ? `; target ${fmt(t.target)}` : ''}${left}` });
+    return Object.assign(out, { action: 'hold', text: `Hold — stop ${fmt(stop)} (${((c / stop - 1) * 100).toFixed(1)}% away), now ${sR(R)}; to breakeven on a close at ${fmt(tick(t.entry + risk))}${t.target > 0 ? `; target ${fmt(t.target)}` : ''}${left}` });
+  }
+  /** Telegram block for open positions pasted into config.json ("positions": [{sym, date, entry, stop, target?, qty?, setup}]). null when there are none. */
+  function positionsDigest(list, bars, opts) {
+    const open = (Array.isArray(list) ? list : []).filter(t => t && t.sym && t.date && t.entry > 0 && t.stop > 0 && t.status !== 'closed'); if (!open.length) return null;
+    const L = [`OPEN POSITIONS (${open.length}) — from config.json; the line is the rule, not an opinion`];
+    for (const t of open) { const p = positionLine(Object.assign({ target: 0 }, t, { sym: String(t.sym).toUpperCase() }), bars, opts); L.push(`• ${p.sym}${t.setup ? ' [' + t.setup + ']' : ''} — ${p.text}`); }
+    return L.join('\n');
+  }
   /* Discretionary book (18 Nov 2026; owner's instruction of 13 Nov). The owner's hunches get their own journal setup so they are scored
    * instead of argued about: a fixed budget — at most DISCRETIONARY.maxOpen open positions, each at half the normal risk and half the
    * normal position cap — and one written sentence at entry saying why. It is read in R at the three- and six-month checks beside the
@@ -501,6 +552,7 @@
     const leaders = [...board.leaders]; L.push(`Leading sectors: ${leaders.length ? leaders.join(', ') : 'none qualify'}`);
     if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
     if (blocks.paper) L.push('', blocks.paper);
+    if (blocks.positions) L.push('', blocks.positions);   // open positions pasted into config.json (18 Nov 2026); never trimmed
     const by = k => signals.filter(s => s.kind === k); const act = by('act'), alert = by('alert'), watch = by('watch');
     if (watchOnly) {
       // 15 Nov 2026: the digest passed Telegram's 4,096-character cap once the paper book joined it, so in watch mode the swing
@@ -533,5 +585,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
 });

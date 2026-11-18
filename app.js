@@ -57,7 +57,7 @@ function render() {
   const M = window.MomentumEngine; const mom = M && res.bars && res.bars.dates.length ? M.selectAt(res.bars, res.bars.dates.length - 1, {}, sectorMap()) : null;
   if (mom) E.tagMomentum(signals, mom.ranked, mom.params.holdRank);   // momentum pullbacks (the slice that passed its backtest) first, with a badge
   renderStrip(snap, reg); renderRegime(reg, snap); renderSizing(reg); renderRules(reg, snap);
-  renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars, mom); renderUniverse(universe); renderPaper(res.bars); renderJournal(); renderSnaplist();
+  renderSectors(board, signals); renderQueue(signals, reg); renderMomentum(res.bars, mom); renderUniverse(universe); renderPaper(res.bars); S.momRank = mom ? Object.fromEntries(mom.ranked.map(r => [r.sym, r.rank])) : null; S.holdRank = mom ? mom.params.holdRank : null; renderPositions(); renderJournal(); renderSnaplist();
   $('secList').innerHTML = [...new Set([...Object.keys(E.SECTOR_LISTS), ...Object.values(S.repoSectors)])].sort().map(s => `<option value="${esc(s)}">`).join('');
 }
 function renderStrip(snap, reg) {
@@ -223,6 +223,20 @@ function renderUniverse(universe) {
     <td class="r">${r.pos52 != null ? `<span class="range ${r.pos52 >= 0.95 ? 'hi' : r.pos52 <= 0.05 ? 'lo' : ''}" title="${(r.pos52 * 100).toFixed(0)}% of 52W range"><span class="mk" style="left:${(r.pos52 * 100).toFixed(1)}%"></span></span>` : '—'}</td>
     <td class="r num">${r.distHi != null ? '-' + r.distHi.toFixed(1) + '%' : '—'}</td></tr>`).join('');
   $('uniSub').textContent = `${rows.length} stocks${S.sector ? ' in ' + S.sector : ''} · sorted by ${cols.find(c => c[0] === key)[1].toLowerCase()}${S.view === 'industries' ? ' · clear the sector filter to hide' : ''}`;
+}
+/* Positions card, swing half (18 Nov 2026): one rule line a day for every open journal trade — hold / raise the stop / exit — from E.positionLine,
+ * which applies the backtest's management and nothing else. The same lines reach the digest only for positions pasted into config.json. */
+function renderPositions() {
+  const card = $('positionsCard'), tbl = $('posTbl'); const open = S.journal.filter(t => t.status !== 'closed'); card.hidden = !open.length; if (!open.length) return;
+  const bars = S.bars || { dates: [], sym: {} }; const lines = open.map(t => ({ t, p: E.positionLine(t, bars, { rank: S.momRank || undefined, holdRank: S.holdRank || undefined }) }));
+  const order = { exit: 0, raise: 1, hold: 2, wait: 3 }; lines.sort((a, b) => order[a.p.action] - order[b.p.action] || a.t.sym.localeCompare(b.t.sym));
+  const n = k => lines.filter(x => x.p.action === k).length; const asOf = bars.dates.length ? bars.dates[bars.dates.length - 1] : null;
+  $('posSub').textContent = `${open.length} open · ${n('exit')} to exit · ${n('raise')} stop to raise · ${n('hold') + n('wait')} hold${asOf ? ' · as of the ' + asOf + ' close' : ''}`;
+  const tag = { exit: ['avoid', 'Exit'], raise: ['act', 'Raise stop'], hold: ['alert', 'Hold'], wait: ['', 'Wait'] };
+  // a list, not a table: on a phone the line itself has to be readable without scrolling sideways
+  tbl.innerHTML = lines.map(({ t, p }) => `<div class="pos-row"><div class="pos-head"><span class="sym">${esc(t.sym)}${symLink(t.sym)}</span><span class="tag ${tag[p.action][0]}">${tag[p.action][1]}</span><span class="muted small">${esc(t.setup || '')} · entered ${esc(t.date)}${t.qty ? ' · ' + fmt0(t.qty) + ' sh' : ''}</span></div><div class="pos-line">${esc(p.text)}</div></div>`).join('');
+  $('posCopy').onclick = async () => { const out = JSON.stringify(open.map(t => ({ sym: t.sym, date: t.date, entry: t.entry, stop: t.stop, target: t.target, qty: t.qty, setup: t.setup })), null, 2);
+    try { await navigator.clipboard.writeText('"positions": ' + out); toast('Copied — paste into config.json to get these lines in the digest (the file is public)'); } catch (e) { $('posJson').hidden = false; $('posJson').value = '"positions": ' + out; $('posJson').select(); toast('Select and copy the text below'); } };
 }
 function renderJournal() {
   const tbl = $('jTbl'), empty = $('jEmpty'); const open = S.journal.filter(t => t.status !== 'closed'), closed = S.journal.filter(t => t.status === 'closed');
