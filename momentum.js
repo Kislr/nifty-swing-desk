@@ -14,13 +14,14 @@
  *   Portfolio   = top `topN` eligible names by momentum, equal weight. Rebalance every `rebalance` bars: sell anything
  *                 that has fallen below rank `holdRank` (hysteresis: you leave later than you entered), fill the free
  *                 slots from the top of the list. Between rebalances the only exit is the `trail` % stop from the
- *                 highest close since entry, checked daily. A position is also closed if its sector would exceed
- *                 `maxPerSector` names.
+ *                 highest close since entry, checked daily. A holding that is no longer on the ranked list at a rebalance
+ *                 — it fails the Eligible screen, or has left the point-in-time universe — is sold there as 'ineligible'
+ *                 (about one exit in six in the ten-year run). `maxPerSector` caps new buys only; nothing is sold for it.
  *   Sizing      = `compound: false` (default): every slot is starting capital ÷ topN for the whole run, profits sit as
  *                 cash. `compound: true`: on each rebalance day the slot for new buys is current equity (cash + open
  *                 positions at that close) ÷ topN, so profits are reinvested and losses shrink the next buys. Changes
  *                 the measurement, not the rules: ranks, gate, stops and exits are identical in both modes.
- *   Refill      = `refill: 'rebalance'` (default): a slot freed by a trailing stop stays empty until the next rebalance, and
+ *   Refill      = `refill: 'rebalance'` (the 12 Nov rules; `'close'` is the default since 13 Nov): a slot freed by a trailing stop stays empty until the next rebalance, and
  *                 a rebalance that finds the gate closed buys nothing until the next one. `refill: 'close'`: on any day the
  *                 gate is open and the book holds fewer than topN names, rank at that close and fill the free slots from the
  *                 top of the list (same sector cap; exits unchanged — rank drops are still judged at rebalances only).
@@ -178,10 +179,11 @@
   function paperBook(bars, params, custom, opts) {
     opts = opts || {}; const P = Object.assign({}, DEFAULTS, { compound: true }, params || {}); const from = opts.from; if (!from) return null;
     const N = bars.dates.length; const last = N - 1; const today = bars.dates[last]; if (!N || today < from) return null;
-    const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20 }); const eq = sim.equity; if (!eq.length) return null;
+    const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20, filter: opts.filter || null }); const eq = sim.equity; if (!eq.length) return null;   // opts.filter (19 Nov 2026, audit A6): the point-in-time membership the backtest ranks on, so a name that leaves the index is sold at the next rebalance as 'ineligible', as it is there
     const i0 = bars.dates.indexOf(eq[0].date); const value = eq[eq.length - 1].value; const st = stats(sim);
     const positions = sim.trades.filter(t => t.reason === 'end of data' && t.exitDate === today).map(t => { const B = bars.sym[t.sym]; const lastPx = B && B.c[last] != null ? B.c[last] : t.exit;
-      return { sym: t.sym, sector: t.sector, entryDate: t.entryDate, entry: t.entry, qty: t.qty, last: lastPx, peak: t.peak, stop: +(t.peak * (1 - P.trail / 100)).toFixed(2), ret: +((lastPx / t.entry - 1) * 100).toFixed(2), bars: t.bars, fill: t.fill, size: t.size, rankIn: t.rankIn }; }).sort((a, b) => a.sym.localeCompare(b.sym));
+      let lb = last; while (B && lb > 0 && B.c[lb] == null) lb--;   // the last day this holding has a bar: not today when the daily job no longer gets it (it left the index, or stopped trading)
+      return { lastBar: bars.dates[lb], noBar: lb !== last, sym: t.sym, sector: t.sector, entryDate: t.entryDate, entry: t.entry, qty: t.qty, last: lastPx, peak: t.peak, stop: +(t.peak * (1 - P.trail / 100)).toFixed(2), ret: +((lastPx / t.entry - 1) * 100).toFixed(2), bars: t.bars, fill: t.fill, size: t.size, rankIn: t.rankIn }; }).sort((a, b) => a.sym.localeCompare(b.sym));
     const buys = sim.trades.filter(t => t.entryDate === today).map(t => ({ sym: t.sym, qty: t.qty, price: t.entry, size: t.size, fill: t.fill, rank: t.rankIn }));
     const sells = sim.trades.filter(t => t.exitDate === today && t.reason !== 'end of data').map(t => ({ sym: t.sym, qty: t.qty, price: t.exit, ret: t.ret, pnl: t.pnl, reason: t.reason, entryDate: t.entryDate }));
     const sinceReb = (last - i0) % P.rebalance; const nextRebalanceIn = sinceReb === 0 ? 0 : P.rebalance - sinceReb;
@@ -192,7 +194,8 @@
     for (const [name, series] of Object.entries(opts.benchmarks || {})) { const ds = Object.keys(series).filter(d => d >= first && d <= today).sort(); if (!ds.length) { benchmarks.push({ name, missing: true }); continue; }
       const d0 = ds[0], d1 = ds[ds.length - 1]; benchmarks.push({ name, from: d0, fromValue: series[d0], asOf: d1, value: series[d1], ret: series[d1] / series[d0] - 1, kind: 'price index', stale: d1 !== today }); }
     const inv = eq[eq.length - 1].invested;
-    return { from: first, to: today, days: eq.length, capital: sim.capital, value, ret: value / sim.capital - 1, maxDrawdown: st.maxDrawdown, invested: inv, investedShare: value ? inv / value : 0,
+    const membersAge = opts.membersAsOf ? Math.round((Date.parse(today + 'T00:00:00Z') - Date.parse(opts.membersAsOf + 'T00:00:00Z')) / 86400000) : null;   // NIFTY 500 is reviewed twice a year: a list older than ~200 days has missed a review
+    return { membersAsOf: opts.membersAsOf || null, membersStale: membersAge != null && membersAge > 200, from: first, to: today, days: eq.length, capital: sim.capital, value, ret: value / sim.capital - 1, maxDrawdown: st.maxDrawdown, invested: inv, investedShare: value ? inv / value : 0,
       positions, buys, sells, gate, volHigh, slot: +slot.toFixed(0), halfSize: volHigh === true, nextRebalanceIn, trades: sim.trades.filter(t => t.reason !== 'end of data').length, params: P, benchmarks, equity: eq.map(e => ({ date: e.date, value: e.value, invested: e.invested, positions: e.positions })) };
   }
   /** Telegram block for the paper book. */
@@ -205,6 +208,8 @@
     if (pb.sells.length) L.push(`• SOLD today: ${pb.sells.map(s => `${s.sym} ${s.qty} @ ${f(s.price)} (${s.reason}, ${s.ret >= 0 ? '+' : ''}${s.ret}%)`).join(', ')}`);
     if (!pb.buys.length && !pb.sells.length) L.push('• no trades today');
     if (pb.positions.length) L.push(`• holding — name, return, stop (hold unless a close is below the stop): ${pb.positions.map(p => `${p.sym} ${p.ret >= 0 ? '+' : ''}${p.ret.toFixed(1)}% / ${f(p.stop)}`).join(' · ')}`);
+    const nb = pb.positions.filter(p => p.noBar); if (nb.length) L.push(`• NO BAR TODAY: ${nb.map(p => `${p.sym} (last close ${p.lastBar})`).join(', ')} — out of the index, or not trading. Carried at that close, closed there after 20 bars. If an index review has just taken effect, run the index-review top-up (BACKFILL.md) and the book is replayed on the real bars`);
+    if (pb.membersStale) L.push(`• membership list is as of ${pb.membersAsOf}: an index review has passed since — run the index-review top-up (BACKFILL.md)`);
     return L.join('\n');
   }
 
@@ -213,7 +218,7 @@
     const f = fmt || (n => Number(n).toFixed(2)); const L = [];
     L.push(`MOMENTUM (${sel.params.lookback}-bar, skip ${sel.params.skip}, top ${sel.params.topN}) — gate ${sel.gate.open == null ? 'n/a' : sel.gate.open ? 'OPEN' : 'CLOSED'}${sel.gate.sma != null ? ` (Nifty ${f(sel.gate.index)} vs ${sel.gate.n}-day ${f(sel.gate.sma)})` : sel.gate.breadth != null ? ` (${Math.round(sel.gate.breadth * 100)}% of stocks above their 200-day)` : ''}`);
     if (sel.gate.open === false) L.push('• no new buys while the index is below its average; holdings exit on trailing stops');
-    else if (sel.params.refill === 'close') L.push(`• rules: top ${sel.params.topN} equal-weight; a free slot is refilled at the close; ${sel.params.trail}% trailing stop; out below rank ${sel.params.holdRank} at the monthly rebalance${sel.params.volScale ? '; half-size buys while Nifty volatility is high' : ''}`);   // one line; the full wording is on the site (15 Nov 2026: digest length)
+    else if (sel.params.refill === 'close') L.push(`• rules: top ${sel.params.topN} equal-weight; a free slot is refilled at the close; ${sel.params.trail}% trailing stop; out at the monthly rebalance if below rank ${sel.params.holdRank} or off the list${sel.params.volScale ? '; half-size buys while Nifty volatility is high' : ''}`);   // one line; the full wording is on the site (15 Nov 2026: digest length)
     sel.picks.slice(0, sel.params.topN).forEach(r => L.push(`• #${r.rank} ${r.sym} — 6m ${r.ret6 != null ? (r.ret6 * 100).toFixed(0) + '%' : '—'}, 1m ${r.ret1 != null ? (r.ret1 * 100).toFixed(0) + '%' : '—'}, ${r.offHigh.toFixed(0)}% off high`));
     if (!sel.picks.length) L.push('• not enough history yet');
     return L.join('\n');
