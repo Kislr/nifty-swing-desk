@@ -95,6 +95,16 @@ The one thing that still gates every verdict. About an hour and a half of wall-c
 
 What not to do: do not run `--years 10` without `--members` (it would skip every saved day and add nothing); do not delete or hand-edit the history files first; do not run two copies at once.
 
+## After each index review — the top-up (twice a year; 19 Nov 2026, interim audit A6)
+
+NIFTY 500 is reviewed twice a year and the changes take effect on the last trading day of March and of September. The daily job saves bars only for the day's constituents, so from that day a name that left gets no more bars and a name that entered arrives with no history: the paper book carries the first at a stale price (the digest says `NO BAR TODAY`) and cannot rank the second for 148 bars. The backtest had bars for both. The book is replayed from its first day on every run, so once the bars are in, it corrects itself — the digest reminds you on 2 April and 2 October.
+
+1. **Three files into `data/membership/src/`**, then commit and push: the "Replacements in indices" press release for the review from niftyindices.com (keep its name, `ind_prsDDMMYYYY.pdf`); a fresh `ind_nifty500list.csv` (nsearchives.nseindia.com/content/indices/ind_nifty500list.csv); a fresh `symbolchange.csv` (nsearchives.nseindia.com/content/equities/symbolchange.csv).
+2. **Rebuild the membership list**: `node scripts/membership.mjs --asof YYYY-MM-DD` (the date of the constituent list). It needs `pdftotext`; a cloud session has it, so this step can be left to the next session. All three checks must be clean; commit `data/membership/members.json` and the report.
+3. **From home, the bars**: `git pull`, then `node scripts/backfill.mjs --years 1 --members` — about ten minutes; it revisits the year's saved days and adds only the names missing on each (the new entrants' history, the leavers' bars since they left).
+4. **`node scripts/corporate-actions.mjs`** (the new names bring their own bonuses and splits), then `git add data reports && git commit -m "Index review top-up" && git push`.
+5. **Once more about a month later** (step 3 and 4 only), so the names that left have bars up to the rebalance at which the book sells them.
+
 ## Results dates — the home run for the PEAD test (13 Nov 2026)
 
 The post-earnings-announcement-drift test (`reports/pead-hypotheses-2026-11-13.md`) needs the date and time NSE published every quarterly result over the history. NSE has it; NSE refuses cloud IPs; so this is a home run, like the three before it. Budget about 25 minutes of wall-clock, almost all of it the script pausing between requests, plus a minute to read one table. Nothing to decide along the way — the hypothesis file already says how the result is read.
@@ -144,6 +154,10 @@ The 13 Nov pull left two holes (`reports/interim-audit-2026-11-19.md`): the last
 | `--members` | past members (12 Nov 2026): the universe becomes every ticker that was ever in NIFTY 500 according to `data/membership/members.json`; days already saved are visited again and only the names still missing that day are added, stored under today's ticker by following NSE's rename list forward from that day. Run `node scripts/backfill.mjs --years 10 --members` once from home (about an hour, one fetch per trading day, progress saved every 20 days), then `corporate-actions` again and the backtests with `--members`. Nothing already in the files is rewritten |
 
 ## Caveats worth knowing
+
+**Corporate actions between refreshes (19 Nov 2026, interim audit A7).** The daily job now reads a bonus or split off NSE's own row on the ex-date — NSE's change is measured from the adjusted price while its previous close is not — writes a provisional entry into `data/adjustments.json` and says so in the digest under DATA NOTICES. The quarterly `corporate-actions` run replaces provisional entries with verified ones. More than five in one day are reported and not applied.
+
+**Weekend sessions are not in the history (interim audit A18, open).** The backfill skips Saturdays and Sundays and the daily job runs Monday to Friday, so a session held on a weekend — the Muhurat session of Sunday 8 Nov 2026 for one — has no bar. The digest's DATA NOTICES line `HISTORY GAP` is how the next one will show.
 
 Bhavcopy prices are not adjusted for splits and bonuses. A 1:1 bonus shows as a 50% drop on the ex-date, which the engine will read as a stop-out, an "avoid" or a momentum trailing-stop exit. The fix is the corporate-actions step below; until it has been run, remember it when a backtest trade looks absurd.
 

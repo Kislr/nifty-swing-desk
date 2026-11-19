@@ -40,6 +40,11 @@
       "repeat": "quarterly"
     },
     {
+      "date": "2027-04-02",
+      "text": "NIFTY 500 review has taken effect (end of March / end of September): do the index-review top-up in BACKFILL.md — save the press release, the new constituent list and symbolchange.csv, rebuild the membership list, then backfill --members from home, and again a month later. Until then the paper book cannot rank the new names and carries the ones that left at a stale price.",
+      "repeat": "semiannual"
+    },
+    {
       "date": "2027-02-05",
       "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Also the journal's momentum-pullback paper trades vs the backtest, and the Discretionary book's record in R (site → Performance → by book; Backup for the sentences written at entry). Write the answer into ROADMAP.md."
     },

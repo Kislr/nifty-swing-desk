@@ -8,6 +8,8 @@
  *   node scripts/backtest-momentum.mjs --benchmarks          # also NSE's total-return indices (data/benchmarks/) over the same window
  *   node scripts/backtest-momentum.mjs --benchmarks path/to/dir
  *   node scripts/backtest-momentum.mjs --members           # rank and trade only that day's NIFTY 500 members (data/membership/members.json)
+ *                                                          # — the default since 19 Nov 2026 when that file exists and no --hist is given;
+ *   node scripts/backtest-momentum.mjs --no-members        # every symbol with bars on every day (not a universe that existed; report gets -allnames)
  *   node scripts/backtest-momentum.mjs --set refill=rebalance --set volScale=false   # the 12 Nov 2026 rules (both switches off; report gets -norefill -novolscale)
  *                                                          # refill=close fills a slot freed by a stop (or left empty by a closed gate) at the next close; volScale=true half-sizes
  *                                                          # new buys while the index's 20-bar volatility is above its one-year median — both on by default since 13 Nov 2026
@@ -29,6 +31,7 @@
  * The report file gets a `-members` suffix so it never overwrites the plain run.
  * Writes reports/momentum-<stamp>.md and .json. */
 import fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -59,12 +62,18 @@ const row = (name, st) => `| ${name} | ${st.n} | ${pc(st.totalReturn)} | ${pc(st
 const hdr = '| run | trades | total return | CAGR | Nifty (same period) | max DD | Sharpe | win rate | avg bars | time in market | equity at work |\n|---|---|---|---|---|---|---|---|---|---|---|';
 // --members [file]: point-in-time NIFTY 500 membership; the filter goes into every rankAt through simulate's opts.
 let MEM = null, memStats = null;
-if (flag('members')) { const v = arg('members'); const file = v && !v.startsWith('--') ? path.resolve(v) : path.join(ROOT, 'data', 'membership', 'members.json');
+// 19 Nov 2026 (interim audit A4): membership is the default on the repository's own history. Since the past members were loaded the
+// history holds every name that was ever in the index, for all of its bars, so a run without the list trades a universe that never
+// existed. `--no-members` asks for that run by name (report suffix -allnames); a custom `--hist` store has no list unless `--members` gives one.
+const memDefault = path.join(ROOT, 'data', 'membership', 'members.json'); const allNames = flag('no-members');
+const memOn = !allNames && (flag('members') || (!argv.includes('--hist') && existsSync(memDefault)));
+if (allNames) console.warn('NOTE: --no-members — every symbol in the history is traded on every day it has a bar, members or not. Not a universe that existed; for comparison only.');
+if (memOn) { const v = arg('members'); const file = v && !v.startsWith('--') ? path.resolve(v) : memDefault;
   MEM = JSON.parse(await fs.readFile(file, 'utf8').catch(() => { console.error(`--members: cannot read ${file}. Build it first: node scripts/membership.mjs`); process.exit(2); }));
   const ever = Object.keys(MEM.symbols); const withBars = ever.filter(s => bars.sym[s]); const todayOnly = Object.keys(bars.sym).filter(s => !MEM.symbols[s]);
   memStats = { from: MEM.from, asOf: MEM.asOf, events: MEM.events.length, everMembers: ever.length, everWithBars: withBars.length, barsNotMembers: todayOnly.length, membersOnFirstDay: membersOn(MEM, bars.dates[0] < MEM.from ? MEM.from : bars.dates[0]).filter(s => bars.sym[s]).length };
   console.log(`membership: ${memStats.events} events ${MEM.from} → ${MEM.asOf}; ${memStats.everMembers} names were ever members, ${memStats.everWithBars} of them have bars (the rest await the past-members price load); ${memStats.barsNotMembers} symbols with bars were never members`); }
-const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : '')
+const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : allNames ? '-allnames' : '')
   + (sets.refill === 'rebalance' ? '-norefill' : '') + (sets.volScale === false ? '-novolscale' : '');   // adjusted-history, members and switched-off runs get their own file names, so a variant never overwrites a baseline (13 Nov 2026: both switches are on by default; the 13 Nov reports were written while they were off, hence their -refill / -volscale names)
 const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 

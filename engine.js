@@ -42,7 +42,8 @@
   // sectorBump / volumeBump are the score points for "leading sector" and "volume ≥ 1.5× average"; the backtest
   // overrides them (--set sectorBump=0) to test whether they earn their place (ROADMAP item 2).
   // swingMode: 'watch' (5 Nov 2026) — the swing rules lost −0.08R/trade over 419 trades on five years and no single tested
-  // change fixed them (reports/backtest-2026-11-05.md). On corporate-action-adjusted history they are breakeven (+0.01R over 433,
+  // change fixed them (reports/backtest-2026-11-05.md). On ten years of point-in-time membership they are −0.03R over 865 trades
+  // (reports/backtest-2026-11-19-adjusted-members.md). On corporate-action-adjusted five-year history they are breakeven (+0.01R over 433,
   // reports/backtest-2026-11-05-adjusted.md) and the best variant +0.04R: still under the +0.1R bar, so setups are levels to watch, not orders,
   // and the digest leads with the momentum list. Set back to 'orders' only after a backtest earns it.
   const DEFAULTS = { capital: 500000, riskPct: 1, minRR: 2, maxPos: 25, sectorBump: 15, volumeBump: 10, swingMode: 'watch' };
@@ -494,7 +495,44 @@
       const R = journalStatus(t, bars || { dates: [], sym: {} }).R; if (t.status === 'closed') { b.closed++; if (R != null) { b.totalR += R; if (R > 0) b.wins++; } } else { b.open++; if (R != null) b.openR += R; } }
     return [DISCRETIONARY.setup, 'Momentum pullback', 'Other setups'].filter(k => by[k]).map(k => Object.assign(by[k], { avgR: by[k].closed ? by[k].totalR / by[k].closed : null }));
   }
-  /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'}]). A reminder is due from its
+  /* Data notices (19 Nov 2026, interim audit A7 and A18). Two things the day's own NSE rows say about the bars, read before anything is computed:
+   *
+   * pendingAdjustments — a bonus or split the adjustments table does not know yet. On the ex-date NSE's *change* is measured from the
+   *   adjusted base price while its *previous close* stays raw (CONCORDBIO, 1:1 bonus, 4 Nov 2026: previous close 1,227.90, last 655.10,
+   *   change +6.69%), so previous close ÷ (last ÷ (1 + change)) is the factor — 1.9998 there. Until the table has the event the bars show a
+   *   47% fall: a trailing-stop sale in the paper book, an "avoid", a name dropped from the momentum list. A name counts only when the bars'
+   *   own previous close agrees with NSE's (within 3%) — otherwise the bars are missing a session and the gap is not a corporate action —
+   *   and the factor is 8% or more away from 1. The factor is snapped to a simple ratio (2, 1.5, 1.25, 5 …) when it is within 0.4% of one.
+   * sessionGap — the share of names whose previous close on the bars differs from NSE's by more than 0.5%. An ordinary day has 5–15%
+   *   (NSE's close is a half-hour average, the bars carry the last price); the day after a session the history lacks has most of them
+   *   (9 Nov 2026, after the Sunday Muhurat session of 8 Nov: 350 of 500). `missing` is true above 40%.
+   * Both take bars built with the day's snapshot (extras carry NSE's prev and pct) and the index of that day. */
+  function snapFactor(f) { for (let den = 1; den <= 10; den++) { const n = Math.round(f * den); if (n > 0 && Math.abs(n / den - f) / f < 0.004) return +(n / den).toFixed(6); } return +f.toFixed(4); }
+  function pendingAdjustments(bars, i) {
+    const date = bars.dates[i]; const ex = bars.extras && bars.extras[date]; const out = []; if (!ex || i < 1) return out;
+    for (const [s, e] of Object.entries(ex)) { if (s === '__index' || !e || !(e.prev > 0) || e.pct == null || !(1 + e.pct / 100 > 0)) continue;
+      const B = bars.sym[s]; const c = B && B.c[i], y = B && B.c[i - 1]; if (!(c > 0) || !(y > 0)) continue;
+      if (Math.abs(y / e.prev - 1) > 0.03) continue;                       // the bars and NSE disagree about yesterday: a missing session, not an ex-date
+      const implied = c / (1 + e.pct / 100); const f = e.prev / implied; if (!(f >= 1.08 || f <= 0.92)) continue;
+      out.push({ sym: s, exDate: date, prevDate: bars.dates[i - 1], factor: snapFactor(f), observed: +f.toFixed(4), yclose: y, prev: e.prev, close: c, pct: e.pct, implied: +implied.toFixed(2) }); }
+    return out.sort((a, b) => a.sym < b.sym ? -1 : 1);
+  }
+  function sessionGap(bars, i) {
+    const date = bars.dates[i]; const ex = bars.extras && bars.extras[date]; if (!ex || i < 1) return null; let n = 0, off = 0;
+    for (const [s, e] of Object.entries(ex)) { if (s === '__index' || !e || !(e.prev > 0)) continue; const B = bars.sym[s]; const y = B && B.c[i - 1]; if (!(y > 0)) continue; n++; if (Math.abs(y / e.prev - 1) > 0.005) off++; }
+    return { date, prevDate: bars.dates[i - 1], n, off, share: n ? off / n : 0, missing: n >= 50 && off / n > 0.4 };
+  }
+  /** The entry the daily job writes into data/adjustments.json for a pendingAdjustments hit: applied at once, marked provisional, replaced by the verified row at the next corporate-actions refresh. */
+  function provisionalEvent(p) { return { exDate: p.exDate, type: 'provisional', detail: `÷${p.factor}, read off NSE's change on the ex-date by the daily job`, factor: p.factor, observed: p.observed, source: `daily job ${p.exDate}: NSE change ${p.pct}% on a close of ${p.close} after ${p.yclose}`, checked: `${p.prevDate} close ${p.yclose} → ${p.exDate} NSE previous close ${p.prev}, adjusted base ${p.implied}`, apply: true, provisional: true }; }
+  /** Telegram block for the two notices; null when there is nothing to say. `applied` false = found but not written (too many at once). */
+  function noticesDigest(pend, gap, applied) {
+    const L = []; pend = pend || [];
+    for (const p of pend.slice(0, 6)) L.push(`• ${applied === false ? 'LOOKS ADJUSTED, NOT APPLIED' : 'ADJUSTED'}: ${p.sym} ÷${p.factor} before ${p.exDate} — NSE's change today is ${pct(p.pct)} where the raw bars say ${pct((p.close / p.yclose - 1) * 100, 1)}: a bonus or split went ex. ${applied === false ? 'Too many in one day to apply unseen; check and run corporate-actions' : 'Provisional until the corporate-actions refresh'} (BACKFILL.md)`);
+    if (pend.length > 6) L.push(`• … and ${pend.length - 6} more`);
+    if (gap && gap.missing) L.push(`• HISTORY GAP: ${gap.off} of ${gap.n} previous closes differ from NSE's — a session between ${gap.prevDate} and ${gap.date} is not in the history (a weekend or special session, or a day the job did not run). Fill it from home (BACKFILL.md)`);
+    return L.length ? ['DATA NOTICES', ...L].join('\n') : null;
+  }
+  /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'|'semiannual'}]). A reminder is due from its
    *  date for `windowDays` (7) days, so a missed day still nags for a week; a repeating one is due around every occurrence. Returns
    *  the digest block or null. Edit or remove the entry in config.json once the check is done. */
   function remindersDue(list, today, windowDays) {
@@ -502,7 +540,7 @@
     const dayDiff = (a, b) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000);
     const addMonths = (d, n) => { const t = new Date(d + 'T00:00:00Z'); const day = t.getUTCDate(); t.setUTCDate(1); t.setUTCMonth(t.getUTCMonth() + n); const last = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() + 1, 0)).getUTCDate(); t.setUTCDate(Math.min(day, last)); return t.toISOString().slice(0, 10); };
     const due = [];
-    for (const r of list) { if (!r || !r.date || !r.text) continue; const step = r.repeat === 'monthly' ? 1 : r.repeat === 'quarterly' ? 3 : 0;
+    for (const r of list) { if (!r || !r.date || !r.text) continue; const step = r.repeat === 'monthly' ? 1 : r.repeat === 'quarterly' ? 3 : r.repeat === 'semiannual' ? 6 : 0;
       let occ = r.date; if (step) { let guard = 0; while (addMonths(occ, step) <= today && guard++ < 600) occ = addMonths(occ, step); }
       const d = dayDiff(occ, today); if (d >= 0 && d < W) due.push({ date: occ, text: r.text, repeat: r.repeat || null }); }
     if (!due.length) return null;
@@ -512,8 +550,9 @@
   /** Telegram text. `blocks` = { momentum, paper, reminders } are the other engines' digests (strings); in swingMode 'watch'
    *  the momentum list comes first, then the paper book (13 Nov 2026), and swing setups are listed as levels to watch, without quantities. */
   /** Tag swing signals whose symbol is in the momentum engine's top `topRank` (default 30, the engine's holdRank).
-   *  Sets s.momRank on every such signal and s.tag = 'momentum pullback' on pullback buys — the one slice of the swing
-   *  rules that passed its backtest (12 Nov 2026: +0.16R over 638 trades, reports/swing-universe-2026-11-12-adjusted.md).
+   *  Sets s.momRank on every such signal and s.tag = 'momentum pullback' on pullback buys — the slice that passed on today's
+   *  names (12 Nov 2026: +0.16R over 638 trades) and failed on the full membership the same day (+0.09R over 594 trades,
+   *  reports/swing-membership-2026-11-12-adjusted-members.md); tagged so the paper record stays separate, not because it earned it.
    *  Tagged pullbacks move to the front of the act list, in score order; everything else keeps its order. Returns the count. */
   function tagMomentum(signals, ranked, topRank) {
     const N = topRank || 30; const rank = {}; for (const r of ranked || []) if (r.rank <= N) rank[r.sym] = r.rank;
@@ -550,6 +589,7 @@
     L.push(`Nifty Swing Desk — ${result.date}${result.time ? ' ' + result.time : ''}${reg.intraday ? ' (intraday)' : ''}`);
     L.push(`Tape: ${reg.state} · breadth ${reg.up}▲/${reg.down}▼ · ${idx} · history ${result.coverage}/250 bars`);
     const leaders = [...board.leaders]; L.push(`Leading sectors: ${leaders.length ? leaders.join(', ') : 'none qualify'}`);
+    if (blocks.notices) L.push('', blocks.notices);   // a corporate action applied today, a session missing from the history (19 Nov 2026); never trimmed
     if (watchOnly && blocks.momentum) L.push('', blocks.momentum);
     if (blocks.paper) L.push('', blocks.paper);
     if (blocks.positions) L.push('', blocks.positions);   // open positions pasted into config.json (18 Nov 2026); never trimmed
@@ -563,7 +603,7 @@
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)');
-      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: breakeven over ten years (−0.01R, 885 trades)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: no edge over ten years (−0.03R, 865 trades, full membership)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
       rest.slice(0, caps.other).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!rest.length) L.push('• none today');
     } else {
@@ -585,5 +625,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, pendingAdjustments, sessionGap, provisionalEvent, noticesDigest, snapFactor, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
 });

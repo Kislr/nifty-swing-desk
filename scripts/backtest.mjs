@@ -34,11 +34,14 @@
  *     parameters, only bars up to i). The ranking needs lookback + skip + 1 bars, so no order is placed before that;
  *     the report names the first date it was defined so the unfiltered run can be repeated from the same date.
  *   - `--members [file]`: point-in-time NIFTY 500 membership (data/membership/members.json, scripts/membership.mjs).
+ *     THE DEFAULT since 19 Nov 2026 whenever that file exists and no `--hist` is given; `--no-members` switches it off
+ *     (every symbol with bars, on every day — report suffix `-allnames`).
  *     Each day's analysis — sector board, relative strength, signals — and the momentum ranking behind
  *     `universe=momentum` see only that day's members. Open positions are untouched. Report files get a `-members`
  *     suffix. Until past members have bars this removes future members only (see the report's Universe section).
  * Writes reports/backtest-<stamp>.md and .json. */
 import fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -73,7 +76,13 @@ console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars
 
 // --members [file]: point-in-time NIFTY 500 membership, applied to analyzeAt and to the momentum ranking alike
 let MEM = null, memStats = null, memFilter = null;
-if (flag('members')) { const v = arg('members'); const file = v && !v.startsWith('--') ? path.resolve(v) : path.join(ROOT, 'data', 'membership', 'members.json');
+// 19 Nov 2026 (interim audit A4): membership is the default on the repository's own history. Since the past members were loaded the
+// history holds every name that was ever in the index, for all of its bars, so a run without the list trades a universe that never
+// existed. `--no-members` asks for that run by name (report suffix -allnames); a custom `--hist` store has no list unless `--members` gives one.
+const memDefault = path.join(ROOT, 'data', 'membership', 'members.json'); const allNames = flag('no-members');
+const memOn = !allNames && (flag('members') || (!argv.includes('--hist') && existsSync(memDefault)));
+if (allNames) console.warn('NOTE: --no-members — every symbol in the history is traded on every day it has a bar, members or not. Not a universe that existed; for comparison only.');
+if (memOn) { const v = arg('members'); const file = v && !v.startsWith('--') ? path.resolve(v) : memDefault;
   MEM = JSON.parse(await fs.readFile(file, 'utf8').catch(() => { console.error(`--members: cannot read ${file}. Build it first: node scripts/membership.mjs`); process.exit(2); })); memFilter = membershipFilter(MEM); P.members = true;
   const ever = Object.keys(MEM.symbols); const withBars = ever.filter(s => bars.sym[s]);
   memStats = { from: MEM.from, asOf: MEM.asOf, events: MEM.events.length, everMembers: ever.length, everWithBars: withBars.length, barsNotMembers: Object.keys(bars.sym).filter(s => !MEM.symbols[s]).length, membersOnFirstDay: membersOn(MEM, bars.dates[0] < MEM.from ? MEM.from : bars.dates[0]).filter(s => bars.sym[s]).length };
@@ -145,7 +154,7 @@ const byScore = (() => { const g = { '50-59': [], '60-69': [], '70+': [] }; for 
 const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(d);
 const row = (name, s) => s.n ? `| ${name} | ${s.n} | ${f(s.winRate * 100, 0)}% | ${f(s.expectancy)}R | ${f(s.profitFactor)} | ${f(s.totalR, 1)}R | ${f(s.maxDrawdownR, 1)}R | ${f(s.avgBars, 1)} | ₹${Math.round(s.pnl).toLocaleString('en-IN')} |` : `| ${name} | 0 | | | | | | | |`;
 const hdr = '| slice | trades | win rate | expectancy | profit factor | total | max DD | avg bars | P&L (fixed ₹' + P.capital.toLocaleString('en-IN') + ') |\n|---|---|---|---|---|---|---|---|---|';
-const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : '');   // adjusted-history and members runs get their own file names
+const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : allNames ? '-allnames' : '');   // adjusted-history and members runs get their own file names
 const md = [`# Backtest — ${stamp}`, '', `History ${bars.dates[P.warmup]} → ${bars.dates[N - 1]} (${N} days, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P)}. Setups: ${setupsFilter}.`, '',
   '## Overall', '', hdr, row('all', all), '', '## By setup', '', hdr, ...Object.entries(bySetup).map(([k, v]) => row(k, v)), '', '## By score band', '', hdr, ...Object.entries(byScore).map(([k, v]) => row(k, v)), '', '## By year', '', hdr, ...Object.entries(byYear).map(([k, v]) => row(k, v)), '',
   '## Exit reasons', '', ...Object.entries(byReason).map(([k, v]) => `- ${k}: ${v}`), '',
