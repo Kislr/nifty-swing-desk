@@ -9,7 +9,11 @@
  *   2. Board meetings     (… → Board Meetings, purpose "Financial Results"): the meeting date only; the fallback for filings the
  *      first list lacks (older years, re-filings), tagged `bm` so the backtest can treat them as after-the-close announcements.
  *
- *   node scripts/results-dates.mjs                       # both lists, from the first history date to today, in 90-day windows
+ *   3. Integrated filing  (… → Integrated Filing → Financials; added 19 Nov 2026): since the quarter filed from April 2025 the results
+ *      go here and list 1 is all but empty (interim audit A2: 25% of 2025's events and none of 2026's carried a time). Same content —
+ *      symbol, broadcast time, quarter end — in pages of 1,000; read as list 1 (`fr`), raw pages saved as if-<from>-<to>-p<n>.json.
+ *
+ *   node scripts/results-dates.mjs                       # all three lists, from the first history date to today, in 90-day windows
  *   node scripts/results-dates.mjs --from 2017-01-01 --to 2026-12-31
  *   node scripts/results-dates.mjs --csv CF-FR-equities-*.csv [--csv CF-BM-equities-*.csv]   # the pages' CSV downloads instead of the API
  *   node scripts/results-dates.mjs --reparse             # rebuild events.json from data/results/raw/ without touching NSE
@@ -36,7 +40,11 @@ const args = process.argv.slice(2); const opt = (n, d) => { const i = args.index
 const csvs = []; args.forEach((a, i) => { if (a === '--csv' && args[i + 1]) csvs.push(args[i + 1]); });
 const DATA = path.join(ROOT, 'data'); const HIST = path.join(DATA, 'history'); const RAW = path.join(DATA, 'results', 'raw'); const OUT = opt('out', path.join(DATA, 'results', 'events.json'));
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
-const HDR = { 'User-Agent': UA, Accept: 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', Referer: 'https://www.nseindia.com/companies-listing/corporate-filings-financial-results' };
+const HDR = { 'User-Agent': UA, Accept: 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9' };
+// NSE's host. From some connections www.nseindia.com now redirects to www.nseindia.in (seen 19 Nov 2026 from a home connection in India), and
+// fetch drops the Cookie header when a redirect crosses hosts, so session() notes where the first visit ended up and the API calls go there.
+let ORIGIN = opt('host', 'https://www.nseindia.com');
+const hdr = cookie => Object.assign({}, HDR, { Referer: ORIGIN + '/companies-listing/corporate-filings-financial-results', Cookie: cookie });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -64,7 +72,7 @@ export function normaliseRecord(r, src) {
   else { stampK = findKey(r, [/^bm_date$/i, /meeting\s*date/i, /meetingdate/i, /^bm_timestamp$/i, /^date$/i, /date/i]); stamp = stampK ? parseStamp(r[stampK]) : null; if (stamp) stamp.time = null;   // a meeting date says nothing about the hour the result went out
     const purposeK = findKey(r, [/purpose/i, /^bm_desc$/i, /desc/i, /subject/i]); if (purposeK && !/result|financial|quarter|audited|unaudited/i.test(String(r[purposeK]))) return null; }
   if (!stamp) return null;
-  const perK = findKey(r, [/^relatingto$/i, /^period$/i, /relating/i, /^qe$/i, /quarter/i, /^todate$/i, /^to_date$/i]); const period = perK && r[perK] ? String(r[perK]).trim() : null;
+  const perK = findKey(r, [/^relatingto$/i, /^period$/i, /relating/i, /^qe$/i, /^qe_date$/i, /quarter/i, /^todate$/i, /^to_date$/i]); const period = perK && r[perK] ? String(r[perK]).trim() : null;
   if (src === 'fr') { const kind = findKey(r, [/^period$/i, /periodicity/i]); if (kind && r[kind] && /annual|half|nine/i.test(String(r[kind])) && !/quarter/i.test(String(r[kind]))) return { symbol, date: stamp.date, time: stamp.time, period, src, skip: String(r[kind]) }; }
   return { symbol, date: stamp.date, time: stamp.time, period, src };
 }
@@ -89,18 +97,22 @@ export function buildEvents(rows, changes) {
 }
 
 /* ---------- sources ---------- */
-async function session() { const res = await fetch('https://www.nseindia.com/', { headers: HDR }); return (res.headers.getSetCookie ? res.headers.getSetCookie() : []).map(c => c.split(';')[0]).join('; '); }
+async function session() { const res = await fetch(ORIGIN + '/', { headers: HDR });
+  try { const o = new URL(res.url).origin; if (o !== ORIGIN) { console.log(`  NSE answered on ${o}; the API calls go there`); ORIGIN = o; } } catch {}
+  return (res.headers.getSetCookie ? res.headers.getSetCookie() : []).map(c => c.split(';')[0]).join('; '); }
 const dmy = d => { const [y, m, dd] = d.split('-'); return `${dd}-${m}-${y}`; };
 const ENDPOINTS = {
-  fr: (a, b) => `https://www.nseindia.com/api/corporates-financial-results?index=equities&from_date=${dmy(a)}&to_date=${dmy(b)}&period=Quarterly`,
-  bm: (a, b) => `https://www.nseindia.com/api/corporate-board-meetings?index=equities&from_date=${dmy(a)}&to_date=${dmy(b)}`,
+  fr: (a, b) => `${ORIGIN}/api/corporates-financial-results?index=equities&from_date=${dmy(a)}&to_date=${dmy(b)}&period=Quarterly`,
+  bm: (a, b) => `${ORIGIN}/api/corporate-board-meetings?index=equities&from_date=${dmy(a)}&to_date=${dmy(b)}`,
+  if: (a, b, page) => `${ORIGIN}/api/integrated-filing-results?index=equities&from_date=${dmy(a)}&to_date=${dmy(b)}&type=${encodeURIComponent('Integrated Filing- Financials')}&page=${page}&size=${IF_PAGE}`,
 };
+const IF_PAGE = 1000, IF_FROM = '2025-01-01';   // the list answers pages of up to 1,000 rows and holds nothing before 2025
 async function pull(src, fromISO, toISO, days) {
   let cookie = await session(); const rows = []; let a = new Date(fromISO + 'T00:00:00Z'); const end = new Date(toISO + 'T00:00:00Z'); let n = 0, empty = 0, shown = false;
   while (a <= end) { const b = new Date(Math.min(end.getTime(), a.getTime() + (days - 1) * 86400000)); const A = a.toISOString().slice(0, 10), B = b.toISOString().slice(0, 10);
     const file = path.join(RAW, `${src}-${A}-${B}.json`); let j = null;
     try { j = JSON.parse(await fs.readFile(file, 'utf8')); } catch {}
-    if (!j) { for (let t = 0; t < 4 && !j; t++) { try { const res = await fetch(ENDPOINTS[src](A, B), { headers: Object.assign({}, HDR, { Cookie: cookie }) }); const text = await res.text();
+    if (!j) { for (let t = 0; t < 4 && !j; t++) { try { const res = await fetch(ENDPOINTS[src](A, B), { headers: hdr(cookie) }); const text = await res.text();
           if (res.ok && /^\s*[\[{]/.test(text)) j = JSON.parse(text); else { console.warn(`  ${src} ${A}→${B}: HTTP ${res.status}${/^\s*</.test(text) ? ' (HTML: bot filter)' : ''}; retrying`); cookie = await session(); await sleep(2500 * (t + 1)); } }
         catch (e) { console.warn(`  ${src} ${A}→${B}: ${e.message}; retrying`); await sleep(2500 * (t + 1)); } }
       if (!j) { console.error(`\nNSE did not answer four times for ${src} ${A}→${B}. Wait fifteen minutes and run the same command again (windows already saved under data/results/raw/ are not re-fetched), or use --csv with the page's download.`); process.exit(2); }
@@ -111,18 +123,37 @@ async function pull(src, fromISO, toISO, days) {
     a = new Date(b.getTime() + 86400000); }
   process.stdout.write('\n'); return rows;
 }
-async function reparse() { const rows = []; const files = (await fs.readdir(RAW).catch(() => [])).filter(f => /^(fr|bm)-\d{4}-\d{2}-\d{2}-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort();
-  for (const f of files) { const src = f.slice(0, 2); const j = JSON.parse(await fs.readFile(path.join(RAW, f), 'utf8')); for (const r of listOf(j)) rows.push(normaliseRecord(r, src)); }
+/** The integrated-filing list (results filed from April 2025 on), window by window and page by page: {data:[…], page, size, totalCount}.
+ *  Every page is saved as if-<from>-<to>-p<n>.json; a saved page is not fetched again. Rows are read as financial results (`fr`). */
+async function pullIF(fromISO, toISO, days) {
+  let cookie = await session(); const rows = []; let a = new Date((fromISO > IF_FROM ? fromISO : IF_FROM) + 'T00:00:00Z'); const end = new Date(toISO + 'T00:00:00Z'); let n = 0, shown = false;
+  while (a <= end) { const b = new Date(Math.min(end.getTime(), a.getTime() + (days - 1) * 86400000)); const A = a.toISOString().slice(0, 10), B = b.toISOString().slice(0, 10); let got = 0, total = null;
+    for (let page = 1; page <= 60; page++) { const file = path.join(RAW, `if-${A}-${B}-p${page}.json`); let j = null;
+      try { j = JSON.parse(await fs.readFile(file, 'utf8')); } catch {}
+      if (!j) { for (let t = 0; t < 4 && !j; t++) { try { const res = await fetch(ENDPOINTS.if(A, B, page), { headers: hdr(cookie) }); const text = await res.text();
+            if (res.ok && /^\s*[\[{]/.test(text)) j = JSON.parse(text); else { console.warn(`  if ${A}→${B} page ${page}: HTTP ${res.status}${/^\s*</.test(text) ? ' (HTML: bot filter)' : ''}; retrying`); cookie = await session(); await sleep(2500 * (t + 1)); } }
+          catch (e) { console.warn(`  if ${A}→${B} page ${page}: ${e.message}; retrying`); await sleep(2500 * (t + 1)); } }
+        if (!j) { console.error(`\nNSE did not answer four times for if ${A}→${B} page ${page}. Wait fifteen minutes and run the same command again (pages already saved under data/results/raw/ are not re-fetched).`); process.exit(2); }
+        await fs.mkdir(RAW, { recursive: true }); await fs.writeFile(file, JSON.stringify(j)); await sleep(900); }
+      const list = listOf(j); if (!shown && list.length) { console.log(`  if sample record keys: ${Object.keys(list[0]).join(', ')}`); shown = true; }
+      if (total == null && j && typeof j.totalCount === 'number') total = j.totalCount; for (const r of list) rows.push(normaliseRecord(r, 'fr')); got += list.length;
+      if (!list.length || list.length < IF_PAGE || (total != null && got >= total)) break; }
+    n++; process.stdout.write(`\r  if ${A} → ${B}: ${rows.filter(Boolean).length} rows in ${n} windows   `);
+    a = new Date(b.getTime() + 86400000); }
+  process.stdout.write('\n'); return rows;
+}
+async function reparse() { const rows = []; const files = (await fs.readdir(RAW).catch(() => [])).filter(f => /^(fr|bm|if)-\d{4}-\d{2}-\d{2}-\d{4}-\d{2}-\d{2}(-p\d+)?\.json$/.test(f)).sort();
+  for (const f of files) { const src = f.startsWith('bm') ? 'bm' : 'fr'; const j = JSON.parse(await fs.readFile(path.join(RAW, f), 'utf8')); for (const r of listOf(j)) rows.push(normaliseRecord(r, src)); }
   console.log(`reparsed ${files.length} saved windows → ${rows.filter(Boolean).length} rows`); return rows; }
 async function fromCSV(file) { const rows = parseCSV(await fs.readFile(file, 'utf8')); if (rows.length < 2) return []; const hdr = rows[0].map(h => h.trim()); const src = hdr.some(h => /meeting|purpose|bm_/i.test(h)) ? 'bm' : 'fr';
   const out = rows.slice(1).map(r => normaliseRecord(Object.fromEntries(hdr.map((h, k) => [h, r[k]])), src)); console.log(`  ${path.basename(file)}: ${out.filter(Boolean).length} rows read as ${src === 'fr' ? 'financial results' : 'board meetings'} (columns: ${hdr.join(', ')})`); return out; }
 
 /* ---------- report ---------- */
 export function coverage(ev, bars) {
-  const years = {}; let total = 0, withTime = 0, bm = 0; const inHist = new Set(bars ? Object.keys(bars.sym) : []); let notInHist = 0; const symsPerYear = {};
-  for (const [s, list] of Object.entries(ev.symbols)) { if (bars && !inHist.has(s)) notInHist++; for (const e of list) { const y = e.date.slice(0, 4); years[y] = (years[y] || 0) + 1; (symsPerYear[y] || (symsPerYear[y] = new Set())).add(s); total++; if (e.time) withTime++; if (e.src === 'bm') bm++; } }
+  const years = {}, timed = {}, months = {}; let total = 0, withTime = 0, bm = 0; const inHist = new Set(bars ? Object.keys(bars.sym) : []); let notInHist = 0; const symsPerYear = {};
+  for (const [s, list] of Object.entries(ev.symbols)) { if (bars && !inHist.has(s)) notInHist++; for (const e of list) { const y = e.date.slice(0, 4); years[y] = (years[y] || 0) + 1; if (e.time) timed[y] = (timed[y] || 0) + 1; months[e.date.slice(0, 7)] = (months[e.date.slice(0, 7)] || 0) + 1; (symsPerYear[y] || (symsPerYear[y] = new Set())).add(s); total++; if (e.time) withTime++; if (e.src === 'bm') bm++; } }
   const afterClose = Object.values(ev.symbols).flat().filter(e => e.time && e.time >= '15:30').length;
-  return { total, withTime, afterClose, bm, symbols: Object.keys(ev.symbols).length, notInHist, years: Object.fromEntries(Object.keys(years).sort().map(y => [y, { events: years[y], symbols: symsPerYear[y].size }])) };
+  return { total, withTime, afterClose, bm, symbols: Object.keys(ev.symbols).length, notInHist, years: Object.fromEntries(Object.keys(years).sort().map(y => [y, { events: years[y], symbols: symsPerYear[y].size, timed: timed[y] || 0 }])), lastMonths: Object.fromEntries(Object.keys(months).sort().slice(-8).map(m => [m, months[m]])) };
 }
 
 /* ---------- main ---------- */
@@ -136,19 +167,21 @@ if (isMain) {
   if (csvs.length) for (const f of csvs) rows.push(...await fromCSV(f));
   else if (flag('reparse')) rows = await reparse();
   else { console.log(`pulling NSE's financial-results list ${from} → ${to} in 90-day windows (raw responses saved under data/results/raw/)`); rows.push(...await pull('fr', from, to, 90));
+    console.log('pulling the integrated-filing list (where the results are filed since April 2025; pages of 1,000)'); rows.push(...await pullIF(from, to, 90));
     if (!flag('no-bm')) { console.log('pulling the board-meetings list (fallback for filings the first list lacks)'); rows.push(...await pull('bm', from, to, 90)); } }
   const ev = buildEvents(rows, changes); const cov = coverage(ev, bars);
   const built = new Date().toISOString().slice(0, 10);
   const yrs = Object.entries(cov.years); const firstFull = yrs.find(([, v]) => v.events >= 1200);   // ~400 names × 4 quarters: the first year the list looks complete
-  const L = [`# Results dates — built ${built}`, '', `Sources: ${csvs.length ? csvs.map(f => path.basename(f)).join(', ') : flag('reparse') ? 'data/results/raw/ (reparsed)' : `NSE financial-results list${flag('no-bm') ? '' : ' + board-meetings list'}, ${from} → ${to}`}. ${rows.filter(Boolean).length} rows read, ${ev.skipped} non-quarterly filings skipped, ${ev.dupes} duplicates folded, ${ev.bmDropped} board-meeting dates dropped as the twin of a filing within 3 days, ${ev.renamed} rows re-keyed through symbolchange.csv.`, '',
+  const L = [`# Results dates — built ${built}`, '', `Sources: ${csvs.length ? csvs.map(f => path.basename(f)).join(', ') : flag('reparse') ? 'data/results/raw/ (reparsed)' : `NSE financial-results list + integrated-filing list${flag('no-bm') ? '' : ' + board-meetings list'}, ${from} → ${to}`}. ${rows.filter(Boolean).length} rows read, ${ev.skipped} non-quarterly filings skipped, ${ev.dupes} duplicates folded, ${ev.bmDropped} board-meeting dates dropped as the twin of a filing within 3 days, ${ev.renamed} rows re-keyed through symbolchange.csv.`, '',
     `**${cov.total} events on ${cov.symbols} symbols**; ${cov.withTime} (${cov.total ? Math.round(cov.withTime / cov.total * 100) : 0}%) carry a dissemination time, of which ${cov.afterClose} are at or after 15:30; ${cov.bm} come from the board-meetings list (no time → treated as after the close). ${cov.notInHist} symbols have no bars in data/history/ (names outside the ever-member universe, or tickers symbolchange.csv does not cover — the backtest ignores them and lists them).`, '',
-    '## Coverage by year', '', '| year | events | symbols | reading |', '|---|---|---|---|', ...yrs.map(([y, v]) => `| ${y} | ${v.events} | ${v.symbols} | ${v.events >= 1200 ? 'looks complete (≥ 4 per name for 300+ names)' : v.events >= 300 ? 'partial' : 'thin — the list does not reach back this far, or the pull missed windows'} |`), '',
+    '## Coverage by year', '', '| year | events | symbols | with a time | reading |', '|---|---|---|---|---|', ...yrs.map(([y, v]) => `| ${y} | ${v.events} | ${v.symbols} | ${v.events ? Math.round(v.timed / v.events * 100) : 0}% | ${v.events >= 1200 ? 'looks complete (≥ 4 per name for 300+ names)' : v.events >= 300 ? 'partial' : 'thin — the list does not reach back this far, or the pull missed windows'} |`), '',
+    `Last months, events: ${Object.entries(cov.lastMonths).map(([m, n]) => `${m} ${n}`).join(' · ')}. A results month (Jan–Feb, Apr–May, Jul–Aug, Oct–Nov) with a few dozen events means the pull missed a window; a year under about 80% "with a time" means one of the timed lists is missing for it (interim audit A1, A2).`, '',
     firstFull ? `The first year that looks complete is **${firstFull[0]}**: the PEAD backtest's window starts there (reports/pead-hypotheses-2026-11-13.md says what a short window means for the verdict).` : '**No year looks complete.** Check the sample keys printed above against normaliseRecord() in scripts/results-dates.mjs, fix the field pattern, and run again with --reparse — the raw responses are saved.', '',
     '## How it is used', '', 'The PEAD backtest (`node scripts/backtest-pead.mjs`) maps each event to its reaction day — the timestamp\'s own day if it is a trading day and the time is before 15:30, else the next trading day — and reads the close-to-close return and the volume multiple on that day. Events are keyed by today\'s ticker; the backtest applies point-in-time NIFTY 500 membership on the reaction day.'];
-  console.log('\n' + L.slice(0, 12).join('\n'));
+  console.log('\n' + L.join('\n').split('\n## How it is used')[0]);
   if (flag('dry')) process.exit(0);
   await fs.mkdir(path.dirname(OUT), { recursive: true });
-  await fs.writeFile(OUT, JSON.stringify({ built, from, to, sources: csvs.length ? csvs.map(f => path.basename(f)) : flag('reparse') ? ['raw'] : ['fr'].concat(flag('no-bm') ? [] : ['bm']), coverage: cov, symbols: ev.symbols }, null, 0));
+  await fs.writeFile(OUT, JSON.stringify({ built, from, to, sources: csvs.length ? csvs.map(f => path.basename(f)) : flag('reparse') ? ['raw'] : ['fr', 'if'].concat(flag('no-bm') ? [] : ['bm']), coverage: cov, symbols: ev.symbols }, null, 0));
   await fs.mkdir(path.join(ROOT, 'reports'), { recursive: true }); await fs.writeFile(path.join(ROOT, 'reports', `results-dates-${built}.md`), L.join('\n'));
   console.log(`\nwrote ${path.relative(ROOT, OUT)} and reports/results-dates-${built}.md`);
 }

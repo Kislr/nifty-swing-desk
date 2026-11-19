@@ -114,6 +114,17 @@ The post-earnings-announcement-drift test (`reports/pead-hypotheses-2026-11-13.m
 
 What not to do: do not hand-edit `data/results/events.json` (re-run with `--reparse` instead); do not run two copies at once; do not change the rule in `scripts/backtest-pead.mjs` before the first run has been read — the whole point of writing the hypothesis first is that the first number is the one that counts.
 
+## Results dates — the top-up (19 Nov 2026, interim audit A1 and A2)
+
+The 13 Nov pull left two holes (`reports/interim-audit-2026-11-19.md`): the last window (16 Sep → 12 Nov 2026) has one financial-results row and no board-meetings file, so the Sep-quarter 2026 season is missing; and since April 2025 NSE files results under *Integrated Filing → Financials*, a list the script did not read, so those seasons have dates from the board-meetings list and no times. The script now reads that list too and follows NSE to whichever host answers (`www.nseindia.com` redirects to `www.nseindia.in` from some connections). About five minutes at home, most of it pauses.
+
+1. `git pull` — you need this version of `scripts/results-dates.mjs` and the history up to the latest close (the last window ends on the history's last day).
+2. `node scripts/results-dates.mjs` — every window already in `data/results/raw/` is skipped. It fetches the last financial-results window again under its new end date (one row is NSE's real answer: that list is empty now), then the integrated-filing list from 1 Jan 2025 in pages of 1,000 (`if-…-p1.json`, about forty requests; the first prints `if sample record keys: …` — `symbol` and `broadcast_Date` should be among them), then the missing board-meetings window. If it prints `NSE answered on https://www.nseindia.in; the API calls go there`, that is the host fix working. If it stops with `NSE did not answer four times`, wait fifteen minutes and run the same command.
+3. Read the table it prints. **2025 and 2026 should now show 80–95% "with a time"** (they were 25% and 0%), and the "Last months" line should show October and November 2026 in the hundreds or thousands (they were 0 and 1). If 2025–2026 are still near zero, send the `if sample record keys` line to the next session and stop here; the raw pages are saved and a `--reparse` after the fix needs no second pull.
+4. `node scripts/backtest-pead.mjs` and then `node scripts/backtest-pead-portfolio.mjs` — ten seconds each, no network. Do not pass any option and do not touch the rule: the pass mark of 13 Nov and of 15 Nov is what the new numbers are read against. Expect more than the 55 missing trades to change, because every 2025–2026 reaction day is re-mapped from its real time.
+5. `git add data/results reports && git commit -m "Results dates topped up: Sep-quarter 2026 season, integrated-filing times; PEAD re-run" && git push`.
+6. Tell the next session the two verdict lines, the "largest year share of R" of the primary row, and the 2025 / 2026 rows of the by-year table.
+
 ## What gets written
 
 `data/history/<year>.json` — one file per calendar year with aligned open/high/low/close/volume/turnover for every symbol in the universe, plus NIFTY 50 index bars (open/high/low/close) for the regime and relative-strength calculations. The site loads only the current and previous year; the backtest loads them all.
