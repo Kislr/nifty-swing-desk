@@ -163,12 +163,12 @@ if (isMain) {
   const bars = files.length ? E.buildBars(files, []) : null; const first = bars ? bars.dates[0] : '2016-01-01', last = bars ? bars.dates[bars.dates.length - 1] : new Date().toISOString().slice(0, 10);
   const from = opt('from', first), to = opt('to', last);
   let changes = null; try { changes = parseSymbolChanges(await fs.readFile(path.join(DATA, 'membership', 'src', 'symbolchange.csv'), 'utf8')); } catch { console.warn('no data/membership/src/symbolchange.csv — symbols are not canonicalised (events filed under old tickers will miss their bars)'); }
-  let rows = [];
-  if (csvs.length) for (const f of csvs) rows.push(...await fromCSV(f));
+  let rows = [];   // lists are joined with concat, never push(...list): a list of 94,177 rows as call arguments overflowed the stack on Node 26 (19 Nov 2026, after a complete pull)
+  if (csvs.length) for (const f of csvs) rows = rows.concat(await fromCSV(f));
   else if (flag('reparse')) rows = await reparse();
-  else { console.log(`pulling NSE's financial-results list ${from} → ${to} in 90-day windows (raw responses saved under data/results/raw/)`); rows.push(...await pull('fr', from, to, 90));
-    console.log('pulling the integrated-filing list (where the results are filed since April 2025; pages of 1,000)'); rows.push(...await pullIF(from, to, 90));
-    if (!flag('no-bm')) { console.log('pulling the board-meetings list (fallback for filings the first list lacks)'); rows.push(...await pull('bm', from, to, 90)); } }
+  else { console.log(`pulling NSE's financial-results list ${from} → ${to} in 90-day windows (raw responses saved under data/results/raw/)`); rows = rows.concat(await pull('fr', from, to, 90));
+    console.log('pulling the integrated-filing list (where the results are filed since April 2025; pages of 1,000)'); rows = rows.concat(await pullIF(from, to, 90));
+    if (!flag('no-bm')) { console.log('pulling the board-meetings list (fallback for filings the first list lacks)'); rows = rows.concat(await pull('bm', from, to, 90)); } }
   const ev = buildEvents(rows, changes); const cov = coverage(ev, bars);
   const built = new Date().toISOString().slice(0, 10);
   const yrs = Object.entries(cov.years); const firstFull = yrs.find(([, v]) => v.events >= 1200);   // ~400 names × 4 quarters: the first year the list looks complete

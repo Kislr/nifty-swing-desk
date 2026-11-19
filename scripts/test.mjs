@@ -454,5 +454,29 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
   const raw = M.rankAt(bars12, n - 1, { volAdjust: false, maxOffHigh: 100 }, {}), adj = M.rankAt(bars12, n - 1, { volAdjust: true, maxOffHigh: 100 }, {});
   assert(raw.ranked[0].sym === 'WILD' && adj.ranked[0].sym === 'STEADY' && adj.ranked[0].vol < adj.ranked[1].vol, `ranking: raw return puts the wilder name first, return ÷ volatility the steadier one (scores ${adj.ranked.map(r => r.score.toFixed(1)).join(' v ')})`); }
 
+// 13. data notices and the paper book at an index review (19 Nov 2026, interim audit A6 / A7 / A18)
+{ const mk = rows => ({ dates: ['2026-11-03', '2026-11-04'], sym: Object.fromEntries(rows.map(r => [r[0], { o: [r[1], r[2]], h: [r[1], r[2]], l: [r[1], r[2]], c: [r[1], r[2]], v: [10, 20], t: [1, 1] }])), extras: { '2026-11-04': Object.fromEntries(rows.map(r => [r[0], { prev: r[3], pct: r[4] }])) } });
+  // BONUS is CONCORDBIO's own row of 4 Nov 2026 (1:1 bonus); FALL is a real 20% fall; GAPUP is FINCABLES on 9 Nov 2026, the day after a session the bars lack; SPLIT5 a 5-for-1 split
+  const rows = [['BONUS', 1234, 655.1, 1227.9, 6.69], ['FALL', 100, 80, 100.2, -20.16], ['GAPUP', 1098, 1229.2, 1309, -6.1], ['FLAT', 200, 202, 199.8, 1.1], ['SPLIT5', 1000, 205, 1001, 2.4]];
+  const b = mk(rows); const pend = E.pendingAdjustments(b, 1);
+  assert(pend.length === 2 && pend[0].sym === 'BONUS' && pend[0].factor === 2 && Math.abs(pend[0].observed - 1.9998) < 0.001 && pend[1].sym === 'SPLIT5' && pend[1].factor === 5, `pendingAdjustments: a bonus and a split are read off NSE's change (${pend.map(x => x.sym + ' ÷' + x.factor).join(', ')}); a real 20% fall and the day after a missing session are not`);
+  assert(E.snapFactor(1.5003) === 1.5 && E.snapFactor(1.2496) === 1.25 && E.snapFactor(10.02) === 10 && E.pendingAdjustments(b, 0).length === 0 && E.pendingAdjustments({ dates: b.dates, sym: b.sym, extras: {} }, 1).length === 0, 'pendingAdjustments: factors snap to simple ratios; nothing without a previous day or without NSE rows');
+  const ev = E.provisionalEvent(pend[0]); const b2 = mk(rows); E.applyAdjustments(b2, { symbols: { BONUS: [ev] } });
+  assert(ev.apply === true && ev.provisional === true && ev.exDate === '2026-11-04' && b2.sym.BONUS.c[0] === 617 && b2.sym.BONUS.v[0] === 20 && b2.sym.BONUS.c[1] === 655.1 && !E.pendingAdjustments(b2, 1).some(x => x.sym === 'BONUS'), 'provisional entry: applied by applyAdjustments (the bar before the ex-date halves, volume doubles) and not found a second time');
+  const many = n => mk(Array.from({ length: 60 }, (_, k) => ['S' + k, 100, 101, k < n ? 103 : 100.1, 1]));
+  const g0 = E.sessionGap(many(6), 1), g1 = E.sessionGap(many(45), 1);
+  assert(g0.n === 60 && g0.off === 6 && g0.missing === false && g1.off === 45 && g1.missing === true && g1.prevDate === '2026-11-03' && E.sessionGap(b, 1).missing === false && E.sessionGap(b, 0) === null, 'sessionGap: a tenth of previous closes off is an ordinary day, three quarters is a missing session');
+  const nd = E.noticesDigest(pend, g1, true);
+  assert(/^DATA NOTICES\n• ADJUSTED: BONUS ÷2 before 2026-11-04/.test(nd) && /HISTORY GAP: 45 of 60/.test(nd) && /LOOKS ADJUSTED, NOT APPLIED/.test(E.noticesDigest(pend, null, false)) && E.noticesDigest([], g0) === null && E.noticesDigest(null, null) === null, 'noticesDigest: one line per adjustment, one for a missing session, null when there is nothing');
+  const dg = E.digest(res, E.DEFAULTS, { notices: nd, momentum: 'MOMENTUM block' }); assert(dg.indexOf('DATA NOTICES') > 0 && dg.indexOf('DATA NOTICES') < dg.indexOf('MOMENTUM block') && !/DATA NOTICES/.test(E.digest(res, E.DEFAULTS, { momentum: 'MOMENTUM block' })), 'digest: the notices sit above the momentum list and only when there are any');
+  const R = [{ date: '2027-04-02', text: 'index review top-up', repeat: 'semiannual' }];
+  assert(/index review/.test(E.remindersDue(R, '2027-04-02')) && E.remindersDue(R, '2027-07-02') === null && /2027-10-02 \(semiannual\)/.test(E.remindersDue(R, '2027-10-05')) && E.remindersDue(R, '2027-04-01') === null, 'reminders: a semiannual repeat is due every six months');
+  const lb = E.buildBars([synth(60, 500)], []); const D = lb.dates; const from = D[300]; const L = D.length - 1;
+  const plain = M.paperBook(lb, {}, custom, { from, capital: 500000 }), all = M.paperBook(lb, {}, custom, { from, capital: 500000, filter: () => true, membersAsOf: D[0] });
+  const out = plain.positions[0].sym; const cut = M.paperBook(lb, {}, custom, { from, capital: 500000, filter: (s, d) => !(s === out && d >= D[L - 30]), membersAsOf: D[L - 10] });
+  assert(all.value === plain.value && all.membersStale === true && plain.membersStale === false && plain.positions.every(p => p.noBar === false && p.lastBar === D[L]) && cut.membersStale === false && !cut.positions.some(p => p.sym === out) && cut.equity.length === plain.equity.length, `paperBook: a filter that passes everything changes nothing; a name the filter drops (${out}) is gone from the book after the next rebalance; a list older than 200 days is flagged`);
+  const lb2 = E.buildBars([synth(60, 500)], []); lb2.sym[out].c[L] = null; const nb = M.paperBook(lb2, {}, custom, { from, capital: 500000 }); const held = nb.positions.find(p => p.sym === out);
+  assert(held && held.noBar === true && held.lastBar === D[L - 1] && /NO BAR TODAY: \S+ \(last close /.test(M.paperDigest(nb, E.fmt)) && !/NO BAR TODAY/.test(M.paperDigest(plain, E.fmt)) && /membership list is as of/.test(M.paperDigest(all, E.fmt)), 'paperBook: a holding without a bar today is carried at its last close and named in the digest; a stale membership list is named too'); }
+
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');

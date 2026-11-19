@@ -17,6 +17,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
+import { membershipFilter } from './membership.mjs';
+
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const E = require(path.join(ROOT, 'engine.js')); const M = require(path.join(ROOT, 'momentum.js')); 
@@ -126,7 +128,16 @@ try {
   const snaps = [...hist, doc].sort((a, b) => a.date.localeCompare(b.date));
   const custom = (await readJSON(path.join(DATA, 'sectors.json'), { map: {} })).map || {};
   const year = Number(date.slice(0, 4)); const histFiles = await loadHistoryFiles(year, PAPER && PAPER.from ? Number(String(PAPER.from).slice(0, 4)) : null);
-  const adjustments = await readJSON(path.join(DATA, 'adjustments.json'), null);   // corporate actions, optional (scripts/corporate-actions.mjs)
+  let adjustments = await readJSON(path.join(DATA, 'adjustments.json'), null);   // corporate actions, optional (scripts/corporate-actions.mjs)
+  // Data notices (19 Nov 2026, audit A7 / A18), before anything is computed: a bonus or split that went ex today and is not in the table yet is
+  // read off NSE's own row and applied now, provisionally — otherwise the bars show a fall of a third or more and the paper book sells on it;
+  // and a day on which most previous closes disagree with NSE's means the history is missing a session.
+  const pre = E.buildBars(histFiles, snaps, { adjustments }); const iL = pre.dates.length - 1; const pend = E.pendingAdjustments(pre, iL), gap = E.sessionGap(pre, iL); const applyPend = pend.length > 0 && pend.length <= 5;
+  if (applyPend) { if (!adjustments) adjustments = { asOf: date, source: 'daily job (provisional entries only; run scripts/corporate-actions.mjs)', symbols: {} }; const table = adjustments.symbols || adjustments;
+    for (const p of pend) { (table[p.sym] = table[p.sym] || []).push(E.provisionalEvent(p)); console.log(`corporate action: ${p.sym} ÷${p.factor} before ${p.exDate} (NSE change ${p.pct}%, bars ${((p.close / p.yclose - 1) * 100).toFixed(1)}%) — provisional entry added to data/adjustments.json`); } }
+  else if (pend.length) console.warn(`corporate actions: ${pend.length} names look adjusted today (${pend.map(p => p.sym).join(', ')}) — too many to apply unseen; nothing written`);
+  if (gap && gap.missing) console.warn(`history gap: ${gap.off} of ${gap.n} previous closes differ from NSE's — a session between ${gap.prevDate} and ${gap.date} is missing`);
+  const notices = E.noticesDigest(pend, gap, pend.length ? applyPend : undefined);
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
   E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
@@ -139,13 +150,14 @@ try {
     for (const [name, bm] of Object.entries(got)) { todayBm[name] = { [date]: bm.close }; if (prevDate && bm.prev && !(live[name] && live[name][prevDate] != null)) { todayBm[name][prevDate] = bm.prev; console.log(`benchmark ${name}: filled ${prevDate} from the previous close (${bm.prev})`); } }
     const merged = JSON.parse(JSON.stringify(live)); for (const [name, days] of Object.entries(todayBm)) Object.assign(merged[name] = merged[name] || {}, days);
     for (const name of PAPER.benchmarks || []) if (name !== 'NIFTY 50' && !merged[name]) merged[name] = {};
-    paper = M.paperBook(result.bars, config.momentum || {}, custom, { from: PAPER.from, capital: PAPER.capital || config.risk.capital, benchmarks: merged });
+    const MEMB = await readJSON(path.join(DATA, 'membership', 'members.json'), null);   // point-in-time NIFTY 500 membership (audit A6): the book ranks what the backtest ranks
+    paper = M.paperBook(result.bars, config.momentum || {}, custom, { from: PAPER.from, capital: PAPER.capital || config.risk.capital, benchmarks: merged, filter: MEMB ? membershipFilter(MEMB) : null, membersAsOf: MEMB ? MEMB.asOf : null });
     if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
   }
   // One Telegram message whenever possible: the watch-only lists give way first (E.DIGEST_CAPS); momentum, the paper book, the pullbacks and the reminders never do.
   // Open positions pasted into config.json get one rule line each (E.positionLine); a hand-bought momentum name is read against today's ranking.
   const rankOf = Object.fromEntries(mom.ranked.map(r => [r.sym, r.rank])); const positions = E.positionsDigest(config.positions, result.bars, { rank: rankOf, holdRank: (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank });
-  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), positions, reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
+  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), positions, notices, reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
   console.log('\n' + text + '\n'); console.log(`digest: ${text.length} characters, ${fit.fits ? 'one message' + (fit.level ? ` (lists trimmed to level ${fit.level})` : '') : 'over the cap — sent in parts'}`);
 
   if (DRY) process.exit(0);
@@ -156,6 +168,7 @@ try {
     await fs.mkdir(HISTDIR, { recursive: true });
     const yf = (await readJSON(path.join(HISTDIR, year + '.json'), null)) || { year, dates: [], symbols: {}, index: null };
     E.appendSnapshotToHistory(yf, doc); await fs.writeFile(path.join(HISTDIR, year + '.json'), JSON.stringify(yf));
+    if (applyPend) await fs.writeFile(path.join(DATA, 'adjustments.json'), JSON.stringify(adjustments, null, 1));   // the provisional corporate-action entries, saved with the bar they belong to
     if (live && Object.keys(todayBm).length) { for (const [name, days] of Object.entries(todayBm)) { const merged = Object.assign(live[name] || {}, days); live[name] = Object.fromEntries(Object.keys(merged).sort().map(d => [d, merged[d]])); } await fs.mkdir(path.dirname(LIVE_BM), { recursive: true }); await fs.writeFile(LIVE_BM, JSON.stringify(live, null, 1)); }
   }
   const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] });
