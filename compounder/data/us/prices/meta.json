@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-11-19",
+  "asOf": "2026-11-20",
   "source": "Yahoo Finance chart API (adjusted closes)",
   "index": "^RUT",
-  "symbols": 3139,
-  "missing": 13,
+  "symbols": 3138,
+  "missing": 14,
   "errors": 0,
   "years": [
     "2014",
@@ -20,7 +20,7 @@
     "2025",
     "2026"
   ],
-  "lastDate": "2026-11-18",
+  "lastDate": "2026-11-19",
   "missingList": [
     "NATH",
     "RAMP",
@@ -34,7 +34,8 @@
     "ACVA",
     "ATKR",
     "ACA",
-    "KVUE"
+    "KVUE",
+    "CCXI"
   ],
   "errorList": []
 }
