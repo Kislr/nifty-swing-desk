@@ -1,0 +1,9 @@
+{
+ "note": "NIFTY 50 bars for sessions that NSE's index-history call does not return. Read by scripts/backfill.mjs only when both that call and NSE's daily index file (ind_close_all_DDMMYYYY.csv) have nothing for a weekend session it has found in the bhavcopy. Each entry names where the figure comes from. Close only is enough: nothing reads the index's open, high or low.",
+ "NIFTY 50": {
+  "2024-03-02": {
+   "c": 22378.4,
+   "source": "Special Saturday session at the disaster-recovery site. Published close 22,378.40, +39.65 points (+0.18%) on Friday's 22,338.75 — Business Today, 2 Mar 2024. Agrees with the bar on file for 1 Mar 2024 (22,338.75 + 39.65) and with NSE's total-return file in data/benchmarks (32,942.63 / 32,884.29 on 22,338.75 = 22,378.38). NSE's index-history call returned no row for the date on 21 Nov 2026 (2,489 days, the 2,480 on file and the nine other weekend sessions)."
+  }
+ }
+}
