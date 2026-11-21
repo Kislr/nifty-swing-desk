@@ -21,6 +21,11 @@
   "positions": [],
   "reminders": [
     {
+      "date": "2026-11-23",
+      "text": "Paper book, one change to note (A18): the ten weekend sessions were loaded on 21 Nov, and the book replayed from 13 Nov on the complete bars holds CARTRADE where the digests of 13–20 Nov listed ATHERENERG. Nothing was sold — the 13 Nov ranking changed by one name. Value on 20 Nov ₹4,97,909 against ₹4,97,996 as sent (reports/weekend-sessions-2026-11-21.md).",
+      "days": 2
+    },
+    {
       "date": "2026-11-25",
       "text": "A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work (19 and 20 Nov: 19:16 and 19:00 IST). If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping). Note the week's times under A16; the decision is at the 8 Dec reading."
     },
@@ -30,7 +35,7 @@
     },
     {
       "date": "2026-12-17",
-      "text": "Results drift, first reading (A1): the 47 PEAD trades open on 20 Nov have closed. npm run backtest:pead, then read the three conditions of the 13 Nov rule on the finished list — if 2023 is back over 40% of the R the setup fails by the letter and is closed (reports/pead-results-drift-reading-2026-11-21.md)."
+      "text": "Results drift, first reading (A1): the 44 PEAD trades open on 20 Nov have closed. npm run backtest:pead, then read the three conditions of the 13 Nov rule on the finished list — if any year is over 40% of the R the setup fails by the letter and is closed (on 21 Nov the largest was 2020, 35.7%; reports/pead-results-drift-reading-2026-11-21.md)."
     },
     {
       "date": "2026-11-30",

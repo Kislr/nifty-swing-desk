@@ -577,8 +577,8 @@
       if (g && g.source === 'breadth') L.push(`• GATE FROM BREADTH: the NIFTY 50 series cannot give a ${g.n}-day average today (too many closes missing, or too short), so the gate is the share of stocks above their own 200-day average (${Math.round(g.breadth * 100)}%) — not the rule the backtest used`); }
     return L.length ? ['DATA NOTICES', ...L].join('\n') : null;
   }
-  /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'|'semiannual'}]). A reminder is due from its
-   *  date for `windowDays` (7) days, so a missed day still nags for a week; a repeating one is due around every occurrence. Returns
+  /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'|'semiannual', days?}]). A reminder is due from its
+   *  date for `days` days if it says so, otherwise for `windowDays` (7) days, so a missed day still nags for a week; a repeating one is due around every occurrence. Returns
    *  the digest block or null. Edit or remove the entry in config.json once the check is done. */
   function remindersDue(list, today, windowDays) {
     if (!Array.isArray(list) || !list.length || !today) return null; const W = windowDays || 7;
@@ -587,7 +587,7 @@
     const due = [];
     for (const r of list) { if (!r || !r.date || !r.text) continue; const step = r.repeat === 'monthly' ? 1 : r.repeat === 'quarterly' ? 3 : r.repeat === 'semiannual' ? 6 : 0;
       let occ = r.date; if (step) { let guard = 0; while (addMonths(occ, step) <= today && guard++ < 600) occ = addMonths(occ, step); }
-      const d = dayDiff(occ, today); if (d >= 0 && d < W) due.push({ date: occ, text: r.text, repeat: r.repeat || null }); }
+      const d = dayDiff(occ, today); if (d >= 0 && d < (r.days > 0 ? r.days : W)) due.push({ date: occ, text: r.text, repeat: r.repeat || null }); }   // `days` (21 Nov 2026): a note that should show for fewer days than a check, so two long ones do not push the digest over Telegram's cap
     if (!due.length) return null;
     return ['DESK CHECKS DUE', ...due.map(r => `• ${r.date}${r.repeat ? ' (' + r.repeat + ')' : ''} — ${r.text}`)].join('\n');
   }
@@ -644,11 +644,11 @@
       // blocks carry the levels and a one-line reading each; the backtest citations, the full lists and the counts beyond the
       // caps live on the site. The momentum list and the paper book — the live record — are not trimmed.
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
-      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper trades, not orders: +0.09R over 594 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-12-adjusted-members.md); log as "Momentum pullback"`);
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper trades, not orders: +0.08R over 587 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-21-adjusted-members.md); log as "Momentum pullback"`);
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)');
-      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: no edge over ten years (−0.03R, 865 trades, full membership)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: no edge over ten years (−0.05R, 872 trades, full membership)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
       rest.slice(0, caps.other).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!rest.length) L.push('• none today');
     } else {
