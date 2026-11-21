@@ -6,6 +6,7 @@
  *   node scripts/backtest-momentum.mjs --from 2025-06-01 --to 2026-06-30
  *   node scripts/backtest-momentum.mjs --sweep               # a fixed grid of lookback / topN / trail / gate, one table
  *   node scripts/backtest-momentum.mjs --benchmarks          # also NSE's total-return indices (data/benchmarks/) over the same window
+ *   node scripts/backtest-momentum.mjs --benchmarks --phases # the same rules started on each day of one rebalance cycle (21 runs): how much of the result is the calendar
  *   node scripts/backtest-momentum.mjs --benchmarks path/to/dir
  *   node scripts/backtest-momentum.mjs --members           # rank and trade only that day's NIFTY 500 members (data/membership/members.json)
  *                                                          # — the default since 19 Nov 2026 when that file exists and no --hist is given;
@@ -57,7 +58,7 @@ console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars
 
 const pc = (x, d = 1) => x == null ? '—' : (x * 100).toFixed(d) + '%';
 const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(d);
-const run = params => { const sim = M.simulate(bars, params, custom, { from, to, capital, filter: MEM ? membershipFilter(MEM) : null, stale: MEM ? 20 : 0 }); return { sim, st: M.stats(sim) }; };   // with --members a name with no close for 20 bars has stopped trading
+const run = (params, start = from) => { const sim = M.simulate(bars, params, custom, { from: start, to, capital, filter: MEM ? membershipFilter(MEM) : null, stale: MEM ? 20 : 0 }); return { sim, st: M.stats(sim) }; };   // with --members a name with no close for 20 bars has stopped trading
 const row = (name, st) => `| ${name} | ${st.n} | ${pc(st.totalReturn)} | ${pc(st.cagr)} | ${pc(st.indexReturn)} | ${pc(st.maxDrawdown)} | ${f(st.sharpe)} | ${st.winRate == null ? '—' : pc(st.winRate, 0)} | ${f(st.avgBars, 0)} | ${pc(st.inMarket, 0)} | ${pc(st.atWork, 0)} |`;
 const hdr = '| run | trades | total return | CAGR | Nifty (same period) | max DD | Sharpe | win rate | avg bars | time in market | equity at work |\n|---|---|---|---|---|---|---|---|---|---|---|';
 // --members [file]: point-in-time NIFTY 500 membership; the filter goes into every rankAt through simulate's opts.
@@ -99,6 +100,33 @@ if (flag('sweep')) {
   process.exit(0);
 }
 
+// --phases (21 Nov 2026, audit A18). The engine rebalances every `rebalance` bars counted from its first day, so the start day fixes
+// which days it trades on for the whole run. Loading ten weekend sessions moved every rebalance after October 2019 by a few bars and
+// the ten-year figure with it — 18.5% a year to 15.5% on the same rules and the same prices. This mode measures that directly: the
+// reinvested run started on each of the first `rebalance` trading days of the window, everything else equal, each beside the
+// indices over its own window. The single run on record is one of these rows; the spread is what a single row cannot show.
+if (flag('phases')) {
+  const first = run(Object.assign({}, sets, { compound: true })); const cyc = first.sim.params.rebalance; const i0 = bars.dates.indexOf(first.st.start);
+  const bmList = benchmarks ? Object.values(benchmarks).sort((a, b) => a.name.localeCompare(b.name)) : []; const rows = [];
+  for (let k = 0; k < cyc && i0 + k < N; k++) { const r = k === 0 ? first : run(Object.assign({}, sets, { compound: true }), bars.dates[i0 + k]); const st = r.st;
+    rows.push({ start: st.start, end: st.end, trades: st.n, totalReturn: st.totalReturn, cagr: st.cagr, maxDrawdown: st.maxDrawdown, sharpe: st.sharpe, winRate: st.winRate, bm: Object.fromEntries(bmList.map(S => { const w = BM.windowStats(S, st.start, st.end); return [S.name, w && w.covered ? w.cagr : null]; })) }); process.stdout.write(`\r${rows.length}/${cyc}   `); }
+  process.stdout.write('\n');
+  const q = (a, p) => { const v = [...a].sort((x, y) => x - y); const i = (v.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i); return v[lo] + (v[hi] - v[lo]) * (i - lo); }; const mean = a => a.reduce((x, y) => x + y, 0) / a.length; const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((x, y) => x + (y - m) ** 2, 0) / (a.length - 1)); };
+  const C = rows.map(r => r.cagr), S = rows.map(r => r.sharpe), DD = rows.map(r => r.maxDrawdown); const P0 = first.sim.params;
+  const summary = { starts: rows.length, cagr: { min: Math.min(...C), q1: q(C, 0.25), median: q(C, 0.5), q3: q(C, 0.75), max: Math.max(...C), mean: mean(C), sd: sd(C) }, sharpe: { min: Math.min(...S), median: q(S, 0.5), max: Math.max(...S) }, maxDrawdown: { min: Math.min(...DD), median: q(DD, 0.5), max: Math.max(...DD) },
+    against: Object.fromEntries(bmList.map(B => { const ok = rows.filter(r => r.bm[B.name] != null); return [B.name, { compared: ok.length, ahead: ok.filter(r => r.cagr > r.bm[B.name]).length, aheadBy2: ok.filter(r => r.cagr >= r.bm[B.name] + 0.02).length, indexCagrMin: ok.length ? Math.min(...ok.map(r => r.bm[B.name])) : null, indexCagrMax: ok.length ? Math.max(...ok.map(r => r.bm[B.name])) : null }]; })) };
+  const lines = [`# Momentum backtest, by rebalance phase — ${stamp}`, '', `History ${bars.dates[0]} → ${bars.dates[N - 1]} (${N} days, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P0)}. Reinvested runs${MEM ? ', that day\'s NIFTY 500 members' : ''}.`, '',
+    `The engine rebalances every ${cyc} bars counted from its first day, so the day a run starts fixes which days it trades on for the next ten years. Each row below is the same rules, the same prices and the same last day, started one trading day later than the row above — one full cycle of ${rows.length} starts. Nothing else differs between the rows. The run on record (the first row, ${rows[0].start}) is one of them.`, '',
+    `| start | trades | total return | CAGR | max DD | Sharpe | win rate |${bmList.map(B => ` ${BM.shortName(B.name)} TR, same window |`).join('')}`, '|---|---|---|---|---|---|---|' + bmList.map(() => '---|').join(''),
+    ...rows.map((r, k) => `| ${k === 0 ? '**' + r.start + '**' : r.start} | ${r.trades} | ${pc(r.totalReturn)} | ${k === 0 ? '**' + pc(r.cagr) + '**' : pc(r.cagr)} | ${pc(r.maxDrawdown)} | ${f(r.sharpe)} | ${r.winRate == null ? '—' : pc(r.winRate, 0)} |${bmList.map(B => ` ${r.bm[B.name] == null ? '—' : pc(r.bm[B.name])} |`).join('')}`), '',
+    '## The spread', '', `CAGR across the ${rows.length} starts: **${pc(summary.cagr.min)} to ${pc(summary.cagr.max)}**, median **${pc(summary.cagr.median)}**, middle half ${pc(summary.cagr.q1)} to ${pc(summary.cagr.q3)}, mean ${pc(summary.cagr.mean)}, standard deviation ${pc(summary.cagr.sd)}. Sharpe ${f(summary.sharpe.min)} to ${f(summary.sharpe.max)}, median ${f(summary.sharpe.median)}. Max drawdown ${pc(summary.maxDrawdown.min)} to ${pc(summary.maxDrawdown.max)}, median ${pc(summary.maxDrawdown.median)}.`, '',
+    ...bmList.map(B => { const a = summary.against[B.name]; return a.compared ? `- **${B.name}** (${pc(a.indexCagrMin)}${a.indexCagrMax - a.indexCagrMin > 0.0005 ? ' to ' + pc(a.indexCagrMax) : ''} a year over the same windows): the engine is ahead in **${a.ahead} of ${a.compared}** starts, and ahead by two points or more in ${a.aheadBy2}.` : `- **${B.name}**: not covered.`; }), bmList.length ? '' : null,
+    '## How to read this', '', `One row is one draw. A difference between two versions of the rules, or between the engine and an index, that is smaller than this spread is not a finding — the same rules differ from themselves by that much when the calendar moves by a day. Compare medians, or count starts, and treat the single run on record as what it is: the row that happens to begin on ${rows[0].start}. The live paper book is one row too: it began on the day it began.`, '',
+    'An index fund has no such row: it rebalances on published dates and holds the result. That is part of what "the fund is the holding" buys.'].filter(l => l != null);
+  await fs.writeFile(path.join(OUT, `momentum-phases-${stamp}.md`), lines.join('\n')); await fs.writeFile(path.join(OUT, `momentum-phases-${stamp}.json`), JSON.stringify({ params: P0, summary, rows }, null, 1));
+  console.log(lines.slice(lines.indexOf('## The spread')).join('\n')); console.log(`\nfull table: reports/momentum-phases-${stamp}.md`);
+  process.exit(0);
+}
 const { sim, st } = run(sets); const P = sim.params;
 const alt = run(Object.assign({}, sets, { compound: !P.compound })); const label = c => c ? 'momentum, reinvested (compound)' : 'momentum, fixed slots';
 const warn = st.days < 250 ? `**Warning: only ${st.days} trading days in the test window** (warm-up ate ${sim.warmup} of ${N}). That is ${Math.round(st.days / P.rebalance)} rebalances — enough to see the machinery work, not enough to trust the numbers. Extend the history: \`node scripts/backfill.mjs --years 5\`.` : st.days < 750 ? `**Caution: ${st.days} trading days (~${(st.days / 250).toFixed(1)} years) in the test window.** Momentum's edge shows up over full cycles; one bull or one bear year proves little.` : '';

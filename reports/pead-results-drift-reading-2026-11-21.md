@@ -33,3 +33,16 @@ The mark describes; it does not select. On the ten-year record **23.6% of closed
 3. **What the season can and cannot say.** It is a record, not a verdict: with a standard error near 0.19R it neither confirms nor refutes the ten-year row. It is appended; forward seasons accumulate in the same section. Building the setup into the engine stays the owner's call and stays out of reach of one season — the sensible moment to ask is when the forward trades number 150 or more (about three seasons) and their own expectancy, excess over the index and desk row can be read against the +0.1R bar without the years that made the record.
 
 Nothing in this file changes `swingMode`, the digest or the queue. The 15 Nov portfolio verdict (fail on two of three conditions) stands.
+
+## Later the same day — the trade list on the complete history
+
+Everything above was written from the trade list of 19 Nov. That evening the ten weekend sessions were loaded (audit A18) and the study re-run (`reports/pead-2026-11-21-adjusted-members.md`); nothing in the rule, the freeze date or the mark changes, and the figures above stay as what was known when they were written. On the complete history:
+
+- 1,926 trades, +0.152R; excess over the NIFTY 50 +0.15% a trade (t 0.68), positive in 7 of 10 years.
+- **The largest year is now 2020, 104.6R of 292.9R — 35.7%** (2023: 35.6%). The pass by the letter is no longer within a point of the cap: the 44 trades still open are marked at +27.1R together and the cap is breached only if they give back 31.5R. Reading 1 above therefore asks whether *any* year is over 40% once they have closed.
+- 2020, 2021 and 2023 supply 94% of the R; the other years make +0.012R a trade over 1,385 trades; 2024–2026 make +0.04R over 566 with a mean excess of −0.53%. The desk row is +0.064R over 340 trades.
+- The mark's share on the record is unchanged: 444 of 1,882 closed trades, 23.6%.
+- The Sep-quarter 2026 season: 63 trades, 44 open, +0.375R a trade, −6.6% against the index, 5 starred — all seen before the freeze.
+
+The case for a re-run rather than a live setup is the same case with slightly different digits.
+
