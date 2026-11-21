@@ -45,6 +45,18 @@ export function describeRefusal(status, session, finalUrl) {
 /** NSE's index-history answer ({data:[{EOD_TIMESTAMP:'19-NOV-2026', EOD_OPEN_INDEX_VAL, EOD_HIGH_INDEX_VAL, EOD_LOW_INDEX_VAL, EOD_CLOSE_INDEX_VAL}]})
  *  → { 'YYYY-MM-DD': {o, h, l, c} }. Rows without a date or a positive close are dropped. Used by backfill.mjs and by the daily job's index repair. */
 const MON3 = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+/** One index's bar from NSE's daily index file (nsearchives …/content/indices/ind_close_all_DDMMYYYY.csv: one row per index, columns
+ *  "Index Name, Index Date, Open Index Value, High Index Value, Low Index Value, Closing Index Value, …") → {o, h, l, c} or null.
+ *  Columns are found by name, so their order does not matter. */
+export function parseIndexCloseAll(text, name = 'NIFTY 50') {
+  const lines = String(text || '').split(/\r?\n/).filter(l => l.trim()); if (lines.length < 2) return null;
+  const cells = l => l.split(',').map(c => c.trim().replace(/^"|"$/g, '')); const hdr = cells(lines[0]).map(h => h.toLowerCase());
+  const col = re => hdr.findIndex(h => re.test(h)); const iN = col(/index\s*name/), iO = col(/^open/), iH = col(/^high/), iL = col(/^low/), iC = col(/^clos/); if (iN < 0 || iC < 0) return null;
+  const want = String(name).replace(/\s+/g, '').toUpperCase(); const num = v => (v == null || v === '' || v === '-' || isNaN(Number(v)) ? null : Number(v));
+  for (const l of lines.slice(1)) { const c = cells(l); if (String(c[iN] || '').replace(/\s+/g, '').toUpperCase() !== want) continue; const close = num(c[iC]); if (!(close > 0)) return null;
+    return { o: iO < 0 ? null : num(c[iO]), h: iH < 0 ? null : num(c[iH]), l: iL < 0 ? null : num(c[iL]), c: close }; }
+  return null;
+}
 export function parseIndexHistory(json) {
   const out = {}; const list = json && Array.isArray(json.data) ? json.data : (json && json.data && Array.isArray(json.data.indexCloseOnlineRecords) ? json.data.indexCloseOnlineRecords : []);
   for (const r of list) { if (!r) continue; const m = String(r.EOD_TIMESTAMP || '').match(/(\d{2})-([A-Za-z]{3})-(\d{4})/); if (!m) continue; const k = MON3.indexOf(m[2].toUpperCase()); if (k < 0) continue;

@@ -30,8 +30,12 @@
  *   - `--weekends` visits every weekend date in the range that is not on file, and no weekday — the one-off catch-up for
  *     the past (ten years is about 1,040 dates, nearly all of them a quick 404). Use it with --members, so the day gets
  *     every name that was a member, not only today's 500.
- * A weekend session is added only together with its NIFTY 50 bar from NSE's index history: a day without it would leave a
- * hole in the gate's average. If the index history did not answer, the date is listed at the end and a re-run adds it.
+ * A weekend session is added only together with its NIFTY 50 bar: a day without it would leave a hole in the gate's average.
+ * The bar comes from NSE's index history; when that call has no row for the session (2 Mar 2024, the disaster-recovery drill:
+ * found by the owner's home run on 21 Nov 2026 — the bhavcopy and NSE's total-return files have the day, the index-history call
+ * does not), from NSE's daily index file for the date (ind_close_all_DDMMYYYY.csv on the archive host), and failing that from
+ * data/index-bars.json, a short list of such bars with the source of each figure. If none of the three has it, the date is
+ * listed at the end and nothing is added.
  *
  * NSE's host (audit A17): the index-history call follows NSE to whichever host answers (scripts/nse.mjs).
  */
@@ -40,7 +44,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
-import { nseSession, nseHeaders, parseIndexHistory } from './nse.mjs';
+import { nseSession, nseHeaders, parseIndexHistory, parseIndexCloseAll } from './nse.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -129,6 +133,17 @@ async function fetchIndexHistory(fromISO, toISO) {
   } catch (e) { console.warn('index history unavailable (' + e.message + ') — regime will use breadth, relative strength will use the universe median'); }
   return out;
 }
+/* ---------- a NIFTY 50 bar the index history does not have (weekend sessions only) ---------- */
+let indexBarsFile; const dmy8 = date => { const [y, m, d] = date.split('-'); return d + m + y; };
+/** → { o, h, l, c, source } or null. NSE's daily index file first; then data/index-bars.json. When both exist and disagree by more than 0.05%, NSE's file is used and the difference is printed. */
+async function indexBarFallback(date) {
+  let fromFile = null; try { fromFile = parseIndexCloseAll(await get(`https://nsearchives.nseindia.com/content/indices/ind_close_all_${dmy8(date)}.csv`), 'NIFTY 50'); } catch (e) { console.warn(`${date}: NSE's daily index file not available (${e.message})`); }
+  if (indexBarsFile === undefined) indexBarsFile = await readJSON(path.join(DATA, 'index-bars.json'), null);
+  const listed = indexBarsFile && indexBarsFile['NIFTY 50'] && indexBarsFile['NIFTY 50'][date]; const ok = listed && listed.c > 0;
+  if (fromFile) { if (ok && Math.abs(fromFile.c / listed.c - 1) > 0.0005) console.warn(`${date}: NSE's daily index file says NIFTY 50 ${fromFile.c}, data/index-bars.json says ${listed.c} — using NSE's file; correct the list`);
+    return Object.assign({ source: "NSE's daily index file" }, fromFile); }
+  return ok ? { o: listed.o ?? null, h: listed.h ?? null, l: listed.l ?? null, c: listed.c, source: 'data/index-bars.json' } : null;
+}
 /* ---------- universe + sectors from the constituent list ---------- */
 async function constituents(mode) {
   if (mode === 'all') return { set: null, industries: {} };
@@ -163,7 +178,7 @@ if (weekendsOnly) console.log(`weekends only: every Saturday and Sunday from ${f
 while (d <= end) {
   const date = iso(d); d = new Date(d.getTime() + 86400000);
   const kind = visitKind(date, { to, weekendsOnly }); if (!kind) continue; const weekend = kind === 'weekend';
-  const yf = await loadYear(date.slice(0, 4)); const k = yf.dates.indexOf(date); const ix = index[date];
+  const yf = await loadYear(date.slice(0, 4)); const k = yf.dates.indexOf(date); let ix = index[date];
   if (k >= 0 && !membersMode) { skipped++;
     if (ix && (!yf.index || yf.index.c[k] == null)) { E.appendSnapshotToHistory(yf, { date, rows: {}, index: { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } }); indexFilled++; }   // gap (a): a saved day without its index bar
     continue; }
@@ -171,7 +186,8 @@ while (d <= end) {
     if (weekend && k < 0) weekendTried++;
     const rows = await fetchBhav(date);
     if (!rows) { holidays++; if (weekend) await sleep(Math.min(pause, 250)); continue; }
-    if (weekend && k < 0 && !ix) { weekendNoIndex.push(date); console.warn(`${date}: NSE held a session (${rows.length} rows in the bhavcopy) but the index history gave no NIFTY 50 bar for it — not added; run again`); await sleep(pause); continue; }
+    if (weekend && k < 0 && !ix) { ix = await indexBarFallback(date); if (ix) console.log(`${date}: the index history has no NIFTY 50 bar for this session; taken from ${ix.source} (${ix.c})`); }
+    if (weekend && k < 0 && !ix) { weekendNoIndex.push(date); console.warn(`${date}: NSE held a session (${rows.length} rows in the bhavcopy) but neither the index history, nor NSE's daily index file, nor data/index-bars.json has its NIFTY 50 bar — not added`); await sleep(pause); continue; }
     let snapRows;
     if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; renamedRows += r.renamed; }
     else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
@@ -190,7 +206,7 @@ if (Object.keys(industries).length) { const sec = await readJSON(path.join(DATA,
   await fs.writeFile(path.join(DATA, 'sectors.json'), JSON.stringify(sec, null, 1)); console.log(`sectors.json: +${n} industry mappings`); }
 const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] }); idx.historyYears = (await fs.readdir(HIST)).filter(f => /^\d{4}\.json$/.test(f)).map(f => Number(f.slice(0, 4))).sort();
 await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify(idx, null, 1));
-if (weekendTried) console.log(`weekend dates: ${weekendTried} asked for, ${weekendAdded.length} session(s) found and added${weekendAdded.length ? ' (' + weekendAdded.join(', ') + ')' : ''}${weekendNoIndex.length ? `; ${weekendNoIndex.length} sessions NOT added for want of their NIFTY 50 bar (${weekendNoIndex.join(', ')}) — run again` : ''}${weekendRefused.length ? `; ${weekendRefused.length} got an answer that was neither a file nor a 404 (${weekendRefused.slice(0, 8).join(', ')}${weekendRefused.length > 8 ? ', …' : ''}) — run again to retry those` : ''}`);
+if (weekendTried) console.log(`weekend dates: ${weekendTried} asked for, ${weekendAdded.length} session(s) found and added${weekendAdded.length ? ' (' + weekendAdded.join(', ') + ')' : ''}${weekendNoIndex.length ? `; ${weekendNoIndex.length} sessions NOT added for want of their NIFTY 50 bar (${weekendNoIndex.join(', ')}) — if the index history was unavailable run again; otherwise add the bar to data/index-bars.json with its source` : ''}${weekendRefused.length ? `; ${weekendRefused.length} got an answer that was neither a file nor a 404 (${weekendRefused.slice(0, 8).join(', ')}${weekendRefused.length > 8 ? ', …' : ''}) — run again to retry those` : ''}`);
 console.log(`done: ${added} days added${membersMode ? `, ${filled} saved days topped up with missing members (${renamedRows} rows stored under a later ticker)` : ''}, ${skipped} already present${indexFilled ? ` (${indexFilled} given their missing NIFTY 50 bar)` : ''}, ${holidays} holidays/weekends skipped, ${failures} failures. History years: ${idx.historyYears.join(', ')}`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
