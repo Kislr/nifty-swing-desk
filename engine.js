@@ -201,6 +201,15 @@
     if (opts && opts.adjustments) applyAdjustments(bars, opts.adjustments);
     return bars;
   }
+  /** The bars as they stood at the close of `to` (YYYY-MM-DD): every series cut after the last date on or before it. A backtest run with
+   *  --to then sees what a run on that day saw — signals, exits and the "end of data" mark alike — so a past report reproduces after new
+   *  bars have arrived (audit A3, 21 Nov 2026). Returns the same object when there is nothing to cut. */
+  function clipBars(bars, to) {
+    if (!bars || !to) return bars; let n = bars.dates.length; while (n > 0 && bars.dates[n - 1] > to) n--; if (n === bars.dates.length) return bars;
+    const cut = a => (Array.isArray(a) ? a.slice(0, n) : a); const sym = {}; for (const [s, B] of Object.entries(bars.sym)) { const o = {}; for (const [k, a] of Object.entries(B)) o[k] = cut(a); sym[s] = o; }
+    const index = bars.index ? Object.fromEntries(Object.entries(bars.index).map(([k, a]) => [k, cut(a)])) : bars.index;
+    return Object.assign({}, bars, { dates: bars.dates.slice(0, n), sym, index, clippedAt: to });
+  }
   function buildBarsRaw(historyFiles, snaps) {
     const dateSet = new Set();
     for (const f of historyFiles || []) for (const d of f.dates || []) dateSet.add(d);
@@ -522,14 +531,50 @@
     for (const [s, e] of Object.entries(ex)) { if (s === '__index' || !e || !(e.prev > 0)) continue; const B = bars.sym[s]; const y = B && B.c[i - 1]; if (!(y > 0)) continue; n++; if (Math.abs(y / e.prev - 1) > 0.005) off++; }
     return { date, prevDate: bars.dates[i - 1], n, off, share: n ? off / n : 0, missing: n >= 50 && off / n > 0.4 };
   }
+  /** Has the latest saved snapshot already got everything NSE can have published? (21 Nov 2026.) `latest` = {date, time} of the last
+   *  snapshot on file; `nowMs` = the clock. The last session that can be final is today's once it is 16:00 IST (the table's closing
+   *  stamp), otherwise the previous calendar day's. If the snapshot on file is that day's — or a later one — and carries the 16:00
+   *  stamp, a run has nothing to fetch and does not call NSE at all. The slot ladder starts about a dozen runs after the one that
+   *  sends the digest; until this check each of them made four calls to NSE to learn that nothing had changed, and on 19 and 20 Nov
+   *  2026 one of them a night was answered HTTP 403 and failed the run. Weekends and holidays are not known here, so on those days
+   *  the answer is false and the run asks NSE once, as before ('snapshot unchanged'). */
+  function sessionDone(latest, nowMs) {
+    if (!latest || !latest.date || !latest.time || !(String(latest.time) >= '16:00')) return false;
+    const ist = new Date((nowMs == null ? Date.now() : nowMs) + 330 * 60000); const hhmm = ist.toISOString().slice(11, 16);
+    const cutoff = hhmm >= '16:00' ? ist.toISOString().slice(0, 10) : new Date(ist.getTime() - 86400000).toISOString().slice(0, 10);
+    return String(latest.date) >= cutoff;
+  }
+  /** The Telegram alert for a daily run that failed (21 Nov 2026). o = { what, nowMs, latest: {date, time}|null, scheduled, runUrl }.
+   *  It names the fault, the last snapshot on file, and what happens next — the ladder's later slots retry on a scheduled run. */
+  function failureNotice(o) {
+    o = o || {}; const ist = new Date((o.nowMs == null ? Date.now() : o.nowMs) + 330 * 60000); const at = `${ist.toISOString().slice(0, 10)} ${ist.toISOString().slice(11, 16)} IST`;
+    const L = [`⚠ Nifty Swing Desk — the daily run failed at ${at}: ${o.what || 'unknown error'}.`];
+    L.push(o.latest && o.latest.date ? `Last snapshot on file: ${o.latest.date}${o.latest.time ? ' ' + o.latest.time : ''}.` : 'No snapshot on file yet.');
+    L.push(o.scheduled ? 'The later slots tonight try again on their own, and the digest comes from the first that gets through. If none has by morning: Actions → Daily NSE snapshot → Run workflow, or "npm run fetch" from your own machine, or upload the CSV on the site.'
+      : 'Run it again (Actions → Daily NSE snapshot → Run workflow), or "npm run fetch" from your own machine, or upload the CSV on the site.');
+    if (o.runUrl) L.push(`Log: ${o.runUrl}`);
+    return L.join('\n');
+  }
+  /** Dates in the last `span` (260) bars up to bar i on which the index series has no close, once the series has started (audit A8). */
+  function indexHoles(bars, i, span) {
+    const idx = bars && bars.index; const out = []; if (!idx || !idx.c) return out; let j0 = idx.c.findIndex(v => v != null); if (j0 < 0) return out;
+    for (let j = Math.max(j0, i - (span || 260)); j <= i; j++) if (idx.c[j] == null) out.push(bars.dates[j]);
+    return out;
+  }
   /** The entry the daily job writes into data/adjustments.json for a pendingAdjustments hit: applied at once, marked provisional, replaced by the verified row at the next corporate-actions refresh. */
   function provisionalEvent(p) { return { exDate: p.exDate, type: 'provisional', detail: `÷${p.factor}, read off NSE's change on the ex-date by the daily job`, factor: p.factor, observed: p.observed, source: `daily job ${p.exDate}: NSE change ${p.pct}% on a close of ${p.close} after ${p.yclose}`, checked: `${p.prevDate} close ${p.yclose} → ${p.exDate} NSE previous close ${p.prev}, adjusted base ${p.implied}`, apply: true, provisional: true }; }
-  /** Telegram block for the two notices; null when there is nothing to say. `applied` false = found but not written (too many at once). */
-  function noticesDigest(pend, gap, applied) {
+  /** Telegram block for the data notices; null when there is nothing to say. `applied` false = found but not written (too many at once).
+   *  `ix` (21 Nov 2026, audit A8) = { repaired: [{date, source}], missing: [dates], gate } — index closes the job filled today, the ones
+   *  still missing, and the momentum gate it computed, so a gate that stepped over a hole or fell back to breadth is never silent. */
+  function noticesDigest(pend, gap, applied, ix) {
     const L = []; pend = pend || [];
     for (const p of pend.slice(0, 6)) L.push(`• ${applied === false ? 'LOOKS ADJUSTED, NOT APPLIED' : 'ADJUSTED'}: ${p.sym} ÷${p.factor} before ${p.exDate} — NSE's change today is ${pct(p.pct)} where the raw bars say ${pct((p.close / p.yclose - 1) * 100, 1)}: a bonus or split went ex. ${applied === false ? 'Too many in one day to apply unseen; check and run corporate-actions' : 'Provisional until the corporate-actions refresh'} (BACKFILL.md)`);
     if (pend.length > 6) L.push(`• … and ${pend.length - 6} more`);
     if (gap && gap.missing) L.push(`• HISTORY GAP: ${gap.off} of ${gap.n} previous closes differ from NSE's — a session between ${gap.prevDate} and ${gap.date} is not in the history (a weekend or special session, or a day the job did not run). Fill it from home (BACKFILL.md)`);
+    if (ix) { const list = a => a.slice(0, 4).join(', ') + (a.length > 4 ? ` and ${a.length - 4} more` : ''); const rep = ix.repaired || [], miss = ix.missing || [], g = ix.gate;
+      if (rep.length) L.push(`• INDEX REPAIRED: the NIFTY 50 close for ${list(rep.map(r => r.date))} was missing and is now filled (${[...new Set(rep.map(r => r.source))].join('; ')})`);
+      if (miss.length) L.push(`• INDEX GAP: no NIFTY 50 close for ${list(miss)} — the repair is retried at every run${g && g.source === 'index' && g.holes ? `; the gate's ${g.n}-day average steps over ${g.holes === 1 ? 'it' : 'them'} (${g.holes} of ${g.n})` : ''}. If it stays, fill it from home (BACKFILL.md, "A missing index bar")`);
+      if (g && g.source === 'breadth') L.push(`• GATE FROM BREADTH: the NIFTY 50 series cannot give a ${g.n}-day average today (too many closes missing, or too short), so the gate is the share of stocks above their own 200-day average (${Math.round(g.breadth * 100)}%) — not the rule the backtest used`); }
     return L.length ? ['DATA NOTICES', ...L].join('\n') : null;
   }
   /** Reminders for the digest (config.json "reminders": [{date, text, repeat?: 'monthly'|'quarterly'|'semiannual'}]). A reminder is due from its
@@ -625,5 +670,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, pendingAdjustments, sessionGap, provisionalEvent, noticesDigest, snapFactor, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, clipBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, pendingAdjustments, sessionGap, sessionDone, indexHoles, failureNotice, provisionalEvent, noticesDigest, snapFactor, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
 });

@@ -24,6 +24,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { nseSession } from './nse.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -80,11 +81,12 @@ export function normaliseRows(records) {
 async function fromCSV(file) { const txt = await fs.readFile(file, 'utf8'); const rows = parseCSV(txt); const hdr = rows[0].map(h => h.trim()); return normaliseRows(rows.slice(1).map(r => Object.fromEntries(hdr.map((h, i) => [h, r[i]])))); }
 async function fromNSE(fromISO, toISO) {
   const f = d => { const [y, m, dd] = d.split('-'); return `${dd}-${m}-${y}`; };
-  const cookie = await (async () => { const res = await fetch('https://www.nseindia.com/', { headers: HDR }); return (res.headers.getSetCookie ? res.headers.getSetCookie() : []).map(c => c.split(';')[0]).join('; '); })();
+  // NSE's host (audit A17, 21 Nov 2026): the API calls go to whichever host answered the first visit — scripts/nse.mjs
+  const ses = await nseSession('/', { headers: HDR }); if (ses.moved) console.log(`  NSE answered on ${ses.origin}; the API calls go there`); const cookie = ses.cookie;
   const out = []; let a = new Date(fromISO + 'T00:00:00Z'); const end = new Date(toISO + 'T00:00:00Z'); let n = 0;
   while (a <= end) { const b = new Date(Math.min(end.getTime(), a.getTime() + 364 * 86400000));
-    const url = `https://www.nseindia.com/api/corporates-corporateActions?index=equities&from_date=${f(a.toISOString().slice(0, 10))}&to_date=${f(b.toISOString().slice(0, 10))}`;
-    let j = null; for (let t = 0; t < 4 && !j; t++) { try { const res = await fetch(url, { headers: Object.assign({}, HDR, { Cookie: cookie }) }); if (res.ok) j = await res.json(); else { console.warn(`  ${res.status} on ${url.slice(-40)}; retrying`); await sleep(2000 * (t + 1)); } } catch (e) { console.warn('  ' + e.message); await sleep(2000 * (t + 1)); } }
+    const url = `${ses.origin}/api/corporates-corporateActions?index=equities&from_date=${f(a.toISOString().slice(0, 10))}&to_date=${f(b.toISOString().slice(0, 10))}`;
+    let j = null; for (let t = 0; t < 4 && !j; t++) { try { const res = await fetch(url, { headers: Object.assign({}, HDR, { Cookie: cookie, Referer: ses.origin + '/' }) }); if (res.ok) j = await res.json(); else { console.warn(`  ${res.status} on ${url.slice(-40)}; retrying`); await sleep(2000 * (t + 1)); } } catch (e) { console.warn('  ' + e.message); await sleep(2000 * (t + 1)); } }
     if (!j) { console.error('NSE did not answer after four tries; wait fifteen minutes and run again, or use --csv with the page\'s download'); process.exit(2); }
     const list = Array.isArray(j) ? j : (j.data || j.rows || []);
     if (!Array.isArray(list)) { console.error('unexpected shape from NSE; first bytes: ' + JSON.stringify(j).slice(0, 300)); process.exit(2); }

@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
 import { membershipFilter } from './membership.mjs';
+import { NSE_DEFAULT, nseSession as openSession, nseHeaders, originOf, describeRefusal, parseIndexHistory } from './nse.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,27 +28,34 @@ const args = new Set(process.argv.slice(2));
 const DRY = args.has('--dry'), FORCE = args.has('--force');
 const DATA = path.join(ROOT, 'data'), SNAPS = path.join(DATA, 'snapshots');
 
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-const BASE = 'https://www.nseindia.com';
+// NSE's host (audit A17, 21 Nov 2026): the first visit says where NSE answers from this connection (www.nseindia.com, or www.nseindia.in
+// when .com redirects there) and every API call goes to that host — a call sent to .com with a cookie issued on .in is refused, because
+// fetch drops the Cookie header when a redirect crosses hosts. scripts/nse.mjs holds the logic; results-dates.mjs has done this since PR #45.
+let ORIGIN = NSE_DEFAULT; let LAST_NSE = null;   // LAST_NSE: what NSE last answered and where, for the failure message
+const PAGE = '/market-data/live-equity-market';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function nseSession() {
-  // NSE sits behind a bot-filter that wants a browser-like first visit; keep the cookies it sets.
-  const res = await fetch(BASE + '/market-data/live-equity-market', { headers: { 'User-Agent': UA, 'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'en-US,en;q=0.9' }, redirect: 'follow' });
-  const cookies = (res.headers.getSetCookie ? res.headers.getSetCookie() : []).map(c => c.split(';')[0]).join('; ');
-  return cookies;
+  // NSE sits behind a bot-filter that wants a browser-like first visit; keep the cookies it sets and note the host that answered.
+  const s = await openSession(PAGE, { origin: ORIGIN });
+  if (s.origin !== ORIGIN) { console.log(`NSE answered on ${s.origin}; the API calls go there`); ORIGIN = s.origin; }
+  return s;
+}
+/** One API call inside a fresh session. Throws with the status and the host that answered, so a refusal can be read from the log. */
+async function nseApi(pathAndQuery) {
+  const s = await nseSession(); await sleep(800);
+  const res = await fetch(s.origin + pathAndQuery, { headers: nseHeaders(s, { Referer: s.origin + PAGE }) });
+  const landed = originOf(res.url || s.origin, s.origin); if (landed !== ORIGIN) { console.log(`NSE's API answered on ${landed}; the next call starts there`); ORIGIN = landed; }
+  const text = await res.text();
+  if (!res.ok) { LAST_NSE = describeRefusal(res.status, s, res.url); throw new Error(LAST_NSE); }
+  return text;
 }
 async function fetchIndex(indexName, attempts = 4) {
   let lastErr;
   for (let attempt = 1; attempt <= attempts; attempt++) {
     try {
-      const cookie = await nseSession();
-      await sleep(800);
-      const url = `${BASE}/api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData&symbol=${encodeURIComponent(indexName)}`;
-      const res = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Referer': BASE + '/market-data/live-equity-market', 'Cookie': cookie } });
-      const text = await res.text();
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      if (!text.trim().startsWith('{')) throw new Error('non-JSON body (bot filter?)');
+      const text = await nseApi(`/api/NextApi/apiClient/marketWatchApi?functionName=getIndicesData&symbol=${encodeURIComponent(indexName)}`);
+      if (!text.trim().startsWith('{')) throw new Error(`non-JSON body from ${ORIGIN.replace('https://', '')} (bot filter?)`);
       const json = JSON.parse(text);
       const rows = E.rowsFromNseApi(json);
       if (rows.filter(r => !r.isIndex).length < 10) throw new Error(`only ${rows.length} rows parsed`);
@@ -57,6 +65,16 @@ async function fetchIndex(indexName, attempts = 4) {
     } catch (e) { lastErr = e; console.warn(`attempt ${attempt} failed: ${e.message}`); await sleep(2500 * attempt); }
   }
   throw lastErr;
+}
+/** NIFTY 50 bars for a range of dates from NSE's index history — the source the October 2026 holes were filled from by hand. Used by the
+ *  index repair below, best effort: at most four calls of 90 days, and a refusal is the caller's warning, not a failed job. */
+async function fetchIndexHistory(fromISO, toISO) {
+  const dmy = d => d.split('-').reverse().join('-'); const iso = d => d.toISOString().slice(0, 10); const out = {};
+  let a = new Date(fromISO + 'T00:00:00Z'); const end = new Date(toISO + 'T00:00:00Z'); let calls = 0;
+  while (a <= end && calls++ < 4) { const b = new Date(Math.min(end.getTime(), a.getTime() + 89 * 86400000));
+    Object.assign(out, parseIndexHistory(JSON.parse(await nseApi(`/api/historicalOR/indicesHistory?indexType=${encodeURIComponent('NIFTY 50')}&from=${dmy(iso(a))}&to=${dmy(iso(b))}`))));
+    a = new Date(b.getTime() + 86400000); }
+  return out;
 }
 function stampOf(rows) {
   // "2026-10-16 15:30:00" → {date:'2026-10-16', time:'15:30'}; fall back to IST now.
@@ -79,9 +97,7 @@ async function loadHistoryFiles(year, fromYear) { // this year and the previous 
 const PAPER = config.paper || null; const LIVE_BM = path.join(DATA, 'benchmarks', 'live.json');   // paper book (13 Nov 2026): {from, capital?, benchmarks: [index names]}; the job saves those indices' closes here, one series per index
 /** NSE's index list (display name → the short code the market-watch call takes). Best effort: E.indexCode falls back to the codes it carries. */
 async function fetchIndexList() {
-  try { const cookie = await nseSession(); await sleep(800);
-    const res = await fetch(`${BASE}/api/NextApi/apiClient/marketWatchApi?functionName=getIndexList`, { headers: { 'User-Agent': UA, 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Referer': BASE + '/market-data/live-equity-market', 'Cookie': cookie } });
-    const text = await res.text(); if (!res.ok || !text.trim().startsWith('{')) throw new Error(`HTTP ${res.status}`); return JSON.parse(text); }
+  try { const text = await nseApi('/api/NextApi/apiClient/marketWatchApi?functionName=getIndexList'); if (!text.trim().startsWith('{')) throw new Error('non-JSON body'); return JSON.parse(text); }
   catch (e) { console.warn(`index list unavailable (${e.message}); using the built-in index codes`); return null; }
 }
 /** Today's close (and the previous close) of each benchmark index — price index, from the same market-watch call the universe comes from.
@@ -109,6 +125,11 @@ async function telegram(text) {
 }
 
 try {
+  // Nothing new to fetch (21 Nov 2026): once the snapshot on file is the last session's, with its closing stamp, NSE is not called at all.
+  // The slot ladder runs about a dozen more slots after the one that sends the digest; each used to make four calls to learn "snapshot
+  // unchanged", and on 19 and 20 Nov one a night was refused (HTTP 403) and failed the run. --force and --dry always fetch.
+  if (!DRY && !FORCE) { const idx0 = await readJSON(path.join(DATA, 'index.json'), null); const latest0 = idx0 && idx0.latest ? { date: idx0.latest, time: idx0.latestTime } : null;
+    if (E.sessionDone(latest0)) { console.log(`snapshot ${latest0.date} ${latest0.time} is the latest NSE can have published — nothing to fetch, NSE not called`); process.exit(0); } }
   const rows = await fetchIndex(config.index || 'NIFTY 500');
   const { date, time } = stampOf(rows);
   // The history files carry NIFTY 50 as the benchmark (see backfill.mjs). When the universe is a different index its
@@ -137,9 +158,22 @@ try {
     for (const p of pend) { (table[p.sym] = table[p.sym] || []).push(E.provisionalEvent(p)); console.log(`corporate action: ${p.sym} ÷${p.factor} before ${p.exDate} (NSE change ${p.pct}%, bars ${((p.close / p.yclose - 1) * 100).toFixed(1)}%) — provisional entry added to data/adjustments.json`); } }
   else if (pend.length) console.warn(`corporate actions: ${pend.length} names look adjusted today (${pend.map(p => p.sym).join(', ')}) — too many to apply unseen; nothing written`);
   if (gap && gap.missing) console.warn(`history gap: ${gap.off} of ${gap.n} previous closes differ from NSE's — a session between ${gap.prevDate} and ${gap.date} is missing`);
-  const notices = E.noticesDigest(pend, gap, pend.length ? applyPend : undefined);
+  // Index repair (audit A8, 21 Nov 2026), before anything is computed: a day saved without its NIFTY 50 bar (the second fetch failed that
+  // evening) is filled here, so a hole lasts until the next run instead of for good. Yesterday's close comes with today's own NIFTY 50 row
+  // (its previous close — no extra call, and not used when the history is missing a session); older holes are asked of NSE's index history.
+  // Whatever stays missing is named in the digest, and the gate's average steps over up to five missing closes meanwhile (momentum.js).
+  const repairs = []; { const holes = E.indexHoles(pre, iL).filter(d => d !== date);
+    if (holes.length) { const fills = {}; const prevDate = pre.dates[iL - 1]; const n50 = rows.find(r => r.isIndex && /^NIFTY 50$/.test(r.sym));
+      if (holes.includes(prevDate) && n50 && n50.prev > 0 && !(gap && gap.missing)) fills[prevDate] = { c: n50.prev, source: "from today's previous close" };
+      const older = holes.filter(d => !fills[d]);
+      if (older.length) { try { const got = await fetchIndexHistory(older[0], older[older.length - 1]); for (const d of holes) if (got[d]) fills[d] = Object.assign({ source: "from NSE's index history" }, got[d]); }
+        catch (e) { console.warn(`index repair: NSE's index history did not answer (${e.message}); ${older.length} NIFTY 50 close(s) still missing: ${older.slice(0, 6).join(', ')}`); } }
+      for (const d of Object.keys(fills).sort()) { const f = fills[d]; const file = histFiles.find(h => h.dates && h.dates.includes(d)); if (!file) continue;
+        const snap = { date: d, rows: {}, index: { name: 'NIFTY 50', open: f.o ?? null, high: f.h ?? null, low: f.l ?? null, ltp: f.c } };
+        E.appendSnapshotToHistory(file, snap); repairs.push({ date: d, source: f.source, snap }); console.log(`index repair: NIFTY 50 ${d} = ${f.c} (${f.source})`); } } }
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
   const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
+  const notices = E.noticesDigest(pend, gap, pend.length ? applyPend : undefined, { repaired: repairs, missing: E.indexHoles(result.bars, result.bars.dates.length - 1), gate: mom.gate });
   E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
   // Paper book: the engine's rules replayed from PAPER.from on the same bars, beside the index funds (price indices saved day by day in data/benchmarks/live.json).
   let paper = null, live = null, todayBm = {};
@@ -163,11 +197,14 @@ try {
   if (DRY) process.exit(0);
   await fs.mkdir(SNAPS, { recursive: true });
   await fs.writeFile(path.join(SNAPS, date + '.json'), JSON.stringify(doc));
-  // append today's bar to the history file so indicators keep working without re-reading every snapshot
+  // append today's bar to the history file so indicators keep working without re-reading every snapshot; repaired index bars go into the
+  // files they belong to, read fresh from disk (a hole can sit in last year's file), whether or not today's bar is appended
+  await fs.mkdir(HISTDIR, { recursive: true });
+  const yfs = {}; const yearFile = async y => yfs[y] || (yfs[y] = (await readJSON(path.join(HISTDIR, y + '.json'), null)) || { year: Number(y), dates: [], symbols: {}, index: null });
+  for (const r of repairs) { const yf = await yearFile(r.date.slice(0, 4)); if (yf.dates.includes(r.date)) E.appendSnapshotToHistory(yf, r.snap); }
+  if (!result.reg.intraday || config.alertIntraday) E.appendSnapshotToHistory(await yearFile(String(year)), doc);
+  for (const yf of Object.values(yfs)) await fs.writeFile(path.join(HISTDIR, yf.year + '.json'), JSON.stringify(yf));
   if (!result.reg.intraday || config.alertIntraday) {
-    await fs.mkdir(HISTDIR, { recursive: true });
-    const yf = (await readJSON(path.join(HISTDIR, year + '.json'), null)) || { year, dates: [], symbols: {}, index: null };
-    E.appendSnapshotToHistory(yf, doc); await fs.writeFile(path.join(HISTDIR, year + '.json'), JSON.stringify(yf));
     if (applyPend) await fs.writeFile(path.join(DATA, 'adjustments.json'), JSON.stringify(adjustments, null, 1));   // the provisional corporate-action entries, saved with the bar they belong to
     if (live && Object.keys(todayBm).length) { for (const [name, days] of Object.entries(todayBm)) { const merged = Object.assign(live[name] || {}, days); live[name] = Object.fromEntries(Object.keys(merged).sort().map(d => [d, merged[d]])); } await fs.mkdir(path.dirname(LIVE_BM), { recursive: true }); await fs.writeFile(LIVE_BM, JSON.stringify(live, null, 1)); }
   }
@@ -184,7 +221,11 @@ try {
   const intraday = result.reg.intraday;
   if (!intraday || config.alertIntraday || FORCE) await telegram(text);
 } catch (e) {
-  console.error('FETCH FAILED:', e.message);
-  await telegram(`Nifty Swing Desk: today's NSE fetch failed (${e.message}). NSE may be blocking the runner — run "npm run fetch" from your own machine, or upload the CSV on the site.`);
+  console.error('FETCH FAILED:', e.message); if (LAST_NSE && !String(e.message).includes(LAST_NSE)) console.error('last answer from NSE:', LAST_NSE);
+  // The alert says what failed, what is already on file and what happens next (21 Nov 2026) — the old one said "run it from your own
+  // machine" on two nights when the digest had already gone out and nothing was missing.
+  const idxF = await readJSON(path.join(DATA, 'index.json'), null); const env = process.env;
+  await telegram(E.failureNotice({ what: e.message, nowMs: Date.now(), latest: idxF && idxF.latest ? { date: idxF.latest, time: idxF.latestTime } : null, scheduled: env.GITHUB_EVENT_NAME === 'schedule',
+    runUrl: env.GITHUB_RUN_ID && env.GITHUB_REPOSITORY ? `${env.GITHUB_SERVER_URL || 'https://github.com'}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}` : null }));
   process.exit(1);
 }

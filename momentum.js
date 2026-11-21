@@ -40,19 +40,31 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5 };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, gateHoles: 5, gateUnknown: 'open', minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5 };
 
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
   const stdev = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((p, c) => p + (c - m) * (c - m), 0) / (a.length - 1)); };
   function smaAt(c, n, i) { if (i + 1 < n) return null; let s = 0; for (let k = i - n + 1; k <= i; k++) { if (c[k] == null) return null; s += c[k]; } return s / n; }
+  /** The same average when the window has a hole in it (audit A8, 21 Nov 2026): the last n closes on file ending at bar i, stepping over
+   *  at most `maxHoles` bars whose close is missing. null when more are missing or the series is too short. One missing close moves a
+   *  200-day average by (the close 200 sessions earlier − the missing close) ÷ 200 — under a tenth of a percent of the level — and the
+   *  step-over ends the day the bar is repaired (the daily job retries at every run), so nothing accumulates. volFlags below has always
+   *  read the index this way. */
+  function smaOver(c, n, i, maxHoles) { let s = 0, got = 0, holes = 0; for (let k = i; k >= 0 && got < n; k--) { if (c[k] == null) { if (++holes > maxHoles) return null; continue; } s += c[k]; got++; } return got === n ? { sma: s / n, holes } : null; }
 
   /** Regime gate at bar i: index above its gateSma-day average, using the latest index bar within 10 bars (the daily
-   *  job can lag the backfilled index series). Without usable index bars, fall back to breadth: more than half of the
-   *  universe above its own 200-day average. */
+   *  job can lag the backfilled index series). A window with up to `gateHoles` (5) missing index closes is averaged over the
+   *  closes on file (smaOver) and the answer carries `holes` — until 21 Nov 2026 one missing bar sent the gate to the breadth
+   *  fallback for the next 200 bars (26 Oct – 5 Nov 2026: breadth said closed on a day the index was above its average). With
+   *  a complete series the result is the old one to the last digit. Without usable index bars, fall back to breadth: more
+   *  than half of the universe above its own 200-day average. An unknown gate (`open: null` — neither exists, the first 51
+   *  days of the ten-year window) is treated as open by simulate and as closed by scripts/backtest.mjs; see the README, A9. */
   function gateAt(bars, i, P) {
-    const idx = bars.index;
-    if (idx) for (let j = i; j >= Math.max(0, i - 10); j--) { if (idx.c[j] == null) continue; const sma = smaAt(idx.c, P.gateSma, j); if (sma == null) break;
-      return { open: idx.c[j] > sma, index: idx.c[j], sma, n: P.gateSma, asOf: bars.dates[j], source: 'index' }; }
+    const idx = bars.index; const maxHoles = P.gateHoles != null ? P.gateHoles : DEFAULTS.gateHoles;
+    if (idx) for (let j = i; j >= Math.max(0, i - 10); j--) { if (idx.c[j] == null) continue; let sma = smaAt(idx.c, P.gateSma, j), holes = 0;
+      if (sma == null && maxHoles > 0) { const t = smaOver(idx.c, P.gateSma, j, maxHoles); if (t) { sma = t.sma; holes = t.holes; } }
+      if (sma == null) break;
+      return Object.assign({ open: idx.c[j] > sma, index: idx.c[j], sma, n: P.gateSma, asOf: bars.dates[j], source: 'index' }, holes ? { holes } : null); }
     let above = 0, n = 0; for (const B of Object.values(bars.sym)) { const c = B.c[i]; if (c == null) continue; const sma = smaAt(B.c, 200, i); if (sma == null) continue; n++; if (c > sma) above++; }
     return n >= 50 ? { open: above / n > 0.5, breadth: above / n, n: P.gateSma, source: 'breadth' } : { open: null, source: 'none' };
   }
@@ -136,14 +148,17 @@
         if (c == null) { if (stale && ++p.gap >= stale) close(sym, i, p.last, 'stopped trading'); continue; } p.gap = 0; p.last = c; p.peak = Math.max(p.peak, c);
         if (c < p.peak * (1 - P.trail / 100)) close(sym, i, c, 'trailing stop'); }
       // 2. rebalance day: rank, drop names below holdRank (or ineligible), fill free slots if the gate is open
+      // (an unknown gate — no 200-day average and no breadth yet, the first 51 days of the ten-year window — counts as open: `gateUnknown: 'open'`,
+      //  the behaviour every report on record was made with; 'closed' is the fail-safe reading, kept as a switch so the difference stays measurable — README, A9)
+      const gateOK = g => g.open === true || (g.open == null && P.gateUnknown !== 'closed');
       const gate = gateAt(bars, i, P);
       if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom, filter); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
         for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
           if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
         if (P.compound) slot = marked(i) / P.topN;
-        if (R.gate.open !== false) fill(R, i, 'rebalance'); }
+        if (gateOK(R.gate)) fill(R, i, 'rebalance'); }
       // 2b. refill: 'close' — any other day the gate is open and the book is short, rank at this close and fill the free slots
-      else if (P.refill === 'close' && gate.open !== false && Object.keys(open).length < P.topN) { const R = selectAt(bars, i, P, custom, filter);
+      else if (P.refill === 'close' && gateOK(gate) && Object.keys(open).length < P.topN) { const R = selectAt(bars, i, P, custom, filter);
         if (P.compound) slot = marked(i) / P.topN; fill(R, i, 'refill'); }
       let inv = 0; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; inv += (c != null ? c : open[sym].entry) * open[sym].qty; } const mv = cash + inv;
       equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gate.open, index: bars.index ? bars.index.c[i] : null, volHigh: P.volScale ? vflag[i] : undefined });
@@ -224,5 +239,5 @@
     return L.join('\n');
   }
 
-  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, volFlags, paperBook, paperDigest };
+  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, smaOver, volFlags, paperBook, paperDigest };
 });

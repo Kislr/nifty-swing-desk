@@ -105,6 +105,29 @@ NIFTY 500 is reviewed twice a year and the changes take effect on the last tradi
 4. **`node scripts/corporate-actions.mjs`** (the new names bring their own bonuses and splits), then `git add data reports && git commit -m "Index review top-up" && git push`.
 5. **Once more about a month later** (step 3 and 4 only), so the names that left have bars up to the rebalance at which the book sells them.
 
+## Weekend sessions — the home run (21 Nov 2026, interim audit A18)
+
+NSE trades on some Saturdays and Sundays: the Muhurat hour when Diwali falls on a weekend, Budget day, the disaster-recovery drills. Until 21 Nov 2026 the backfill skipped every weekend date and the daily job runs Monday to Friday, so none of those sessions is in the history — not one weekend date in 2,480 days. It showed on 9 Nov 2026: the previous close on file differed from NSE's for 350 of 500 names, because Sunday 8 Nov's Muhurat session was missing. About twenty minutes, nothing to decide along the way.
+
+1. **Pull `main`** (`git pull`) so you have the backfill that knows about weekends.
+2. **Run the catch-up**, from home, in the repository folder:
+   `node scripts/backfill.mjs --from 2016-11-07 --weekends --members`
+   It prints `members mode: 895 tickers…`, then `index history: N days` (about 2,490; **if it says *unavailable*, stop and run it again later** — a weekend session is only added together with its NIFTY 50 bar), then `weekends only: every Saturday and Sunday from … that is not on file is asked for; weekdays are left alone`. About 1,040 dates are asked for and nearly all answer "no such file" at once. Each session found prints its own line: `2026-11-08: weekend session added — 8xx symbols, NIFTY 50 25xxx.x`.
+3. **Read the two last lines.** `weekend dates: N asked for, K session(s) found and added (dates…)` — K is expected to be about ten; the list of dates is the thing to pass on. If it also says `sessions NOT added for want of their NIFTY 50 bar` or `got an answer that was neither a file nor a 404`, run the same command again: it asks only for what is still missing. If a date keeps coming back that way, send the line as it is.
+4. **Corporate actions**: `node scripts/corporate-actions.mjs` (a bonus or split whose ex-date is the Monday after is checked against the bar before it, which is now the weekend session).
+5. **Commit and push**: `git add data/history data/adjustments.json reports && git commit -m "Weekend sessions loaded (audit A18)" && git push`.
+6. **Tell the next session** the dates the run added. Its job: both baselines and the event studies re-run and set beside the 19 Nov reports (every figure is expected to move a little — a 21-bar rebalance counts sessions), and the paper book's replay from 13 Nov read against the digests already sent, since its bars now include 8 Nov.
+
+What not to do: do not leave out `--members` (the day would get today's 500 names only, and the past members a hole); do not add `--years` as well as `--from`; do not run it at the same time as another backfill.
+
+From now on nothing special is needed: any top-up tries the weekend dates of its last 60 days by itself, so when the digest says `HISTORY GAP`, `node scripts/backfill.mjs --from <the earlier date in that line> --members` fills the session.
+
+## A missing index bar (21 Nov 2026, interim audit A8)
+
+If the NIFTY 50 call fails on an evening, that day is saved without its index bar. The daily job repairs it by itself at the next run — yesterday's close from today's NIFTY 50 row, older ones from NSE's index history — and the digest says `INDEX REPAIRED`. While a close is missing the digest carries `INDEX GAP`, and the gate's 200-day average steps over it (up to five; beyond that the digest says `GATE FROM BREADTH`).
+
+If `INDEX GAP` is still there after two or three days, GitHub's runner is not getting NSE's index history. From home: `git pull`, then `node scripts/backfill.mjs --from <the first date in the INDEX GAP line>` — check that it prints `index history: N days` and ends with `(N given their missing NIFTY 50 bar)` — then `git add data/history && git commit -m "Index bars filled" && git push`. No `--members` needed: a saved day only gets the bar it lacks.
+
 ## Results dates — the home run for the PEAD test (13 Nov 2026)
 
 The post-earnings-announcement-drift test (`reports/pead-hypotheses-2026-11-13.md`) needs the date and time NSE published every quarterly result over the history. NSE has it; NSE refuses cloud IPs; so this is a home run, like the three before it. Budget about 25 minutes of wall-clock, almost all of it the script pausing between requests, plus a minute to read one table. Nothing to decide along the way — the hypothesis file already says how the result is read.
@@ -151,13 +174,16 @@ The 13 Nov pull left two holes (`reports/interim-audit-2026-11-19.md`): the last
 | `--from YYYY-MM-DD [--to YYYY-MM-DD]` | exact range |
 | `--universe nifty500` (default), `nifty50`, `all` | which symbols to keep; `all` stores every EQ-series stock (~2,000 names, ~4× the file size) |
 | `--pause 900` | milliseconds between requests; raise it if you get blocked |
+| `--weekends` | weekend sessions (21 Nov 2026, audit A18): visit every Saturday and Sunday in the range that is not on file, and no weekday — the one-off catch-up, `--from 2016-11-07 --weekends --members`. Without the flag a run still tries the weekend dates of its last 60 days. A weekend session is added only with its NIFTY 50 bar |
 | `--members` | past members (12 Nov 2026): the universe becomes every ticker that was ever in NIFTY 500 according to `data/membership/members.json`; days already saved are visited again and only the names still missing that day are added, stored under today's ticker by following NSE's rename list forward from that day. Run `node scripts/backfill.mjs --years 10 --members` once from home (about an hour, one fetch per trading day, progress saved every 20 days), then `corporate-actions` again and the backtests with `--members`. Nothing already in the files is rewritten |
 
 ## Caveats worth knowing
 
 **Corporate actions between refreshes (19 Nov 2026, interim audit A7).** The daily job now reads a bonus or split off NSE's own row on the ex-date — NSE's change is measured from the adjusted price while its previous close is not — writes a provisional entry into `data/adjustments.json` and says so in the digest under DATA NOTICES. The quarterly `corporate-actions` run replaces provisional entries with verified ones. More than five in one day are reported and not applied.
 
-**Weekend sessions are not in the history (interim audit A18, open).** The backfill skips Saturdays and Sundays and the daily job runs Monday to Friday, so a session held on a weekend — the Muhurat session of Sunday 8 Nov 2026 for one — has no bar. The digest's DATA NOTICES line `HISTORY GAP` is how the next one will show.
+**Weekend sessions (interim audit A18; code 21 Nov 2026, the catch-up is the home run above).** The daily job runs Monday to Friday, so a session held on a weekend — the Muhurat session of Sunday 8 Nov 2026 for one — is not saved by it; the digest's DATA NOTICES line `HISTORY GAP` says so on the next trading day, and any backfill top-up from that date now picks the session up (it tries the weekend dates of its last 60 days). The sessions before November 2026 need the one-off `--weekends` run.
+
+**NSE's host.** From some connections `www.nseindia.com` redirects to `www.nseindia.in`. Every script that calls NSE's site follows it to whichever host answers (`scripts/nse.mjs`, 21 Nov 2026) and prints `NSE answered on …` when that is not `.com`. The archive host (`nsearchives.nseindia.com`) is a different server and is not affected.
 
 Bhavcopy prices are not adjusted for splits and bonuses. A 1:1 bonus shows as a 50% drop on the ex-date, which the engine will read as a stop-out, an "avoid" or a momentum trailing-stop exit. The fix is the corporate-actions step below; until it has been run, remember it when a backtest trade looks absurd.
 

@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Build universe and pull EDGAR company facts
         env:
           # SEC fair-access policy asks for a User-Agent naming who you are: Settings → Secrets and variables → Actions → Variables → EDGAR_USER_AGENT
@@ -50,3 +50,17 @@ jobs:
           git config user.email "swing-desk-bot@users.noreply.github.com"
           git add compounder/data reports
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US fundamentals $(date -u +%Y-%m-%d)" && git pull --rebase origin main && git push; fi
+      # Telegram alert when the run fails (21 Nov 2026). Uses the two secrets the daily digest uses; without them it does nothing.
+      - name: Telegram alert if this run failed
+        if: failure() || cancelled()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          WHAT: ${{ github.workflow }} #${{ github.run_number }} (${{ github.event_name }})
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then echo "telegram not configured"; exit 0; fi
+          TEXT="⚠ Nifty Swing Desk — $WHAT failed at $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M') IST. Nothing was saved by this run; the next scheduled run tries again, or use Run workflow.
+          Log: $RUN_URL"
+          curl -sS --max-time 20 -o /dev/null -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" -d disable_web_page_preview=true || echo "telegram alert not sent"
