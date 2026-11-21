@@ -66,3 +66,23 @@ Every verdict on record reproduces. The mismatches are in the data behind one ve
 ## Checked and found as described
 
 `E.positionLine` against `scripts/backtest.mjs`, check for check: gap through the stop, stop, gap above the target, target, time stop at the 15th bar after the entry day, breakeven after a close at +1R, nothing read on the entry day; the journal's setup names match the ones it tests for. `E.discretionaryCheck`: two open at most, half the risk and half the position cap, a sentence of 12 characters or more. `E.digestFit` and its caps; `E.indexCode` and the built-in codes; the slot gate's two numbers (195, 750) against the README; `momentum.paperBook` — first buys at the first close on or after `from`, rebalance every 21 bars from that day, half size on the volatility flag, 20% stop on closes; the regime, sector-score, breakout, pullback, avoid, score and sizing rules in the README's "rules in one paragraph", apart from A11.
+
+## 21 Nov 2026 — what was decided and done (fourteenth session)
+
+Items A4–A7 and A10–A14 were closed on 19 Nov (PR #45, PR #46), A2 by the owner's home run the same day. The rest, on the owner's decisions of 21 Nov; detail in the README checklist under each number.
+
+| item | decision | state |
+|---|---|---|
+| A1 | the pass by the letter is taken as a frozen re-run, not a live setup; "showing promise" = at least +1R and ahead of the NIFTY 50, fixed before any forward trade (`reports/pead-results-drift-reading-2026-11-21.md`) | built — report section, `data/results/drift.json`, site card; readings 16 Dec 2026 and 12 Apr 2027 |
+| A3 | fix | done — `E.clipBars`; PEAD to 18 Nov, reversal to 12 Nov and the swing baseline to 18 Nov reproduce their committed files to the last field |
+| A8 | repair the data, and do not let one hole move the rule meanwhile | done — repair at the next run, average over the closes on file for up to five holes (0.003% on today's data for one), three digest notices; both 19 Nov baselines unchanged |
+| A9 | document, no change | done — measured (18.6% → 18.0%; identical from the first gated day), `gateUnknown` switch for the record |
+| A15 | Node 24 | done — five workflows; 250 checks pass on Node 22, 24 and 26 |
+| A16 | leave until 25 Nov, then re-evaluate | open — 19 and 20 Nov read (digest 19:16 and 19:00 IST; the gate has now stopped four early runs); second reminder 8 Dec |
+| A17 | follow NSE's host in every script | done — `scripts/nse.mjs`; replayed against a stand-in, not against NSE |
+| A18 | load the weekend sessions | code done; the owner's home run is next (`BACKFILL.md`, "Weekend sessions"), then the re-run and comparison |
+| A19 (new) | — | fixed — runs #89 and #100 (19 and 20 Nov) were late slots refused by NSE with HTTP 403 after the digest had gone; once the last session's snapshot is on file a run no longer calls NSE |
+
+Two things the pass of 19 Nov had as "probably": A9's "probably no effect" is 0.6 of a point a year on the level and nothing on the comparison; and A1's pass turns on 47 trades still open on 20 Nov (2023 = 38.4% of the R with them marked at +30.6R).
+
+Not verified in this session: anything that needs NSE. The repair's index-history call, the host-following and the weekend catch-up were run against stand-ins that answer as NSE is known to; the daily job's first evening after the merge, and the owner's home run, are their first real runs.
