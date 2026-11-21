@@ -39,6 +39,7 @@ export function candidatesOn(bars, i, P, pre, filter) {
   rows.sort((a, b) => b.turn - a.turn); const liquid = P.liquid ? rows.slice(0, P.liquid) : rows; liquid.sort((a, b) => a.r5 - b.r5); return liquid;
 }
 export function study(bars, opts) {
+  if (opts && opts.to) bars = E.clipBars(bars, opts.to);   // --to ends the data, not only the signals (audit A3, 21 Nov 2026)
   const P = Object.assign({}, RULE, opts && opts.params || {}); const MEM = opts && opts.members || null; const custom = opts && opts.custom || {}; const from = opts && opts.from || '0000', to = opts && opts.to || '9999';
   const filter = MEM ? (s, d) => memberOn(MEM, s, d) : null; const N = bars.dates.length; const pos = {}; bars.dates.forEach((d, i) => (pos[d] = i));
   const pre = {}; for (const [sym, B] of Object.entries(bars.sym)) pre[sym] = { sma: rolling(B.c, P.trend), turn: rolling(B.t, P.turnBars) };
@@ -65,7 +66,7 @@ if (isMain) {
   if (!files.length) { console.error('No history files. Run the backfill first.'); process.exit(2); }
   const custom = (JSON.parse(await fs.readFile(path.join(ROOT, 'data', 'sectors.json'), 'utf8').catch(() => '{"map":{}}'))).map || {};
   const adjustments = JSON.parse(await fs.readFile(arg('adjust', path.join(ROOT, 'data', 'adjustments.json')), 'utf8').catch(() => 'null'));
-  const bars = E.buildBars(files, [], { adjustments }); const N = bars.dates.length;
+  const bars = E.clipBars(E.buildBars(files, [], { adjustments }), arg('to')); const N = bars.dates.length;   // with --to the header and every exit stop there (audit A3)
   let MEM = null; if (!flag('no-members')) { MEM = JSON.parse(await fs.readFile(arg('members', path.join(ROOT, 'data', 'membership', 'members.json')), 'utf8').catch(() => 'null')); if (!MEM) console.warn('no membership list; running on every name with bars'); }
   console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars.dates[0]} → ${bars.dates[N - 1]}${bars.adjusted ? `; corporate actions ${bars.adjusted.events} events` : ''}${MEM ? '; point-in-time NIFTY 500 membership on' : ''}`);
   const t0 = Date.now(); const S = study(bars, { members: MEM, custom, from: arg('from'), to: arg('to') }); const liq = study(bars, { members: MEM, custom, from: arg('from'), to: arg('to'), params: { liquid: 0 } }).rows.primary;   // liquidity control: all members above their 200-day

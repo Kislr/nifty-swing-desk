@@ -70,7 +70,8 @@ const files = []; for (const f of (await fs.readdir(HIST).catch(() => []))) if (
 if (!files.length) { console.error('No history files in data/history/. Run the backfill first: node scripts/backfill.mjs --years 2'); process.exit(2); }
 const custom = (JSON.parse(await fs.readFile(path.join(ROOT, 'data', 'sectors.json'), 'utf8').catch(() => '{"map":{}}'))).map || {};
 const adjustments = JSON.parse(await fs.readFile(arg('adjust', path.join(ROOT, 'data', 'adjustments.json')), 'utf8').catch(() => 'null'));   // corporate actions (scripts/corporate-actions.mjs); optional
-const bars = E.buildBars(files, [], { adjustments }); const N = bars.dates.length;
+const bars = E.clipBars(E.buildBars(files, [], { adjustments }), arg('to'));   // --to ends the data (audit A3, 21 Nov 2026): the run is the one that day's history gave, last day and header included
+const N = bars.dates.length;
 if (bars.adjusted) console.log(`corporate actions applied: ${bars.adjusted.events} events across ${bars.adjusted.symbols} symbols`);
 console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars.dates[0]} → ${bars.dates[N - 1]}${bars.index ? ', index bars present' : ', no index bars'}`);
 
@@ -155,7 +156,8 @@ const f = (x, d = 2) => (x == null || !isFinite(x)) ? '—' : Number(x).toFixed(
 const row = (name, s) => s.n ? `| ${name} | ${s.n} | ${f(s.winRate * 100, 0)}% | ${f(s.expectancy)}R | ${f(s.profitFactor)} | ${f(s.totalR, 1)}R | ${f(s.maxDrawdownR, 1)}R | ${f(s.avgBars, 1)} | ₹${Math.round(s.pnl).toLocaleString('en-IN')} |` : `| ${name} | 0 | | | | | | | |`;
 const hdr = '| slice | trades | win rate | expectancy | profit factor | total | max DD | avg bars | P&L (fixed ₹' + P.capital.toLocaleString('en-IN') + ') |\n|---|---|---|---|---|---|---|---|---|';
 const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : allNames ? '-allnames' : '');   // adjusted-history and members runs get their own file names
-const md = [`# Backtest — ${stamp}`, '', `History ${bars.dates[P.warmup]} → ${bars.dates[N - 1]} (${N} days, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P)}. Setups: ${setupsFilter}.`, '',
+const winDays = bars.dates.filter((d, i) => i >= P.warmup && d >= from && d <= to); const windowed = from > bars.dates[0] || to < bars.dates[N - 1];   // the days the run actually walked: with --from / --to the header names the window, not the whole history (audit A3, 21 Nov 2026)
+const md = [`# Backtest — ${stamp}`, '', `History ${winDays[0] || bars.dates[P.warmup]} → ${winDays[winDays.length - 1] || bars.dates[N - 1]} (${windowed ? `${winDays.length} days walked of ${N} on file` : `${N} days`}, ${Object.keys(bars.sym).length} symbols). Parameters: ${JSON.stringify(P)}. Setups: ${setupsFilter}.`, '',
   '## Overall', '', hdr, row('all', all), '', '## By setup', '', hdr, ...Object.entries(bySetup).map(([k, v]) => row(k, v)), '', '## By score band', '', hdr, ...Object.entries(byScore).map(([k, v]) => row(k, v)), '', '## By year', '', hdr, ...Object.entries(byYear).map(([k, v]) => row(k, v)), '',
   '## Exit reasons', '', ...Object.entries(byReason).map(([k, v]) => `- ${k}: ${v}`), '',
   ...(P.gate ? ['## Regime gate', '', `Nifty above its ${P.gate}-day average: open on ${gateStats.open} days, closed on ${gateStats.closed}, not yet computable on ${gateStats.undefined} (first computable ${gateStats.firstDefined || '—'}; ${gateStats.index} days read from the index, ${gateStats.breadth} from the breadth fallback). ${gateStats.skipped} act signals were not turned into orders.`, ''] : []),
