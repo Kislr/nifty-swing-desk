@@ -1,11 +1,11 @@
 {
- "asOf": "2026-11-12",
+ "asOf": "2026-11-21",
  "source": "NSE corporate-actions API",
- "history": "2016-11-07 → 2026-11-11",
+ "history": "2016-11-07 → 2026-11-20",
  "rule": "for bars before exDate: price ÷ factor, volume × factor; apply:false events are skipped by engine.buildBars",
  "tolerance": 0.12,
  "counts": {
-  "rows": 22526,
+  "rows": 22589,
   "parsed": 307,
   "applied": 281,
   "rejected": 26,
@@ -549,28 +549,6 @@
     "apply": true
    }
   ],
-  "BPCL": [
-   {
-    "exDate": "2017-07-13",
-    "type": "bonus",
-    "detail": "bonus 1:2",
-    "factor": 1.5,
-    "source": "Bonus 1:2",
-    "observed": 1.4928,
-    "checked": "2017-07-12 close 683.7 → 2017-07-13 open 458",
-    "apply": true
-   },
-   {
-    "exDate": "2024-06-21",
-    "type": "bonus",
-    "detail": "bonus 1:1",
-    "factor": 2,
-    "source": "Bonus 1:1",
-    "observed": 1.9693,
-    "checked": "2024-06-20 close 626.25 → 2024-06-21 open 318",
-    "apply": true
-   }
-  ],
   "CUB": [
    {
     "exDate": "2017-07-13",
@@ -612,6 +590,28 @@
     "source": "Bonus 1:2",
     "observed": 1.493,
     "checked": "2017-07-12 close 1739.55 → 2017-07-13 open 1165.1",
+    "apply": true
+   }
+  ],
+  "BPCL": [
+   {
+    "exDate": "2017-07-13",
+    "type": "bonus",
+    "detail": "bonus 1:2",
+    "factor": 1.5,
+    "source": "Bonus 1:2",
+    "observed": 1.4928,
+    "checked": "2017-07-12 close 683.7 → 2017-07-13 open 458",
+    "apply": true
+   },
+   {
+    "exDate": "2024-06-21",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9693,
+    "checked": "2024-06-20 close 626.25 → 2024-06-21 open 318",
     "apply": true
    }
   ],
@@ -753,18 +753,6 @@
     "apply": true
    }
   ],
-  "BHARATFORG": [
-   {
-    "exDate": "2017-09-28",
-    "type": "bonus",
-    "detail": "bonus 1:1",
-    "factor": 2,
-    "source": "Bonus 1:1",
-    "observed": 1.9886,
-    "checked": "2017-09-27 close 1217 → 2017-09-28 open 612",
-    "apply": true
-   }
-  ],
   "BHEL": [
    {
     "exDate": "2017-09-28",
@@ -774,6 +762,18 @@
     "source": "Bonus 1:2",
     "observed": 1.5054,
     "checked": "2017-09-27 close 124.65 → 2017-09-28 open 82.8",
+    "apply": true
+   }
+  ],
+  "BHARATFORG": [
+   {
+    "exDate": "2017-09-28",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 1.9886,
+    "checked": "2017-09-27 close 1217 → 2017-09-28 open 612",
     "apply": true
    }
   ],
@@ -869,6 +869,18 @@
     "apply": true
    }
   ],
+  "M&M": [
+   {
+    "exDate": "2017-12-21",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1",
+    "observed": 2.0101,
+    "checked": "2017-12-20 close 1541.75 → 2017-12-21 open 767",
+    "apply": true
+   }
+  ],
   "BALKRISIND": [
    {
     "exDate": "2017-12-21",
@@ -890,18 +902,6 @@
     "source": "Bonus 1:1",
     "observed": 1.9631,
     "checked": "2017-12-20 close 761.7 → 2017-12-21 open 388",
-    "apply": true
-   }
-  ],
-  "M&M": [
-   {
-    "exDate": "2017-12-21",
-    "type": "bonus",
-    "detail": "bonus 1:1",
-    "factor": 2,
-    "source": "Bonus 1:1",
-    "observed": 2.0101,
-    "checked": "2017-12-20 close 1541.75 → 2017-12-21 open 767",
     "apply": true
    }
   ],
@@ -1053,18 +1053,6 @@
     "apply": true
    }
   ],
-  "EMAMILTD": [
-   {
-    "exDate": "2018-06-21",
-    "type": "bonus",
-    "detail": "bonus 1:1",
-    "factor": 2,
-    "source": "Bonus 1:1/Dividend- Rs 7 Per Share",
-    "observed": 2.002,
-    "checked": "2018-06-20 close 1073.05 → 2018-06-21 open 536",
-    "apply": true
-   }
-  ],
   "JUBLFOOD": [
    {
     "exDate": "2018-06-21",
@@ -1084,6 +1072,18 @@
     "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 2/- Per Share",
     "observed": 4.9302,
     "checked": "2022-04-18 close 2844.7 → 2022-04-19 open 577",
+    "apply": true
+   }
+  ],
+  "EMAMILTD": [
+   {
+    "exDate": "2018-06-21",
+    "type": "bonus",
+    "detail": "bonus 1:1",
+    "factor": 2,
+    "source": "Bonus 1:1/Dividend- Rs 7 Per Share",
+    "observed": 2.002,
+    "checked": "2018-06-20 close 1073.05 → 2018-06-21 open 536",
     "apply": true
    }
   ],
@@ -3007,18 +3007,6 @@
     "apply": true
    }
   ],
-  "MAZDOCK": [
-   {
-    "exDate": "2024-12-27",
-    "type": "split",
-    "detail": "split ₹10 → ₹5",
-    "factor": 2,
-    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
-    "observed": 1.9915,
-    "checked": "2024-12-26 close 4729.75 → 2024-12-27 open 2375",
-    "apply": true
-   }
-  ],
   "NMDC": [
    {
     "exDate": "2024-12-27",
@@ -3028,6 +3016,18 @@
     "source": "Bonus 2:1",
     "observed": 2.9851,
     "checked": "2024-12-26 close 214.45 → 2024-12-27 open 71.84",
+    "apply": true
+   }
+  ],
+  "MAZDOCK": [
+   {
+    "exDate": "2024-12-27",
+    "type": "split",
+    "detail": "split ₹10 → ₹5",
+    "factor": 2,
+    "source": "Face Value Split (Sub-Division) - From Rs 10/- Per Share To Rs 5/- Per Share",
+    "observed": 1.9915,
+    "checked": "2024-12-26 close 4729.75 → 2024-12-27 open 2375",
     "apply": true
    }
   ],
