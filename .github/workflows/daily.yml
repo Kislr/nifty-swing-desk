@@ -10,7 +10,9 @@ on:
     #   - a run that starts between 03:15 and 12:30 UTC (08:45–18:00 IST: pre-open, market hours, data not final) stops at the gate step
     #     below in a few seconds, without checking out the repository;
     #   - the first run that starts after 12:30 UTC saves the snapshot and sends the digest;
-    #   - every later run sees the same NSE timestamp and exits (fetch.mjs: "snapshot unchanged"), so there is never a second digest.
+    #   - every later run finds that day's snapshot already on file with its closing stamp and exits without calling NSE (fetch.mjs,
+    #     E.sessionDone, since 21 Nov 2026 — until then each asked NSE and read "snapshot unchanged", and on 19 and 20 Nov one a night
+    #     was answered HTTP 403 and failed its run), so there is never a second digest.
     # The gate applies to scheduled runs only; "Run workflow" (workflow_dispatch) always runs. If the scheduler's delay ever grows past
     # ten hours, add earlier slots; the outside clock in the README ("When the digest is late") remains the exact fix.
     - cron: '32 2 * * 1-5'
@@ -64,8 +66,9 @@ jobs:
       - uses: actions/setup-node@v7
         if: steps.gate.outputs.run == 'true'
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Fetch NSE data and compute signals
+        id: fetch
         if: steps.gate.outputs.run == 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -79,3 +82,17 @@ jobs:
           git config user.email "swing-desk-bot@users.noreply.github.com"
           git add data
           if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: snapshot $(date -u +%Y-%m-%d)" && git pull --rebase origin main && git push; fi
+      # Telegram alert when the run fails anywhere but in the fetch step — fetch.mjs sends its own alert, with NSE's answer and the last snapshot on file, so a refused fetch is one message, not two (21 Nov 2026). Uses the two secrets the daily digest uses; without them it does nothing.
+      - name: Telegram alert if this run failed
+        if: (failure() || cancelled()) && steps.fetch.outcome != 'failure'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          WHAT: ${{ github.workflow }} #${{ github.run_number }} (${{ github.event_name }})
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then echo "telegram not configured"; exit 0; fi
+          TEXT="⚠ Nifty Swing Desk — $WHAT failed at $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M') IST, outside the NSE fetch (checkout, Node set-up or saving the snapshot). The later slots tonight try again on their own; if no digest has come by morning, use Run workflow.
+          Log: $RUN_URL"
+          curl -sS --max-time 20 -o /dev/null -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" -d disable_web_page_preview=true || echo "telegram alert not sent"
