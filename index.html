@@ -196,6 +196,24 @@ textarea{width:100%;min-height:110px;font-family:var(--font-num);font-size:12px;
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:var(--shadow);z-index:20;max-width:92vw}
 footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
 @media (prefers-reduced-motion:no-preference){.bar{transition:width .25s ease}}
+
+/* the "?" beside a section title and its popup (help.js, 21 Nov 2026) */
+.help{flex:none;display:inline-grid;place-items:center;width:18px;height:18px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--fg-2);font-size:11px;font-weight:700;line-height:1;cursor:help;position:relative}
+.help::after{content:"";position:absolute;inset:-9px}   /* a comfortable touch target without a bigger dot */
+.help:hover,.help[aria-expanded="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+h1 .help{vertical-align:3px;margin-left:4px}
+.helppop{position:absolute;z-index:30;width:max-content;max-width:min(380px,calc(100vw - 24px));background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(10,20,40,.22);padding:12px 14px 4px;font-size:13px;line-height:1.5;font-weight:400;text-align:left}
+.helppop h3{font-size:13.5px;margin:0 22px 8px 0}
+.helppop p{margin:0 0 10px}
+.helppop-l{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);font-weight:700;margin-bottom:1px}
+.helppop-m{color:var(--fg-2);border-top:1px solid var(--line-soft);padding-top:8px}
+.helppop-x{position:absolute;top:6px;right:6px;width:26px;height:26px;border:0;border-radius:6px;background:transparent;color:var(--fg-3);font-size:18px;line-height:1;display:none}
+.helppop.pinned .helppop-x{display:block} .helppop-x:hover{background:var(--surface-2);color:var(--fg)}
+/* Results drift card (drift.js) */
+.drift-season{margin:14px 0 6px;font-size:13px}
+.drift-tbl tr.star td{background:var(--up-soft)} .drift-tbl tr.star .sym{font-weight:700}
+.tag.star{background:var(--up);color:var(--surface);font-weight:700} .tag.fwd{background:var(--accent-soft);color:var(--accent)} .tag.open{background:var(--warn-soft);color:var(--warn)}
+#driftBody code{font-family:var(--font-num);font-size:12px}
 </style>
 </head>
 <body>
@@ -205,7 +223,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     <div class="strip-in">
       <div class="grow">
         <div class="eyebrow">NSE · Swing setups · rules engine</div>
-        <h1>Nifty Swing Desk</h1>
+        <h1>Nifty Swing Desk <button type="button" class="help" data-help="desk">?</button></h1>
       </div>
       <span id="pillRegime" class="pill"><span class="dot"></span>No data yet</span>
       <span id="pillIndex" class="pill"><span class="dot"></span>Index —</span>
@@ -217,12 +235,12 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
 
   <section class="grid">
     <div class="card span-4">
-      <h2>Market regime</h2>
+      <h2>Market regime <button type="button" class="help" data-help="regime">?</button></h2>
       <div class="stats" id="regimeStats"></div>
       <div id="regimeNote" class="note" style="margin-top:12px"></div>
     </div>
     <div class="card span-4">
-      <h2>Risk &amp; sizing <span class="sub">drives every entry below</span></h2>
+      <h2>Risk &amp; sizing <button type="button" class="help" data-help="risk">?</button> <span class="sub">drives every entry below</span></h2>
       <div class="form-row">
         <div class="field w-150"><label for="capital">Capital (₹)</label><input id="capital" type="number" min="1000" step="1000"></div>
         <div class="field w-110"><label for="riskPct">Risk / trade %</label><input id="riskPct" type="number" min="0.1" max="5" step="0.1"></div>
@@ -232,21 +250,21 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
       <div id="sizingNote" class="note" style="margin-top:12px"></div>
     </div>
     <div class="card span-4">
-      <h2>Today's rules</h2>
+      <h2>Today's rules <button type="button" class="help" data-help="rules">?</button></h2>
       <ul class="rules" id="rules"></ul>
     </div>
   </section>
 
 
   <section class="card" id="momCard">
-    <h2>Momentum portfolio <span class="sub" id="momSub"></span></h2>
+    <h2>Momentum portfolio <button type="button" class="help" data-help="momentum">?</button> <span class="sub" id="momSub"></span></h2>
     <div id="momNote" class="note" style="margin-bottom:10px"></div>
     <div class="tbl-wrap"><table id="momTbl"><thead></thead><tbody></tbody></table></div>
     <div id="momEmpty" class="empty" hidden></div>
   </section>
 
   <section class="card">
-    <h2>Swing setups <span class="sub" id="queueSub"></span></h2>
+    <h2>Swing setups <button type="button" class="help" data-help="swing">?</button> <span class="sub" id="queueSub"></span></h2>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div id="queueNote" class="note" style="margin-bottom:10px" hidden>These are <b>conditional orders for the next session</b>, not stocks to buy at market. For each: place a buy-stop at the entry price with the stop-loss attached; if the price never reaches the entry tomorrow, the order expires and the setup is void. A name that was here today and is gone tomorrow was simply not triggered &mdash; nothing was lost. Every rule here is judged on the <a href="#backtestCard">backtest</a>, not on any single day.</div>
     <div class="tbl-wrap"><table id="queueTbl"><thead></thead><tbody></tbody></table></div>
@@ -254,14 +272,14 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card">
-    <h2>Sector momentum <span class="sub" id="secSub">click a sector to filter the queue</span><span class="seg" role="group" aria-label="View" style="margin-left:auto"><button class="seg-btn" id="viewInd" data-view="industries" aria-pressed="true">Industries</button><button class="seg-btn" id="viewAll" data-view="all" aria-pressed="false">All stocks</button></span></h2>
+    <h2>Sector momentum <button type="button" class="help" data-help="sectors">?</button> <span class="sub" id="secSub">click a sector to filter the queue</span><span class="seg" role="group" aria-label="View" style="margin-left:auto"><button class="seg-btn" id="viewInd" data-view="industries" aria-pressed="true">Industries</button><button class="seg-btn" id="viewAll" data-view="all" aria-pressed="false">All stocks</button></span></h2>
     <div class="sec-head"><span>Sector</span><span>Today avg %</span><span>30D avg</span><span>Breadth</span><span>Turnover</span></div>
     <div class="sectors" id="sectors"></div>
     <div id="secMore" style="margin-top:8px" hidden><button class="btn small" id="secMoreBtn"></button></div>
   </section>
 
   <section class="card" id="universeCard">
-    <h2><span id="uniTitle">Universe</span> <span class="sub" id="uniSub"></span></h2>
+    <h2><span id="uniTitle">Universe</span> <button type="button" class="help" data-help="universe">?</button> <span class="sub" id="uniSub"></span></h2>
     <div class="form-row" style="margin-bottom:10px">
       <div class="field w-150"><label for="search">Find symbol</label><input id="search" type="search" placeholder="e.g. TECHM"></div>
       <div class="field w-150"><label for="assignSym">Assign sector</label><input id="assignSym" placeholder="SYMBOL"></div>
@@ -273,7 +291,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card" id="paperCard">
-    <h2>Paper book vs the index fund <span class="sub" id="paperSub"></span></h2>
+    <h2>Paper book vs the index fund <button type="button" class="help" data-help="paper">?</button> <span class="sub" id="paperSub"></span></h2>
     <div class="stats" id="paperStats"></div>
     <div id="paperNote" class="note" style="margin-top:12px" hidden></div>
     <div class="tbl-wrap" style="margin-top:12px"><table id="paperTbl"><thead></thead><tbody></tbody></table></div>
@@ -281,7 +299,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card" id="positionsCard" hidden>
-    <h2>Open positions &mdash; today's line <span class="sub" id="posSub"></span><button class="btn small" id="posCopy" style="margin-left:auto" title="Copy the open positions as a config.json block, so the Telegram digest carries the same lines">Copy for the digest</button></h2>
+    <h2>Open positions &mdash; today's line <button type="button" class="help" data-help="positions">?</button> <span class="sub" id="posSub"></span><button class="btn small" id="posCopy" style="margin-left:auto" title="Copy the open positions as a config.json block, so the Telegram digest carries the same lines">Copy for the digest</button></h2>
     <div class="note" style="margin-bottom:10px">One line per open journal trade, from the rules the backtest applies and nothing else: out at the stop or the target, stop to the entry price after a close at +1R, out at the close of the 15th bar for swing setups; a 20% trailing stop and the rank-30 rule for a momentum name. The line is the rule, not an opinion &mdash; and a trade the rule says to exit stays here until you close it in the journal. The digest shows these lines only for positions pasted into <code>config.json</code>, which is a public file.</div>
     <div id="posTbl" class="pos-list"></div>
     <textarea id="posJson" hidden readonly style="margin-top:10px"></textarea>
@@ -289,7 +307,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
 
   <section class="grid">
     <div class="card span-8">
-      <h2>Trade journal <span class="sub">status is marked against each day's snapshot</span><span style="margin-left:auto;display:flex;gap:6px"><button class="btn small" id="exportBtn" title="Download journal, settings and sector overrides as JSON">Backup</button><label class="btn small" for="importFile" style="margin:0">Restore<input id="importFile" type="file" accept="application/json" hidden></label></span></h2>
+      <h2>Trade journal <button type="button" class="help" data-help="journal">?</button> <span class="sub">status is marked against each day's snapshot</span><span style="margin-left:auto;display:flex;gap:6px"><button class="btn small" id="exportBtn" title="Download journal, settings and sector overrides as JSON">Backup</button><label class="btn small" for="importFile" style="margin:0">Restore<input id="importFile" type="file" accept="application/json" hidden></label></span></h2>
       <div class="form-row" id="jForm">
         <div class="field w-110"><label for="jSym">Symbol</label><input id="jSym" placeholder="SYMBOL"></div>
         <div class="field w-110"><label for="jDate">Entry date</label><input id="jDate" type="date"></div>
@@ -306,7 +324,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
       <div id="jEmpty" class="empty" hidden>No trades logged. Use <b>Log trade</b> on a signal row to prefill this form.</div>
     </div>
     <div class="card span-4">
-      <h2>Performance</h2>
+      <h2>Performance <button type="button" class="help" data-help="performance">?</button></h2>
       <div class="stats" id="perfStats"></div>
       <div id="perfBooks" style="margin-top:12px" hidden></div>
       <div class="note" style="margin-top:12px" id="perfNote"></div>
@@ -314,7 +332,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
   </section>
 
   <section class="card" id="importCard">
-    <h2>Manual snapshot <span class="sub">normally the daily job does this; use it if the job fails or for an intraday check</span></h2>
+    <h2>Manual snapshot <button type="button" class="help" data-help="import">?</button> <span class="sub">normally the daily job does this; use it if the job fails or for an intraday check</span></h2>
     <div class="grid">
       <div class="span-5">
         <label class="drop" id="drop" for="file">Drop the NSE CSV here or <u>choose a file</u><input id="file" type="file" accept=".csv,text/csv,text/plain"></label>
@@ -335,8 +353,13 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
     </div>
   </section>
 
+  <details class="card" id="driftCard" hidden>
+    <summary><h2>Results drift <button type="button" class="help" data-help="drift">?</button> <span class="sub" id="driftSub"></span><span class="chev" aria-hidden="true">&#9660;</span></h2></summary>
+    <div id="driftBody"></div>
+  </details>
+
   <details class="card" id="backtestCard">
-    <summary><h2>What the rules have earned <span class="sub">walk-forward backtests on ten years, Jun 2017 &rarr; Nov 2026, point-in-time NIFTY 500 members, costs included &middot; four findings, tap one to read it</span><span class="chev" aria-hidden="true">&#9660;</span></h2></summary>
+    <summary><h2>What the rules have earned <button type="button" class="help" data-help="backtest">?</button> <span class="sub">walk-forward backtests on ten years, Jun 2017 &rarr; Nov 2026, point-in-time NIFTY 500 members, costs included &middot; four findings, tap one to read it</span><span class="chev" aria-hidden="true">&#9660;</span></h2></summary>
     <details class="note down"><summary><b>Momentum engine</b><span class="verdict">13.6% a year on the full membership, against 17.3% for the momentum index fund &mdash; does not beat it; a monitor</span><span class="chev" aria-hidden="true">&#9660;</span></summary><div class="body"><b>Momentum engine</b> (Jun 2017 &rarr; Nov 2026, ten years, corporate-action-adjusted, profits reinvested, <b>on the names that were actually in the NIFTY 500 each day</b>): <b>13.6% a year</b>, 30.5% max drawdown, Sharpe 0.71 &mdash; against 12.3% for NIFTY 50 total return (38% drawdown), 15.2% for Nifty200 Momentum 30 and <b>17.3% for Nifty500 Momentum 50</b>, the index fund that does what this engine does. On today's constituents the same rules read 25.3%: the difference is survivorship bias, measured in two steps on 12 Nov 2026 (25.3 &rarr; 16.8 &rarr; 13.6). In 2022 the engine lost 17.6% while both momentum indices lost 5&ndash;8%. <b>Verdict, by the rule written before the run: the engine does not beat the investable version of its own idea.</b> It stays on the page as a monitor; the list is not a reason to trade. Reports: <code>reports/momentum-2026-11-12-adjusted-members.md</code>, <code>reports/membership-hypotheses-2026-11-12.md</code>.</div></details>
     <details class="note down"><summary><b>Momentum pullbacks</b><span class="verdict">+0.09R over 594 trades on the full membership, under the +0.1R bar &mdash; fail; paper trades only</span><span class="chev" aria-hidden="true">&#9660;</span></summary><div class="body"><b>Momentum pullbacks &mdash; the first swing slice to pass (12 Nov 2026):</b> the same pullback rule, taken only on names the momentum engine ranks in its top 30 that day, made <b>+0.16R per trade over 638 trades</b> on ten years of adjusted history (profit factor 1.39, 21R max drawdown, seven of ten years positive) against +0.02R for the rule on the whole universe. Caveats: 2020 supplied 45R of the 100R (without it +0.10R, the bar exactly), and the filter inherits the momentum list's survivorship bias. The correction, later the same day, in two steps: +0.12R over 603 trades with future members removed, then <b>+0.09R over 594 trades on the full membership</b> (profit factor 1.22; +0.04R without 2020) &mdash; under the bar (<code>reports/swing-membership-2026-11-12-adjusted-members.md</code>). <b>Fail, by the rule written first.</b> Watch-only stands; the paper trades logged as <b>Momentum pullback</b> may continue as a live check but promote nothing. Breakouts inside the list did not pass (+0.08R). Hypothesis and tables: <code>reports/swing-hypotheses-2026-11-12.md</code>, <code>reports/swing-universe-2026-11-12-adjusted.md</code>, <code>reports/membership-hypotheses-2026-11-12.md</code>.</div></details>
     <details class="note down"><summary><b>Swing engine</b><span class="verdict">no edge after costs (&minus;0.03R over 865 trades on ten years, full membership) &mdash; watch only</span><span class="chev" aria-hidden="true">&#9660;</span></summary><div class="body"><b>Swing engine &mdash; watch only (5 Nov 2026):</b> on corporate-action-adjusted history the combined rules are <b>breakeven after costs</b>: +0.01R per trade over 433 trades, profit factor 1.02, max drawdown 23R, positive in 2023&ndash;25 and negative in 2022 and 2026, with 46% of exits the 15-day time stop. (Unadjusted they read &minus;0.08R over 419 trades &mdash; bonus ex-dates were being counted as stop-outs.) The same tests one change at a time, re-run on adjusted history: no sector / volume score points &minus;0.03R; exit below the 10-day average &minus;0.08R; below the 20-day &minus;0.17R; breakouts only <b>+0.04R</b> over 376 trades, profit factor 1.09, the best &mdash; and still +0.26R in 2023 with three of the other four years negative. None reaches the +0.1R over 300 trades the roadmap requires, so setups stay levels to watch and the digest leads with momentum. The score (0&ndash;100) has <b>not</b> separated winners from losers. Full tables and every trade: <code>reports/backtest-2026-11-05-adjusted.md</code>, <code>reports/swing-variants-2026-11-05-adjusted.md</code>, and the unadjusted <code>backtest-2026-11-05.md</code> / <code>swing-variants-2026-11-05.md</code>. Run <code>node scripts/backtest.mjs</code> after any rule change.</div></details>
@@ -349,5 +372,7 @@ footer{font-size:12px;color:var(--fg-3);line-height:1.5;max-width:90ch}
 <script src="engine.js"></script>
 <script src="momentum.js"></script>
 <script src="app.js"></script>
+<script src="help.js"></script>
+<script src="drift.js"></script>
 </body>
 </html>

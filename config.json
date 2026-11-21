@@ -22,7 +22,15 @@
   "reminders": [
     {
       "date": "2026-11-25",
-      "text": "A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work. If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping)."
+      "text": "A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work (19 and 20 Nov: 19:16 and 19:00 IST). If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping). Note the week's times under A16; the decision is at the 8 Dec reading."
+    },
+    {
+      "date": "2026-12-08",
+      "text": "Slot ladder, second reading (A16): list the digest times since 18 Nov and decide — mostly 18:00–18:45 IST → tick A16; 19:00 or later → add the 04:02 and 05:02 UTC slots to daily.yml; hours late → the outside clock (README, 'When the digest is late'). Has any run failed since 21 Nov, and did the alert arrive?"
+    },
+    {
+      "date": "2026-12-17",
+      "text": "Results drift, first reading (A1): the 47 PEAD trades open on 20 Nov have closed. npm run backtest:pead, then read the three conditions of the 13 Nov rule on the finished list — if 2023 is back over 40% of the R the setup fails by the letter and is closed (reports/pead-results-drift-reading-2026-11-21.md)."
     },
     {
       "date": "2026-11-30",
@@ -43,6 +51,10 @@
       "date": "2027-04-02",
       "text": "NIFTY 500 review has taken effect (end of March / end of September): do the index-review top-up in BACKFILL.md — save the press release, the new constituent list and symbolchange.csv, rebuild the membership list, then backfill --members from home, and again a month later. Until then the paper book cannot rank the new names and carries the ones that left at a stale price.",
       "repeat": "semiannual"
+    },
+    {
+      "date": "2027-04-12",
+      "text": "Results drift, the paper season (A1): from home, the results-dates top-up (BACKFILL.md, 'Results dates'), then npm run backtest:pead and backtest:pead-portfolio. Read the forward season in the report's Results drift section and on the site: trades, R, excess over the NIFTY 50, the starred share against 23.6%. A record, not a verdict — rule frozen 21 Nov 2026."
     },
     {
       "date": "2027-02-05",
