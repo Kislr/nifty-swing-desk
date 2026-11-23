@@ -1,21 +1,21 @@
 {
  "asOf": "2026-11-20",
- "report": "reports/pead-2026-11-21-adjusted-members.md",
+ "report": "reports/pead-2026-11-23-adjusted-members.md",
  "verdict": {
   "result": "pass",
-  "why": "0.152R over 1926 trades; excess positive in 7 of 10 years; largest year 36% of total R"
+  "why": "0.154R over 1928 trades; excess positive in 7 of 10 years; largest year 35% of total R"
  },
  "primary": {
-  "n": 1926,
-  "expectancy": 0.152,
-  "meanExcess": 0.15,
-  "maxYearShare": 0.36,
+  "n": 1928,
+  "expectancy": 0.154,
+  "meanExcess": 0.17,
+  "maxYearShare": 0.35,
   "openAtEnd": 44
  },
  "desk": {
   "n": 340,
-  "expectancy": 0.064,
-  "meanExcess": -0.35
+  "expectancy": 0.095,
+  "meanExcess": -0.14
  },
  "frozen": "2026-11-21",
  "showFrom": "2026-10-01",
