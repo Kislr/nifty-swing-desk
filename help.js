@@ -38,7 +38,7 @@ const HELP = {
     use: 'Look up any company, sort by any column, or correct the industry a stock is filed under. Nothing in this table is a suggestion; it is the raw material the other sections are built from.' },
   paper: { title: 'Paper book vs the index fund',
     what: 'A pretend portfolio. The momentum rules “buy” and “sell” with imaginary money, day by day, with nobody intervening — and the result is compared with simply holding a momentum index fund (a ready-made basket anyone can buy).',
-    use: 'Lets you see, with no money at risk, whether following the rules is doing better or worse than the simple alternative. Each holding has one line saying hold or sell. Any decision about real money waits until this record is at least six months long.' },
+    use: 'Lets you see, with no money at risk, whether following the rules is doing better or worse than the simple alternative. Each holding has one line saying hold or sell. Because the result depends partly on the day the pretend portfolio happened to start, twenty more copies are started on the following twenty trading days (“The twenty-one books”) and the middle one is what counts. Any decision about real money waits until all of them are at least six months old, and the test they have to pass was written down before they began.' },
   positions: { title: 'Open positions — today’s line',
     what: 'For every trade you have written into the journal below and not yet closed, one line stating what the rules say today: hold, move the stop up, or exit.',
     use: 'A daily to-do list for trades you already have. It applies the same exit rules that were used in the tests, so the decision is made in advance rather than in the heat of the moment.' },

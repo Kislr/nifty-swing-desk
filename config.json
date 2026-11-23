@@ -12,6 +12,8 @@
   "paper": {
     "from": "2026-11-13",
     "capital": 500000,
+    "books": 21,
+    "fund": "NIFTY500 MOMENTUM 50",
     "benchmarks": [
       "NIFTY500 MOMENTUM 50",
       "NIFTY200 MOMENTUM 30",
@@ -32,6 +34,11 @@
     {
       "date": "2026-12-08",
       "text": "Slot ladder, second reading (A16): list the digest times since 18 Nov and decide — mostly 18:00–18:45 IST → tick A16; 19:00 or later → add the 04:02 and 05:02 UTC slots to daily.yml; hours late → the outside clock (README, 'When the digest is late'). Has any run failed since 21 Nov, and did the alert arrive?"
+    },
+    {
+      "date": "2026-12-15",
+      "text": "The twenty-one books (A21): book 21 should have started on 14 Dec — the site's card and the job's log say so. Copy the 21 start days from data/latest.json → paperBooks.starts into config.json → paper.starts, so that a session loaded later cannot move a book; then note it under A21.",
+      "days": 2
     },
     {
       "date": "2026-12-17",
@@ -63,11 +70,11 @@
     },
     {
       "date": "2027-02-05",
-      "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Also the journal's momentum-pullback paper trades vs the backtest, and the Discretionary book's record in R (site → Performance → by book; Backup for the sentences written at entry). Write the answer into ROADMAP.md."
+      "text": "Three months of the paper book (since 13 Nov 2026): is the engine, both switches on, ahead of or behind NIFTY500 MOMENTUM 50 since then, on return and on drawdown (latest.json paper, data/benchmarks/live.json; refresh the TR files from niftyindices.com for the dividend-inclusive number)? Beside it the twenty-one books' line (median, range, how many ahead) — a look, not the reading, which is on 14 Jun. Also the journal's momentum-pullback paper trades vs the backtest, and the Discretionary book's record in R (site → Performance → by book; Backup for the sentences written at entry). Write the answer into ROADMAP.md."
     },
     {
-      "date": "2027-05-05",
-      "text": "Six months of the paper book. Decide: behind the fund on return and not clearly better on drawdown → the desk stays a monitor and the fund stays the holding; ahead → the owner's call on real money. Read the Discretionary book the same way: its expectancy in R beside the paper book and the fund — a record, never a reason to change a rule. Then, if everything above is ticked, schedule the final audit session (README, Housekeeping)."
+      "date": "2027-06-14",
+      "text": "The twenty-one books, the reading (A21) — six months from book 21's first day; this replaces the 5 May reading of book 1 alone. First the five data conditions in reports/momentum-books-reading-rule-2026-11-23.md (start days frozen, a fund close on every first day and today, the March index-review top-up, corporate actions, no missing session). Then: node scripts/paper-books.mjs --to <today> --write. Ahead = median gap +1.0 point or more and 14 of 21 books ahead; anything else → the desk stays a monitor and the fund stays the holding. An 'ahead' opens the call on real money (owner, 23 Nov 2026): read the books as the actual investment — the script prints the median margin over the fund in rupees on ₹5,00,000 — and decide whether it is tangible, with the history beside it (an 'ahead' came up in 36% of past half years on rules level with the fund). Read the Discretionary book the same way: its expectancy in R beside the books and the fund — a record, never a reason to change a rule. Then, if everything above is ticked, schedule the final audit session (README, Housekeeping)."
     }
   ]
 }

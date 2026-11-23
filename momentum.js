@@ -125,7 +125,10 @@
    *  rebalance and leaves as 'ineligible', like any other name that fails the screen. opts.stale = N: a holding with no
    *  close for N bars in a row (a delisting or suspension once past members' bars are loaded) is closed at its last
    *  close as 'stopped trading'; off by default (0), because on today's constituents a long run of missing bars is a
-   *  hole in the history files, and the plain run should not change for a membership feature. */
+   *  hole in the history files, and the plain run should not change for a membership feature. opts.cache = a Map: the day's
+   *  ranking is kept there by bar number and reused — for runs that differ only in their start day (the twenty-one paper
+   *  books), where bars, parameters, sector map and filter are the same and the ranking at a close is therefore the same
+   *  object. The caller answers for that; without the option nothing is kept. */
   function simulate(bars, params, custom, opts) {
     const P = Object.assign({}, DEFAULTS, params || {}); const N = bars.dates.length; const warmup = P.lookback + P.skip + 1; opts = opts || {}; const filter = opts.filter || null; const stale = opts.stale || 0;
     const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
@@ -133,6 +136,7 @@
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
       trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size, peak: +p.peak.toFixed(2) }); delete open[sym]; };
     const vflag = P.volScale ? volFlags(bars, P) : null;   // high-volatility flag per bar, closes up to that bar only
+    const cache = opts.cache || null; const select = i => { if (!cache) return selectAt(bars, i, P, custom, filter); let R = cache.get(i); if (!R) cache.set(i, R = selectAt(bars, i, P, custom, filter)); return R; };
     const marked = i => { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } return mv; };
     // Buy from the top of the ranking into the free slots: sector cap, then the slot (half of it while volatility is high), then the cash left.
     const fill = (R, i, how) => { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
@@ -152,13 +156,13 @@
       //  the behaviour every report on record was made with; 'closed' is the fail-safe reading, kept as a switch so the difference stays measurable — README, A9)
       const gateOK = g => g.open === true || (g.open == null && P.gateUnknown !== 'closed');
       const gate = gateAt(bars, i, P);
-      if (i - lastReb >= P.rebalance) { lastReb = i; const R = selectAt(bars, i, P, custom, filter); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
+      if (i - lastReb >= P.rebalance) { lastReb = i; const R = select(i); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
         for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
           if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
         if (P.compound) slot = marked(i) / P.topN;
         if (gateOK(R.gate)) fill(R, i, 'rebalance'); }
       // 2b. refill: 'close' — any other day the gate is open and the book is short, rank at this close and fill the free slots
-      else if (P.refill === 'close' && gateOK(gate) && Object.keys(open).length < P.topN) { const R = selectAt(bars, i, P, custom, filter);
+      else if (P.refill === 'close' && gateOK(gate) && Object.keys(open).length < P.topN) { const R = select(i);
         if (P.compound) slot = marked(i) / P.topN; fill(R, i, 'refill'); }
       let inv = 0; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; inv += (c != null ? c : open[sym].entry) * open[sym].qty; } const mv = cash + inv;
       equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gate.open, index: bars.index ? bars.index.c[i] : null, volHigh: P.volScale ? vflag[i] : undefined });
@@ -194,7 +198,7 @@
   function paperBook(bars, params, custom, opts) {
     opts = opts || {}; const P = Object.assign({}, DEFAULTS, { compound: true }, params || {}); const from = opts.from; if (!from) return null;
     const N = bars.dates.length; const last = N - 1; const today = bars.dates[last]; if (!N || today < from) return null;
-    const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20, filter: opts.filter || null }); const eq = sim.equity; if (!eq.length) return null;   // opts.filter (19 Nov 2026, audit A6): the point-in-time membership the backtest ranks on, so a name that leaves the index is sold at the next rebalance as 'ineligible', as it is there
+    const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20, filter: opts.filter || null, cache: opts.cache || null }); const eq = sim.equity; if (!eq.length) return null;   // opts.filter (19 Nov 2026, audit A6): the point-in-time membership the backtest ranks on, so a name that leaves the index is sold at the next rebalance as 'ineligible', as it is there
     const i0 = bars.dates.indexOf(eq[0].date); const value = eq[eq.length - 1].value; const st = stats(sim);
     const positions = sim.trades.filter(t => t.reason === 'end of data' && t.exitDate === today).map(t => { const B = bars.sym[t.sym]; const lastPx = B && B.c[last] != null ? B.c[last] : t.exit;
       let lb = last; while (B && lb > 0 && B.c[lb] == null) lb--;   // the last day this holding has a bar: not today when the daily job no longer gets it (it left the index, or stopped trading)
@@ -213,11 +217,64 @@
     return { membersAsOf: opts.membersAsOf || null, membersStale: membersAge != null && membersAge > 200, from: first, to: today, days: eq.length, capital: sim.capital, value, ret: value / sim.capital - 1, maxDrawdown: st.maxDrawdown, invested: inv, investedShare: value ? inv / value : 0,
       positions, buys, sells, gate, volHigh, slot: +slot.toFixed(0), halfSize: volHigh === true, nextRebalanceIn, trades: sim.trades.filter(t => t.reason !== 'end of data').length, params: P, benchmarks, equity: eq.map(e => ({ date: e.date, value: e.value, invested: e.invested, positions: e.positions })) };
   }
-  /** Telegram block for the paper book. */
-  function paperDigest(pb, fmt) {
+  /** The twenty-one paper books (A21; owner's decision 21 Nov 2026, built 23 Nov). The engine rebalances every 21 bars from its
+   *  first day, so one book is one draw of 21 (reports/momentum-phases-2026-11-21-adjusted-members.md: 12.7% to 21.6% a year on the
+   *  same rules). Book 1 is the paper book above, unchanged, from opts.from; books 2…n are the same rules and the same capital
+   *  started at the close of each of the next n − 1 sessions on file. Every book is a replay (paperBook), so a start day already
+   *  past is replayed and one not yet reached starts by itself on its day; the day's ranking is computed once and shared.
+   *  opts.starts = [dates]: the start days, frozen — once all n exist they go into config.json → paper.starts, because counted
+   *  from the bars they would all move if a session were loaded later (as the weekend sessions were on 21 Nov 2026).
+   *  opts.fund = the benchmark every book is read against over its own days (default: the first series in opts.benchmarks).
+   *  Returns { n, started, pending, starts, fund, rows (one per started book), list (the full paperBook objects; list[0] is book 1),
+   *  ret {median, min, max}, measured, G (median gap to the fund), gap {min, max}, A (books ahead), D (median drawdown gap,
+   *  positive = the book fell less), L (books that fell less), readingFrom, due, reading }. The rule for the reading —
+   *  what counts as ahead, and when — was written before this function: reports/momentum-books-reading-rule-2026-11-23.md. */
+  const READING = { gap: 0.01, dd: 0.02, share: 2 / 3, months: 6 };   // +1.0 point at the median and two books in three (14 of 21) ahead; 2.0 points and two in three for "clearly better on drawdown"; read six calendar months after the last book starts
+  const median = a => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2; };
+  const addMonths = (d, n) => { const t = new Date(d + 'T00:00:00Z'); const day = t.getUTCDate(); t.setUTCDate(1); t.setUTCMonth(t.getUTCMonth() + n); const last = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() + 1, 0)).getUTCDate(); t.setUTCDate(Math.min(day, last)); return t.toISOString().slice(0, 10); };
+  /** Largest peak-to-trough fall of a { date: close } series between two dates, both included, as a fraction. null without a close. */
+  function seriesDrawdown(series, from, to) { let peak = -Infinity, dd = null; for (const d of Object.keys(series || {}).filter(x => x >= from && x <= to).sort()) { const v = series[d]; if (!(v > 0)) continue; peak = Math.max(peak, v); dd = Math.max(dd || 0, (peak - v) / peak); } return dd; }
+  function paperBooks(bars, params, custom, opts) {
+    opts = opts || {}; const n = opts.books > 0 ? Math.floor(opts.books) : 21; const from = opts.from; const N = bars && bars.dates ? bars.dates.length : 0; if (!from || !N) return null;
+    const today = bars.dates[N - 1]; const frozen = Array.isArray(opts.starts) && opts.starts.length > 0;
+    let starts; if (frozen) starts = opts.starts.slice(0, n).map(String); else { const i0 = bars.dates.findIndex(d => d >= from); starts = i0 < 0 ? [] : bars.dates.slice(i0, i0 + n); }
+    const cache = opts.cache || new Map(); const fund = opts.fund || Object.keys(opts.benchmarks || {})[0] || null; const series = fund && opts.benchmarks ? opts.benchmarks[fund] : null;
+    const list = [], rows = [];
+    starts.forEach((d, k) => { if (d > today) return; const pb = paperBook(bars, params, custom, Object.assign({}, opts, { from: k === 0 && !frozen ? from : d, cache })); if (!pb) return;
+      const fb = fund ? pb.benchmarks.find(b => b.name === fund && !b.missing) : null; const fdd = series ? seriesDrawdown(series, pb.from, pb.to) : null; const gap = fb ? pb.ret - fb.ret : null;
+      list.push(pb); rows.push({ k: k + 1, from: pb.from, days: pb.days, value: pb.value, ret: pb.ret, maxDrawdown: pb.maxDrawdown, names: pb.positions.length, investedShare: pb.investedShare, trades: pb.trades, nextRebalanceIn: pb.nextRebalanceIn,
+        fundRet: fb ? fb.ret : null, fundFrom: fb ? fb.from : null, fundAsOf: fb ? fb.asOf : null, fundExact: !!fb && fb.from === pb.from && !fb.stale,   // exact: the fund has a close on the book's first day and on the last one
+        gap, ahead: gap == null ? null : gap > 0, fundDrawdown: fdd, ddGap: fdd == null ? null : fdd - pb.maxDrawdown, holdings: pb.positions.map(p => ({ sym: p.sym, ret: p.ret })) }); });
+    if (!list.length) return null;
+    const rets = rows.map(r => r.ret), gaps = rows.filter(r => r.gap != null).map(r => r.gap), dds = rows.filter(r => r.ddGap != null).map(r => r.ddGap);
+    const out = { n, started: rows.length, pending: n - rows.length, frozen, from: rows[0].from, to: today, starts: rows.map(r => r.from), fund, rows, list,
+      ret: { median: median(rets), min: Math.min(...rets), max: Math.max(...rets) }, measured: gaps.length, G: median(gaps), gap: gaps.length ? { min: Math.min(...gaps), max: Math.max(...gaps) } : null, A: gaps.filter(g => g > 0).length,
+      D: median(dds), L: dds.filter(g => g > 0).length, inexact: rows.filter(r => r.gap != null && !r.fundExact).map(r => r.k) };
+    out.readingFrom = rows.length === n ? addMonths(rows[n - 1].from, READING.months) : null; out.due = !!out.readingFrom && today >= out.readingFrom; out.reading = booksReading(out);
+    return out;
+  }
+  /** The reading, by the rule written on 23 Nov 2026 (reports/momentum-books-reading-rule-2026-11-23.md). null until every book has
+   *  started and is measured against the fund. Return: 'ahead' = median gap ≥ +1.0 point and two books in three ahead; 'behind' = median
+   *  gap below zero; otherwise 'level'. Drawdown: `losesLess` = median drawdown gap ≥ 2.0 points and two books in three fell less.
+   *  verdict: 'ahead' (the owner's call on real money) | 'monitor' | 'monitor, loses less' (the fund stays the holding in both).
+   *  A function of the numbers only: whether the day has come (`due`) and whether the data conditions hold is the reader's to check. */
+  function booksReading(B, rule) {
+    const R = Object.assign({}, READING, rule || {}); if (!B || B.started < B.n || B.measured < B.n || B.G == null) return null;
+    const need = Math.ceil(B.n * R.share - 1e-9); const ret = B.G >= R.gap && B.A >= need ? 'ahead' : B.G < 0 ? 'behind' : 'level';
+    const losesLess = B.D != null && B.D >= R.dd && B.L >= need;
+    return { ret, losesLess, need, verdict: ret === 'ahead' ? 'ahead' : losesLess ? 'monitor, loses less' : 'monitor', rule: R };
+  }
+  /** The twenty-one books' line in the digest: median, range, how many are ahead of the fund. null until a second book exists. */
+  function booksLine(B) {
+    if (!B || B.started < 2) return null; const pc = x => (x >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%'; const pts = x => (x >= 0 ? '+' : '') + (x * 100).toFixed(1) + ' pts';
+    return `• ${B.n} BOOKS${B.pending ? ` (${B.started} started, one a day)` : ''}: median ${pc(B.ret.median)}, ${pc(B.ret.min)} to ${pc(B.ret.max)}` + (B.measured ? ` · ahead of ${B.fund}, own days: ${B.A} of ${B.measured}, median gap ${pts(B.G)}` : '');
+  }
+  /** Telegram block for the paper book. `books` (paperBooks, optional) adds the twenty-one books' one line under the header. */
+  function paperDigest(pb, fmt, books) {
     if (!pb) return null; const f = fmt || (n => Number(n).toFixed(2)); const pc = x => (x >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%'; const L = [];
     const bm = pb.benchmarks.filter(b => !b.missing).map(b => `${b.name} ${pc(b.ret)}${b.stale ? ' (to ' + b.asOf + ')' : ''}`).join(' · ');
     L.push(`PAPER BOOK — the engine's rules run forward since ${pb.from}, reinvested, beside the index fund: ₹${f(pb.capital, 0)} → ₹${f(pb.value, 0)} (${pc(pb.ret)}) after ${pb.days} day${pb.days === 1 ? '' : 's'}${bm ? ' · ' + bm : ''} · max drawdown ${(pb.maxDrawdown * 100).toFixed(1)}% · ${pb.positions.length} of ${pb.params.topN} names, ${Math.round(pb.investedShare * 100)}% invested`);
+    const bl = booksLine(books); if (bl) L.push(bl);
     L.push(`• gate ${pb.gate.open == null ? 'n/a' : pb.gate.open ? 'OPEN' : 'CLOSED'}${pb.volHigh == null ? '' : pb.volHigh ? ' · Nifty 20-day volatility above its 1-year median → new buys at HALF size' : ' · volatility normal → full size'} · slot ₹${f(pb.slot, 0)}${pb.halfSize ? ' (₹' + f(pb.slot * pb.params.volFactor, 0) + ' today)' : ''} · next rebalance in ${pb.nextRebalanceIn} bar${pb.nextRebalanceIn === 1 ? '' : 's'}`);
     if (pb.buys.length) L.push(`• BOUGHT today: ${pb.buys.map(b => `${b.sym} ${b.qty} @ ${f(b.price)}${b.size === 'half' ? ' (half)' : ''}${b.fill === 'refill' ? ' (refill)' : ''}`).join(', ')}`);
     if (pb.sells.length) L.push(`• SOLD today: ${pb.sells.map(s => `${s.sym} ${s.qty} @ ${f(s.price)} (${s.reason}, ${s.ret >= 0 ? '+' : ''}${s.ret}%)`).join(', ')}`);
@@ -239,5 +296,5 @@
     return L.join('\n');
   }
 
-  return { DEFAULTS, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, smaOver, volFlags, paperBook, paperDigest };
+  return { DEFAULTS, READING, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, smaOver, volFlags, paperBook, paperDigest, paperBooks, booksReading, booksLine, seriesDrawdown };
 });
