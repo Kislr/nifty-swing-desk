@@ -1,0 +1,64 @@
+name: Compounder US survivor count
+
+# The US leg's step (a), SCREEN.md decision 4 (23 Nov 2026): who was filing 10-Ks on each backtest cohort date and is not in the store
+# today, and how large they were. Reads EDGAR's quarterly full index and asks data.sec.gov two small questions per departed filer —
+# both reachable from here, not from a cloud session. Run by hand; it is a count, not a feed. About an hour.
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Classify only the first N departed filers (0 = all). Use 200 for a trial of the whole path.'
+        type: number
+        default: 0
+      fresh:
+        description: 'Ignore compounder/data/us/survivors.json and ask EDGAR again'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compounder-us
+  cancel-in-progress: false
+
+jobs:
+  survivors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Count the filers that left
+        env:
+          # SEC fair-access policy asks for a User-Agent naming who you are: Settings → Secrets and variables → Actions → Variables → EDGAR_USER_AGENT
+          EDGAR_USER_AGENT: ${{ vars.EDGAR_USER_AGENT }}
+        run: |
+          LIMIT="${{ github.event.inputs.limit }}"
+          FRESH="${{ github.event.inputs.fresh }}"
+          ARGS=""
+          if [ -n "$LIMIT" ] && [ "$LIMIT" != "0" ]; then ARGS="$ARGS --limit $LIMIT"; fi
+          if [ "$FRESH" = "true" ]; then ARGS="$ARGS --fresh"; fi
+          node scripts/compounder-survivors-us.mjs $ARGS
+      - name: Commit the count
+        run: |
+          git config user.name "swing-desk-bot"
+          git config user.email "swing-desk-bot@users.noreply.github.com"
+          git add compounder/data/us/survivors.json reports
+          if git diff --cached --quiet; then echo "no changes"; else git commit -m "data: compounder US survivor count $(date -u +%Y-%m-%d)" && git pull --rebase origin main && git push; fi
+      # Telegram alert when the run fails. Uses the two secrets the daily digest uses; without them it does nothing.
+      - name: Telegram alert if this run failed
+        if: failure() || cancelled()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          WHAT: ${{ github.workflow }} #${{ github.run_number }} (${{ github.event_name }})
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then echo "telegram not configured"; exit 0; fi
+          TEXT="⚠ Nifty Swing Desk — $WHAT failed at $(TZ=Asia/Kolkata date '+%Y-%m-%d %H:%M') IST. What it had classified is kept only if the run reached its save; run it again and it carries on from compounder/data/us/survivors.json.
+          Log: $RUN_URL"
+          curl -sS --max-time 20 -o /dev/null -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" -d disable_web_page_preview=true || echo "telegram alert not sent"
