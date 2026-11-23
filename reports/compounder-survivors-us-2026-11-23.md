@@ -1,6 +1,6 @@
 # The survivor count — who was filing 10-Ks and is not in the store (2026-11-23)
 
-EDGAR's full index, 53 quarters (2013 Q4 → 2026 Q4): 14,899 distinct filers of a 10-K. The store (`compounder/data/us/universe.json`, built 2026-10-25) holds 6,041 filers on NYSE or Nasdaq today, 3,152 of them screenable. 44 cohort dates, 2015-01-01 → 2025-10-01; a filer is active on a date when it filed a 10-K in the 456 days before it. 10,355 filers were active on at least one date and are not in the store; 200 of them were asked of data.sec.gov for their SIC code and their reported public float — **a partial run: 10,155 not asked, counted below as "not asked"**.
+EDGAR's full index, 53 quarters (2013 Q4 → 2026 Q4): 14,899 distinct filers of a 10-K. The store (`compounder/data/us/universe.json`, built 2026-10-25) holds 6,041 filers on NYSE or Nasdaq today, 3,152 of them screenable. 44 cohort dates, 2015-01-01 → 2025-10-01; a filer is active on a date when it filed a 10-K in the 456 days before it. 10,355 filers were active on at least one date and are not in the store; 10,355 of them were asked of data.sec.gov for their SIC code and their reported public float.
 
 **A departed filer is not yet a missing company.** EDGAR's 10-K filers include trusts, shells, issuers of public debt with private shares, non-traded REITs and the over-the-counter market. The table counts a departed filer only when it is non-financial and had reported a public float above zero by the cohort date, and buckets it by that float — the proxy the backtest uses for a name with no price. "With a Form 25" is the stricter reading: a class of its securities was at some point removed from a national exchange.
 
@@ -8,33 +8,33 @@ EDGAR's full index, 53 quarters (2013 Q4 → 2026 Q4): 14,899 distinct filers of
 
 | reported float on the date | in the store (screenable) | departed | share departed | departed, with a Form 25 | share |
 |---|---|---|---|---|---|
-| <$300M | 36,925 | 1,427 | 3.7% | 801 | 2.1% |
-| $300M–1B | 15,710 | 277 | 1.7% | 277 | 1.7% |
-| $1–2B | 9,954 | 411 | 4.0% | 411 | 4.0% |
-| $2–10B | 20,017 | 625 | 3.0% | 625 | 3.0% |
-| >$10B | 15,965 | 299 | 1.8% | 260 | 1.6% |
+| <$300M | 36,925 | 66,162 | 64.2% | 27,985 | 43.1% |
+| $300M–1B | 15,710 | 11,073 | 41.3% | 10,566 | 40.2% |
+| $1–2B | 9,954 | 5,508 | 35.6% | 5,254 | 34.5% |
+| $2–10B | 20,017 | 7,605 | 27.5% | 7,391 | 27.0% |
+| >$10B | 15,965 | 2,796 | 14.9% | 2,582 | 13.9% |
 | unknown | 3,057 | 0 | 0.0% | 0 | 0.0% |
-| **the screen's band, $300M–$10B** | **45,681** | **1,313** | **2.8%** | **1,313** | **2.8%** |
+| **the screen's band, $300M–$10B** | **45,681** | **24,186** | **34.6%** | **23,211** | **33.7%** |
 
 Figures are company-cohorts: a company active on twenty cohort dates is counted twenty times, on each side. "Share departed" = departed ÷ (departed + in the store). The store's "unknown" row is screenable filers with no float on file by the date; a departed filer with no float is not in the table (next paragraph).
 
-Not in the table, per company-cohort: 766 departed financials (SIC 6000–6799, outside the screen), 1,752 departed filers that had reported no public float above zero by the date, 184,186 not asked. All active filers: 324,138; in the store 134,395 (41.5%), of which screenable 101,628.
+Not in the table, per company-cohort: 70,879 departed financials (SIC 6000–6799, outside the screen), 25,720 departed filers that had reported no public float above zero by the date. All active filers: 324,138; in the store 134,395 (41.5%), of which screenable 101,628.
 
 ## By cohort year, inside the band
 
 | year | cohorts | in the store | departed | share departed | with a Form 25 | share |
 |---|---|---|---|---|---|---|
-| 2015 | 4 | 3,220 | 200 | 5.8% | 200 | 5.8% |
-| 2016 | 4 | 3,372 | 182 | 5.1% | 182 | 5.1% |
-| 2017 | 4 | 3,416 | 177 | 4.9% | 177 | 4.9% |
-| 2018 | 4 | 3,638 | 161 | 4.2% | 161 | 4.2% |
-| 2019 | 4 | 3,873 | 141 | 3.5% | 141 | 3.5% |
-| 2020 | 4 | 3,999 | 122 | 3.0% | 122 | 3.0% |
-| 2021 | 4 | 4,168 | 100 | 2.3% | 100 | 2.3% |
-| 2022 | 4 | 4,887 | 82 | 1.7% | 82 | 1.7% |
-| 2023 | 4 | 5,032 | 60 | 1.2% | 60 | 1.2% |
-| 2024 | 4 | 4,996 | 50 | 1.0% | 50 | 1.0% |
-| 2025 | 4 | 5,080 | 38 | 0.7% | 38 | 0.7% |
+| 2015 | 4 | 3,220 | 3,340 | 50.9% | 3,247 | 50.2% |
+| 2016 | 4 | 3,372 | 3,223 | 48.9% | 3,128 | 48.1% |
+| 2017 | 4 | 3,416 | 2,788 | 44.9% | 2,695 | 44.1% |
+| 2018 | 4 | 3,638 | 2,511 | 40.8% | 2,433 | 40.1% |
+| 2019 | 4 | 3,873 | 2,391 | 38.2% | 2,310 | 37.4% |
+| 2020 | 4 | 3,999 | 2,096 | 34.4% | 2,007 | 33.4% |
+| 2021 | 4 | 4,168 | 1,830 | 30.5% | 1,763 | 29.7% |
+| 2022 | 4 | 4,887 | 2,108 | 30.1% | 1,994 | 29.0% |
+| 2023 | 4 | 5,032 | 1,756 | 25.9% | 1,649 | 24.7% |
+| 2024 | 4 | 4,996 | 1,258 | 20.1% | 1,176 | 19.1% |
+| 2025 | 4 | 5,080 | 885 | 14.8% | 809 | 13.7% |
 
 The earlier the cohort, the more of its companies have since left: a 2015 cohort has had eleven years to lose them, a 2025 cohort one.
 
