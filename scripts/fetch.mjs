@@ -11,6 +11,10 @@
  * Paper book (13 Nov 2026): with config.paper = {from, capital?, benchmarks: [...]} the job also replays the momentum engine's
  * rules from `from` on the history it already has (M.paperBook), saves each benchmark index's close for the day into
  * data/benchmarks/live.json, prints a PAPER BOOK block in the digest and writes the book into latest.json for the site.
+ * Twenty-one books (A21, 23 Nov 2026): config.paper.books = 21 replays the same rules from each of the first 21 sessions on or after
+ * `from` (M.paperBooks; book 1 is the book above, unchanged), adds one line to the PAPER BOOK block — median, range, how many are ahead
+ * of config.paper.fund over their own days — and writes the table into latest.json as paperBooks. config.paper.starts, once set, fixes
+ * the 21 start days. The rule for reading them: reports/momentum-books-reading-rule-2026-11-23.md.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -176,7 +180,7 @@ try {
   const notices = E.noticesDigest(pend, gap, pend.length ? applyPend : undefined, { repaired: repairs, missing: E.indexHoles(result.bars, result.bars.dates.length - 1), gate: mom.gate });
   E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
   // Paper book: the engine's rules replayed from PAPER.from on the same bars, beside the index funds (price indices saved day by day in data/benchmarks/live.json).
-  let paper = null, live = null, todayBm = {};
+  let paper = null, books = null, live = null, todayBm = {};
   if (PAPER && PAPER.from) {
     live = await readJSON(LIVE_BM, {}); const got = await fetchBenchmarks(PAPER.benchmarks || [], date);
     // The call also carries the previous close: if the last trading day's close is missing (a failed fetch that day), fill it — a one-day gap heals itself.
@@ -185,13 +189,17 @@ try {
     const merged = JSON.parse(JSON.stringify(live)); for (const [name, days] of Object.entries(todayBm)) Object.assign(merged[name] = merged[name] || {}, days);
     for (const name of PAPER.benchmarks || []) if (name !== 'NIFTY 50' && !merged[name]) merged[name] = {};
     const MEMB = await readJSON(path.join(DATA, 'membership', 'members.json'), null);   // point-in-time NIFTY 500 membership (audit A6): the book ranks what the backtest ranks
-    paper = M.paperBook(result.bars, config.momentum || {}, custom, { from: PAPER.from, capital: PAPER.capital || config.risk.capital, benchmarks: merged, filter: MEMB ? membershipFilter(MEMB) : null, membersAsOf: MEMB ? MEMB.asOf : null });
+    // Book 1 is the book the digest has carried since 13 Nov 2026 — the same call with the same arguments; books 2…n start on the following sessions (A21).
+    books = M.paperBooks(result.bars, config.momentum || {}, custom, { from: PAPER.from, books: PAPER.books || 1, starts: PAPER.starts, fund: PAPER.fund || (PAPER.benchmarks || []).find(n => n !== 'NIFTY 50'), capital: PAPER.capital || config.risk.capital, benchmarks: merged, filter: MEMB ? membershipFilter(MEMB) : null, membersAsOf: MEMB ? MEMB.asOf : null });
+    paper = books ? books.list[0] : null;
     if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
+    else if (books.n > 1) { console.log(`paper books: ${books.started} of ${books.n} started (${books.starts[0]} → ${books.starts[books.started - 1]})${books.frozen ? ', start days from config.json' : ''}${books.inexact.length ? `; fund close missing on the first or last day of book ${books.inexact.join(', ')}` : ''}`);
+      if (!books.pending && !books.frozen) console.log(`paper books: all ${books.n} have started — freeze the start days: config.json → paper.starts = ${JSON.stringify(books.starts)}`); }
   }
   // One Telegram message whenever possible: the watch-only lists give way first (E.DIGEST_CAPS); momentum, the paper book, the pullbacks and the reminders never do.
   // Open positions pasted into config.json get one rule line each (E.positionLine); a hand-bought momentum name is read against today's ranking.
   const rankOf = Object.fromEntries(mom.ranked.map(r => [r.sym, r.rank])); const positions = E.positionsDigest(config.positions, result.bars, { rank: rankOf, holdRank: (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank });
-  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt), positions, notices, reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
+  const fit = E.digestFit(result, config.risk, { momentum: M.digest(mom, E.fmt), paper: M.paperDigest(paper, E.fmt, books), positions, notices, reminders: E.remindersDue(config.reminders, date) }); const text = fit.text;
   console.log('\n' + text + '\n'); console.log(`digest: ${text.length} characters, ${fit.fits ? 'one message' + (fit.level ? ` (lists trimmed to level ${fit.level})` : '') : 'over the cap — sent in parts'}`);
 
   if (DRY) process.exit(0);
@@ -216,7 +224,7 @@ try {
   await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify({ dates: pruned, latest: date, latestTime: time, index: config.index, historyYears, generatedAt: new Date().toISOString() }, null, 1));
   const strip = s => ({ sym: s.sym, sector: s.sector, kind: s.kind, setup: s.setup, tag: s.tag || null, momRank: s.momRank ?? null, score: s.score, entry: s.entry ?? null, stop: s.stop ?? null, target: s.target ?? null, qty: s.size ? s.size.qty : null, trigger: s.trigger || null, ltp: s.row.ltp, pct: s.row.pct, d30: s.row.d30, reasons: s.reasons });
   const momOut = { date: mom.date, gate: mom.gate, params: mom.params, picks: mom.picks.map(r => ({ rank: r.rank, sym: r.sym, sector: r.sector, ltp: r.ltp, ret: r.ret, ret1: r.ret1, ret6: r.ret6, ret12: r.ret12, offHigh: r.offHigh })) };
-  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, paper, digest: text }, null, 1));
+  await fs.writeFile(path.join(DATA, 'latest.json'), JSON.stringify({ date, time, regime: { ...result.reg }, leaders: [...result.board.leaders], laggards: [...result.board.laggards], signals: result.signals.map(strip), momentum: momOut, paper, paperBooks: books ? (({ list, ...rest }) => rest)(books) : null, digest: text }, null, 1));
   console.log(`wrote data/snapshots/${date}.json, data/index.json, data/latest.json`);
   const intraday = result.reg.intraday;
   if (!intraday || config.alertIntraday || FORCE) await telegram(text);
