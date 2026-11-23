@@ -170,3 +170,46 @@ assert(bars.dates.length === 4 && bars.sym.AAA.c[2] === 11 && bars.index.c[1] ==
   assert((await P.yearsOnDisk(tmp)).join(',') === '2023,2024', 'yearsOnDisk lists both forms once');
   await fsP.rm(tmp, { recursive: true, force: true }); }
 if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder price tests passed');
+
+// ---- the survivor count from EDGAR's full index (scripts/compounder-survivors-us.mjs, 23 Nov 2026; SCREEN.md decision 4) ----
+{ const SV = await import('./compounder-survivors-us.mjs');
+  const idx = ['Description:           Master Index of EDGAR Dissemination Feed by Form Type', 'Last Data Received:    March 31, 2015', '', 'Form Type   Company Name                                                  CIK         Date Filed  File Name', '-'.repeat(130),
+    '10-K             1 800 FLOWERS COM INC                                           1084869     2015-02-11  edgar/data/1084869/0001437749-15-017027.txt',
+    '10-K             GONE  WIDGETS, INC.                                             2000001     2015-03-02  edgar/data/2000001/0000000000-15-000001.txt',
+    '10-K/A           GONE  WIDGETS, INC.                                             2000001     2015-03-20  edgar/data/2000001/0000000000-15-000002.txt',
+    '10-K405          OLD FORM CO                                                     2000002     2015-01-15  edgar/data/2000002/0000000000-15-000003.txt',
+    '10-KT            TRANSITION CORP                                                 2000003     2015-01-20  edgar/data/2000003/0000000000-15-000004.txt',
+    '10-Q             GONE  WIDGETS, INC.                                             2000001     2015-02-09  edgar/data/2000001/0000000000-15-000005.txt',
+    'NT 10-K          LATE FILER LLC                                                  2000004     2015-03-31  edgar/data/2000004/0000000000-15-000006.txt',
+    '25-NSE           GONE  WIDGETS, INC.                                             2000001     2016-06-30  edgar/data/2000001/0000000000-16-000007.txt',
+    '25               OLD FORM CO                                                     2000002     2015-09-01  edgar/data/2000002/0000000000-15-000008.txt',
+    '15-12B           GONE  WIDGETS, INC.                                             2000001     2016-07-11  edgar/data/2000001/0000000000-16-000009.txt',
+    '8-K              1 800 FLOWERS COM INC                                           1084869     2015-01-29  edgar/data/1084869/0001437749-15-001111.txt'].join('\n');
+  const rows = SV.parseFormIdx(idx);
+  assert(rows.length === 7 && rows.map(r => r.form).join() === '10-K,10-K,10-K405,10-KT,25-NSE,25,15-12B' && rows[0].cik === 1084869 && rows[0].name === '1 800 FLOWERS COM INC' && rows[0].date === '2015-02-11' && rows[1].name === 'GONE  WIDGETS, INC.',
+    'form index: annual reports, Form 25 and Form 15 are read; amendments, 10-Q, NT 10-K, 8-K and the header are not; a name with a double space survives');
+  const F = SV.foldFilings(rows); SV.foldFilings([{ form: '10-K', name: 'GONE WIDGETS INC', cik: 2000001, date: '2014-03-03' }, { form: '10-K', name: 'GONE WIDGETS INC', cik: 2000001, date: '2015-03-02' }], F);
+  assert(Object.keys(F).length === 4 && F[2000001].annual.join() === '2014-03-03,2015-03-02' && F[2000001].delist.join() === '2016-06-30' && F[2000001].dereg.join() === '2016-07-11' && F[2000002].delist.length === 1 && F[1084869].delist.length === 0,
+    'filings folded by filer: annual dates ascending and distinct across quarters, the Form 25 and the Form 15 kept beside them');
+  const D = SV.cohortDates();
+  assert(D.length === 44 && D[0] === '2015-01-01' && D[43] === '2025-10-01' && SV.activeOn(F[2000001], '2015-04-01') && SV.activeOn(F[2000001], '2016-04-01') && !SV.activeOn(F[2000001], '2016-07-01') && !SV.activeOn(F[2000001], '2014-03-02') && SV.activeOn(F[2000001], '2014-03-03') && SV.ACTIVE_DAYS === 456,
+    'cohorts: the 44 quarter starts from January 2015 to October 2025; a filer is active for 456 days from a 10-K and not a day before it');
+  const fdoc = { units: { USD: [{ end: '2014-06-30', val: 9e8, filed: '2015-03-02', form: '10-K' }, { end: '2014-06-30', val: 9.5e8, filed: '2016-03-01', form: '10-K' }, { end: '2015-06-30', val: 1.2e9, filed: '2016-03-01', form: '10-K' }, { end: '2015-09-30', val: 5, filed: '2015-11-01', form: '10-Q' }] } };
+  const fs1 = SV.floatSeries(fdoc);
+  assert(fs1.length === 2 && fs1[0].v === 9e8 && fs1[0].filed === '2015-03-02' && SV.valueAt(fs1, '2015-03-01') === null && SV.valueAt(fs1, '2015-04-01') === 9e8 && SV.valueAt(fs1, '2016-04-01') === 1.2e9 && SV.floatSeries(null).length === 0,
+    'public float: the figure from the first 10-K that reported each period, read as of a date by its filing day; a 10-Q value is ignored');
+  assert(SV.bucketOf(null) === 'unknown' && SV.bucketOf(2.99e8) === '<$300M' && SV.bucketOf(3e8) === '$300M–1B' && SV.bucketOf(1e9) === '$1–2B' && SV.bucketOf(1e10) === '$2–10B' && SV.bucketOf(1.01e10) === '>$10B' && SV.BUCKETS.length === 6 && SV.BAND.join() === '$300M–1B,$1–2B,$2–10B', 'size buckets: the backtest\'s, from dollars');
+  // a small world: one store company (screenable, $500M float), one store financial, three departed (a $900M company with a Form 25, a financial, a shell with no float), one departed not yet asked
+  const filings = SV.foldFilings([[1, '2015-02-01'], [1, '2016-02-01'], [2, '2015-02-01'], [10, '2015-03-01'], [11, '2015-03-01'], [12, '2015-03-01'], [13, '2015-03-01']].map(([cik, date]) => ({ form: '10-K', name: 'C' + cik, cik, date })).concat([{ form: '25-NSE', name: 'C10', cik: 10, date: '2016-01-05' }]));
+  const universe = { companies: [{ cik: 1, domestic: true, financial: false }, { cik: 2, domestic: true, financial: true }] };
+  const facts = { 1: { fy: { '2014-06-30': { float: { v: 5e8, filed: '2015-02-01' } } } } };
+  const departed = { 10: { sic: 3559, float: [{ v: 9e8, filed: '2015-03-01' }] }, 11: { sic: 6022, float: [{ v: 2e9, filed: '2015-03-01' }] }, 12: { sic: 6770 - 1000, float: [] } };
+  const R = SV.countSurvivors({ filings, universe, facts, departed, dates: ['2015-04-01', '2016-04-01', '2017-07-01'] }); const c0 = R.cohorts[0], c1 = R.cohorts[1], c2 = R.cohorts[2];
+  assert(c0.active === 6 && c0.inStore === 2 && c0.screenable === 1 && c0.departed === 4 && c0.by['$300M–1B'].store === 1 && c0.by['$300M–1B'].gone === 1 && c0.by['$300M–1B'].goneExch === 1 && c0.goneFinancial === 1 && c0.goneNoFloat === 1 && c0.goneUnasked === 1,
+    'count: on a date, the store\'s screenable filer and the departed company share a bucket; a departed financial, a filer with no float and one not yet asked are each counted apart');
+  assert(c1.active === 6 && c1.inStore === 2 && c1.screenable === 1 && c1.departed === 4 && c1.by['$300M–1B'].gone === 1 && c2.active === 0 && R.total.by['$300M–1B'].store === 2 && R.total.by['$300M–1B'].gone === 2 && SV.goneShare(R.total.by, SV.BAND) === 0.5 && SV.goneShare(R.total.by, ['>$10B']) === null && R.byYear['2015'].cohorts === 1 && Object.keys(R.byYear).join() === '2015,2016,2017',
+    'count: a filer drops out 456 days after its last 10-K; totals are company-cohorts; the share departed is departed ÷ (departed + in the store)');
+  const md = SV.reportLines(R, { asOf: '2026-11-23', quarters: 3, firstQuarter: '2013 Q4', lastQuarter: '2014 Q2', annualFilers: 6, universe: 2, screenable: 1, universeAsOf: '2026-10-25', departedCiks: 4, classified: 3 }).join('\n');
+  assert(/\| \*\*the screen's band, \$300M–\$10B\*\* \| \*\*2\*\* \| \*\*2\*\* \| \*\*50\.0%\*\* \| \*\*2\*\* \| \*\*50\.0%\*\* \|/.test(md) && /a partial run: 1 not asked/.test(md) && /\| 2015 \| 1 \| 1 \| 1 \| 50\.0% \|/.test(md) && /Float is not market cap/.test(md),
+    'report: the band row, the by-year table, a partial run named as one, and what the count cannot say'); }
+if (fails) { console.error(`${fails} failing`); process.exit(1); } else console.log('all compounder survivor-count tests passed');

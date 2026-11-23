@@ -19,6 +19,7 @@
     "results-dates": "node scripts/results-dates.mjs",
     "corporate-actions": "node scripts/corporate-actions.mjs",
     "test": "node scripts/test.mjs && node scripts/test-compounder.mjs",
-    "compounder:us": "node scripts/compounder-fetch-us.mjs --all"
+    "compounder:us": "node scripts/compounder-fetch-us.mjs --all",
+    "compounder:survivors": "node scripts/compounder-survivors-us.mjs"
   }
 }
