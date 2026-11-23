@@ -644,11 +644,11 @@
       // blocks carry the levels and a one-line reading each; the backtest citations, the full lists and the counts beyond the
       // caps live on the site. The momentum list and the paper book — the live record — are not trimmed.
       const mp = act.filter(s => s.tag === 'momentum pullback'), rest = act.filter(s => s.tag !== 'momentum pullback');
-      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper trades, not orders: +0.08R over 587 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-21-adjusted-members.md); log as "Momentum pullback"`);
+      L.push('', `MOMENTUM PULLBACKS (${mp.length}) — paper trades, not orders: +0.06R over 616 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-23-adjusted-members.md); log as "Momentum pullback"`);
       mp.slice(0, 8).forEach(s => L.push(`• ${s.sym} [${s.score}] momentum #${s.momRank} — buy-stop ${fmt(s.entry)} tomorrow, stop ${fmt(s.stop)}, 2R at ${fmt(s.target)}${s.size ? `, paper qty ${s.size.qty}` : ''}`));
       if (!mp.length) L.push('• none today — most days there are none; that is the rule working, not failing');
       else L.push('  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)');
-      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: no edge over ten years (−0.05R, 872 trades, full membership)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
+      L.push('', `OTHER SWING SETUPS (${rest.length}) — levels to watch, not orders: no edge over ten years (−0.03R, 891 trades, full membership)${rest.length > caps.other ? `; top ${caps.other} here, all ${rest.length} on the site` : ''}`);
       rest.slice(0, caps.other).forEach(s => L.push(`• ${s.sym} [${s.score}]${s.momRank ? ` momentum #${s.momRank}` : ''} — ${s.setup}: trigger ${fmt(s.entry)}, invalid below ${fmt(s.stop)}, 2R at ${fmt(s.target)}`));
       if (!rest.length) L.push('• none today');
     } else {
