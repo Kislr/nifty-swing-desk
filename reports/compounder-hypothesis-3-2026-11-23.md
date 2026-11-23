@@ -126,7 +126,37 @@ The decision of 18 Nov gave `volAdjust` one more reading, "on the US store once 
 ## Still open — to be closed in this file, by dated addendum, before any Sharadar price is loaded
 
 1. **The 30% NYSE haircut**, checked against the 1997 paper. If the paper says otherwise the figure is corrected here; the pessimistic row does not depend on it.
-2. **The cap floor**, from the full survivor count (launched by the owner on 23 Nov; the trial of 200 filers is not it).
+2. ~~**The cap floor**, from the full survivor count.~~ **Closed 23 Nov 2026 — addendum 1 below: the floor stays at $300M.**
 3. **The delisting categories**, from the Sharadar schema — the one item that waits for the key, and the reason printing the schema is the first job with it. If the data cannot tell an acquisition from a failure, the convention is rewritten here first.
 
 Settled by the commit: the numbers marked *(owner)* as proposed, and the proceeds of a departed holding earning the benchmark's return. The owner can change either before the pull.
+
+---
+
+## Addendum 1, 23 Nov 2026 — the full survivor count, and the cap floor
+
+The owner's full run finished the same day (`reports/compounder-survivors-us-2026-11-23.md`, all 10,355 departed filers classified). No price of a departed company has been seen; this is a count of filers and their reported floats.
+
+**The hole is not 2%. In the screen's band it is a third of every cohort, and half of the early ones.**
+
+| reported float on the date | in the store | departed | share departed |
+|---|---|---|---|
+| $300M–1B | 15,710 | 11,073 | 41.3% |
+| $1–2B | 9,954 | 5,508 | 35.6% |
+| $2–10B | 20,017 | 7,605 | 27.5% |
+| **the band, $300M–$10B** | **45,681** | **24,186** | **34.6%** |
+| above $10B | 15,965 | 2,796 | 14.9% |
+
+Company-cohorts; 96% of the departed in the band left a Form 25 behind, so they were on an exchange. By cohort year the share runs from **50.9% in 2015** to 14.8% in 2025. In companies: **1,675 departed filers were in the band on at least one cohort date** (1,557 with a Form 25), leaving at 100 to 175 a year.
+
+**What it means for the two runs of 5 Nov.** They ranked about two candidates in three, and one in two for 2015. Their fails stand as recorded; they were fails on a different universe from the one the screen was written for, by far more than the write-up could say.
+
+**The cap floor.** `SCREEN.md`'s rule of 29 Oct raises the floor to the lowest size bucket where the gap falls under about 5%. **No bucket is under 5%** — the smallest gap, above $10 billion, is 14.9%. The rule was written for a store that would stay incomplete; it has no answer here, and raising the floor would not buy what it was meant to buy. **So the floor stays at $300M and the band at $300M–$10B, on the survivor-complete universe**, where the gap closes by construction because the departed companies are priced and ranked. The benchmark does not change.
+
+**What it means for this test.** Everything said under "What is expected" holds with more force: a third of the benchmark is companies the earlier runs never saw, and the for-cause delistings among them are where the two delisting rows will differ. Condition 3 is still the one most likely to decide it.
+
+**The size of the pull.** `compounder/data/us/survivors.json` lists the departed filers; the 1,675 that were ever in the band are the ones whose prices and EDGAR facts the rebuild needs first.
+
+**Limits of the count, repeated:** float is the company's own figure for non-affiliates' holdings, not market cap; a company that reorganised under a new registrant number is counted as departed although its business is in the store under the new one; over-the-counter companies report a float too, though the Form 25 share says they are few in the band.
+
+Still open: items 1 and 3 above.
