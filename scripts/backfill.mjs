@@ -38,6 +38,16 @@
  * listed at the end and nothing is added.
  *
  * NSE's host (audit A17): the index-history call follows NSE to whichever host answers (scripts/nse.mjs).
+ *
+ * Series (audit A20, 23 Nov 2026). The bhavcopy lists every security under the series it traded in that day, and until now only
+ * `EQ` rows were kept. A share NSE has moved to trade-for-trade is listed under `BE` (or `BZ`) for as long as that lasts, and REITs
+ * and InvITs are always `RR` and `IV` — so an index member in one of those had no bar from this script. The ten years on file have
+ * 4,634 member-days without a bar, in 78 names, nearly all in runs of weeks or months (ALOKINDS, SUZLON, JSWENERGY, ADANIENSOL,
+ * ATGL …) — the shape of trade-for-trade spells, though only the members run from home can say how many of them it fills
+ * (scripts/history-holes.mjs counts them) — and the three REITs that entered in September 2026 have none before the daily job first saw them. Now a symbol's row is taken
+ * from the first of EQ, BE, BZ, RR, IV that has one (SERIES below). No other series is read: the debt series (N1…, Y…, Z…, GS, …)
+ * reuse company symbols at a bond's price. `--universe all` stays EQ-only — it has no list of names to hold the other series to.
+ * Days already saved are topped up only by `--members`, as before: the fix reaches the past through that run.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -65,23 +75,36 @@ const universeMode = arg('universe', 'nifty500'); const membersMode = argv.inclu
 const RECENT_WEEKEND_DAYS = 60;
 
 /** Which dates a run looks at (audit A18). Weekdays always, unless `weekendsOnly`; a Saturday or Sunday when `weekendsOnly`, or when it
- *  falls in the last RECENT_WEEKEND_DAYS days up to `to`. Returns 'weekday', 'weekend' or null (not visited). */
-export function visitKind(date, { to, weekendsOnly }) {
+ *  falls in the last RECENT_WEEKEND_DAYS days up to `to`, or — in a `--members` run — when that session is already on file (`onFile`),
+ *  so that a ten-year members run tops up the weekend sessions like any other saved day (audit A20). Returns 'weekday', 'weekend' or null (not visited). */
+export function visitKind(date, { to, weekendsOnly, membersMode, onFile }) {
   const d = new Date(date + 'T00:00:00Z'); const dow = d.getUTCDay(); const weekend = dow === 0 || dow === 6;
   if (!weekend) return weekendsOnly ? null : 'weekday';
-  if (weekendsOnly) return 'weekend';
+  if (weekendsOnly || (membersMode && onFile)) return 'weekend';
   return (Date.parse(to + 'T00:00:00Z') - d.getTime()) / 86400000 <= RECENT_WEEKEND_DAYS ? 'weekend' : null;
 }
 const pause = Number(arg('pause', '900'));
 
-/** --members: the rows to add for one day. `rows` are the bhavcopy's EQ rows; `canon(sym, date)` maps a symbol as it
+/** The series a symbol's bar may come from, in order of preference (audit A20). EQ is the rolling-settlement equity series; BE and BZ
+ *  are the same shares while NSE has them in trade-for-trade; RR is REITs, IV is InvITs. Nothing else: every debt series reuses the
+ *  company's symbol. */
+export const SERIES = ['EQ', 'BE', 'BZ', 'RR', 'IV'];
+/** One row per symbol: the row with a close from the first series in SERIES that has one. Rows without a `series` count as EQ. */
+export function bestSeries(rows) {
+  const rank = Object.fromEntries(SERIES.map((x, i) => [x, i])); const by = new Map();
+  for (const r of rows) { if (!(r.c > 0)) continue; const k = rank[r.series || 'EQ']; if (k == null) continue; const cur = by.get(r.sym); if (!cur || k < rank[cur.series || 'EQ']) by.set(r.sym, r); }
+  return [...by.values()];
+}
+/** --members: the rows to add for one day. `rows` are the bhavcopy's rows, one per symbol (bestSeries); `canon(sym, date)` maps a symbol as it
  *  stood that day to today's ticker; `ever` is the set of today's tickers that were ever members; `has(sym)` says whether
  *  the file already holds a close for that ticker on the day. Returns { rows: snapRows keyed by today's ticker, renamed }. */
 export function membersRows(rows, date, { ever, canon, has }) {
   const out = {}; let renamed = 0;
+  const other = {};   // rows taken from a series other than EQ, by series
   for (const r of rows) { if (!(r.c > 0)) continue; const c = canon(r.sym, date); const sym = c.sym; if (!ever.has(sym) || has(sym)) continue; if (sym !== r.sym) renamed++;
+    if (r.series && r.series !== 'EQ') other[r.series] = (other[r.series] || 0) + 1;
     out[sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; }
-  return { rows: out, renamed };
+  return { rows: out, renamed, other };
 }
 
 /* ---------- minimal zip reader (single-entry zip, deflate or stored) ---------- */
@@ -103,18 +126,19 @@ async function get(url, opts = {}) {
 const MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 function bhavUrls(date) { const [y, m, d] = date.split('-'); const ymd = y + m + d; const mon = MON[Number(m) - 1];
   return [`https://nsearchives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_${ymd}_F_0000.csv.zip`, `https://nsearchives.nseindia.com/content/historical/EQUITIES/${y}/${mon}/cm${d}${mon}${y}bhav.csv.zip`]; }
-function parseBhav(text) {
-  const lines = text.split(/\r?\n/).filter(l => l.trim()); const hdr = lines[0].split(',').map(h => h.trim());
+/** `series`: the series to keep (default EQ only, as every run before 23 Nov 2026 did). Each row carries the series it came from. */
+export function parseBhav(text, series = ['EQ']) {
+  const keep = new Set(series); const lines = text.split(/\r?\n/).filter(l => l.trim()); const hdr = lines[0].split(',').map(h => h.trim());
   const H = {}; hdr.forEach((h, i) => (H[h] = i)); const out = [];
   const isNew = H.TckrSymb != null;
   for (const line of lines.slice(1)) { const c = line.split(','); const g = k => (H[k] == null ? null : c[H[k]]);
-    if (isNew) { if (g('SctySrs') !== 'EQ') continue; out.push({ sym: g('TckrSymb'), o: +g('OpnPric'), h: +g('HghPric'), l: +g('LwPric'), c: +g('ClsPric'), v: +g('TtlTradgVol'), t: +g('TtlTrfVal') / 1e7 }); }
-    else { if (g('SERIES') !== 'EQ') continue; out.push({ sym: g('SYMBOL'), o: +g('OPEN'), h: +g('HIGH'), l: +g('LOW'), c: +g('CLOSE'), v: +g('TOTTRDQTY'), t: +g('TOTTRDVAL') / 1e7 }); } }
+    if (isNew) { const sr = (g('SctySrs') || '').trim(); if (!keep.has(sr)) continue; out.push({ sym: g('TckrSymb'), series: sr, o: +g('OpnPric'), h: +g('HghPric'), l: +g('LwPric'), c: +g('ClsPric'), v: +g('TtlTradgVol'), t: +g('TtlTrfVal') / 1e7 }); }
+    else { const sr = (g('SERIES') || '').trim(); if (!keep.has(sr)) continue; out.push({ sym: g('SYMBOL'), series: sr, o: +g('OPEN'), h: +g('HIGH'), l: +g('LOW'), c: +g('CLOSE'), v: +g('TOTTRDQTY'), t: +g('TOTTRDVAL') / 1e7 }); } }
   return out;
 }
-async function fetchBhav(date) {
+async function fetchBhav(date, series) {
   let lastErr;
-  for (const url of bhavUrls(date)) { try { const buf = await get(url, { binary: true }); return parseBhav(unzipFirst(buf).text); } catch (e) { lastErr = e; if (e.status && e.status !== 404 && e.status !== 403) break; } }
+  for (const url of bhavUrls(date)) { try { const buf = await get(url, { binary: true }); return bestSeries(parseBhav(unzipFirst(buf).text, series)); } catch (e) { lastErr = e; if (e.status && e.status !== 404 && e.status !== 403) break; } }
   if (lastErr && lastErr.status === 404) return null; // holiday
   throw lastErr || new Error('no bhavcopy');
 }
@@ -172,25 +196,26 @@ if (membersMode) { const MB = await import('./membership.mjs'); const M = await 
   console.log(`members mode: ${members.ever.size} tickers were ever NIFTY 500 members (${M.from} → ${M.asOf}); saved days are revisited for the ones still missing`); }
 const index = await fetchIndexHistory(from, to);
 const files = {}; const loadYear = async y => files[y] || (files[y] = await readJSON(path.join(HIST, y + '.json'), { year: Number(y), dates: [], symbols: {}, index: null }));
+const series = membersMode || universe ? SERIES : ['EQ']; const otherSeries = {};   // A20: a listed name's bar from the series it trades in; `--universe all` has no list, so EQ only
 let d = new Date(from); const end = new Date(to); let added = 0, skipped = 0, holidays = 0, failures = 0, filled = 0, indexFilled = 0, renamedRows = 0;
 const weekendAdded = [], weekendNoIndex = [], weekendRefused = []; let weekendTried = 0;
 if (weekendsOnly) console.log(`weekends only: every Saturday and Sunday from ${from} to ${to} that is not on file is asked for; weekdays are left alone`);
 while (d <= end) {
   const date = iso(d); d = new Date(d.getTime() + 86400000);
-  const kind = visitKind(date, { to, weekendsOnly }); if (!kind) continue; const weekend = kind === 'weekend';
   const yf = await loadYear(date.slice(0, 4)); const k = yf.dates.indexOf(date); let ix = index[date];
+  const kind = visitKind(date, { to, weekendsOnly, membersMode, onFile: k >= 0 }); if (!kind) continue; const weekend = kind === 'weekend';
   if (k >= 0 && !membersMode) { skipped++;
     if (ix && (!yf.index || yf.index.c[k] == null)) { E.appendSnapshotToHistory(yf, { date, rows: {}, index: { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } }); indexFilled++; }   // gap (a): a saved day without its index bar
     continue; }
   try {
     if (weekend && k < 0) weekendTried++;
-    const rows = await fetchBhav(date);
+    const rows = await fetchBhav(date, series);
     if (!rows) { holidays++; if (weekend) await sleep(Math.min(pause, 250)); continue; }
     if (weekend && k < 0 && !ix) { ix = await indexBarFallback(date); if (ix) console.log(`${date}: the index history has no NIFTY 50 bar for this session; taken from ${ix.source} (${ix.c})`); }
     if (weekend && k < 0 && !ix) { weekendNoIndex.push(date); console.warn(`${date}: NSE held a session (${rows.length} rows in the bhavcopy) but neither the index history, nor NSE's daily index file, nor data/index-bars.json has its NIFTY 50 bar — not added`); await sleep(pause); continue; }
     let snapRows;
-    if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; renamedRows += r.renamed; }
-    else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
+    if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; renamedRows += r.renamed; for (const [sr, n] of Object.entries(r.other)) otherSeries[sr] = (otherSeries[sr] || 0) + n; }
+    else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; if (r.series && r.series !== 'EQ') otherSeries[r.series] = (otherSeries[r.series] || 0) + 1; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
     const snap = { date, rows: snapRows, index: ix ? { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } : null };
     const n = Object.keys(snapRows).length; if (k >= 0 && !n && !(ix && (!yf.index || yf.index.c[k] == null))) { skipped++; await sleep(pause); continue; }   // members mode: nothing missing that day
     E.appendSnapshotToHistory(yf, snap); if (k >= 0) { filled++; if (ix && (!yf.index || yf.index.c[k] == null)) indexFilled++; } else { added++; if (weekend) { weekendAdded.push(date); console.log(`${date}: weekend session added — ${n} symbols, NIFTY 50 ${ix.c}`); } }
@@ -207,6 +232,7 @@ if (Object.keys(industries).length) { const sec = await readJSON(path.join(DATA,
 const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] }); idx.historyYears = (await fs.readdir(HIST)).filter(f => /^\d{4}\.json$/.test(f)).map(f => Number(f.slice(0, 4))).sort();
 await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify(idx, null, 1));
 if (weekendTried) console.log(`weekend dates: ${weekendTried} asked for, ${weekendAdded.length} session(s) found and added${weekendAdded.length ? ' (' + weekendAdded.join(', ') + ')' : ''}${weekendNoIndex.length ? `; ${weekendNoIndex.length} sessions NOT added for want of their NIFTY 50 bar (${weekendNoIndex.join(', ')}) — if the index history was unavailable run again; otherwise add the bar to data/index-bars.json with its source` : ''}${weekendRefused.length ? `; ${weekendRefused.length} got an answer that was neither a file nor a 404 (${weekendRefused.slice(0, 8).join(', ')}${weekendRefused.length > 8 ? ', …' : ''}) — run again to retry those` : ''}`);
+if (Object.keys(otherSeries).length) console.log(`series: ${Object.values(otherSeries).reduce((p, c) => p + c, 0)} bars came from a series other than EQ (${SERIES.filter(x => otherSeries[x]).map(x => x + ' ' + otherSeries[x]).join(', ')}) — names in trade-for-trade, REITs, InvITs`);
 console.log(`done: ${added} days added${membersMode ? `, ${filled} saved days topped up with missing members (${renamedRows} rows stored under a later ticker)` : ''}, ${skipped} already present${indexFilled ? ` (${indexFilled} given their missing NIFTY 50 bar)` : ''}, ${holidays} holidays/weekends skipped, ${failures} failures. History years: ${idx.historyYears.join(', ')}`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

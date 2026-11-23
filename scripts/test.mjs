@@ -346,6 +346,20 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
   { const BF = await import('./backfill.mjs'); const row = (sym, c) => ({ sym, o: 1, h: 2, l: 1, c, v: 10, t: 1 });
     const r = BF.membersRows([row('BURGERKING', 1.5), row('NEVER', 1), row('HAVE', 1), row('ZERO', 0)], '2021-06-01', { ever: new Set(['RBA', 'HAVE', 'ZERO']), canon: (sym, d) => ({ sym: sym === 'BURGERKING' && d < '2022-02-14' ? 'RBA' : sym }), has: sym => sym === 'HAVE' });
     assert(Object.keys(r.rows).join() === 'RBA' && r.rows.RBA[4] === 1.5 && r.renamed === 1, 'backfill --members: BURGERKING stored as RBA, a never-member dropped, a ticker already saved that day skipped, a zero close skipped'); }
+  // backfill series (audit A20, 23 Nov 2026): a name's bar comes from the series it trades in — EQ first, then BE, BZ, RR, IV — and never from a debt series that reuses its symbol
+  { const BF = await import('./backfill.mjs');
+    const udiff = ['TradDt,BizDt,Sgmt,Src,FinInstrmTp,FinInstrmId,ISIN,TckrSymb,SctySrs,XpryDt,FininstrmActlXpryDt,StrkPric,OptnTp,FinInstrmNm,OpnPric,HghPric,LwPric,ClsPric,LastPric,PrvsClsgPric,UndrlygPric,SttlmPric,OpnIntrst,ChngInOpnIntrst,TtlTradgVol,TtlTrfVal,TtlNbOfTxsExctd,SsnId,NewBrdLotQty,Rmks,Rsvd1,Rsvd2,Rsvd3,Rsvd4',
+      ...[['PLAIN', 'EQ', 100], ['TFT', 'BE', 50], ['ZED', 'BZ', 5], ['EMBASSY', 'RR', 400], ['INVIT', 'IV', 120], ['PLAIN', 'N1', 1012.5], ['BOND', 'N2', 990], ['BOTH', 'BE', 71], ['BOTH', 'EQ', 70], ['BLOCK', 'BL', 33], ['GILT', 'GS', 99]]
+        .map(([sym, sr, c]) => `2026-11-08,2026-11-08,CM,NSE,STK,1,INE000,${sym},${sr},,,,,${sym} LTD,${c},${c + 1},${c - 1},${c},${c},${c},,${c},,,1000,${c * 1e5},10,F1,1,,,,,`)].join('\n');
+    const old = ['SYMBOL,SERIES,OPEN,HIGH,LOW,CLOSE,LAST,PREVCLOSE,TOTTRDQTY,TOTTRDVAL,TIMESTAMP,TOTALTRADES,ISIN,', 'PLAIN,EQ,10,11,9,10,10,10,100,1000000,08-NOV-2018,5,INE1,', 'TFT,BE,20,21,19,20,20,20,100,2000000,08-NOV-2018,5,INE2,', 'PLAIN,N1,1000,1001,999,1000,1000,1000,1,1000,08-NOV-2018,1,INE3,'].join('\n');
+    const eq = BF.parseBhav(udiff), all = BF.bestSeries(BF.parseBhav(udiff, BF.SERIES)); const by = Object.fromEntries(all.map(r => [r.sym, r]));
+    assert(BF.SERIES.join() === 'EQ,BE,BZ,RR,IV' && eq.map(r => r.sym).join() === 'PLAIN,BOTH' && eq.every(r => r.series === 'EQ') && BF.parseBhav(old).map(r => r.sym).join() === 'PLAIN' && BF.parseBhav(old, BF.SERIES).map(r => r.sym + ':' + r.series).join() === 'PLAIN:EQ,TFT:BE',
+      'backfill series: the default is EQ only, as before, in both bhavcopy formats; with the list, BE rows are read and a debt row is not');
+    assert(all.length === 6 && by.PLAIN.c === 100 && by.PLAIN.series === 'EQ' && by.TFT.series === 'BE' && by.ZED.series === 'BZ' && by.EMBASSY.series === 'RR' && by.EMBASSY.c === 400 && by.INVIT.series === 'IV' && by.BOTH.series === 'EQ' && by.BOTH.c === 70 && !by.BOND && !by.BLOCK && !by.GILT,
+      'backfill series: one row a symbol — a REIT from RR, trade-for-trade names from BE / BZ, EQ preferred when a symbol has both, the bond that shares a share\'s symbol never taken');
+    const mr = BF.membersRows(all, '2026-11-08', { ever: new Set(['PLAIN', 'TFT', 'EMBASSY', 'ZED']), canon: sym => ({ sym }), has: sym => sym === 'PLAIN' });
+    assert(Object.keys(mr.rows).sort().join() === 'EMBASSY,TFT,ZED' && mr.rows.EMBASSY[4] === 400 && JSON.stringify(mr.other) === '{"BE":1,"BZ":1,"RR":1}' && BF.bestSeries([{ sym: 'X', c: 5 }, { sym: 'X', c: 0, series: 'EQ' }])[0].c === 5,
+      'backfill --members: a member missing that day gets its bar from BE, BZ or RR, counted by series; a row without a series counts as EQ'); }
   // stale exit: a holding whose bars stop is closed after 20 missing closes, only when opts.stale is set
   { const lb = E.buildBars([synth(60, 400)], []); const first = M.simulate(lb, { topN: 5 }, custom, { capital: 500000 }); const held = first.trades[0] && first.trades[0].sym; const k0 = lb.dates.indexOf(first.trades[0].entryDate) + 2;
     const cut = JSON.parse(JSON.stringify(synth(60, 400))); for (let k = k0; k < k0 + 60; k++) for (const key of ['o', 'h', 'l', 'c']) cut.symbols[held][key][k] = null;   // 60 bars of nothing
@@ -559,6 +573,7 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
   assert(/note/.test(E.remindersDue([{ date: '2026-11-23', days: 2, text: 'note' }], '2026-11-24') || '') && E.remindersDue([{ date: '2026-11-23', days: 2, text: 'note' }], '2026-11-25') === null && /check/.test(E.remindersDue([{ date: '2026-11-23', text: 'check' }], '2026-11-29') || ''), 'reminders: one with `days` shows for that many days; without it, for a week as before');
   // A18: weekend dates
   const vk = (d, o) => BF.visitKind(d, Object.assign({ to: '2026-11-20', weekendsOnly: false }, o));
+  assert(vk('2024-03-02', {}) === null && vk('2024-03-02', { membersMode: true }) === null && vk('2024-03-02', { membersMode: true, onFile: true }) === 'weekend' && vk('2024-03-02', { onFile: true }) === null && vk('2024-03-04', { membersMode: true, onFile: true }) === 'weekday', 'backfill: a --members run tops up a weekend session that is already on file, however old (audit A20); no other run revisits it');
   assert(vk('2026-11-06') === 'weekday' && vk('2026-11-08') === 'weekend' && vk('2026-09-20') === null && vk('2019-10-27', { weekendsOnly: true }) === 'weekend' && vk('2019-10-28', { weekendsOnly: true }) === null && vk('2026-09-21') === 'weekday', 'backfill: a weekend date is tried when it is within 60 days of the end of the range, or always with --weekends (which leaves weekdays alone)');
   // A3: --to ends the data
   const lb = E.buildBars([synth(60, 500)], []); const D = lb.dates; const cut = E.clipBars(lb, D[300]); const anySym = Object.keys(lb.sym)[0];

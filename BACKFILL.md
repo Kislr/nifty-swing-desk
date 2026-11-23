@@ -122,6 +122,25 @@ What not to do: do not leave out `--members` (the day would get today's 500 name
 
 From now on nothing special is needed: any top-up tries the weekend dates of its last 60 days by itself, so when the digest says `HISTORY GAP`, `node scripts/backfill.mjs --from <the earlier date in that line> --members` fills the session.
 
+## Series — the home run (23 Nov 2026, interim audit A20)
+
+The bhavcopy lists every security under the series it traded in that day. Until 23 Nov 2026 the backfill kept `EQ` rows only, so a member NSE had moved to trade-for-trade (`BE`, `BZ`) got no bar for as long as that lasted, and a REIT (`RR`) or InvIT (`IV`) never got one. It showed on 8 Nov 2026 — STLTECH, HFCL and the three REITs had no bar for the Muhurat session — and it is not five names: `node scripts/history-holes.mjs` counts **4,634 member-days without a bar in 78 names** over the ten years (0.37% of all member-days), nearly all in runs of weeks or months: ALOKINDS 193 days from May 2022, JSWENERGY 182 from July 2021, ATGL and ADANIENSOL from September 2021, SUZLON, TTML … A name with a run like that cannot be ranked by the momentum engine for six months after it ends, and a holding with one is closed as "stopped trading" after 20 bars. The backfill now takes a name's bar from the first of `EQ`, `BE`, `BZ`, `RR`, `IV` that has one, and never from a debt series. About an hour and a quarter, nothing to decide along the way.
+
+1. **Pull `main`** (`git pull`) so you have the backfill that reads the other series.
+2. **Count the holes before**: `node scripts/history-holes.mjs` — it should say `without a bar: 4,634 (0.37%), in 78 names`. Keep the output.
+3. **Run the members top-up over the whole history**, from home, in the repository folder:
+   `node scripts/backfill.mjs --from 2016-11-07 --members`
+   It prints `members mode: 895 tickers…` and `index history: N days` (about 2,490), then a progress line every 20 days. Every saved day is visited again — the ten weekend sessions too — and only the names still missing that day are added; nothing already in the files is rewritten. One fetch per trading day, as on 12 Nov. If it stops with `too many failures`, wait a few minutes and run the same command again.
+4. **Read the two last lines.** `series: N bars came from a series other than EQ (BE …, BZ …, RR …, IV …)` is what the fix added; `done: 0 days added, K saved days topped up…` — days added should be 0 unless a session was missing.
+5. **Count the holes after**: `node scripts/history-holes.mjs` again. What is left is a suspension, or a day NSE has no row for; `--list` prints every run that remains.
+6. **Corporate actions**: `node scripts/corporate-actions.mjs` — an event rejected by the bar check because the bars around its ex-date were missing can now be verified.
+7. **Commit and push**: `git add data/history data/adjustments.json reports && git commit -m "Members' bars from BE, BZ, RR and IV loaded (audit A20)" && git push`.
+8. **Tell the next session** the two counts and the `series:` line. Its job: every baseline and event study re-run and set beside the 21 Nov reports — this moves the ranking universe, not only the calendar, so the figures are expected to move — and the twenty-one paper books' replay read against the digests already sent.
+
+Only 8 Nov and nothing else, if an hour is not to hand: `node scripts/backfill.mjs --from 2026-11-08 --to 2026-11-08 --members` (a minute; it fills the five names for that session and leaves the rest of the count where it is).
+
+What not to do: do not leave out `--members` (a plain run skips every day already on file); do not add `--weekends` (that asks for a thousand weekend dates that never had a session; the members run already revisits the ten that did); do not run it at the same time as another backfill.
+
 ## A missing index bar (21 Nov 2026, interim audit A8)
 
 If the NIFTY 50 call fails on an evening, that day is saved without its index bar. The daily job repairs it by itself at the next run — yesterday's close from today's NIFTY 50 row, older ones from NSE's index history — and the digest says `INDEX REPAIRED`. While a close is missing the digest carries `INDEX GAP`, and the gate's 200-day average steps over it (up to five; beyond that the digest says `GATE FROM BREADTH`).
@@ -172,7 +191,7 @@ The 13 Nov pull left two holes (`reports/interim-audit-2026-11-19.md`): the last
 |---|---|
 | `--years N` | last N years to today |
 | `--from YYYY-MM-DD [--to YYYY-MM-DD]` | exact range |
-| `--universe nifty500` (default), `nifty50`, `all` | which symbols to keep; `all` stores every EQ-series stock (~2,000 names, ~4× the file size) |
+| `--universe nifty500` (default), `nifty50`, `all` | which symbols to keep; `all` stores every EQ-series stock (~2,000 names, ~4× the file size). With a list of names (`nifty500`, `nifty50`, `--members`) a name's bar is taken from the first of `EQ`, `BE`, `BZ`, `RR`, `IV` that has one (23 Nov 2026, audit A20) |
 | `--pause 900` | milliseconds between requests; raise it if you get blocked |
 | `--weekends` | weekend sessions (21 Nov 2026, audit A18): visit every Saturday and Sunday in the range that is not on file, and no weekday — the one-off catch-up, `--from 2016-11-07 --weekends --members`. Without the flag a run still tries the weekend dates of its last 60 days. A weekend session is added only with its NIFTY 50 bar |
 | `--members` | past members (12 Nov 2026): the universe becomes every ticker that was ever in NIFTY 500 according to `data/membership/members.json`; days already saved are visited again and only the names still missing that day are added, stored under today's ticker by following NSE's rename list forward from that day. Run `node scripts/backfill.mjs --years 10 --members` once from home (about an hour, one fetch per trading day, progress saved every 20 days), then `corporate-actions` again and the backtests with `--members`. Nothing already in the files is rewritten |
