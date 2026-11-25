@@ -95,6 +95,19 @@ export function bestSeries(rows) {
   for (const r of rows) { if (!(r.c > 0)) continue; const k = rank[r.series || 'EQ']; if (k == null) continue; const cur = by.get(r.sym); if (!cur || k < rank[cur.series || 'EQ']) by.set(r.sym, r); }
   return [...by.values()];
 }
+/** --members, A22 step 2 (25 Nov 2026): the series of every ever-member's row in the day's bhavcopy that is not EQ, keyed by today's ticker —
+ *  for the bars already on file as much as for the ones being added. `rows` are the bhavcopy's rows, one per symbol (bestSeries: the series
+ *  the bar itself was taken from). The caller keeps the names that have a close on file that day and writes them as the day's `series`. */
+export function memberSeries(rows, date, { ever, canon }) {
+  const out = {}; for (const r of rows) { if (!(r.c > 0) || !r.series || r.series === 'EQ') continue; const sym = canon(r.sym, date).sym; if (ever.has(sym)) out[sym] = r.series; } return out;
+}
+/** Write a day's series into a history file from the bhavcopy's reading: every name with a close on file that day and a series other than EQ.
+ *  Returns { listed, unmatched } — unmatched = names with a close on file and no row in the day's bhavcopy (read as EQ; the count is printed). */
+export function writeDaySeries(file, date, daySeries, rowSyms) {
+  const k = file.dates.indexOf(date); if (k < 0) return { listed: 0, unmatched: 0 }; const day = {}; let unmatched = 0;
+  for (const [sym, b] of Object.entries(file.symbols)) { if (!b.c || b.c[k] == null) continue; if (daySeries[sym]) day[sym] = daySeries[sym]; else if (rowSyms && !rowSyms.has(sym)) unmatched++; }
+  file.series = file.series || {}; file.series[date] = day; return { listed: Object.keys(day).length, unmatched };
+}
 /** Whether the rows added to `date` may carry their series into the file (A22): the day is new to the file, or its series are already on record. */
 export function seriesKnown(file, date, k) { return k < 0 || !!(file && file.series && file.series[date]); }
 /** --members: the rows to add for one day. `rows` are the bhavcopy's rows, one per symbol (bestSeries); `canon(sym, date)` maps a symbol as it
@@ -199,7 +212,7 @@ if (membersMode) { const MB = await import('./membership.mjs'); const M = await 
 const index = await fetchIndexHistory(from, to);
 const files = {}; const loadYear = async y => files[y] || (files[y] = await readJSON(path.join(HIST, y + '.json'), { year: Number(y), dates: [], symbols: {}, index: null }));
 const series = membersMode || universe ? SERIES : ['EQ']; const otherSeries = {};   // A20: a listed name's bar from the series it trades in; `--universe all` has no list, so EQ only
-let d = new Date(from); const end = new Date(to); let added = 0, skipped = 0, holidays = 0, failures = 0, filled = 0, indexFilled = 0, renamedRows = 0;
+let d = new Date(from); const end = new Date(to); let added = 0, skipped = 0, holidays = 0, failures = 0, filled = 0, indexFilled = 0, renamedRows = 0; let seriesDays = 0, seriesListed = 0, seriesUnmatched = 0;
 const weekendAdded = [], weekendNoIndex = [], weekendRefused = []; let weekendTried = 0;
 if (weekendsOnly) console.log(`weekends only: every Saturday and Sunday from ${from} to ${to} that is not on file is asked for; weekdays are left alone`);
 while (d <= end) {
@@ -223,8 +236,11 @@ while (d <= end) {
     // rows added here carry theirs on a day that is wholly new (every row is from this bhavcopy) and on a day the daily job has already recorded.
     // A day on file without a record stays without one: its older bars are of unknown series until the series home run visits it (README, A22 step 2).
     if (seriesKnown(yf, date, k)) snap.series = snapSeries;
-    const n = Object.keys(snapRows).length; if (k >= 0 && !n && !(ix && (!yf.index || yf.index.c[k] == null))) { skipped++; await sleep(pause); continue; }   // members mode: nothing missing that day
-    E.appendSnapshotToHistory(yf, snap); if (k >= 0) { filled++; if (ix && (!yf.index || yf.index.c[k] == null)) indexFilled++; } else { added++; if (weekend) { weekendAdded.push(date); console.log(`${date}: weekend session added — ${n} symbols, NIFTY 50 ${ix.c}`); } }
+    // A22 step 2: in members mode every visited day gets its series written — the bars already on file and the ones added below — from the same bhavcopy
+    const stamp = () => { if (!membersMode) return; const ds = memberSeries(rows, date, { ever: members.ever, canon: members.canon }); const rowSyms = new Set(rows.filter(r => r.c > 0).map(r => members.canon(r.sym, date).sym));
+      const w = writeDaySeries(yf, date, ds, rowSyms); seriesDays++; seriesListed += w.listed; seriesUnmatched += w.unmatched; return seriesDays % 20 === 0; };   // true every twentieth day: the caller saves, so an interrupted run keeps what it has written
+    const n = Object.keys(snapRows).length; if (k >= 0 && !n && !(ix && (!yf.index || yf.index.c[k] == null))) { skipped++; if (stamp()) { await fs.writeFile(path.join(HIST, yf.year + '.json'), JSON.stringify(yf)); console.log(`${date}: series written (saved, ${seriesDays} days so far)`); } await sleep(pause); continue; }   // members mode: nothing missing that day
+    E.appendSnapshotToHistory(yf, snap); stamp(); if (k >= 0) { filled++; if (ix && (!yf.index || yf.index.c[k] == null)) indexFilled++; } else { added++; if (weekend) { weekendAdded.push(date); console.log(`${date}: weekend session added — ${n} symbols, NIFTY 50 ${ix.c}`); } }
     if ((added + filled) % 20 === 0) { await fs.writeFile(path.join(HIST, yf.year + '.json'), JSON.stringify(yf)); console.log(`${date}: ${n} symbols (saved, ${added} days added, ${filled} days topped up so far)`); }
   } catch (e) { if (weekend && k < 0) { weekendRefused.push(date); console.warn(`${date}: no answer for this weekend date (${e.message})`); await sleep(pause); continue; }   // not counted towards the stop below: an odd answer for a file that never existed is not a block
     failures++; console.warn(`${date}: failed (${e.message})`); if (failures > 15) { console.error('too many failures — NSE may be blocking this IP; wait and re-run (progress is saved)'); break; } }
@@ -239,6 +255,7 @@ const idx = await readJSON(path.join(DATA, 'index.json'), { dates: [] }); idx.hi
 await fs.writeFile(path.join(DATA, 'index.json'), JSON.stringify(idx, null, 1));
 if (weekendTried) console.log(`weekend dates: ${weekendTried} asked for, ${weekendAdded.length} session(s) found and added${weekendAdded.length ? ' (' + weekendAdded.join(', ') + ')' : ''}${weekendNoIndex.length ? `; ${weekendNoIndex.length} sessions NOT added for want of their NIFTY 50 bar (${weekendNoIndex.join(', ')}) — if the index history was unavailable run again; otherwise add the bar to data/index-bars.json with its source` : ''}${weekendRefused.length ? `; ${weekendRefused.length} got an answer that was neither a file nor a 404 (${weekendRefused.slice(0, 8).join(', ')}${weekendRefused.length > 8 ? ', …' : ''}) — run again to retry those` : ''}`);
 if (Object.keys(otherSeries).length) console.log(`series: ${Object.values(otherSeries).reduce((p, c) => p + c, 0)} bars came from a series other than EQ (${SERIES.filter(x => otherSeries[x]).map(x => x + ' ' + otherSeries[x]).join(', ')}) — names in trade-for-trade, REITs, InvITs`);
+if (seriesDays) console.log(`series on record: ${seriesDays} days written this run, ${seriesListed} bars in a series other than EQ${seriesUnmatched ? `; ${seriesUnmatched} bars on file had no row in their day's bhavcopy and are read as EQ` : ''}`);
 console.log(`done: ${added} days added${membersMode ? `, ${filled} saved days topped up with missing members (${renamedRows} rows stored under a later ticker)` : ''}, ${skipped} already present${indexFilled ? ` (${indexFilled} given their missing NIFTY 50 bar)` : ''}, ${holidays} holidays/weekends skipped, ${failures} failures. History years: ${idx.historyYears.join(', ')}`);
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
