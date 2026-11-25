@@ -1,0 +1,618 @@
+{
+ "params": {
+  "lookback": 126,
+  "skip": 21,
+  "volAdjust": false,
+  "topN": 15,
+  "holdRank": 30,
+  "rebalance": 21,
+  "trail": 20,
+  "gateSma": 200,
+  "gateHoles": 5,
+  "gateUnknown": "open",
+  "minTurnover": 5,
+  "maxOffHigh": 20,
+  "maxPerSector": 4,
+  "costBps": 30,
+  "compound": true,
+  "refill": "rebalance",
+  "volScale": false,
+  "volWindow": 20,
+  "volMedian": 250,
+  "volFactor": 0.5,
+  "bandFill": "both"
+ },
+ "summary": {
+  "starts": 21,
+  "cagr": {
+   "min": 0.07968847644900645,
+   "q1": 0.12216615626598504,
+   "median": 0.14322177312435813,
+   "q3": 0.16640328762674317,
+   "max": 0.21692628913132395,
+   "mean": 0.14151414885275485,
+   "sd": 0.03136378391438704
+  },
+  "sharpe": {
+   "min": 0.4897246007191215,
+   "median": 0.7748673946940181,
+   "max": 1.098241253417257
+  },
+  "maxDrawdown": {
+   "min": 0.2543924949949769,
+   "median": 0.37122202447513897,
+   "max": 0.5130829021732379
+  },
+  "against": {
+   "NIFTY 50": {
+    "compared": 21,
+    "ahead": 16,
+    "aheadBy2": 10,
+    "indexCagrMin": 0.12138117540872528,
+    "indexCagrMax": 0.12472811035969378
+   },
+   "NIFTY200 MOMENTUM 30": {
+    "compared": 21,
+    "ahead": 7,
+    "aheadBy2": 1,
+    "indexCagrMin": 0.15226495235506943,
+    "indexCagrMax": 0.15757469220452558
+   },
+   "NIFTY500 MOMENTUM 50": {
+    "compared": 21,
+    "ahead": 1,
+    "aheadBy2": 1,
+    "indexCagrMin": 0.17269275497131886,
+    "indexCagrMax": 0.17947592140330393
+   }
+  }
+ },
+ "rows": [
+  {
+   "start": "2017-06-12",
+   "end": "2026-11-23",
+   "trades": 549,
+   "totalReturn": 1.6902859065726061,
+   "cagr": 0.11137300000941819,
+   "maxDrawdown": 0.35691250819385495,
+   "sharpe": 0.646541903057544,
+   "winRate": 0.4371584699453552,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2343,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 28,
+     "buys": 0
+    },
+    "deferred": 8,
+    "deferredBars": 28
+   },
+   "bm": {
+    "NIFTY 50": 0.12266491652350275,
+    "NIFTY200 MOMENTUM 30": 0.15226995891803985,
+    "NIFTY500 MOMENTUM 50": 0.17269275497131886
+   }
+  },
+  {
+   "start": "2017-06-13",
+   "end": "2026-11-23",
+   "trades": 534,
+   "totalReturn": 2.5831857804412968,
+   "cagr": 0.1459515039089223,
+   "maxDrawdown": 0.3427301783025846,
+   "sharpe": 0.8000506809645628,
+   "winRate": 0.45318352059925093,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2342,
+    "unfilled": {
+     "sells": 9,
+     "sellDays": 29,
+     "buys": 3
+    },
+    "deferred": 9,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.12279084172741972,
+    "NIFTY200 MOMENTUM 30": 0.1526005597508302,
+    "NIFTY500 MOMENTUM 50": 0.1729141404552652
+   }
+  },
+  {
+   "start": "2017-06-14",
+   "end": "2026-11-23",
+   "trades": 523,
+   "totalReturn": 1.5829858148357348,
+   "cagr": 0.10665263441438588,
+   "maxDrawdown": 0.37255502649900457,
+   "sharpe": 0.6295362241679936,
+   "winRate": 0.4397705544933078,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2341,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 27,
+     "buys": 4
+    },
+    "deferred": 7,
+    "deferredBars": 27
+   },
+   "bm": {
+    "NIFTY 50": 0.12270609363575691,
+    "NIFTY200 MOMENTUM 30": 0.15299540479728702,
+    "NIFTY500 MOMENTUM 50": 0.17308817812895705
+   }
+  },
+  {
+   "start": "2017-06-15",
+   "end": "2026-11-23",
+   "trades": 515,
+   "totalReturn": 3.223807921418757,
+   "cagr": 0.16640328762674317,
+   "maxDrawdown": 0.37122202447513897,
+   "sharpe": 0.8883950012973671,
+   "winRate": 0.46601941747572817,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2340,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 27,
+     "buys": 2
+    },
+    "deferred": 7,
+    "deferredBars": 27
+   },
+   "bm": {
+    "NIFTY 50": 0.12325308996187023,
+    "NIFTY200 MOMENTUM 30": 0.15361434191397327,
+    "NIFTY500 MOMENTUM 50": 0.1736174856453494
+   }
+  },
+  {
+   "start": "2017-06-16",
+   "end": "2026-11-23",
+   "trades": 518,
+   "totalReturn": 3.314039290464211,
+   "cagr": 0.16911840313228677,
+   "maxDrawdown": 0.2543924949949769,
+   "sharpe": 0.9124462584880808,
+   "winRate": 0.46525096525096526,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2339,
+    "unfilled": {
+     "sells": 6,
+     "sellDays": 25,
+     "buys": 0
+    },
+    "deferred": 6,
+    "deferredBars": 25
+   },
+   "bm": {
+    "NIFTY 50": 0.12318377388442014,
+    "NIFTY200 MOMENTUM 30": 0.15340812226764222,
+    "NIFTY500 MOMENTUM 50": 0.17337444001904534
+   }
+  },
+  {
+   "start": "2017-06-19",
+   "end": "2026-11-23",
+   "trades": 524,
+   "totalReturn": 3.3447851089527756,
+   "cagr": 0.17008473067697838,
+   "maxDrawdown": 0.30094630672220857,
+   "sharpe": 0.9075785196160564,
+   "winRate": 0.4389312977099237,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2338,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 28,
+     "buys": 1
+    },
+    "deferred": 7,
+    "deferredBars": 28
+   },
+   "bm": {
+    "NIFTY 50": 0.12236917209020604,
+    "NIFTY200 MOMENTUM 30": 0.152420446954586,
+    "NIFTY500 MOMENTUM 50": 0.1730653154871611
+   }
+  },
+  {
+   "start": "2017-06-20",
+   "end": "2026-11-23",
+   "trades": 542,
+   "totalReturn": 2.6831879500455678,
+   "cagr": 0.1496659273532308,
+   "maxDrawdown": 0.34222302802867965,
+   "sharpe": 0.807258763019529,
+   "winRate": 0.477859778597786,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2337,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 27,
+     "buys": 2
+    },
+    "deferred": 7,
+    "deferredBars": 27
+   },
+   "bm": {
+    "NIFTY 50": 0.12242694622112071,
+    "NIFTY200 MOMENTUM 30": 0.15226495235506943,
+    "NIFTY500 MOMENTUM 50": 0.17300059658322198
+   }
+  },
+  {
+   "start": "2017-06-21",
+   "end": "2026-11-23",
+   "trades": 538,
+   "totalReturn": 2.5768126044057733,
+   "cagr": 0.14613418264116218,
+   "maxDrawdown": 0.36547446362307273,
+   "sharpe": 0.7920086439575368,
+   "winRate": 0.4628252788104089,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2336,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 27,
+     "buys": 1
+    },
+    "deferred": 7,
+    "deferredBars": 27
+   },
+   "bm": {
+    "NIFTY 50": 0.12273158468510559,
+    "NIFTY200 MOMENTUM 30": 0.15321556239696754,
+    "NIFTY500 MOMENTUM 50": 0.1734935096754917
+   }
+  },
+  {
+   "start": "2017-06-22",
+   "end": "2026-11-23",
+   "trades": 569,
+   "totalReturn": 3.3882336917332996,
+   "cagr": 0.17156837224767396,
+   "maxDrawdown": 0.2970303465359371,
+   "sharpe": 0.8974236960121407,
+   "winRate": 0.46572934973637964,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2335,
+    "unfilled": {
+     "sells": 7,
+     "sellDays": 27,
+     "buys": 2
+    },
+    "deferred": 7,
+    "deferredBars": 27
+   },
+   "bm": {
+    "NIFTY 50": 0.12280528180566042,
+    "NIFTY200 MOMENTUM 30": 0.15475405473662884,
+    "NIFTY500 MOMENTUM 50": 0.17517485778427977
+   }
+  },
+  {
+   "start": "2017-06-23",
+   "end": "2026-11-23",
+   "trades": 540,
+   "totalReturn": 3.3416557503795667,
+   "cagr": 0.1703094324441914,
+   "maxDrawdown": 0.35673732799516406,
+   "sharpe": 0.8898716602872763,
+   "winRate": 0.46111111111111114,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2334,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 29,
+     "buys": 3
+    },
+    "deferred": 8,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.12355323766925363,
+    "NIFTY200 MOMENTUM 30": 0.15653016202264758,
+    "NIFTY500 MOMENTUM 50": 0.17746828676031567
+   }
+  },
+  {
+   "start": "2017-06-27",
+   "end": "2026-11-23",
+   "trades": 549,
+   "totalReturn": 5.247211333732596,
+   "cagr": 0.21692628913132395,
+   "maxDrawdown": 0.3572787299705938,
+   "sharpe": 1.098241253417257,
+   "winRate": 0.4681238615664845,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2333,
+    "unfilled": {
+     "sells": 6,
+     "sellDays": 25,
+     "buys": 3
+    },
+    "deferred": 6,
+    "deferredBars": 25
+   },
+   "bm": {
+    "NIFTY 50": 0.124415052337572,
+    "NIFTY200 MOMENTUM 30": 0.15757469220452558,
+    "NIFTY500 MOMENTUM 50": 0.17947592140330393
+   }
+  },
+  {
+   "start": "2017-06-28",
+   "end": "2026-11-23",
+   "trades": 531,
+   "totalReturn": 3.03417899506063,
+   "cagr": 0.16128668679063085,
+   "maxDrawdown": 0.3436009066115805,
+   "sharpe": 0.8624878125167706,
+   "winRate": 0.4312617702448211,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2332,
+    "unfilled": {
+     "sells": 9,
+     "sellDays": 33,
+     "buys": 2
+    },
+    "deferred": 9,
+    "deferredBars": 33
+   },
+   "bm": {
+    "NIFTY 50": 0.12472811035969378,
+    "NIFTY200 MOMENTUM 30": 0.15672175846814373,
+    "NIFTY500 MOMENTUM 50": 0.1784017169734442
+   }
+  },
+  {
+   "start": "2017-06-29",
+   "end": "2026-11-23",
+   "trades": 505,
+   "totalReturn": 2.3070801636040974,
+   "cagr": 0.13686920372043065,
+   "maxDrawdown": 0.39525632343089506,
+   "sharpe": 0.7568682831720106,
+   "winRate": 0.45742574257425744,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2331,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 29,
+     "buys": 2
+    },
+    "deferred": 8,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.12454625840795774,
+    "NIFTY200 MOMENTUM 30": 0.15596660044052935,
+    "NIFTY500 MOMENTUM 50": 0.17759816229291725
+   }
+  },
+  {
+   "start": "2017-06-30",
+   "end": "2026-11-23",
+   "trades": 518,
+   "totalReturn": 2.0391323071376353,
+   "cagr": 0.12667113553926157,
+   "maxDrawdown": 0.3835388471992557,
+   "sharpe": 0.7047467780974853,
+   "winRate": 0.46525096525096526,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2330,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 29,
+     "buys": 3
+    },
+    "deferred": 8,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.1243762673705624,
+    "NIFTY200 MOMENTUM 30": 0.15579800253501053,
+    "NIFTY500 MOMENTUM 50": 0.17734213976808455
+   }
+  },
+  {
+   "start": "2017-07-03",
+   "end": "2026-11-23",
+   "trades": 519,
+   "totalReturn": 2.3190053179237062,
+   "cagr": 0.13743383509205276,
+   "maxDrawdown": 0.37882287810943216,
+   "sharpe": 0.7518552810404282,
+   "winRate": 0.4489402697495183,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2329,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 28,
+     "buys": 1
+    },
+    "deferred": 8,
+    "deferredBars": 28
+   },
+   "bm": {
+    "NIFTY 50": 0.12324200523558115,
+    "NIFTY200 MOMENTUM 30": 0.15429523547755442,
+    "NIFTY500 MOMENTUM 50": 0.17568034484165862
+   }
+  },
+  {
+   "start": "2017-07-04",
+   "end": "2026-11-23",
+   "trades": 519,
+   "totalReturn": 2.477851999479224,
+   "cagr": 0.14322177312435813,
+   "maxDrawdown": 0.4328064067443816,
+   "sharpe": 0.7748673946940181,
+   "winRate": 0.4508670520231214,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2328,
+    "unfilled": {
+     "sells": 10,
+     "sellDays": 31,
+     "buys": 2
+    },
+    "deferred": 10,
+    "deferredBars": 31
+   },
+   "bm": {
+    "NIFTY 50": 0.12331953468093482,
+    "NIFTY200 MOMENTUM 30": 0.15445218176185382,
+    "NIFTY500 MOMENTUM 50": 0.17585015875566912
+   }
+  },
+  {
+   "start": "2017-07-05",
+   "end": "2026-11-23",
+   "trades": 534,
+   "totalReturn": 1.0414658670736738,
+   "cagr": 0.07968847644900645,
+   "maxDrawdown": 0.5130829021732379,
+   "sharpe": 0.4897246007191215,
+   "winRate": 0.4232209737827715,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2327,
+    "unfilled": {
+     "sells": 10,
+     "sellDays": 30,
+     "buys": 2
+    },
+    "deferred": 10,
+    "deferredBars": 30
+   },
+   "bm": {
+    "NIFTY 50": 0.12306550000252692,
+    "NIFTY200 MOMENTUM 30": 0.15362428764218494,
+    "NIFTY500 MOMENTUM 50": 0.174906874254817
+   }
+  },
+  {
+   "start": "2017-07-06",
+   "end": "2026-11-23",
+   "trades": 553,
+   "totalReturn": 1.3308676545405747,
+   "cagr": 0.09521916155050247,
+   "maxDrawdown": 0.4191206069839846,
+   "sharpe": 0.5568619251640076,
+   "winRate": 0.4141048824593128,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2326,
+    "unfilled": {
+     "sells": 9,
+     "sellDays": 30,
+     "buys": 0
+    },
+    "deferred": 9,
+    "deferredBars": 30
+   },
+   "bm": {
+    "NIFTY 50": 0.12260543624213072,
+    "NIFTY200 MOMENTUM 30": 0.15345394462000495,
+    "NIFTY500 MOMENTUM 50": 0.1748433173336581
+   }
+  },
+  {
+   "start": "2017-07-07",
+   "end": "2026-11-23",
+   "trades": 525,
+   "totalReturn": 2.116329563709054,
+   "cagr": 0.1300038764012159,
+   "maxDrawdown": 0.3843540695450331,
+   "sharpe": 0.7253590163784701,
+   "winRate": 0.46095238095238095,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2325,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 29,
+     "buys": 5
+    },
+    "deferred": 8,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.12277142451744272,
+    "NIFTY200 MOMENTUM 30": 0.15356976538411438,
+    "NIFTY500 MOMENTUM 50": 0.17538298338768854
+   }
+  },
+  {
+   "start": "2017-07-10",
+   "end": "2026-11-23",
+   "trades": 539,
+   "totalReturn": 1.7519769416892337,
+   "cagr": 0.11504905738809112,
+   "maxDrawdown": 0.3983800389777151,
+   "sharpe": 0.6606177977234595,
+   "winRate": 0.44155844155844154,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2324,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 29,
+     "buys": 5
+    },
+    "deferred": 8,
+    "deferredBars": 29
+   },
+   "bm": {
+    "NIFTY 50": 0.12151122576947504,
+    "NIFTY200 MOMENTUM 30": 0.1526772274723407,
+    "NIFTY500 MOMENTUM 50": 0.17487723939860977
+   }
+  },
+  {
+   "start": "2017-07-11",
+   "end": "2026-11-23",
+   "trades": 553,
+   "totalReturn": 1.918308442963129,
+   "cagr": 0.12216615626598504,
+   "maxDrawdown": 0.3837997650246927,
+   "sharpe": 0.6936329777396483,
+   "winRate": 0.45569620253164556,
+   "band": {
+    "mode": "both",
+    "seriesDays": 2323,
+    "unfilled": {
+     "sells": 8,
+     "sellDays": 28,
+     "buys": 2
+    },
+    "deferred": 8,
+    "deferredBars": 28
+   },
+   "bm": {
+    "NIFTY 50": 0.12138117540872528,
+    "NIFTY200 MOMENTUM 30": 0.15291136798163985,
+    "NIFTY500 MOMENTUM 50": 0.17535539045702953
+   }
+  }
+ ]
+}

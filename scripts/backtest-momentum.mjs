@@ -12,6 +12,8 @@
  *                                                          # — the default since 19 Nov 2026 when that file exists and no --hist is given;
  *   node scripts/backtest-momentum.mjs --no-members        # every symbol with bars on every day (not a universe that existed; report gets -allnames)
  *   node scripts/backtest-momentum.mjs --set refill=rebalance --set volScale=false   # the 12 Nov 2026 rules (both switches off; report gets -norefill -novolscale)
+ *   node scripts/backtest-momentum.mjs --set bandFill=off    # close fills, as every report before 25 Nov 2026 (report gets -closefill); bandFill=sell: the sales half only (-bandsell)
+ *   node scripts/backtest-momentum.mjs --coverage            # print how many days have their series on record, and stop
  *                                                          # refill=close fills a slot freed by a stop (or left empty by a closed gate) at the next close; volScale=true half-sizes
  *                                                          # new buys while the index's 20-bar volatility is above its one-year median — both on by default since 13 Nov 2026
  *                                                          # (owner's decision; tests in reports/momentum-hypotheses-2026-11-13.md and momentum-refinements-2026-11-13-adjusted-members.md)
@@ -59,6 +61,7 @@ console.log(`history: ${N} days, ${Object.keys(bars.sym).length} symbols, ${bars
 const seriesOnFile = bars.dates.filter(d => bars.series && bars.series[d]).length;
 console.log(`series on record: ${seriesOnFile} of ${N} days${seriesOnFile < N ? ' — the rest are read as "not known" and bought and sold at the close (BACKFILL.md, "Series — the second home run")' : ''}`);
 if (flag('coverage')) process.exit(0);   // --coverage: print the two lines above and stop (the check after a series home run)
+if (sets.bandFill == null && seriesOnFile < N * 0.9) console.log('fill rule at the band (the default): it acts only on the days whose series are on record');
 if ((sets.bandFill === 'both' || sets.bandFill === 'sell') && seriesOnFile < N * 0.9 && !flag('allow-partial-series')) { console.error(`bandFill=${sets.bandFill} needs the series of the bars: only ${seriesOnFile} of ${N} days have them. Run the series home run first (BACKFILL.md), or pass --allow-partial-series to run on what there is.`); process.exit(2); }
 
 const pc = (x, d = 1) => x == null ? '—' : (x * 100).toFixed(d) + '%';
@@ -80,7 +83,7 @@ if (memOn) { const v = arg('members'); const file = v && !v.startsWith('--') ? p
   memStats = { from: MEM.from, asOf: MEM.asOf, events: MEM.events.length, everMembers: ever.length, everWithBars: withBars.length, barsNotMembers: todayOnly.length, membersOnFirstDay: membersOn(MEM, bars.dates[0] < MEM.from ? MEM.from : bars.dates[0]).filter(s => bars.sym[s]).length };
   console.log(`membership: ${memStats.events} events ${MEM.from} → ${MEM.asOf}; ${memStats.everMembers} names were ever members, ${memStats.everWithBars} of them have bars (the rest await the past-members price load); ${memStats.barsNotMembers} symbols with bars were never members`); }
 const stamp = new Date().toISOString().slice(0, 10) + (bars.adjusted && bars.adjusted.events ? '-adjusted' : '') + (MEM ? '-members' : allNames ? '-allnames' : '')
-  + (sets.refill === 'rebalance' ? '-norefill' : '') + (sets.volScale === false ? '-novolscale' : '') + (sets.bandFill === 'both' ? '-bandfill' : sets.bandFill === 'sell' ? '-bandsell' : '');   // adjusted-history, members and switched-off runs get their own file names, so a variant never overwrites a baseline (13 Nov 2026: both switches are on by default; the 13 Nov reports were written while they were off, hence their -refill / -volscale names)
+  + (sets.refill === 'rebalance' ? '-norefill' : '') + (sets.volScale === false ? '-novolscale' : '') + (sets.bandFill === 'off' ? '-closefill' : sets.bandFill === 'sell' ? '-bandsell' : '');   // the fill rule at the band is the default since 25 Nov 2026: the plain name is the band-fill run, -closefill the old close fills (the reports dated 25 Nov were made before the change: there the plain name is close fills and -bandfill the rule)   // adjusted-history, members and switched-off runs get their own file names, so a variant never overwrites a baseline (13 Nov 2026: both switches are on by default; the 13 Nov reports were written while they were off, hence their -refill / -volscale names)
 const OUT = arg('out', path.join(ROOT, 'reports')); await fs.mkdir(OUT, { recursive: true });
 
 // --benchmarks [dir]: NSE total-return indices, stitched from the one-year files the site serves. Optional; nothing changes without the flag.

@@ -151,6 +151,8 @@ The fill rule at the band (`reports/momentum-fill-hypothesis-2026-11-25.md`) nee
 5. **Commit and push**: `git add data/history && git commit -m "Series of the bars on file (A22 step 2)" && git push`.
 6. **Do not run the sweep.** Tell the next session the `series on record:` line; it runs the three sweeps and reads them against the hypothesis file.
 
+**Done 25 Nov 2026**: 2,491 days written, 53,931 bars in a series other than `EQ`, 0 failures; the sweeps were read the same day (`reports/momentum-fill-2026-11-25.md`). The `496 bars on file had no row` line was `ICICIPRULI`, the name `ICICILIFE` had until 23 Oct 2026 — a stale duplicate, harmless. From here the daily job keeps the series day by day, and any members top-up writes it for the days it visits; this run does not need repeating.
+
 Only 8 Nov and nothing else, if an hour is not to hand: `node scripts/backfill.mjs --from 2026-11-08 --to 2026-11-08 --members` (a minute; it fills the five names for that session and leaves the rest of the count where it is).
 
 What not to do: do not leave out `--members` (a plain run skips every day already on file); do not add `--weekends` (that asks for a thousand weekend dates that never had a session; the members run already revisits the ten that did); do not run it at the same time as another backfill.

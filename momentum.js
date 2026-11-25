@@ -38,13 +38,16 @@
  *                 a price anyone had (the same for a purchase at the upper band). The paper books say which holdings are in such a
  *                 series and which of their purchases and sales were made on a day the share closed at its band (bandAt, t2tReport).
  *                 No rule reads any of it: the fill rule is a hypothesis to be written and tested first (README, A22, step 2).
- *   Band fill   = `bandFill: 'off'` (default: bought and sold at the close, as every report before 25 Nov 2026). `'both'`: a sale that
+ *   Band fill   = `bandFill: 'both'` (the default since 25 Nov 2026, by the decision fixed before the test was run; `'off'`: bought and
+ *                 sold at the close, as every report before that day, and still what the paper books do). `'both'`: a sale that
  *                 falls due on a day the share is in trade-for-trade and closed at its lower band is not made; it is tried again at
  *                 every later close the share has, and made at the first that is not at the lower band, whatever the stop or the
  *                 rank says by then. A purchase of a share that closed at its upper band is not made either; its slot stays empty
  *                 for the day and is filled, or not, by the usual rules at the next close. `'sell'`: the sale half only. Acts only
- *                 on days whose series are on record (bandAt). Hypothesis written before any run on real series:
- *                 reports/momentum-fill-hypothesis-2026-11-25.md. The paper books do not take it: their rules were fixed on 23 Nov.
+ *                 on days whose series are on record (bandAt) — on a history without them it changes nothing. Hypothesis written
+ *                 before any run on real series: reports/momentum-fill-hypothesis-2026-11-25.md; read the same day: the median of
+ *                 the 21 starts 20.1% → 18.8% a year, ahead of the fund by two points from 7 starts, not 12
+ *                 (reports/momentum-fill-2026-11-25.md). The paper books do not take it: their rules were fixed on 23 Nov.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -52,7 +55,7 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, gateHoles: 5, gateUnknown: 'open', minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5, bandFill: 'off' };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, gateHoles: 5, gateUnknown: 'open', minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5, bandFill: 'both' };   // bandFill 'both' since 25 Nov 2026: the backtest's standing fill model (reports/momentum-fill-2026-11-25.md); 'off' = bought and sold at the close, as every report before it
 
   const BAND = 4.9;   // percent from the previous close at which a trade-for-trade share is read as at its band (bandAt)
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
