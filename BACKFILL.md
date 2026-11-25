@@ -137,7 +137,19 @@ The bhavcopy lists every security under the series it traded in that day. Until 
 7. **Commit and push**: `git add data/history data/adjustments.json reports && git commit -m "Members' bars from BE, BZ, RR and IV loaded (audit A20)" && git push`.
 8. **Tell the next session** the two counts and the `series:` line. Its job: every baseline and event study re-run and set beside the 21 Nov reports — this moves the ranking universe, not only the calendar, so the figures are expected to move — and the twenty-one paper books' replay read against the digests already sent.
 
-**Since 25 Nov 2026 (A22, step 1) the series is also remembered.** The daily job writes the day's names that are not in `EQ` into the snapshot (`series`) and the history file (`series["<date>"]`), and a day listed there says every other bar of that day is `EQ`. A top-up from this file's commands keeps that true: the rows it adds carry their series when the day is new to the file or already listed, and are added without one on an older day, whose other bars are of unknown series. **The history before 25 Nov has no series on record yet** — filling it in is one more pass over the same bhavcopies (README, A22 step 2), not built at the time of writing; nothing here needs to be re-run until it is.
+**Since 25 Nov 2026 (A22, step 1) the series is also remembered.** The daily job writes the day's names that are not in `EQ` into the snapshot (`series`) and the history file (`series["<date>"]`), and a day listed there says every other bar of that day is `EQ`. A top-up from this file's commands keeps that true: the rows it adds carry their series when the day is new to the file or already listed, and are added without one on an older day, whose other bars are of unknown series. **The history before 25 Nov has no series on record yet** — filling it in is one more pass over the same bhavcopies, built later the same day: the next section.
+
+## Series — the second home run (25 Nov 2026, A22 step 2)
+
+The fill rule at the band (`reports/momentum-fill-hypothesis-2026-11-25.md`) needs to know, for every bar, whether the share was in trade-for-trade that day. The members top-up downloads each day's bhavcopy anyway; since 25 Nov it also writes, for every day it visits, the series of **every member's bar on file** that is not `EQ` — not only of the bars it adds. Same command as on 23 Nov, from home, about an hour:
+
+1. **Pull `main`** (`git pull`).
+2. **Run** `node scripts/backfill.mjs --from 2016-11-07 --members`
+   A progress line every 20 days (`…: series written (saved, N days so far)`). If it stops with `too many failures`, wait a few minutes and run the same command again — a day already written is simply written again.
+3. **Read the last lines.** `series on record: N days written this run, K bars in a series other than EQ` — N should be the number of sessions on file (about 2,490) and K about 54,000 (the 53,793 bars loaded on 23 Nov, and any since). `; U bars on file had no row in their day's bhavcopy and are read as EQ` — if it appears, keep the number: it is the bars the rule cannot speak for. `done: 0 days added, 0 saved days topped up…` is the expected last line; anything added is a session or a bar that was missing.
+4. **Check the coverage**: `node scripts/backtest-momentum.mjs --coverage` prints `series on record: N of N days` and stops. If the two numbers differ, the days missing are sessions the run did not reach — run step 2 again.
+5. **Commit and push**: `git add data/history && git commit -m "Series of the bars on file (A22 step 2)" && git push`.
+6. **Do not run the sweep.** Tell the next session the `series on record:` line; it runs the three sweeps and reads them against the hypothesis file.
 
 Only 8 Nov and nothing else, if an hour is not to hand: `node scripts/backfill.mjs --from 2026-11-08 --to 2026-11-08 --members` (a minute; it fills the five names for that session and leaves the rest of the count where it is).
 
