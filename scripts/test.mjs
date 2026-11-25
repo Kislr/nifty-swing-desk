@@ -691,5 +691,47 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
   assert(JSON.stringify(mr.series) === '{"TFT":"BE","REIT":"RR"}' && BF.seriesKnown({ dates: ['2026-11-25'] }, '2026-11-25', 0) === false && BF.seriesKnown({ dates: [] }, '2026-11-25', -1) === true && BF.seriesKnown({ series: { '2026-11-25': {} } }, '2026-11-25', 0) === true,
     'backfill: the rows added name their series; they are written on a day new to the file or already on record, and held back on an old day whose other bars are of unknown series'); }
 
+// 17. A22, step 2 (25 Nov 2026): the fill rule at the band as a switch in the momentum engine (bandFill: 'off' by default), the series of the bars
+//     already on file written by the members top-up, and the backtest script's guard. Hypothesis: reports/momentum-fill-hypothesis-2026-11-25.md.
+{ const mkB = () => { const b = E.buildBars([synth(60, 500)], []); for (const d of b.dates) b.series[d] = {}; return b; };   // every day on record, every bar in EQ
+  const D = mkB().dates; const from = D[300]; const run = (bars, bandFill) => M.simulate(bars, Object.assign({ compound: true }, bandFill ? { bandFill } : {}), custom, { from, capital: 500000, stale: 20 });
+  const key = sim => JSON.stringify([sim.trades, sim.equity]);
+  const plain = E.buildBars([synth(60, 500)], []); const base = run(mkB());
+  assert(M.DEFAULTS.bandFill === 'off' && key(run(plain, 'both')) === key(run(plain)) && key(run(mkB(), 'both')) === key(base) && key(run(mkB(), 'sell')) === key(base) && run(plain, 'both').seriesDays === 0 && base.seriesDays === base.equity.length && base.trades.every(t => !('deferred' in t)),
+    'bandFill: off by default; without the series on record, or with every bar in EQ, the run with the rule on is the run with it off, trade for trade');
+  // a sale: the trailing stop falls due on a day the share is locked at its lower band, and again the next day; it is made on the third
+  // (the synthetic run has no stop of its own: one is made — a holding falls 30% on its fourth day, in BE, and is locked 6% lower the day after)
+  const tr = base.trades.find(t => D.indexOf(t.exitDate) - D.indexOf(t.entryDate) >= 8); const X = tr.sym, b0 = D.indexOf(tr.entryDate) + 3;
+  const lock = bars => { const c = bars.sym[X].c; c[b0] = +(c[b0 - 1] * 0.7).toFixed(2); c[b0 + 1] = +(c[b0] * 0.94).toFixed(2); c[b0 + 2] = +(c[b0 + 1] * 1.01).toFixed(2); bars.series[D[b0]][X] = 'BE'; bars.series[D[b0 + 1]][X] = 'BE'; bars.series[D[b0 + 2]][X] = 'BE'; return bars; };
+  const off = run(lock(mkB())), both = run(lock(mkB()), 'both'), sellOnly = run(lock(mkB()), 'sell'); const tOff = off.trades.find(t => t.sym === X && t.entryDate === tr.entryDate), tOn = both.trades.find(t => t.sym === X && t.entryDate === tr.entryDate), tS = sellOnly.trades.find(t => t.sym === X && t.entryDate === tr.entryDate);
+  assert(tOff.exitDate === D[b0] && tOff.reason === 'trailing stop' && !('deferred' in tOff) && tOn.exitDate === D[b0 + 2] && tOn.reason === 'trailing stop' && tOn.deferred === 2 && tOn.dueDate === D[b0] && tOn.exit < tOff.exit && tOn.qty === tOff.qty && both.unfilled.sells === 1 && both.unfilled.sellDays === 2 && tS.exitDate === tOn.exitDate && tS.exit === tOn.exit && off.unfilled.sells === 0,
+    `bandFill: ${X}'s stop falls due on ${D[b0]} with the share at its lower band; with the rule off it is sold that close, with it on (both, or sales only) it is sold two closes later at the lower price, marked two bars late`);
+  assert(both.equity.find(e => e.date === D[b0]).positions >= off.equity.find(e => e.date === D[b0]).positions && both.equity.find(e => e.date === D[b0 + 1]).invested > 0 && M.stats(both).band.deferred === 1 && M.stats(both).band.deferredBars === 2 && M.stats(both).band.mode === 'both' && M.stats(off).band.mode === 'off' && M.stats(both).band.seriesDays === both.equity.length,
+    'bandFill: while the sale is due the share is still held (its slot is not free to refill); stats count the sales made late and the bars they waited');
+  // a purchase: the share closes at its upper band on the day the book would buy it — not bought, and the slot is not handed to the next name
+  const bt = [...base.trades].sort((x, y) => y.entryDate.localeCompare(x.entryDate))[0]; const Y = bt.sym, e0 = D.indexOf(bt.entryDate); const bought = (sim, d) => sim.trades.filter(t => t.entryDate === d).length;
+  const lockUp = bars => { const c = bars.sym[Y].c; c[e0] = +(c[e0 - 1] * 1.06).toFixed(2); bars.series[D[e0]][Y] = 'BZ'; return bars; };
+  const offB = run(lockUp(mkB())), onB = run(lockUp(mkB()), 'both'), sellB = run(lockUp(mkB()), 'sell'); const at = (sim, sym, d) => sim.trades.some(t => t.sym === sym && t.entryDate === d);
+  assert(at(offB, Y, D[e0]) && !at(onB, Y, D[e0]) && at(sellB, Y, D[e0]) && onB.unfilled.buys >= 1 && sellB.unfilled.buys === 0 && bought(onB, D[e0]) === bought(offB, D[e0]) - 1 && onB.equity.find(e => e.date === D[e0]).positions === offB.equity.find(e => e.date === D[e0]).positions - 1,
+    `bandFill: ${Y} closes at its upper band on ${D[e0]}, the day the book would buy it — bought with the rule off or sales-only, not bought with both sides on, and nothing else is bought in its place that day`);
+  // the paper books do not take the rule: fixed on 23 Nov, before it existed
+  const pbOff = M.paperBook(lock(mkB()), {}, custom, { from, capital: 500000 }), pbOn = M.paperBook(lock(mkB()), { bandFill: 'both' }, custom, { from, capital: 500000 });
+  assert(pbOn.params.bandFill === 'off' && pbOn.value === pbOff.value && JSON.stringify(pbOn.equity) === JSON.stringify(pbOff.equity) && pbOn.trades === pbOff.trades, 'paper books: bandFill is off whatever the parameters say — the books buy and sell at the close, as fixed on 23 Nov');
+  // the backfill's series pass: the day's series for the bars already on file, from the bhavcopy the members top-up reads anyway
+  const BF = await import('./backfill.mjs'); const brow = (sym, series, c) => ({ sym, series, o: c, h: c, l: c, c, v: 10, t: 1 });
+  const dayRows = [brow('PLAIN', 'EQ', 100), brow('TFT', 'BE', 50), brow('OLDNAME', 'BZ', 5), brow('REIT', 'RR', 400), brow('NEVER', 'BE', 9), brow('NOTONFILE', 'BE', 7), brow('ZERO', 'BE', 0)];
+  const ms = BF.memberSeries(dayRows, '2020-01-02', { ever: new Set(['PLAIN', 'TFT', 'NEWNAME', 'REIT', 'NOTONFILE', 'ZERO', 'GHOST']), canon: sym => ({ sym: sym === 'OLDNAME' ? 'NEWNAME' : sym }) });
+  const bar = v => ({ o: [1, v], h: [1, v], l: [1, v], c: [1, v], v: [1, 1], t: [1, 1] }); const hfile = { year: 2020, dates: ['2020-01-01', '2020-01-02'], symbols: { PLAIN: bar(100), TFT: bar(50), NEWNAME: bar(5), REIT: bar(400), NOTONFILE: bar(null), GHOST: bar(3) }, index: null };
+  const w = BF.writeDaySeries(hfile, '2020-01-02', ms, new Set(['PLAIN', 'TFT', 'NEWNAME', 'REIT', 'NEVER', 'NOTONFILE']));
+  assert(JSON.stringify(ms) === '{"TFT":"BE","NEWNAME":"BZ","REIT":"RR","NOTONFILE":"BE"}' && JSON.stringify(hfile.series) === '{"2020-01-02":{"TFT":"BE","NEWNAME":"BZ","REIT":"RR"}}' && w.listed === 3 && w.unmatched === 1 && BF.writeDaySeries(hfile, '2019-01-01', ms).listed === 0 && !('2019-01-01' in hfile.series),
+    'backfill series pass: a visited day gets the series of every member bar on file that is not in EQ, under today\'s ticker; a name without a bar that day is not listed, a bar with no row in the bhavcopy is counted, and a day not on file is left alone');
+  const sb2 = E.buildBars([hfile], []); assert(E.seriesAt(sb2, 'TFT', 1) === 'BE' && E.seriesAt(sb2, 'PLAIN', 1) === 'EQ' && E.seriesAt(sb2, 'TFT', 0) === null, 'backfill series pass: read back by the bars — BE, EQ for the rest of the day, and nothing for a day the pass has not visited');
+  // the backtest script: bandFill needs the series; it stops on a store without them and runs when told to
+  { const out = path.join(tmp, 'out-bandfill'); const args = [path.join(ROOT, 'scripts', 'backtest-momentum.mjs'), '--hist', path.join(tmp, 'hist'), '--out', out, '--set', 'bandFill=both'];
+    const stop = spawnSync(process.execPath, args, { encoding: 'utf8' }); const go = spawnSync(process.execPath, [...args, '--allow-partial-series'], { encoding: 'utf8' }); const wr = go.status === 0 ? await fs.readdir(out).catch(() => []) : []; const mdf = wr.find(f => /-bandfill\.md$/.test(f));
+    const txt = mdf ? await fs.readFile(path.join(out, mdf), 'utf8') : '';
+    assert(stop.status === 2 && /needs the series of the bars/.test(stop.stderr) && go.status === 0 && mdf && /## Fill rule at the band \(A22\)/.test(txt) && /Series on record for \*\*0 of \d+\*\* days/.test(txt) && /sales not made on the day they fell due: \*\*0\*\*/.test(txt),
+      'backtest-momentum --set bandFill=both: refuses a store without the series, runs with --allow-partial-series, and the report (-bandfill) says how many days the rule could act on' + (go.status ? '\n' + String(go.stderr).split('\n').slice(0, 6).join('\n') : '')); } }
+
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');

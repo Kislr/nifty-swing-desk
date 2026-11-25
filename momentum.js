@@ -38,6 +38,13 @@
  *                 a price anyone had (the same for a purchase at the upper band). The paper books say which holdings are in such a
  *                 series and which of their purchases and sales were made on a day the share closed at its band (bandAt, t2tReport).
  *                 No rule reads any of it: the fill rule is a hypothesis to be written and tested first (README, A22, step 2).
+ *   Band fill   = `bandFill: 'off'` (default: bought and sold at the close, as every report before 25 Nov 2026). `'both'`: a sale that
+ *                 falls due on a day the share is in trade-for-trade and closed at its lower band is not made; it is tried again at
+ *                 every later close the share has, and made at the first that is not at the lower band, whatever the stop or the
+ *                 rank says by then. A purchase of a share that closed at its upper band is not made either; its slot stays empty
+ *                 for the day and is filled, or not, by the usual rules at the next close. `'sell'`: the sale half only. Acts only
+ *                 on days whose series are on record (bandAt). Hypothesis written before any run on real series:
+ *                 reports/momentum-fill-hypothesis-2026-11-25.md. The paper books do not take it: their rules were fixed on 23 Nov.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -45,8 +52,9 @@
 })(typeof self !== 'undefined' ? self : this, function (E) {
   'use strict';
 
-  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, gateHoles: 5, gateUnknown: 'open', minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5 };
+  const DEFAULTS = { lookback: 126, skip: 21, volAdjust: false, topN: 15, holdRank: 30, rebalance: 21, trail: 20, gateSma: 200, gateHoles: 5, gateUnknown: 'open', minTurnover: 5, maxOffHigh: 20, maxPerSector: 4, costBps: 30, compound: false, refill: 'close', volScale: true, volWindow: 20, volMedian: 250, volFactor: 0.5, bandFill: 'off' };
 
+  const BAND = 4.9;   // percent from the previous close at which a trade-for-trade share is read as at its band (bandAt)
   const mean = a => a.length ? a.reduce((p, c) => p + c, 0) / a.length : null;
   const stdev = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((p, c) => p + (c - m) * (c - m), 0) / (a.length - 1)); };
   function smaAt(c, n, i) { if (i + 1 < n) return null; let s = 0; for (let k = i - n + 1; k <= i; k++) { if (c[k] == null) return null; s += c[k]; } return s / n; }
@@ -139,14 +147,21 @@
     const from = opts.from || '0000-00-00', to = opts.to || '9999-99-99'; const capital = opts.capital || 500000; let slot = capital / P.topN;
     const open = {}; const trades = []; const equity = []; let cash = capital; let lastReb = -Infinity; const cost = px => px * P.costBps / 2 / 10000;
     const close = (sym, i, px, reason) => { const p = open[sym]; const exitPx = px - cost(px); const pnl = (exitPx - p.entry) * p.qty; cash += exitPx * p.qty;
-      trades.push({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size, peak: +p.peak.toFixed(2) }); delete open[sym]; };
+      trades.push(Object.assign({ sym, sector: p.sector, entryDate: bars.dates[p.i], exitDate: bars.dates[i], entry: +p.entry.toFixed(2), exit: +exitPx.toFixed(2), qty: p.qty, bars: i - p.i, ret: +((exitPx / p.entry - 1) * 100).toFixed(2), pnl: +pnl.toFixed(0), rankIn: p.rank, reason, fill: p.fill, size: p.size, peak: +p.peak.toFixed(2) }, p.due != null ? { deferred: i - p.due, dueDate: bars.dates[p.due] } : null)); delete open[sym]; };
+    // Band fill (A22 step 2): `sell` asks for a sale; with bandFill on, a share locked at its lower band is not sold today — the sale stays due
+    // (p.due = the day it first fell due, p.dueReason) and is tried at every later close the share has. Off, sell is close.
+    const bf = P.bandFill === 'both' || P.bandFill === 'sell' ? P.bandFill : null; const unfilled = { sells: 0, sellDays: 0, buys: 0 };
+    const lockedAt = (sym, i, side) => !!bf && (side === 'sell' || bf === 'both') && bandAt(bars, sym, i).band === (side === 'sell' ? 'lower' : 'upper');
+    const sell = (sym, i, px, reason) => { const p = open[sym]; if (lockedAt(sym, i, 'sell')) { if (p.due == null) { p.due = i; p.dueReason = reason; unfilled.sells++; } unfilled.sellDays++; return false; } close(sym, i, px, p.due != null ? p.dueReason : reason); return true; };
     const vflag = P.volScale ? volFlags(bars, P) : null;   // high-volatility flag per bar, closes up to that bar only
     const cache = opts.cache || null; const select = i => { if (!cache) return selectAt(bars, i, P, custom, filter); let R = cache.get(i); if (!R) cache.set(i, R = selectAt(bars, i, P, custom, filter)); return R; };
     const marked = i => { let mv = cash; for (const sym of Object.keys(open)) { const c = bars.sym[sym].c[i]; mv += (c != null ? c : open[sym].entry) * open[sym].qty; } return mv; };
     // Buy from the top of the ranking into the free slots: sector cap, then the slot (half of it while volatility is high), then the cash left.
     const fill = (R, i, how) => { const bySec = {}; for (const sym of Object.keys(open)) bySec[open[sym].sector] = (bySec[open[sym].sector] || 0) + 1;
       const half = !!(vflag && vflag[i]); const size = slot * (half ? P.volFactor : 1);
-      for (const r of R.ranked) { if (Object.keys(open).length >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
+      let held = 0;   // slots kept empty today for a purchase that could not be made (band fill)
+      for (const r of R.ranked) { if (Object.keys(open).length + held >= P.topN) break; if (open[r.sym]) continue; if ((bySec[r.sector] || 0) >= P.maxPerSector) continue;
+        if (lockedAt(r.sym, i, 'buy')) { held++; unfilled.buys++; continue; }
         const px = r.ltp + cost(r.ltp); const qty = Math.floor(Math.min(size, cash) / px); if (qty < 1) continue;
         cash -= qty * px; bySec[r.sector] = (bySec[r.sector] || 0) + 1; open[r.sym] = { entry: px, qty, i, peak: r.ltp, last: r.ltp, gap: 0, sector: r.sector, rank: r.rank, fill: how, size: half ? 'half' : 'full' }; } };
     let lastI = N - 1;   // last bar inside the window: positions still open there are closed at that close, not at the end of the whole history
@@ -155,15 +170,16 @@
       // 1. daily: trailing stops on open positions, marked on today's close
       for (const sym of Object.keys(open)) { const p = open[sym]; const c = bars.sym[sym].c[i];
         if (c == null) { if (stale && ++p.gap >= stale) close(sym, i, p.last, 'stopped trading'); continue; } p.gap = 0; p.last = c; p.peak = Math.max(p.peak, c);
-        if (c < p.peak * (1 - P.trail / 100)) close(sym, i, c, 'trailing stop'); }
+        if (p.due != null) { sell(sym, i, c, p.dueReason); continue; }   // a sale already due: made today unless the share is at its lower band again
+        if (c < p.peak * (1 - P.trail / 100)) sell(sym, i, c, 'trailing stop'); }
       // 2. rebalance day: rank, drop names below holdRank (or ineligible), fill free slots if the gate is open
       // (an unknown gate — no 200-day average and no breadth yet, the first 51 days of the ten-year window — counts as open: `gateUnknown: 'open'`,
       //  the behaviour every report on record was made with; 'closed' is the fail-safe reading, kept as a switch so the difference stays measurable — README, A9)
       const gateOK = g => g.open === true || (g.open == null && P.gateUnknown !== 'closed');
       const gate = gateAt(bars, i, P);
       if (i - lastReb >= P.rebalance) { lastReb = i; const R = select(i); const rankOf = {}; R.ranked.forEach(r => (rankOf[r.sym] = r.rank));
-        for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null) continue;
-          if (rk == null) close(sym, i, c, 'ineligible'); else if (rk > P.holdRank) close(sym, i, c, 'rank ' + rk); }
+        for (const sym of Object.keys(open)) { const rk = rankOf[sym]; const c = bars.sym[sym].c[i]; if (c == null || open[sym].due != null) continue;   // a sale already due was tried above
+          if (rk == null) sell(sym, i, c, 'ineligible'); else if (rk > P.holdRank) sell(sym, i, c, 'rank ' + rk); }
         if (P.compound) slot = marked(i) / P.topN;
         if (gateOK(R.gate)) fill(R, i, 'rebalance'); }
       // 2b. refill: 'close' — any other day the gate is open and the book is short, rank at this close and fill the free slots
@@ -173,7 +189,9 @@
       equity.push({ date, value: +mv.toFixed(0), invested: +inv.toFixed(0), positions: Object.keys(open).length, gate: gate.open, index: bars.index ? bars.index.c[i] : null, volHigh: P.volScale ? vflag[i] : undefined });
     }
     for (const sym of Object.keys(open)) { const i = lastI; const c = bars.sym[sym].c[i]; close(sym, i, c != null ? c : open[sym].last, 'end of data'); }   // (13 Nov 2026: was N - 1 even with --to, so a windowed run's last trades were marked at the final bar of the whole history)
-    return { trades, equity, params: P, warmup, capital };
+    // seriesDays: the days of the run whose series are on record — the only days band fill can act on (and bandAt can speak of)
+    let seriesDays = 0; for (const e of equity) if (bars.series && bars.series[e.date]) seriesDays++;
+    return { trades, equity, params: P, warmup, capital, unfilled, seriesDays };
   }
 
   function stats(sim) {
@@ -188,7 +206,8 @@
     const atWork = eq[0].invested != null ? mean(eq.map(e => e.value ? e.invested / e.value : 0)) : null;   // average share of equity in open positions
     const refills = t.filter(x => x.fill === 'refill').length, halfSized = t.filter(x => x.size === 'half').length;   // 13 Nov 2026 options; both 0 at the defaults
     const volHighDays = eq.some(e => e.volHigh != null) ? eq.filter(e => e.volHigh === true).length / eq.length : null;
-    return { atWork, refills, halfSized, volHighDays, n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
+    const band = { mode: sim.params.bandFill || 'off', seriesDays: sim.seriesDays || 0, unfilled: sim.unfilled || { sells: 0, sellDays: 0, buys: 0 }, deferred: t.filter(x => x.deferred > 0).length, deferredBars: t.reduce((p, x) => p + (x.deferred || 0), 0) };   // A22 step 2
+    return { band, atWork, refills, halfSized, volHighDays, n: t.length, days: eq.length, start: eq[0].date, end: eq[eq.length - 1].date, totalReturn: v1 / v0 - 1, cagr, maxDrawdown: dd, sharpe, indexReturn: idxRet, winRate: t.length ? wins.length / t.length : null,
       avgWin: wins.length ? mean(wins.map(x => x.ret)) : null, avgLoss: t.length - wins.length ? mean(t.filter(x => x.pnl <= 0).map(x => x.ret)) : null, avgBars: t.length ? mean(t.map(x => x.bars)) : null, byReason, byYear, inMarket, final: v1 };
   }
 
@@ -198,7 +217,6 @@
    *  band: 'lower' | 'upper' when the share is in trade-for-trade and closed BAND percent or more from the previous close, else null.
    *  BAND is 4.9, the figure the 23 Nov count was made with (reports/series-fill-2026-11-23.md): the band is 5% and the band price is
    *  rounded to a tick. A share NSE holds to a 2% band is not seen by this — the market-watch row carries the series, not the band. */
-  const BAND = 4.9;
   function bandAt(bars, sym, i) {
     const series = E && E.seriesAt ? E.seriesAt(bars, sym, i) : null; const t2t = series == null ? null : E.T2T.includes(series);
     const B = bars.sym[sym]; const c = B ? B.c[i] : null, pc = B && i > 0 ? B.c[i - 1] : null; const pct = c != null && pc > 0 ? (c / pc - 1) * 100 : null;
@@ -237,7 +255,7 @@
    *  NIFTY 50 comes from bars.index. Each is measured from the first close it has on or after the book's first day.
    *  Returns null before the first day exists in the bars. */
   function paperBook(bars, params, custom, opts) {
-    opts = opts || {}; const P = Object.assign({}, DEFAULTS, { compound: true }, params || {}); const from = opts.from; if (!from) return null;
+    opts = opts || {}; const P = Object.assign({}, DEFAULTS, { compound: true }, params || {}, { bandFill: 'off' }); const from = opts.from; if (!from) return null;   // bandFill off whatever the parameters say: the books' rules were fixed on 23 Nov 2026, before the fill rule existed (owner, 25 Nov)
     const N = bars.dates.length; const last = N - 1; const today = bars.dates[last]; if (!N || today < from) return null;
     const sim = simulate(bars, P, custom, { from, capital: opts.capital || 500000, stale: 20, filter: opts.filter || null, cache: opts.cache || null }); const eq = sim.equity; if (!eq.length) return null;   // opts.filter (19 Nov 2026, audit A6): the point-in-time membership the backtest ranks on, so a name that leaves the index is sold at the next rebalance as 'ineligible', as it is there
     const i0 = bars.dates.indexOf(eq[0].date); const value = eq[eq.length - 1].value; const st = stats(sim);
