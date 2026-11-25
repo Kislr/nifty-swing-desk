@@ -15,6 +15,11 @@
  * `from` (M.paperBooks; book 1 is the book above, unchanged), adds one line to the PAPER BOOK block — median, range, how many are ahead
  * of config.paper.fund over their own days — and writes the table into latest.json as paperBooks. config.paper.starts, once set, fixes
  * the 21 start days. The rule for reading them: reports/momentum-books-reading-rule-2026-11-23.md.
+ * Series (A22 step 1, 25 Nov 2026): NSE's row names the series each share trades in (EQ; BE / BZ = trade-for-trade; RR, IV). The job keeps
+ * the names that are not in EQ in the snapshot (`series`) and in the history file (`series[date]`), beside the rows and bars, which are
+ * unchanged; the PAPER BOOK block gains a TRADE-FOR-TRADE line on a day a holding is in BE / BZ or a trade was made at its band, and
+ * latest.json carries the record (paper.t2t, paperBooks.t2t). Nothing is bought, sold or skipped because of it. The live momentum list
+ * is ranked on the point-in-time membership, as the books are.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -145,6 +150,10 @@ try {
   }
   const doc = E.toSnapshotDoc(rows, date, time, 'nse-api');
   console.log(`fetched ${doc.count} stocks for ${date} ${time} (${config.index})`);
+  // Series (A22, 25 Nov 2026): NSE's row says which series each share trades in today; the snapshot and the history keep the ones that are not EQ.
+  if (doc.series) { const by = {}; for (const sr of Object.values(doc.series)) by[sr] = (by[sr] || 0) + 1; const t2t = Object.keys(doc.series).filter(k => E.T2T.includes(doc.series[k])).sort();
+    console.log(`series: ${doc.count - Object.keys(doc.series).length} in EQ${Object.keys(by).sort().map(k => `, ${by[k]} in ${k}`).join('')}${t2t.length ? ` — trade-for-trade: ${t2t.join(', ')}` : ''}`); }
+  else console.warn('series: the payload names no series today — none recorded for this day (the bhavcopy has them: BACKFILL.md, "Series — the home run")');
 
   const existing = await readJSON(path.join(SNAPS, date + '.json'), null);
   if (existing && existing.time === time && !FORCE) { console.log('snapshot unchanged (market closed today?) — nothing to do'); process.exit(0); }
@@ -176,7 +185,10 @@ try {
         const snap = { date: d, rows: {}, index: { name: 'NIFTY 50', open: f.o ?? null, high: f.h ?? null, low: f.l ?? null, ltp: f.c } };
         E.appendSnapshotToHistory(file, snap); repairs.push({ date: d, source: f.source, snap }); console.log(`index repair: NIFTY 50 ${d} = ${f.c} (${f.source})`); } } }
   const result = E.analyzeLatest(histFiles, snaps, config.risk, custom, adjustments);
-  const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom);
+  // The live list is ranked on the point-in-time NIFTY 500 membership, as the paper books are (A22 step 1 (v), 25 Nov 2026). Until now it relied
+  // on a non-member having no bar today — true every evening except one on which a members top-up has just loaded a past member's bars.
+  const MEMB = await readJSON(path.join(DATA, 'membership', 'members.json'), null); const memFilter = MEMB ? membershipFilter(MEMB) : null;
+  const mom = M.selectAt(result.bars, result.bars.dates.length - 1, config.momentum || {}, custom, memFilter);
   const notices = E.noticesDigest(pend, gap, pend.length ? applyPend : undefined, { repaired: repairs, missing: E.indexHoles(result.bars, result.bars.dates.length - 1), gate: mom.gate });
   E.tagMomentum(result.signals, mom.ranked, (config.momentum && config.momentum.holdRank) || M.DEFAULTS.holdRank);   // momentum pullbacks first, tagged for the digest and latest.json
   // Paper book: the engine's rules replayed from PAPER.from on the same bars, beside the index funds (price indices saved day by day in data/benchmarks/live.json).
@@ -188,13 +200,14 @@ try {
     for (const [name, bm] of Object.entries(got)) { todayBm[name] = { [date]: bm.close }; if (prevDate && bm.prev && !(live[name] && live[name][prevDate] != null)) { todayBm[name][prevDate] = bm.prev; console.log(`benchmark ${name}: filled ${prevDate} from the previous close (${bm.prev})`); } }
     const merged = JSON.parse(JSON.stringify(live)); for (const [name, days] of Object.entries(todayBm)) Object.assign(merged[name] = merged[name] || {}, days);
     for (const name of PAPER.benchmarks || []) if (name !== 'NIFTY 50' && !merged[name]) merged[name] = {};
-    const MEMB = await readJSON(path.join(DATA, 'membership', 'members.json'), null);   // point-in-time NIFTY 500 membership (audit A6): the book ranks what the backtest ranks
+    // point-in-time NIFTY 500 membership (audit A6): the book ranks what the backtest ranks — MEMB, read above for the live list
     // Book 1 is the book the digest has carried since 13 Nov 2026 — the same call with the same arguments; books 2…n start on the following sessions (A21).
-    books = M.paperBooks(result.bars, config.momentum || {}, custom, { from: PAPER.from, books: PAPER.books || 1, starts: PAPER.starts, fund: PAPER.fund || (PAPER.benchmarks || []).find(n => n !== 'NIFTY 50'), capital: PAPER.capital || config.risk.capital, benchmarks: merged, filter: MEMB ? membershipFilter(MEMB) : null, membersAsOf: MEMB ? MEMB.asOf : null });
+    books = M.paperBooks(result.bars, config.momentum || {}, custom, { from: PAPER.from, books: PAPER.books || 1, starts: PAPER.starts, fund: PAPER.fund || (PAPER.benchmarks || []).find(n => n !== 'NIFTY 50'), capital: PAPER.capital || config.risk.capital, benchmarks: merged, filter: memFilter, membersAsOf: MEMB ? MEMB.asOf : null });
     paper = books ? books.list[0] : null;
     if (!paper) console.log(`paper book starts ${PAPER.from}; no bar on or after that date yet`);
     else if (books.n > 1) { console.log(`paper books: ${books.started} of ${books.n} started (${books.starts[0]} → ${books.starts[books.started - 1]})${books.frozen ? ', start days from config.json' : ''}${books.inexact.length ? `; fund close missing on the first or last day of book ${books.inexact.join(', ')}` : ''}`);
       if (!books.pending && !books.frozen) console.log(`paper books: all ${books.n} have started — freeze the start days: config.json → paper.starts = ${JSON.stringify(books.starts)}`); }
+    const T = books && books.t2t; if (T) console.log(`paper books, trade-for-trade (A22): series on record for ${T.known} of book 1's ${T.days} days${T.from ? ` (from ${T.from})` : ''}; held in BE / BZ today: ${T.held.length ? T.held.map(h => `${h.sym} ${h.series} (books ${h.books.join(', ')})`).join('; ') : 'none'}; purchases or sales at a band on those days: ${T.fills.length ? T.fills.map(f => `${f.date} ${f.side} ${f.sym} ${f.band} (books ${f.books.join(', ')})`).join('; ') : 'none'}`);
   }
   // One Telegram message whenever possible: the watch-only lists give way first (E.DIGEST_CAPS); momentum, the paper book, the pullbacks and the reminders never do.
   // Open positions pasted into config.json get one rule line each (E.positionLine); a hand-bought momentum name is read against today's ranking.

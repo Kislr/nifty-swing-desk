@@ -95,16 +95,18 @@ export function bestSeries(rows) {
   for (const r of rows) { if (!(r.c > 0)) continue; const k = rank[r.series || 'EQ']; if (k == null) continue; const cur = by.get(r.sym); if (!cur || k < rank[cur.series || 'EQ']) by.set(r.sym, r); }
   return [...by.values()];
 }
+/** Whether the rows added to `date` may carry their series into the file (A22): the day is new to the file, or its series are already on record. */
+export function seriesKnown(file, date, k) { return k < 0 || !!(file && file.series && file.series[date]); }
 /** --members: the rows to add for one day. `rows` are the bhavcopy's rows, one per symbol (bestSeries); `canon(sym, date)` maps a symbol as it
  *  stood that day to today's ticker; `ever` is the set of today's tickers that were ever members; `has(sym)` says whether
  *  the file already holds a close for that ticker on the day. Returns { rows: snapRows keyed by today's ticker, renamed }. */
 export function membersRows(rows, date, { ever, canon, has }) {
-  const out = {}; let renamed = 0;
+  const out = {}; let renamed = 0; const series = {};
   const other = {};   // rows taken from a series other than EQ, by series
   for (const r of rows) { if (!(r.c > 0)) continue; const c = canon(r.sym, date); const sym = c.sym; if (!ever.has(sym) || has(sym)) continue; if (sym !== r.sym) renamed++;
-    if (r.series && r.series !== 'EQ') other[r.series] = (other[r.series] || 0) + 1;
+    if (r.series && r.series !== 'EQ') { other[r.series] = (other[r.series] || 0) + 1; series[sym] = r.series; }
     out[sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; }
-  return { rows: out, renamed, other };
+  return { rows: out, renamed, other, series };   // series (A22): today's ticker → the series its row came from, for the rows that are not EQ
 }
 
 /* ---------- minimal zip reader (single-entry zip, deflate or stored) ---------- */
@@ -213,10 +215,14 @@ while (d <= end) {
     if (!rows) { holidays++; if (weekend) await sleep(Math.min(pause, 250)); continue; }
     if (weekend && k < 0 && !ix) { ix = await indexBarFallback(date); if (ix) console.log(`${date}: the index history has no NIFTY 50 bar for this session; taken from ${ix.source} (${ix.c})`); }
     if (weekend && k < 0 && !ix) { weekendNoIndex.push(date); console.warn(`${date}: NSE held a session (${rows.length} rows in the bhavcopy) but neither the index history, nor NSE's daily index file, nor data/index-bars.json has its NIFTY 50 bar — not added`); await sleep(pause); continue; }
-    let snapRows;
-    if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; renamedRows += r.renamed; for (const [sr, n] of Object.entries(r.other)) otherSeries[sr] = (otherSeries[sr] || 0) + n; }
-    else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; if (r.series && r.series !== 'EQ') otherSeries[r.series] = (otherSeries[r.series] || 0) + 1; snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
+    let snapRows, snapSeries = {};   // snapSeries (A22): the series of the rows added today that are not EQ
+    if (membersMode) { const has = sym => k >= 0 && yf.symbols[sym] && yf.symbols[sym].c[k] != null; const r = membersRows(rows, date, { ever: members.ever, canon: members.canon, has }); snapRows = r.rows; snapSeries = r.series; renamedRows += r.renamed; for (const [sr, n] of Object.entries(r.other)) otherSeries[sr] = (otherSeries[sr] || 0) + n; }
+    else { snapRows = {}; for (const r of rows) { if (universe && !universe.has(r.sym)) continue; if (!(r.c > 0)) continue; if (r.series && r.series !== 'EQ') { otherSeries[r.series] = (otherSeries[r.series] || 0) + 1; snapSeries[r.sym] = r.series; } snapRows[r.sym] = [r.o, r.h, r.l, null, r.c, null, null, r.v, r.t, null, null, null]; } }
     const snap = { date, rows: snapRows, index: ix ? { name: 'NIFTY 50', open: ix.o, high: ix.h, low: ix.l, ltp: ix.c } : null };
+    // Series (A22, 25 Nov 2026). A day listed under the file's `series` says every bar of that day not named there is EQ (engine.js, seriesAt), so the
+    // rows added here carry theirs on a day that is wholly new (every row is from this bhavcopy) and on a day the daily job has already recorded.
+    // A day on file without a record stays without one: its older bars are of unknown series until the series home run visits it (README, A22 step 2).
+    if (seriesKnown(yf, date, k)) snap.series = snapSeries;
     const n = Object.keys(snapRows).length; if (k >= 0 && !n && !(ix && (!yf.index || yf.index.c[k] == null))) { skipped++; await sleep(pause); continue; }   // members mode: nothing missing that day
     E.appendSnapshotToHistory(yf, snap); if (k >= 0) { filled++; if (ix && (!yf.index || yf.index.c[k] == null)) indexFilled++; } else { added++; if (weekend) { weekendAdded.push(date); console.log(`${date}: weekend session added — ${n} symbols, NIFTY 50 ${ix.c}`); } }
     if ((added + filled) % 20 === 0) { await fs.writeFile(path.join(HIST, yf.year + '.json'), JSON.stringify(yf)); console.log(`${date}: ${n} symbols (saved, ${added} days added, ${filled} days topped up so far)`); }
