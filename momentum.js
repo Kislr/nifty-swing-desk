@@ -33,6 +33,11 @@
  *                 index fund on return from any start in 2020 or later, so the fund is the holding; the engine runs as a paper
  *                 book (paperBook below, started 13 Nov 2026 by the daily job) beside the fund, to see whether the live record
  *                 agrees. The 12 Nov verdict figures (switches off) stay reproducible with refill=rebalance volScale=false.
+ *   Trade-for-trade (A22, 25 Nov 2026) = reported, not acted on. A share NSE has moved to BE or BZ trades inside a 5% daily band with
+ *                 no intraday trading; locked at the lower band it has sellers and no buyers, and the close the book sells at is not
+ *                 a price anyone had (the same for a purchase at the upper band). The paper books say which holdings are in such a
+ *                 series and which of their purchases and sales were made on a day the share closed at its band (bandAt, t2tReport).
+ *                 No rule reads any of it: the fill rule is a hypothesis to be written and tested first (README, A22, step 2).
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(root.SwingEngine || (typeof require === 'function' ? require('./engine.js') : null));
@@ -187,6 +192,42 @@
       avgWin: wins.length ? mean(wins.map(x => x.ret)) : null, avgLoss: t.length - wins.length ? mean(t.filter(x => x.pnl <= 0).map(x => x.ret)) : null, avgBars: t.length ? mean(t.map(x => x.bars)) : null, byReason, byYear, inMarket, final: v1 };
   }
 
+  /** Trade-for-trade (A22, 25 Nov 2026). What the series on record says about one symbol on bar i:
+   *  { series, t2t, pct, band } — series: E.seriesAt (null = not recorded that day); t2t: true in BE / BZ, false in any other series,
+   *  null when the series is not on record; pct: the close against the close of the bar before, in percent (null without both);
+   *  band: 'lower' | 'upper' when the share is in trade-for-trade and closed BAND percent or more from the previous close, else null.
+   *  BAND is 4.9, the figure the 23 Nov count was made with (reports/series-fill-2026-11-23.md): the band is 5% and the band price is
+   *  rounded to a tick. A share NSE holds to a 2% band is not seen by this — the market-watch row carries the series, not the band. */
+  const BAND = 4.9;
+  function bandAt(bars, sym, i) {
+    const series = E && E.seriesAt ? E.seriesAt(bars, sym, i) : null; const t2t = series == null ? null : E.T2T.includes(series);
+    const B = bars.sym[sym]; const c = B ? B.c[i] : null, pc = B && i > 0 ? B.c[i - 1] : null; const pct = c != null && pc > 0 ? (c / pc - 1) * 100 : null;
+    return { series, t2t, pct: pct == null ? null : +pct.toFixed(2), band: t2t && pct != null ? (pct <= -BAND ? 'lower' : pct >= BAND ? 'upper' : null) : null };
+  }
+  /** One book's trades (simulate's list, open positions included as 'end of data') read against the series on record. Nothing here
+   *  changes a trade. Returns { days, known, from, held, fills, doubtful, pnl, profit, share }:
+   *  days / known / from / today — the book's sessions, how many of them have the series on record, the first that has, and whether today's has;
+   *  held        — today's holdings in trade-for-trade: [{ sym, series, band, pct, since }] (since = first day of the present run in BE / BZ while held);
+   *  fills       — every purchase or sale made on a day the share was in trade-for-trade and closed at its band:
+   *                [{ sym, side: 'buy' | 'sell', date, series, band, pct, doubtful }]; doubtful = a sale at the lower band or a purchase
+   *                at the upper one, the two the close may not have filled;
+   *  pnl / profit / share — rupee profit (closed and open) of the trades that spent at least one held day in trade-for-trade, the
+   *                book's whole profit, and the first over the second (null unless the book is in profit — a share of a loss says nothing). */
+  function t2tReport(bars, trades, eq, capital) {
+    const pos = {}; bars.dates.forEach((d, i) => (pos[d] = i)); const last = bars.dates.length - 1; const today = bars.dates[last];
+    const i0 = eq.length ? pos[eq[0].date] : last; let known = 0, from = null; for (let i = i0; i <= last; i++) if (bars.series && bars.series[bars.dates[i]]) { known++; if (!from) from = bars.dates[i]; }
+    const held = [], fills = []; let pnl = 0;
+    for (const t of trades) { const a = pos[t.entryDate], openNow = t.reason === 'end of data' && t.exitDate === today; const b = pos[t.exitDate]; if (a == null || b == null) continue;
+      let any = false, since = null; for (let i = a; i <= b; i++) { const x = bandAt(bars, t.sym, i); if (x.t2t) { any = true; if (!since) since = bars.dates[i]; } else if (x.t2t === false) since = null; }
+      if (any) pnl += t.pnl;
+      const atIn = bandAt(bars, t.sym, a); if (atIn.band) fills.push({ sym: t.sym, side: 'buy', date: t.entryDate, series: atIn.series, band: atIn.band, pct: atIn.pct, doubtful: atIn.band === 'upper' });
+      const atOut = bandAt(bars, t.sym, b);
+      if (openNow) { if (atOut.t2t) held.push({ sym: t.sym, series: atOut.series, band: atOut.band, pct: atOut.pct, since }); }
+      else if (atOut.band) fills.push({ sym: t.sym, side: 'sell', date: t.exitDate, series: atOut.series, band: atOut.band, pct: atOut.pct, doubtful: atOut.band === 'lower' }); }
+    const profit = eq.length ? eq[eq.length - 1].value - capital : 0;
+    return { days: eq.length, known, from, today: !!(bars.series && bars.series[today]), held: held.sort((x, y) => x.sym.localeCompare(y.sym)), fills: fills.sort((x, y) => x.date.localeCompare(y.date) || x.sym.localeCompare(y.sym)), doubtful: fills.filter(f => f.doubtful).length, pnl: +pnl.toFixed(0), profit: +profit.toFixed(0), share: profit > 0 ? +(pnl / profit).toFixed(4) : null };
+  }
+
   /** The paper book (13 Nov 2026): the engine's rules run forward from `opts.from` on the live history, exactly as the
    *  backtest runs them — a fresh book of `opts.capital` bought at the first close on or after `from`, then rebalances,
    *  stops, refills and half-size buys day by day — so the daily job can print what the book holds, what it did today and
@@ -202,9 +243,10 @@
     const i0 = bars.dates.indexOf(eq[0].date); const value = eq[eq.length - 1].value; const st = stats(sim);
     const positions = sim.trades.filter(t => t.reason === 'end of data' && t.exitDate === today).map(t => { const B = bars.sym[t.sym]; const lastPx = B && B.c[last] != null ? B.c[last] : t.exit;
       let lb = last; while (B && lb > 0 && B.c[lb] == null) lb--;   // the last day this holding has a bar: not today when the daily job no longer gets it (it left the index, or stopped trading)
-      return { lastBar: bars.dates[lb], noBar: lb !== last, sym: t.sym, sector: t.sector, entryDate: t.entryDate, entry: t.entry, qty: t.qty, last: lastPx, peak: t.peak, stop: +(t.peak * (1 - P.trail / 100)).toFixed(2), ret: +((lastPx / t.entry - 1) * 100).toFixed(2), bars: t.bars, fill: t.fill, size: t.size, rankIn: t.rankIn }; }).sort((a, b) => a.sym.localeCompare(b.sym));
-    const buys = sim.trades.filter(t => t.entryDate === today).map(t => ({ sym: t.sym, qty: t.qty, price: t.entry, size: t.size, fill: t.fill, rank: t.rankIn }));
-    const sells = sim.trades.filter(t => t.exitDate === today && t.reason !== 'end of data').map(t => ({ sym: t.sym, qty: t.qty, price: t.exit, ret: t.ret, pnl: t.pnl, reason: t.reason, entryDate: t.entryDate }));
+      return { lastBar: bars.dates[lb], noBar: lb !== last, sym: t.sym, sector: t.sector, entryDate: t.entryDate, entry: t.entry, qty: t.qty, last: lastPx, peak: t.peak, stop: +(t.peak * (1 - P.trail / 100)).toFixed(2), ret: +((lastPx / t.entry - 1) * 100).toFixed(2), bars: t.bars, fill: t.fill, size: t.size, rankIn: t.rankIn, series: bandAt(bars, t.sym, last).series }; }).sort((a, b) => a.sym.localeCompare(b.sym));   // series (A22): the series today's bar came from, null when not on record
+    const atBand = sym => { const x = bandAt(bars, sym, last); return x.band ? { band: x.band, series: x.series, pct: x.pct } : null; };   // A22: said of a trade made today, never used to make or stop one
+    const buys = sim.trades.filter(t => t.entryDate === today).map(t => Object.assign({ sym: t.sym, qty: t.qty, price: t.entry, size: t.size, fill: t.fill, rank: t.rankIn }, atBand(t.sym)));
+    const sells = sim.trades.filter(t => t.exitDate === today && t.reason !== 'end of data').map(t => Object.assign({ sym: t.sym, qty: t.qty, price: t.exit, ret: t.ret, pnl: t.pnl, reason: t.reason, entryDate: t.entryDate }, atBand(t.sym)));
     const sinceReb = (last - i0) % P.rebalance; const nextRebalanceIn = sinceReb === 0 ? 0 : P.rebalance - sinceReb;
     const gate = gateAt(bars, last, P); const volHigh = P.volScale ? volFlags(bars, P)[last] : null; const slot = value / P.topN;
     const benchmarks = []; const first = eq[0].date;
@@ -215,7 +257,7 @@
     const inv = eq[eq.length - 1].invested;
     const membersAge = opts.membersAsOf ? Math.round((Date.parse(today + 'T00:00:00Z') - Date.parse(opts.membersAsOf + 'T00:00:00Z')) / 86400000) : null;   // NIFTY 500 is reviewed twice a year: a list older than ~200 days has missed a review
     return { membersAsOf: opts.membersAsOf || null, membersStale: membersAge != null && membersAge > 200, from: first, to: today, days: eq.length, capital: sim.capital, value, ret: value / sim.capital - 1, maxDrawdown: st.maxDrawdown, invested: inv, investedShare: value ? inv / value : 0,
-      positions, buys, sells, gate, volHigh, slot: +slot.toFixed(0), halfSize: volHigh === true, nextRebalanceIn, trades: sim.trades.filter(t => t.reason !== 'end of data').length, params: P, benchmarks, equity: eq.map(e => ({ date: e.date, value: e.value, invested: e.invested, positions: e.positions })) };
+      positions, buys, sells, t2t: t2tReport(bars, sim.trades, eq, sim.capital), gate, volHigh, slot: +slot.toFixed(0), halfSize: volHigh === true, nextRebalanceIn, trades: sim.trades.filter(t => t.reason !== 'end of data').length, params: P, benchmarks, equity: eq.map(e => ({ date: e.date, value: e.value, invested: e.invested, positions: e.positions })) };
   }
   /** The twenty-one paper books (A21; owner's decision 21 Nov 2026, built 23 Nov). The engine rebalances every 21 bars from its
    *  first day, so one book is one draw of 21 (reports/momentum-phases-2026-11-21-adjusted-members.md: 12.7% to 21.6% a year on the
@@ -244,14 +286,41 @@
       const fb = fund ? pb.benchmarks.find(b => b.name === fund && !b.missing) : null; const fdd = series ? seriesDrawdown(series, pb.from, pb.to) : null; const gap = fb ? pb.ret - fb.ret : null;
       list.push(pb); rows.push({ k: k + 1, from: pb.from, days: pb.days, value: pb.value, ret: pb.ret, maxDrawdown: pb.maxDrawdown, names: pb.positions.length, investedShare: pb.investedShare, trades: pb.trades, nextRebalanceIn: pb.nextRebalanceIn,
         fundRet: fb ? fb.ret : null, fundFrom: fb ? fb.from : null, fundAsOf: fb ? fb.asOf : null, fundExact: !!fb && fb.from === pb.from && !fb.stale,   // exact: the fund has a close on the book's first day and on the last one
-        gap, ahead: gap == null ? null : gap > 0, fundDrawdown: fdd, ddGap: fdd == null ? null : fdd - pb.maxDrawdown, holdings: pb.positions.map(p => ({ sym: p.sym, ret: p.ret })) }); });
+        gap, ahead: gap == null ? null : gap > 0, fundDrawdown: fdd, ddGap: fdd == null ? null : fdd - pb.maxDrawdown, holdings: pb.positions.map(p => ({ sym: p.sym, ret: p.ret })),
+        t2t: pb.t2t.held.map(h => h.sym), bandFills: pb.t2t.fills.length, t2tShare: pb.t2t.share }); });   // A22: holdings in trade-for-trade today, purchases and sales made at a band so far, and their part of the book's profit
     if (!list.length) return null;
     const rets = rows.map(r => r.ret), gaps = rows.filter(r => r.gap != null).map(r => r.gap), dds = rows.filter(r => r.ddGap != null).map(r => r.ddGap);
     const out = { n, started: rows.length, pending: n - rows.length, frozen, from: rows[0].from, to: today, starts: rows.map(r => r.from), fund, rows, list,
       ret: { median: median(rets), min: Math.min(...rets), max: Math.max(...rets) }, measured: gaps.length, G: median(gaps), gap: gaps.length ? { min: Math.min(...gaps), max: Math.max(...gaps) } : null, A: gaps.filter(g => g > 0).length,
       D: median(dds), L: dds.filter(g => g > 0).length, inexact: rows.filter(r => r.gap != null && !r.fundExact).map(r => r.k) };
     out.readingFrom = rows.length === n ? addMonths(rows[n - 1].from, READING.months) : null; out.due = !!out.readingFrom && today >= out.readingFrom; out.reading = booksReading(out);
+    out.t2t = booksT2T(out);
     return out;
+  }
+  /** The books' trade-for-trade record in one object (A22): { days, known, from, today, held, fills, doubtful, share }.
+   *  days / known / from — book 1's sessions (the longest book), how many have the series on record, and the first that has; today — whether today's is;
+   *  held  — [{ sym, series, band, pct, since, books: [k…] }]: names held today in BE / BZ, and by which books;
+   *  fills — [{ sym, side, date, series, band, pct, doubtful, books: [k…] }]: purchases and sales made on a day the share closed at its band, one
+   *          entry per name, side and day; doubtful (the count: `doubtful`) = a sale at the lower band or a purchase at the upper one;
+   *  share — the part of the median book's profit that came from trades held through a trade-for-trade day: the middle book by return
+   *          (the two middle books together when their number is even); null while that book is not in profit. */
+  function booksT2T(B) {
+    const merge = (acc, key, item, k) => { const cur = acc.get(key); if (cur) cur.books.push(k); else acc.set(key, Object.assign({}, item, { books: [k] })); };
+    const held = new Map(), fills = new Map();
+    B.list.forEach((pb, j) => { const k = B.rows[j].k; for (const h of pb.t2t.held) merge(held, h.sym, h, k); for (const f of pb.t2t.fills) merge(fills, f.sym + '|' + f.side + '|' + f.date, f, k); });
+    const order = B.list.map((pb, j) => j).sort((x, y) => B.list[x].ret - B.list[y].ret); const m = order.length; const mid = m % 2 ? [order[(m - 1) / 2]] : [order[m / 2 - 1], order[m / 2]];
+    const pnl = mid.reduce((p, j) => p + B.list[j].t2t.pnl, 0), profit = mid.reduce((p, j) => p + B.list[j].t2t.profit, 0); const f = [...fills.values()].sort((x, y) => x.date.localeCompare(y.date) || x.sym.localeCompare(y.sym));
+    const b1 = B.list[0].t2t;
+    return { days: b1.days, known: b1.known, from: b1.from, today: b1.today, held: [...held.values()].sort((x, y) => x.sym.localeCompare(y.sym)), fills: f, doubtful: f.filter(x => x.doubtful).length, medianBooks: mid.map(j => B.rows[j].k), share: profit > 0 ? +(pnl / profit).toFixed(4) : null };
+  }
+  /** The digest's line for it: only when there is something to say today — a holding in BE / BZ, or a purchase or sale made today at a band.
+   *  `T` is a book's t2t (one book) or the books' (booksT2T); `today` the last bar's date; `started` the number of books, when there are several. */
+  function t2tLine(T, today, started) {
+    if (!T) return null; const pc = x => (x >= 0 ? '+' : '') + x.toFixed(1) + '%'; const inBooks = x => (started > 1 && x.books ? `, ${x.books.length === started ? 'all' : x.books.length + ' of ' + started} books` : '');
+    const held = T.held.map(h => `${h.sym} ${h.series}${h.band ? ` at its ${h.band} band today (${pc(h.pct)})` : ''}${inBooks(h)}`);
+    const now = T.fills.filter(f => f.date === today).map(f => `${f.side === 'sell' ? 'sold' : 'bought'} ${f.sym} at its ${f.band} band (${pc(f.pct)})${inBooks(f)}${f.doubtful ? ' — that close may not have been a price to be had' : ''}`);
+    if (!held.length && !now.length) return null;
+    return `• TRADE-FOR-TRADE — reported, no rule reads it (A22): ${[held.length ? 'held: ' + held.join('; ') : null, now.length ? 'today: ' + now.join('; ') : null].filter(Boolean).join(' · ')}`;
   }
   /** The reading, by the rule written on 23 Nov 2026 (reports/momentum-books-reading-rule-2026-11-23.md). null until every book has
    *  started and is measured against the fund. Return: 'ahead' = median gap ≥ +1.0 point and two books in three ahead; 'behind' = median
@@ -275,6 +344,7 @@
     const bm = pb.benchmarks.filter(b => !b.missing).map(b => `${b.name} ${pc(b.ret)}${b.stale ? ' (to ' + b.asOf + ')' : ''}`).join(' · ');
     L.push(`PAPER BOOK — the engine's rules run forward since ${pb.from}, reinvested, beside the index fund: ₹${f(pb.capital, 0)} → ₹${f(pb.value, 0)} (${pc(pb.ret)}) after ${pb.days} day${pb.days === 1 ? '' : 's'}${bm ? ' · ' + bm : ''} · max drawdown ${(pb.maxDrawdown * 100).toFixed(1)}% · ${pb.positions.length} of ${pb.params.topN} names, ${Math.round(pb.investedShare * 100)}% invested`);
     const bl = booksLine(books); if (bl) L.push(bl);
+    const tl = books && books.started > 1 ? t2tLine(books.t2t, pb.to, books.started) : t2tLine(pb.t2t, pb.to, 1); if (tl) L.push(tl);
     L.push(`• gate ${pb.gate.open == null ? 'n/a' : pb.gate.open ? 'OPEN' : 'CLOSED'}${pb.volHigh == null ? '' : pb.volHigh ? ' · Nifty 20-day volatility above its 1-year median → new buys at HALF size' : ' · volatility normal → full size'} · slot ₹${f(pb.slot, 0)}${pb.halfSize ? ' (₹' + f(pb.slot * pb.params.volFactor, 0) + ' today)' : ''} · next rebalance in ${pb.nextRebalanceIn} bar${pb.nextRebalanceIn === 1 ? '' : 's'}`);
     if (pb.buys.length) L.push(`• BOUGHT today: ${pb.buys.map(b => `${b.sym} ${b.qty} @ ${f(b.price)}${b.size === 'half' ? ' (half)' : ''}${b.fill === 'refill' ? ' (refill)' : ''}`).join(', ')}`);
     if (pb.sells.length) L.push(`• SOLD today: ${pb.sells.map(s => `${s.sym} ${s.qty} @ ${f(s.price)} (${s.reason}, ${s.ret >= 0 ? '+' : ''}${s.ret}%)`).join(', ')}`);
@@ -296,5 +366,5 @@
     return L.join('\n');
   }
 
-  return { DEFAULTS, READING, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, smaOver, volFlags, paperBook, paperDigest, paperBooks, booksReading, booksLine, seriesDrawdown };
+  return { DEFAULTS, READING, gateAt, rankAt, selectAt, simulate, stats, digest, smaAt, smaOver, volFlags, paperBook, paperDigest, paperBooks, booksReading, booksLine, seriesDrawdown, BAND, bandAt, t2tReport, booksT2T, t2tLine };
 });

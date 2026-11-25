@@ -141,7 +141,8 @@
     for (const d of data) { if (!d || d.lastPrice == null) continue;
       const val = d.totalTradedValue != null ? (d.totalTradedValue > 1e6 ? d.totalTradedValue / 1e7 : d.totalTradedValue) : null; // rupees → ₹ crore
       out.push({ sym: String(d.symbol).toUpperCase(), open: d.open, high: d.dayHigh, low: d.dayLow, prev: d.previousClose, ltp: d.lastPrice, chg: d.change, pct: d.pChange,
-        vol: d.totalTradedVolume, val, h52: d.yearHigh, l52: d.yearLow, d30: d.perChange30d, isIndex: d.priority === 1 || isIndexName(String(d.symbol)), lastUpdate: d.lastUpdateTime });
+        vol: d.totalTradedVolume, val, h52: d.yearHigh, l52: d.yearLow, d30: d.perChange30d, isIndex: d.priority === 1 || isIndexName(String(d.symbol)), lastUpdate: d.lastUpdateTime,
+        series: d.series ? String(d.series).trim().toUpperCase() : null });   // A22 (25 Nov 2026): the row names the series the share trades in today — EQ, or BE / BZ while NSE has it in trade-for-trade, RR for a REIT, IV for an InvIT; null on the index row
     }
     return out;
   }
@@ -167,6 +168,11 @@
       if (r.isIndex) { const ix = { name: r.sym, ltp: r.ltp, pct: r.pct, chg: r.chg, high: r.high, low: r.low, open: r.open }; if (!doc.index || /^NIFTY 50$/.test(r.sym)) doc.index = ix; if (!/^NIFTY 50$/.test(r.sym)) doc.universeIndex = ix; continue; }
       doc.rows[r.sym] = F.map(k => (r[k] == null ? null : r[k])); doc.count++;
     }
+    // Series (A22, 25 Nov 2026): kept beside the rows, never inside them, so every reader of `rows` sees what it always saw. Only the names
+    // that are not in EQ are listed; `series` present (even empty) means the source said which series each row was in, absent means it did
+    // not (a CSV or a pasted table) and nothing can be said about that day.
+    const stocks = rows.filter(r => !r.isIndex);
+    if (stocks.some(r => r.series)) { doc.series = {}; for (const r of stocks) if (r.series && r.series !== 'EQ') doc.series[r.sym] = r.series; }
     return doc;
   }
 
@@ -216,7 +222,9 @@
     for (const s of snaps || []) dateSet.add(s.date);
     const dates = [...dateSet].sort(); const pos = {}; dates.forEach((d, i) => (pos[d] = i));
     const N = dates.length; const mk = () => ({ o: new Array(N).fill(null), h: new Array(N).fill(null), l: new Array(N).fill(null), c: new Array(N).fill(null), v: new Array(N).fill(null), t: new Array(N).fill(null) });
-    const sym = {}; let index = null; const extras = {};
+    const sym = {}; let index = null; const extras = {}; const series = {};   // series: { date: { SYM: 'BE' } } — see seriesAt
+    for (const s of snaps || []) if (s.series && typeof s.series === 'object') series[s.date] = Object.assign({}, s.series);
+    for (const f of historyFiles || []) if (f.series && typeof f.series === 'object') for (const [d, m] of Object.entries(f.series)) series[d] = Object.assign(series[d] || {}, m);   // history (end of day) wins over a snapshot, as for the bars
     for (const f of historyFiles || []) {
       for (const [s, b] of Object.entries(f.symbols || {})) { const B = sym[s] || (sym[s] = mk());
         f.dates.forEach((d, k) => { const i = pos[d]; if (b.c[k] == null) return; B.o[i] = b.o[k]; B.h[i] = b.h[k]; B.l[i] = b.l[k]; B.c[i] = b.c[k]; B.v[i] = b.v[k]; B.t[i] = b.t ? b.t[k] : null; }); }
@@ -231,7 +239,17 @@
         // Only splice a snapshot's index bar into the series when it is the same index (a NIFTY 500 close in a NIFTY 50 series is a phantom crash)
         if (index.c[i] == null && sameIndex(index.name, s.index.name)) { index.o[i] = s.index.open; index.h[i] = s.index.high; index.l[i] = s.index.low; index.c[i] = s.index.ltp; } ex.__index = { pct: s.index.pct, time: s.time, name: s.index.name }; }
     }
-    return { dates, sym, index, extras };
+    return { dates, sym, index, extras, series };
+  }
+  /** The series a symbol's bar came from on bar i (A22, 25 Nov 2026): 'EQ', or 'BE' / 'BZ' while NSE has the share in trade-for-trade,
+   *  'RR' (REIT), 'IV' (InvIT). null when the day's series were not recorded — every day before the daily job began to keep them, until the
+   *  backfill fills them in — or the symbol has no bar that day. The history files and the snapshots list only the names that are not in
+   *  EQ, under `series[date]`; a date that is listed says every other bar of that day is EQ. */
+  const T2T = ['BE', 'BZ'];
+  function seriesAt(bars, sym, i) {
+    const day = bars && bars.series ? bars.series[bars.dates[i]] : null; if (!day) return null;
+    const B = bars.sym[sym]; if (!B || B.c[i] == null) return null;
+    return day[sym] || 'EQ';
   }
   /* Append one snapshot to a history file object (the daily job does this). Returns the mutated file. */
   function appendSnapshotToHistory(file, snap) {
@@ -247,6 +265,9 @@
       ['o', 'h', 'l', 'c'].forEach(key => { while (file.index[key].length < N) file.index[key].push(null); });
       if (sameIndex(file.index.name, snap.index.name)) { file.index.o[k] = snap.index.open; file.index.h[k] = snap.index.high; file.index.l[k] = snap.index.low; file.index.c[k] = snap.index.ltp; } }
     else if (file.index) ['o', 'h', 'l', 'c'].forEach(key => { while (file.index[key].length < N) file.index[key].push(null); });
+    // Series (A22): the day's names that are not in EQ, under file.series[date]; a snapshot that does not say (an index repair, a pasted table) leaves the day as it was
+    if (snap.series && typeof snap.series === 'object') { file.series = file.series || {}; const day = file.series[snap.date] || (file.series[snap.date] = {});
+      for (const s of Object.keys(snap.rows)) { if (snap.series[s]) day[s] = snap.series[s]; else delete day[s]; } }   // the snapshot speaks for its own rows only: a name it does not carry (a past member's bar from the backfill) keeps what is on file
     return file;
   }
 
@@ -670,5 +691,5 @@
   }
 
   return { SECTOR_LISTS, SECTOR_OF, DEFAULTS, F, tick, fmt, pct, esc, rowObj, sectorOf, parseAny, rowsFromCSV, rowsFromPaste, rowsFromNseApi, toSnapshotDoc,
-    sameIndex, buildBars, clipBars, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, pendingAdjustments, sessionGap, sessionDone, indexHoles, failureNotice, provisionalEvent, noticesDigest, snapFactor, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
+    sameIndex, buildBars, clipBars, seriesAt, T2T, applyAdjustments, appendSnapshotToHistory, analyzeAt, analyzeLatest, buildSignals, sizing, journalStatus, DISCRETIONARY, discretionaryCheck, bookStats, POSITION_RULES, positionLine, positionsDigest, pendingAdjustments, sessionGap, sessionDone, indexHoles, failureNotice, provisionalEvent, noticesDigest, snapFactor, tagMomentum, digest, digestFit, DIGEST_CAPS, TELEGRAM_MAX, chunks, remindersDue, indexCode, benchmarkClose, INDEX_CODES, indicators: { sma, atr, rsi, candles } };
 });
