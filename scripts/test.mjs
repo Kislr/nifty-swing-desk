@@ -621,5 +621,75 @@ for (const [script, prefix] of [['backtest-momentum.mjs', 'momentum-']]) { const
     assert(c[2] === D[a + 20] && hb.readingFrom <= c[3] && D[D.indexOf(c[3]) - 1] < hb.readingFrom && c[5] === pts(hb.G) && +c[7] === hb.A && c[10] === hb.reading.ret && c[11] === hb.reading.verdict, `paper-books --history: the first reading (${c[1]} → ${c[3]}) re-made by hand — G ${c[5]} pts, ${c[7]} of 21 ahead, ${c[11]}`); }
   await fs.rm(dir, { recursive: true, force: true }); }
 
+// 16. A22, step 1 (25 Nov 2026): the series each bar came from — kept by the daily job in the snapshot and the history beside the rows, read
+//     back by the bars, and said of the paper books' holdings and fills. No rule reads it: a book with the series on record trades as one without.
+{ // the payload as NSE served it on 25 Nov 2026: every stock row names its series, the index row has null
+  const row = (symbol, series, lastPrice, previousClose) => ({ priority: 0, identifier: symbol + series + 'N', symbol, series, marketType: 'N', open: previousClose, dayHigh: Math.max(lastPrice, previousClose), dayLow: Math.min(lastPrice, previousClose), previousClose, lastPrice, change: +(lastPrice - previousClose).toFixed(2), pChange: +((lastPrice / previousClose - 1) * 100).toFixed(2), totalTradedVolume: 1000, totalTradedValue: 5e8, yearHigh: 900, yearLow: 100, perChange30d: 1, lastUpdateTime: '2026-11-25 16:00:00' });
+  const pay = { data: { timestamp: '25-Nov-2026 16:00:00', data: [{ priority: 1, identifier: 'NIFTY 50', symbol: 'NIFTY 50', series: null, marketType: null, open: 25000, dayHigh: 25100, dayLow: 24900, previousClose: 25000, lastPrice: 25050, change: 50, pChange: 0.2, totalTradedVolume: 1, totalTradedValue: 1, yearHigh: 26000, yearLow: 22000, perChange30d: 0, lastUpdateTime: '2026-11-25 16:00:00' },
+    row('PLAIN', 'EQ', 101, 100), row('HFCL', 'BE', 169.67, 178.6), row('EMBASSY', 'RR', 418.95, 419.97), row('ZED', 'BZ', 10.5, 10)] } };
+  const rs = E.rowsFromNseApi(pay); const by = Object.fromEntries(rs.map(r => [r.sym, r]));
+  assert(by.PLAIN.series === 'EQ' && by.HFCL.series === 'BE' && by.EMBASSY.series === 'RR' && by['NIFTY 50'].series === null && rows.every(r => r.series === null), 'series: the market-watch row keeps the series NSE names; the index row and a payload without the field give null');
+  const d1 = E.toSnapshotDoc(rs, '2026-11-25', '16:00', 'nse-api'); const bare = E.toSnapshotDoc(rs.map(r => Object.assign({}, r, { series: null })), '2026-11-25', '16:00', 'nse-api');
+  assert(JSON.stringify(d1.series) === '{"HFCL":"BE","EMBASSY":"RR","ZED":"BZ"}' && JSON.stringify(d1.rows) === JSON.stringify(bare.rows) && d1.count === 4 && !('series' in bare) && !('series' in doc) && d1.rows.HFCL.length === E.F.length,
+    'series: the snapshot lists the names that are not in EQ beside the rows; the rows are what they were, and a source that names no series leaves no list');
+  // the history file: the day's list under series[date]; the arrays as before; a snapshot speaks for its own rows only
+  const hf1 = { year: 2026, dates: [], symbols: {}, index: null }, hf0 = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(hf1, d1); E.appendSnapshotToHistory(hf0, bare);
+  assert(JSON.stringify(hf1.series) === '{"2026-11-25":{"HFCL":"BE","EMBASSY":"RR","ZED":"BZ"}}' && !('series' in hf0) && JSON.stringify(hf1.symbols) === JSON.stringify(hf0.symbols) && JSON.stringify(hf1.index) === JSON.stringify(hf0.index) && hf1.dates.join() === hf0.dates.join(),
+    'series: the history file keeps the day\'s list under series[date]; dates, bars and index are the same with and without it');
+  hf1.series['2026-11-25'].PASTMEMBER = 'BE';   // a past member's bar, loaded by the backfill: not in the daily job's snapshot
+  E.appendSnapshotToHistory(hf1, E.toSnapshotDoc(rs.map(r => (r.sym === 'HFCL' ? Object.assign({}, r, { series: 'EQ' }) : r)), '2026-11-25', '16:05', 'nse-api'));
+  E.appendSnapshotToHistory(hf1, { date: '2026-11-25', rows: {}, index: { name: 'NIFTY 50', open: 1, high: 1, low: 1, ltp: 25050 } });   // an index repair names no series
+  assert(JSON.stringify(hf1.series['2026-11-25']) === '{"EMBASSY":"RR","ZED":"BZ","PASTMEMBER":"BE"}', 'series: a later snapshot of the same day corrects its own names (HFCL back in EQ), keeps a name it does not carry, and an index repair touches nothing');
+  // the bars: series by date, history over snapshot; seriesAt
+  const d0 = E.toSnapshotDoc(rs.map(r => Object.assign({}, r, { series: null })), '2026-11-24', '16:00', 'nse-api'); const snapOnly = E.toSnapshotDoc(rs, '2026-11-26', '16:00', 'nse-api');
+  const hfB = { year: 2026, dates: [], symbols: {}, index: null }; E.appendSnapshotToHistory(hfB, d0); E.appendSnapshotToHistory(hfB, d1);
+  const sb = E.buildBars([hfB], [snapOnly]); const old = E.buildBars([hf0], []);
+  assert(sb.dates.join() === '2026-11-24,2026-11-25,2026-11-26' && E.seriesAt(sb, 'HFCL', 1) === 'BE' && E.seriesAt(sb, 'PLAIN', 1) === 'EQ' && E.seriesAt(sb, 'HFCL', 2) === 'BE' && E.seriesAt(sb, 'EMBASSY', 2) === 'RR' && E.seriesAt(sb, 'HFCL', 0) === null && E.seriesAt(sb, 'NOBAR', 1) === null && E.seriesAt(E.clipBars(sb, '2026-11-25'), 'ZED', 1) === 'BZ'
+    && JSON.stringify(old.series) === '{}' && E.seriesAt(old, 'HFCL', 0) === null && E.T2T.join() === 'BE,BZ', 'series: the bars carry it by date from the history and from a snapshot; EQ for a bar not listed on a recorded day, null on a day not on record or without a bar');
+  // bandAt: trade-for-trade and 4.9% or more from the previous close
+  const mkBars = (dates, closes, series) => ({ dates, sym: Object.fromEntries(Object.entries(closes).map(([k, c]) => [k, { o: c, h: c, l: c, c, v: c.map(() => 1), t: c.map(() => 10) }])), index: null, extras: {}, series });
+  const dd = ['2026-01-01', '2026-01-02', '2026-01-05', '2026-01-06', '2026-01-07', '2026-01-08'];
+  const tb = mkBars(dd, { X: [100, 100, 95, 95, 99.75, 99.75], Y: [50, 51, 52, 53, 54, 56.7], Q: [10, 9.5, 9.2, null, 9.2, 9.66] }, { [dd[1]]: { Q: 'BE' }, [dd[2]]: { X: 'BE', Q: 'BE' }, [dd[3]]: { X: 'BE' }, [dd[4]]: { X: 'BE', Q: 'BZ' }, [dd[5]]: { Y: 'BE', Q: 'BZ' } });
+  const bx = (sym, i) => M.bandAt(tb, sym, i);
+  assert(bx('X', 2).band === 'lower' && bx('X', 2).pct === -5 && bx('X', 4).band === 'upper' && bx('X', 3).band === null && bx('X', 3).t2t === true && bx('X', 5).t2t === false && bx('X', 5).band === null && bx('Y', 5).band === 'upper' && bx('Q', 1).band === 'lower'
+    && bx('X', 0).t2t === null && bx('X', 0).series === null && bx('Q', 4).band === null && bx('Q', 4).pct === null && bx('Q', 5).band === 'upper' && M.BAND === 4.9,
+    'bandAt: a BE / BZ share that closes 4.9% or more from the day before is at its band; the same move in EQ is not; no band without the previous day\'s close or on a day whose series are not on record');
+  // t2tReport: holdings in trade-for-trade today, fills at a band, and their part of the profit
+  const eqv = dd.map((d, k) => ({ date: d, value: 500000 + k * 20 })); const trd = [
+    { sym: 'X', entryDate: dd[1], exitDate: dd[2], pnl: -50, reason: 'trailing stop' },   // sold at the lower band: doubtful
+    { sym: 'X', entryDate: dd[4], exitDate: dd[5], pnl: 10, reason: 'end of data' },       // bought at the upper band: doubtful; back in EQ today, so not "held in trade-for-trade"
+    { sym: 'Y', entryDate: dd[0], exitDate: dd[5], pnl: 200, reason: 'end of data' },      // open, in BE today, at its upper band
+    { sym: 'Q', entryDate: dd[1], exitDate: dd[5], pnl: -30, reason: 'rank 31' }];         // bought at the lower band, sold at the upper one: at a band, the easy side both times
+  const T = M.t2tReport(tb, trd, eqv, 500000);
+  assert(T.days === 6 && T.known === 5 && T.from === dd[1] && T.today === true && T.held.length === 1 && T.held[0].sym === 'Y' && T.held[0].series === 'BE' && T.held[0].band === 'upper' && T.held[0].since === dd[5]
+    && T.fills.map(f => `${f.date} ${f.side} ${f.sym} ${f.band} ${f.doubtful}`).join('; ') === `${dd[1]} buy Q lower false; ${dd[2]} sell X lower true; ${dd[4]} buy X upper true; ${dd[5]} sell Q upper false` && T.doubtful === 2 && T.pnl === 130 && T.profit === 100 && T.share === 1.3,
+    't2tReport: the holding in BE today, the four trades made at a band — a sale at the lower and a purchase at the upper marked doubtful — and the profit of the trades held through a trade-for-trade day over the book\'s');
+  assert(M.t2tReport(tb, trd, eqv.map(e => ({ date: e.date, value: 499000 })), 500000).share === null && M.t2tLine(M.t2tReport(tb, trd.slice(0, 1), eqv, 500000), dd[5], 1) === null && M.t2tLine(null) === null,
+    't2tReport: no share of a book that is not in profit; t2tLine: nothing to say on a day without a holding in trade-for-trade or a trade at a band');
+  const line = M.t2tLine(T, dd[5], 1);
+  assert(/^• TRADE-FOR-TRADE — reported, no rule reads it \(A22\): held: Y BE at its upper band today \(\+5\.0%\) · today: sold Q at its upper band \(\+5\.0%\)$/.test(line), 't2tLine: the holding with its series and band, and today\'s trade at a band; a past fill is left to the site');
+  // the paper book and the twenty-one books: the same trades with and without the series on record; holdings and fills said, shares merged by book
+  const lb0 = E.buildBars([synth(60, 500)], []); const D = lb0.dates; const L = D.length - 1; const from = D[340]; const opt = { from, capital: 500000, books: 5, fund: 'F', benchmarks: { F: Object.fromEntries(D.slice(330).map((d, k) => [d, 1000 + k])) } };
+  const B0 = M.paperBooks(lb0, {}, custom, opt); const p0 = B0.list[0]; const H = p0.positions[0].sym; const allHeld = [...new Set(B0.list.flatMap(pb => pb.positions.map(x => x.sym)))];
+  const lb1 = E.buildBars([synth(60, 500)], []); for (let i = L - 4; i <= L; i++) lb1.series[D[i]] = i >= L - 2 ? { [H]: 'BE' } : {};   // five days on record, H in BE on the last three
+  const B1 = M.paperBooks(lb1, {}, custom, opt); const p1 = B1.list[0]; const strip = pb => JSON.stringify({ v: pb.value, e: pb.equity, p: pb.positions.map(x => [x.sym, x.qty, x.entry, x.stop]), b: pb.buys.map(x => [x.sym, x.qty]), s: pb.sells.map(x => [x.sym, x.qty, x.reason]), n: pb.trades });
+  assert(B1.list.length === 5 && B1.list.every((pb, k) => strip(pb) === strip(B0.list[k])) && JSON.stringify(B1.rows.map(r => [r.ret, r.gap, r.maxDrawdown])) === JSON.stringify(B0.rows.map(r => [r.ret, r.gap, r.maxDrawdown])) && B1.G === B0.G && B1.A === B0.A,
+    'paper books: with the series on record every book holds, buys, sells and is worth what it was without — the series is said, never acted on');
+  const hk = B1.rows.filter(r => r.t2t.includes(H)).map(r => r.k);
+  assert(p0.positions.every(x => x.series === null) && p0.t2t.known === 0 && p0.t2t.today === false && B0.t2t.held.length === 0 && p1.positions.find(x => x.sym === H).series === 'BE' && p1.positions.filter(x => x.sym !== H && !x.noBar).every(x => x.series === 'EQ') && p1.t2t.known === 5 && p1.t2t.from === D[L - 4] && p1.t2t.today === true
+    && p1.t2t.held.length === 1 && p1.t2t.held[0].sym === H && p1.t2t.held[0].since === D[L - 2] && B1.t2t.held.length === 1 && B1.t2t.held[0].books.join() === hk.join() && hk.includes(1) && B1.t2t.medianBooks.length === 1 && B1.rows.every(r => 'bandFills' in r && 't2tShare' in r),
+    `paper books: ${H} is named as held in BE since ${D[L - 2]}, by the books that hold it (${hk.join(', ')} of 5); a book without the series on record says so (known 0) and names nothing`);
+  const dg0 = M.paperDigest(p0, E.fmt, B0), dg1 = M.paperDigest(p1, E.fmt, B1); const extra = dg1.split('\n').filter(l => !dg0.split('\n').includes(l));
+  assert(!/TRADE-FOR-TRADE/.test(dg0) && extra.length === 1 && extra[0].startsWith(`• TRADE-FOR-TRADE — reported, no rule reads it (A22): held: ${H} BE`) && extra[0].endsWith(hk.length === 5 ? ', all books' : `, ${hk.length} of 5 books`) && dg1.split('\n').length === dg0.split('\n').length + 1,
+    'paperDigest: one line more on a day a holding is in trade-for-trade, under the books\' line; the block is otherwise the same, and has no such line on a day there is nothing to say');
+  // the live list on the membership list (step 1 (v)): a name that is not a member is not ranked, though it has a bar
+  const selAll = M.selectAt(lb0, L, {}, custom), top = selAll.picks[0].sym, selMem = M.selectAt(lb0, L, {}, custom, s => s !== top);
+  assert(selMem.picks.every(r => r.sym !== top) && selMem.picks[0].sym === selAll.picks.filter(r => r.sym !== top)[0].sym && selMem.picks[0].rank === 1 && JSON.stringify(selMem.gate) === JSON.stringify(selAll.gate), 'live list: ranked with the membership filter, a non-member with a bar today is left out and the rest move up; the gate is the same');
+  // the backfill: the rows it adds carry their series on a new day or a day already on record, and not on a day on file without a record
+  const BF = await import('./backfill.mjs'); const brow = (sym, series, c) => ({ sym, series, o: c, h: c, l: c, c, v: 10, t: 1 });
+  const mr = BF.membersRows([brow('PLAIN', 'EQ', 100), brow('TFT', 'BE', 50), brow('REIT', 'RR', 400)], '2026-11-25', { ever: new Set(['PLAIN', 'TFT', 'REIT']), canon: sym => ({ sym }), has: () => false });
+  assert(JSON.stringify(mr.series) === '{"TFT":"BE","REIT":"RR"}' && BF.seriesKnown({ dates: ['2026-11-25'] }, '2026-11-25', 0) === false && BF.seriesKnown({ dates: [] }, '2026-11-25', -1) === true && BF.seriesKnown({ series: { '2026-11-25': {} } }, '2026-11-25', 0) === true,
+    'backfill: the rows added name their series; they are written on a day new to the file or already on record, and held back on an old day whose other bars are of unknown series'); }
+
 console.log('\n' + E.digest(res, E.DEFAULTS).split('\n').slice(0, 6).join('\n'));
 if (fails) { console.error(`\n${fails} test(s) failed`); process.exit(1); } else console.log('\nall tests passed');
