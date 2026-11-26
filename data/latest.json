@@ -1,88 +1,223 @@
 {
- "date": "2026-11-25",
+ "date": "2026-11-26",
  "time": "16:00",
  "regime": {
-  "up": 264,
-  "down": 236,
-  "breadth": 0.528,
-  "idx": 1.85,
+  "up": 258,
+  "down": 239,
+  "breadth": 0.5191146881287726,
+  "idx": 0.25,
   "state": "Mixed",
   "intraday": false,
   "sizeMult": 1
  },
  "leaders": [
-  "Aviation & Hotels",
-  "Banks",
-  "FMCG"
+  "Capital Markets",
+  "Realty",
+  "Textiles"
  ],
  "laggards": [
-  "Services",
   "Metals & Mining",
+  "Services",
   "Telecom"
  ],
  "signals": [
   {
-   "sym": "PVRINOX",
-   "sector": "Internet & Media",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": "momentum pullback",
-   "momRank": 18,
-   "score": 75,
-   "entry": 1722.15,
-   "stop": 1624.6,
-   "target": 1917.25,
-   "qty": 51,
-   "trigger": "Buy-stop 1,722.15 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1708,
-   "pct": 0.49,
-   "d30": 22.38,
-   "reasons": [
-    "+10 relative strength top 17%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: inside bar, strong close"
-   ]
-  },
-  {
-   "sym": "CEMPRO",
-   "sector": "Construction",
+   "sym": "CPPLUS",
+   "sector": "Capital Goods & Defence",
    "kind": "act",
    "setup": "Pullback buy",
    "tag": "momentum pullback",
    "momRank": 5,
    "score": 60,
-   "entry": 1461.55,
-   "stop": 1255.3,
-   "target": 1874.05,
-   "qty": 24,
-   "trigger": "Buy-stop 1,461.55 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1405.1,
-   "pct": -2.34,
-   "d30": 22.19,
+   "entry": 4271.2,
+   "stop": 4010.95,
+   "target": 4791.7,
+   "qty": 19,
+   "trigger": "Buy-stop 4,271.20 tomorrow (above today's high); cancel if not filled",
+   "ltp": 4223,
+   "pct": 0.44,
+   "d30": 9.19,
    "reasons": [
-    "+10 relative strength top 14%",
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
-   "sym": "GABRIEL",
+   "sym": "SANSERA",
    "sector": "Auto",
    "kind": "act",
    "setup": "Pullback buy",
    "tag": "momentum pullback",
-   "momRank": 17,
-   "score": 60,
-   "entry": 1527.55,
-   "stop": 1433.5,
-   "target": 1715.65,
-   "qty": 53,
-   "trigger": "Buy-stop 1,527.55 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1495,
-   "pct": -0.86,
-   "d30": 9.07,
+   "momRank": 8,
+   "score": 50,
+   "entry": 4732.15,
+   "stop": 4386,
+   "target": 5424.45,
+   "qty": 14,
+   "trigger": "Buy-stop 4,732.15 tomorrow (above today's high); cancel if not filled",
+   "ltp": 4649.9,
+   "pct": -1.24,
+   "d30": 12.11,
    "reasons": [
-    "+10 price > 20-day > 50-day average"
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "VIJAYA",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": "momentum pullback",
+   "momRank": 29,
+   "score": 50,
+   "entry": 1633.9,
+   "stop": 1423.7,
+   "target": 2054.3,
+   "qty": 23,
+   "trigger": "Buy-stop 1,633.90 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1582,
+   "pct": -2.81,
+   "d30": 13.34,
+   "reasons": [
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "MCX",
+   "sector": "Capital Markets",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 100,
+   "entry": 3785.3,
+   "stop": 3503,
+   "target": 4349.9,
+   "qty": 17,
+   "trigger": "Buy-stop 3,785.30 tomorrow; cancel if not filled",
+   "ltp": 3835,
+   "pct": 7.57,
+   "d30": 23.24,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 7%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.9× average",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "DLF",
+   "sector": "Realty",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 90,
+   "entry": 800.4,
+   "stop": 763.8,
+   "target": 873.6,
+   "qty": 136,
+   "trigger": "Buy-stop 800.40 tomorrow; cancel if not filled",
+   "ltp": 807.8,
+   "pct": 1.61,
+   "d30": 21.97,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 6%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "WELSPUNLIV",
+   "sector": "Textiles",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 11,
+   "score": 90,
+   "entry": 279.85,
+   "stop": 252.5,
+   "target": 334.55,
+   "qty": 182,
+   "trigger": "Buy-stop 279.85 tomorrow; cancel if not filled",
+   "ltp": 280,
+   "pct": 1.24,
+   "d30": 34,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 1%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: hammer, strong close"
+   ]
+  },
+  {
+   "sym": "BAJAJHLDNG",
+   "sector": "NBFC & Finance",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 85,
+   "entry": 11886.55,
+   "stop": 11213.85,
+   "target": 13231.95,
+   "qty": 7,
+   "trigger": "Buy-stop 11,886.55 tomorrow; cancel if not filled",
+   "ltp": 11930,
+   "pct": 4.41,
+   "d30": 7.96,
+   "reasons": [
+    "+10 relative strength top 21%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 2.3× average",
+    "+5 bullish candle: bullish engulfing, strong close"
+   ]
+  },
+  {
+   "sym": "GODREJCP",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 80,
+   "entry": 959.25,
+   "stop": 900.3,
+   "target": 1077.15,
+   "qty": 84,
+   "trigger": "Buy-stop 959.25 tomorrow (above today's high); cancel if not filled",
+   "ltp": 947.5,
+   "pct": -1.61,
+   "d30": 13.73,
+   "reasons": [
+    "+10 relative strength top 18%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.7× average"
+   ]
+  },
+  {
+   "sym": "LAURUSLABS",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 2,
+   "score": 75,
+   "entry": 2495.45,
+   "stop": 2329.85,
+   "target": 2826.65,
+   "qty": 30,
+   "trigger": "Buy-stop 2,495.45 tomorrow; cancel if not filled",
+   "ltp": 2505,
+   "pct": 1.83,
+   "d30": 21.67,
+   "reasons": [
+    "+10 relative strength top 19%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: strong close"
    ]
   },
   {
@@ -92,133 +227,19 @@
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 90,
-   "entry": 927.75,
-   "stop": 895.05,
-   "target": 993.15,
-   "qty": 134,
-   "trigger": "Buy-stop 927.75 tomorrow; cancel if not filled",
-   "ltp": 935.2,
-   "pct": 1.71,
-   "d30": 22.01,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 7%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "BANKBARODA",
-   "sector": "Banks",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": 280.35,
-   "stop": 268.35,
-   "target": 304.35,
-   "qty": 416,
-   "trigger": "Buy-stop 280.35 tomorrow (above today's high); cancel if not filled",
-   "ltp": 276.43,
-   "pct": 0.31,
-   "d30": 19.72,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 12%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "MOTHERSON",
-   "sector": "Auto Ancillary",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
    "score": 75,
-   "entry": 168,
-   "stop": 153.05,
-   "target": 197.9,
-   "qty": 334,
-   "trigger": "Buy-stop 168.00 tomorrow (above today's high); cancel if not filled",
-   "ltp": 166.26,
-   "pct": 0.3,
-   "d30": 9.62,
+   "entry": 938,
+   "stop": 905,
+   "target": 1004,
+   "qty": 133,
+   "trigger": "Buy-stop 938.00 tomorrow; cancel if not filled",
+   "ltp": 939.1,
+   "pct": 0.42,
+   "d30": 21.15,
    "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.5× average",
-    "+5 bullish candle: hammer"
-   ]
-  },
-  {
-   "sym": "GLENMARK",
-   "sector": "Pharma",
-   "kind": "act",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": 2722.15,
-   "stop": 2554.05,
-   "target": 3058.35,
-   "qty": 29,
-   "trigger": "Buy-stop 2,722.15 tomorrow; cancel if not filled",
-   "ltp": 2719,
-   "pct": 2.33,
-   "d30": 25.5,
-   "reasons": [
-    "+10 relative strength top 8%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "EICHERMOT",
-   "sector": "Auto",
-   "kind": "act",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 8299.8,
-   "stop": 7848.15,
-   "target": 9203.1,
-   "qty": 11,
-   "trigger": "Buy-stop 8,299.80 tomorrow; cancel if not filled",
-   "ltp": 8336,
-   "pct": 2,
-   "d30": 17.97,
-   "reasons": [
-    "+10 relative strength top 18%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.5× average",
-    "-15 RSI 79 — extended",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "PNB",
-   "sector": "Banks",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 151.65,
-   "stop": 141.3,
-   "target": 172.35,
-   "qty": 483,
-   "trigger": "Buy-stop 151.65 tomorrow (above today's high); cancel if not filled",
-   "ltp": 148.61,
-   "pct": -0.76,
-   "d30": 23.46,
-   "reasons": [
-    "+15 leading sector",
     "+10 relative strength top 5%",
     "+10 price > 20-day > 50-day average",
-    "-15 RSI 81 — extended"
+    "+5 bullish candle: hammer, strong close"
    ]
   },
   {
@@ -228,193 +249,19 @@
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 70,
-   "entry": 2162.85,
-   "stop": 2050.1,
-   "target": 2388.35,
-   "qty": 44,
-   "trigger": "Buy-stop 2,162.85 tomorrow (above today's high); cancel if not filled",
-   "ltp": 2112,
-   "pct": -2,
-   "d30": 14.16,
+   "score": 75,
+   "entry": 2128.35,
+   "stop": 2043,
+   "target": 2299.05,
+   "qty": 58,
+   "trigger": "Buy-stop 2,128.35 tomorrow (above today's high); cancel if not filled",
+   "ltp": 2104.2,
+   "pct": -0.37,
+   "d30": 12.64,
    "reasons": [
-    "+10 relative strength top 25%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "NAVINFLUOR",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 10234.6,
-   "stop": 9613.45,
-   "target": 11476.9,
-   "qty": 8,
-   "trigger": "Buy-stop 10,234.60 tomorrow (above today's high); cancel if not filled",
-   "ltp": 9956,
-   "pct": -1.95,
-   "d30": 29.83,
-   "reasons": [
-    "+10 relative strength top 7%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "PRESTIGE",
-   "sector": "Realty",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 1706.1,
-   "stop": 1602.95,
-   "target": 1912.4,
-   "qty": 48,
-   "trigger": "Buy-stop 1,706.10 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1685.1,
-   "pct": -0.11,
-   "d30": 21.01,
-   "reasons": [
-    "+10 relative strength top 11%",
+    "+10 relative strength top 26%",
     "+10 price > 20-day > 50-day average",
-    "+10 volume 1.7× average",
-    "-10 bearish candle: bearish engulfing"
-   ]
-  },
-  {
-   "sym": "LINDEINDIA",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 7119.3,
-   "stop": 6432.55,
-   "target": 8492.8,
-   "qty": 7,
-   "trigger": "Buy-stop 7,119.30 tomorrow (above today's high); cancel if not filled",
-   "ltp": 6942.5,
-   "pct": -0.27,
-   "d30": 21.3,
-   "reasons": [
-    "+10 relative strength top 4%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "M&M",
-   "sector": "Auto",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 3536.6,
-   "stop": 3280.1,
-   "target": 4049.6,
-   "qty": 19,
-   "trigger": "Buy-stop 3,536.60 tomorrow (above today's high); cancel if not filled",
-   "ltp": 3509.5,
-   "pct": 0.63,
-   "d30": 22.66,
-   "reasons": [
-    "+10 relative strength top 4%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 76 — extended",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "URBANCO",
-   "sector": "Consumer Services",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 172.8,
-   "stop": 156.3,
-   "target": 205.8,
-   "qty": 303,
-   "trigger": "Buy-stop 172.80 tomorrow (above today's high); cancel if not filled",
-   "ltp": 164.99,
-   "pct": -2.19,
-   "d30": 24.29,
-   "reasons": [
-    "+10 relative strength top 22%",
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
-   ]
-  },
-  {
-   "sym": "ASTERDM",
-   "sector": "Pharma",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 805.2,
-   "stop": 714.2,
-   "target": 987.2,
-   "qty": 54,
-   "trigger": "Buy-stop 805.20 tomorrow (above today's high); cancel if not filled",
-   "ltp": 775,
-   "pct": -1.94,
-   "d30": 20.2,
-   "reasons": [
-    "+10 relative strength top 15%",
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: bearish engulfing, weak close"
-   ]
-  },
-  {
-   "sym": "CUB",
-   "sector": "Financial Services",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 249.75,
-   "stop": 225.85,
-   "target": 297.55,
-   "qty": 209,
-   "trigger": "Buy-stop 249.75 tomorrow (above today's high); cancel if not filled",
-   "ltp": 247,
-   "pct": 0.59,
-   "d30": 11.25,
-   "reasons": [
-    "+10 relative strength top 20%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 84 — extended",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "UPL",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 575.7,
-   "stop": 538.3,
-   "target": 650.5,
-   "qty": 133,
-   "trigger": "Buy-stop 575.70 tomorrow (above today's high); cancel if not filled",
-   "ltp": 554.45,
-   "pct": -0.58,
-   "d30": 9,
-   "reasons": [
-    "+10 price > 20-day > 50-day average"
+    "+5 bullish candle: hammer"
    ]
   },
   {
@@ -424,19 +271,855 @@
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
+   "score": 75,
+   "entry": 394,
+   "stop": 379.35,
+   "target": 423.3,
+   "qty": 317,
+   "trigger": "Buy-stop 394.00 tomorrow (above today's high); cancel if not filled",
+   "ltp": 390.95,
+   "pct": -0.27,
+   "d30": 6.24,
+   "reasons": [
+    "+10 relative strength top 29%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: hammer"
+   ]
+  },
+  {
+   "sym": "ASTERDM",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": 782,
+   "stop": 713.9,
+   "target": 918.2,
+   "qty": 73,
+   "trigger": "Buy-stop 782.00 tomorrow (above today's high); cancel if not filled",
+   "ltp": 773.35,
+   "pct": -0.17,
+   "d30": 19.53,
+   "reasons": [
+    "+10 relative strength top 18%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: hammer"
+   ]
+  },
+  {
+   "sym": "LINDEINDIA",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": 7114.3,
+   "stop": 6434,
+   "target": 8474.9,
+   "qty": 7,
+   "trigger": "Buy-stop 7,114.30 tomorrow (above today's high); cancel if not filled",
+   "ltp": 7017.5,
+   "pct": 0.97,
+   "d30": 24.59,
+   "reasons": [
+    "+10 relative strength top 4%",
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: bullish engulfing, inside bar"
+   ]
+  },
+  {
+   "sym": "MARUTI",
+   "sector": "Auto",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 14207.5,
+   "stop": 12423.7,
+   "target": 17775.1,
+   "qty": 2,
+   "trigger": "Buy-stop 14,207.50 tomorrow (above today's high); cancel if not filled",
+   "ltp": 14015,
+   "pct": -1.3,
+   "d30": 24.91,
+   "reasons": [
+    "+10 relative strength top 6%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "HINDUNILVR",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 2177.2,
+   "stop": 2003.9,
+   "target": 2523.8,
+   "qty": 28,
+   "trigger": "Buy-stop 2,177.20 tomorrow (above today's high); cancel if not filled",
+   "ltp": 2130.8,
+   "pct": -0.51,
+   "d30": 17.17,
+   "reasons": [
+    "+10 relative strength top 12%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.7× average",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "M&M",
+   "sector": "Auto",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 3515.1,
+   "stop": 3284.75,
+   "target": 3975.8,
+   "qty": 21,
+   "trigger": "Buy-stop 3,515.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 3487.5,
+   "pct": -0.63,
+   "d30": 22.24,
+   "reasons": [
+    "+10 relative strength top 6%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "HDFCLIFE",
+   "sector": "Insurance",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 610.75,
+   "stop": 573.3,
+   "target": 685.65,
+   "qty": 133,
+   "trigger": "Buy-stop 610.75 tomorrow (above today's high); cancel if not filled",
+   "ltp": 594.4,
+   "pct": -1.15,
+   "d30": 14.53,
+   "reasons": [
+    "+10 relative strength top 16%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.6× average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "ULTRACEMCO",
+   "sector": "Cement",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 12866.5,
+   "stop": 12447.05,
+   "target": 13705.4,
+   "qty": 9,
+   "trigger": "Buy-stop 12,866.50 tomorrow (above today's high); cancel if not filled",
+   "ltp": 12737,
+   "pct": -0.49,
+   "d30": 13.93,
+   "reasons": [
+    "+10 relative strength top 19%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "INDUSINDBK",
+   "sector": "Banks",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 975.9,
+   "stop": 890.95,
+   "target": 1145.8,
+   "qty": 58,
+   "trigger": "Buy-stop 975.90 tomorrow (above today's high); cancel if not filled",
+   "ltp": 966.1,
+   "pct": -0.78,
+   "d30": 14.4,
+   "reasons": [
+    "+10 relative strength top 23%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "TATACONSUM",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 1185.45,
+   "stop": 1140.75,
+   "target": 1274.85,
+   "qty": 105,
+   "trigger": "Buy-stop 1,185.45 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1164,
+   "pct": -1.84,
+   "d30": 24.29,
+   "reasons": [
+    "+10 relative strength top 15%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "LTF",
+   "sector": "Financial Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 287.75,
+   "stop": 274.25,
+   "target": 314.75,
+   "qty": 370,
+   "trigger": "Buy-stop 287.75 tomorrow (above today's high); cancel if not filled",
+   "ltp": 283,
+   "pct": -0.33,
+   "d30": 17.38,
+   "reasons": [
+    "+10 relative strength top 19%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "POONAWALLA",
+   "sector": "NBFC & Finance",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 518.15,
+   "stop": 481.2,
+   "target": 592.05,
+   "qty": 135,
+   "trigger": "Buy-stop 518.15 tomorrow (above today's high); cancel if not filled",
+   "ltp": 507,
+   "pct": -1.26,
+   "d30": 24.08,
+   "reasons": [
+    "+10 relative strength top 2%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "PIDILITIND",
+   "sector": "Durables & Building",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 1626.05,
+   "stop": 1520.05,
+   "target": 1838.05,
+   "qty": 47,
+   "trigger": "Buy-stop 1,626.05 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1604.9,
+   "pct": -0.74,
+   "d30": 8.59,
+   "reasons": [
+    "+10 relative strength top 17%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "MSUMI",
+   "sector": "Auto",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 42.75,
+   "stop": 38.9,
+   "target": 50.45,
+   "qty": 1298,
+   "trigger": "Buy-stop 42.75 tomorrow (above today's high); cancel if not filled",
+   "ltp": 42.1,
+   "pct": -0.05,
+   "d30": 20.22,
+   "reasons": [
+    "+10 relative strength top 8%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "AXISBANK",
+   "sector": "Banks",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
    "score": 60,
-   "entry": 399.9,
-   "stop": 379,
-   "target": 441.7,
-   "qty": 239,
-   "trigger": "Buy-stop 399.90 tomorrow (above today's high); cancel if not filled",
-   "ltp": 392,
-   "pct": 0.01,
-   "d30": 9.22,
+   "entry": 1449.35,
+   "stop": 1350,
+   "target": 1648.05,
+   "qty": 50,
+   "trigger": "Buy-stop 1,449.35 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1408,
+   "pct": -0.71,
+   "d30": 15.41,
+   "reasons": [
+    "+10 relative strength top 17%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, weak close"
+   ]
+  },
+  {
+   "sym": "HEROMOTOCO",
+   "sector": "Auto",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 5845.5,
+   "stop": 5194.55,
+   "target": 7147.4,
+   "qty": 7,
+   "trigger": "Buy-stop 5,845.50 tomorrow (above today's high); cancel if not filled",
+   "ltp": 5789,
+   "pct": 0.65,
+   "d30": 11.35,
+   "reasons": [
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "ACE",
+   "sector": "Capital Goods & Defence",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 1271.8,
+   "stop": 1180.95,
+   "target": 1453.5,
+   "qty": 55,
+   "trigger": "Buy-stop 1,271.80 tomorrow; cancel if not filled",
+   "ltp": 1292.1,
+   "pct": 8.55,
+   "d30": 27.77,
+   "reasons": [
+    "+10 relative strength top 1%",
+    "+10 volume 10.0× average",
+    "-15 RSI 81 — extended",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "INDIGO",
+   "sector": "Aviation & Hotels",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 5717.1,
+   "stop": 5528.75,
+   "target": 6093.8,
+   "qty": 21,
+   "trigger": "Buy-stop 5,717.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 5625,
+   "pct": -1.66,
+   "d30": 22.07,
+   "reasons": [
+    "+10 relative strength top 8%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "EICHERMOT",
+   "sector": "Auto",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 8349.95,
+   "stop": 7567,
+   "target": 9915.85,
+   "qty": 6,
+   "trigger": "Buy-stop 8,349.95 tomorrow (above today's high); cancel if not filled",
+   "ltp": 8180,
+   "pct": -1.87,
+   "d30": 15.22,
+   "reasons": [
+    "+10 relative strength top 27%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "TRENT",
+   "sector": "Consumer & Retail",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 3329.55,
+   "stop": 3179.4,
+   "target": 3629.85,
+   "qty": 33,
+   "trigger": "Buy-stop 3,329.55 tomorrow (above today's high); cancel if not filled",
+   "ltp": 3262.6,
+   "pct": -1.72,
+   "d30": 18.47,
+   "reasons": [
+    "+10 relative strength top 27%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "DABUR",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 429,
+   "stop": 396.35,
+   "target": 494.3,
+   "qty": 153,
+   "trigger": "Buy-stop 429.00 tomorrow (above today's high); cancel if not filled",
+   "ltp": 418.5,
+   "pct": -2.67,
+   "d30": 16.48,
+   "reasons": [
+    "+10 relative strength top 15%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "IDFCFIRSTB",
+   "sector": "Banks",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 87.75,
+   "stop": 81.25,
+   "target": 100.75,
+   "qty": 769,
+   "trigger": "Buy-stop 87.75 tomorrow (above today's high); cancel if not filled",
+   "ltp": 86.71,
+   "pct": -0.87,
+   "d30": 20.87,
+   "reasons": [
+    "+10 relative strength top 11%"
+   ]
+  },
+  {
+   "sym": "UNIONBANK",
+   "sector": "Banks",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 214.95,
+   "stop": 203.85,
+   "target": 237.15,
+   "qty": 450,
+   "trigger": "Buy-stop 214.95 tomorrow (above today's high); cancel if not filled",
+   "ltp": 210.2,
+   "pct": -1.55,
+   "d30": 16,
+   "reasons": [
+    "+10 relative strength top 18%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "BANKBARODA",
+   "sector": "Banks",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 278.65,
+   "stop": 268.7,
+   "target": 298.55,
+   "qty": 448,
+   "trigger": "Buy-stop 278.65 tomorrow (above today's high); cancel if not filled",
+   "ltp": 274.61,
+   "pct": -0.66,
+   "d30": 18.37,
+   "reasons": [
+    "+10 relative strength top 10%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "ITCHOTELS",
+   "sector": "Aviation & Hotels",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 189.7,
+   "stop": 174,
+   "target": 221.1,
+   "qty": 318,
+   "trigger": "Buy-stop 189.70 tomorrow (above today's high); cancel if not filled",
+   "ltp": 185.25,
+   "pct": -0.67,
+   "d30": 12.74,
+   "reasons": [
+    "+10 relative strength top 26%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "VOLTAS",
+   "sector": "Durables & Building",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 1239.3,
+   "stop": 1108.4,
+   "target": 1501.1,
+   "qty": 38,
+   "trigger": "Buy-stop 1,239.30 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1215.5,
+   "pct": -1.37,
+   "d30": 28.27,
+   "reasons": [
+    "+10 relative strength top 8%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, weak close"
+   ]
+  },
+  {
+   "sym": "HAVELLS",
+   "sector": "Durables & Building",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 1196.1,
+   "stop": 1116.45,
+   "target": 1355.4,
+   "qty": 62,
+   "trigger": "Buy-stop 1,196.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1181,
+   "pct": -1.29,
+   "d30": 16.94,
+   "reasons": [
+    "+10 relative strength top 18%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "COLPAL",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 1833.7,
+   "stop": 1662.75,
+   "target": 2175.6,
+   "qty": 29,
+   "trigger": "Buy-stop 1,833.70 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1800,
+   "pct": -1.37,
+   "d30": 11.42,
+   "reasons": [
+    "+10 relative strength top 26%"
+   ]
+  },
+  {
+   "sym": "APOLLOTYRE",
+   "sector": "Auto Ancillary",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 437.3,
+   "stop": 413.35,
+   "target": 485.2,
+   "qty": 208,
+   "trigger": "Buy-stop 437.30 tomorrow (above today's high); cancel if not filled",
+   "ltp": 427,
+   "pct": -2.37,
+   "d30": 10.38,
+   "reasons": [
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "NH",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 2030.85,
+   "stop": 1843.6,
+   "target": 2405.35,
+   "qty": 26,
+   "trigger": "Buy-stop 2,030.85 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1985,
+   "pct": -0.93,
+   "d30": 19.41,
+   "reasons": [
+    "+10 relative strength top 17%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "CENTRALBK",
+   "sector": "Financial Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 33.95,
+   "stop": 31.85,
+   "target": 38.15,
+   "qty": 2380,
+   "trigger": "Buy-stop 33.95 tomorrow (above today's high); cancel if not filled",
+   "ltp": 32.97,
+   "pct": -1.02,
+   "d30": 13.34,
+   "reasons": [
+    "+10 relative strength top 22%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "EIHOTEL",
+   "sector": "Consumer Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 346.15,
+   "stop": 303.35,
+   "target": 431.75,
+   "qty": 116,
+   "trigger": "Buy-stop 346.15 tomorrow (above today's high); cancel if not filled",
+   "ltp": 333.15,
+   "pct": -2.09,
+   "d30": 15.36,
+   "reasons": [
+    "+10 relative strength top 20%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, weak close"
+   ]
+  },
+  {
+   "sym": "UBL",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 1292.45,
+   "stop": 1190,
+   "target": 1497.35,
+   "qty": 48,
+   "trigger": "Buy-stop 1,292.45 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1274.5,
+   "pct": 0,
+   "d30": 12.17,
+   "reasons": [
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "MAXHEALTH",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 55,
+   "entry": 1093.25,
+   "stop": 1035.7,
+   "target": 1208.35,
+   "qty": 86,
+   "trigger": "Buy-stop 1,093.25 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1081.25,
+   "pct": 0.46,
+   "d30": 29.49,
+   "reasons": [
+    "+10 relative strength top 1%",
+    "+10 price > 20-day > 50-day average",
+    "-15 RSI 82 — extended"
+   ]
+  },
+  {
+   "sym": "GLENMARK",
+   "sector": "Pharma",
+   "kind": "act",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 55,
+   "entry": 2745.2,
+   "stop": 2582.35,
+   "target": 3070.9,
+   "qty": 30,
+   "trigger": "Buy-stop 2,745.20 tomorrow; cancel if not filled",
+   "ltp": 2740.2,
+   "pct": 0.78,
+   "d30": 23.11,
+   "reasons": [
+    "+10 relative strength top 9%",
+    "+10 price > 20-day > 50-day average",
+    "-15 RSI 78 — extended"
+   ]
+  },
+  {
+   "sym": "DEVYANI",
+   "sector": "Consumer Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 55,
+   "entry": 126.6,
+   "stop": 116.65,
+   "target": 146.5,
+   "qty": 502,
+   "trigger": "Buy-stop 126.60 tomorrow (above today's high); cancel if not filled",
+   "ltp": 126.13,
+   "pct": 0.45,
+   "d30": 5,
+   "reasons": [
+    "+5 bullish candle: hammer, inside bar, strong close"
+   ]
+  },
+  {
+   "sym": "DIXON",
+   "sector": "Durables & Building",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 13237.6,
+   "stop": 12430,
+   "target": 14852.8,
+   "qty": 6,
+   "trigger": "Buy-stop 13,237.60 tomorrow (above today's high); cancel if not filled",
+   "ltp": 12718,
+   "pct": -2,
+   "d30": 13.95,
    "reasons": [
     "+10 relative strength top 28%",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "MOTHERSON",
+   "sector": "Auto Ancillary",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 169.1,
+   "stop": 153.25,
+   "target": 200.8,
+   "qty": 315,
+   "trigger": "Buy-stop 169.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 164.61,
+   "pct": -0.99,
+   "d30": 7.06,
+   "reasons": [
     "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: shooting star, inside bar, weak close"
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "NESTLEIND",
+   "sector": "FMCG",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 1369.1,
+   "stop": 1291.35,
+   "target": 1524.6,
+   "qty": 64,
+   "trigger": "Buy-stop 1,369.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1320.3,
+   "pct": -2.81,
+   "d30": 12.51,
+   "reasons": [
+    "+10 relative strength top 24%",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "DMART",
+   "sector": "Consumer & Retail",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 3614.9,
+   "stop": 3395.25,
+   "target": 4054.2,
+   "qty": 22,
+   "trigger": "Buy-stop 3,614.90 tomorrow (above today's high); cancel if not filled",
+   "ltp": 3533,
+   "pct": -1.64,
+   "d30": 12.16,
+   "reasons": [
+    "+10 relative strength top 26%",
+    "-10 bearish candle: weak close"
    ]
   },
   {
@@ -446,82 +1129,76 @@
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 60,
-   "entry": 598.25,
-   "stop": 529.05,
-   "target": 736.65,
-   "qty": 72,
-   "trigger": "Buy-stop 598.25 tomorrow (above today's high); cancel if not filled",
-   "ltp": 584,
-   "pct": -0.48,
-   "d30": 24.24,
+   "score": 50,
+   "entry": 589.8,
+   "stop": 528.85,
+   "target": 711.7,
+   "qty": 82,
+   "trigger": "Buy-stop 589.80 tomorrow (above today's high); cancel if not filled",
+   "ltp": 567.25,
+   "pct": -2.87,
+   "d30": 19.42,
    "reasons": [
-    "+10 relative strength top 17%",
     "+10 price > 20-day > 50-day average",
     "-10 bearish candle: weak close"
    ]
   },
   {
-   "sym": "EXIDEIND",
-   "sector": "Auto Ancillary",
+   "sym": "PWL",
+   "sector": "Consumer Services",
    "kind": "act",
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 60,
-   "entry": 406.9,
-   "stop": 358.6,
-   "target": 503.5,
-   "qty": 103,
-   "trigger": "Buy-stop 406.90 tomorrow (above today's high); cancel if not filled",
-   "ltp": 396,
-   "pct": -1.46,
-   "d30": 19.3,
-   "reasons": [
-    "+10 relative strength top 12%"
-   ]
+   "score": 50,
+   "entry": 139.75,
+   "stop": 127.65,
+   "target": 163.95,
+   "qty": 413,
+   "trigger": "Buy-stop 139.75 tomorrow (above today's high); cancel if not filled",
+   "ltp": 136.5,
+   "pct": 0.62,
+   "d30": 9.34,
+   "reasons": []
   },
   {
-   "sym": "LTTS",
-   "sector": "IT",
+   "sym": "SYNGENE",
+   "sector": "Pharma",
    "kind": "act",
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 60,
-   "entry": 4311.9,
-   "stop": 4037.95,
-   "target": 4859.8,
-   "qty": 18,
-   "trigger": "Buy-stop 4,311.90 tomorrow (above today's high); cancel if not filled",
-   "ltp": 4209,
-   "pct": -0.32,
-   "d30": 7.64,
+   "score": 50,
+   "entry": 452.8,
+   "stop": 426.8,
+   "target": 504.8,
+   "qty": 192,
+   "trigger": "Buy-stop 452.80 tomorrow (above today's high); cancel if not filled",
+   "ltp": 444.45,
+   "pct": -1.62,
+   "d30": 23.51,
    "reasons": [
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "MINDACORP",
-   "sector": "Auto",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 60,
-   "entry": 735.85,
-   "stop": 698.4,
-   "target": 810.75,
-   "qty": 133,
-   "trigger": "Buy-stop 735.85 tomorrow (above today's high); cancel if not filled",
-   "ltp": 716.9,
-   "pct": -1.42,
-   "d30": 19.35,
-   "reasons": [
-    "+10 relative strength top 14%",
     "+10 price > 20-day > 50-day average",
     "-10 bearish candle: weak close"
    ]
+  },
+  {
+   "sym": "CANHLIFE",
+   "sector": "Financial Services",
+   "kind": "act",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 136.65,
+   "stop": 120.35,
+   "target": 169.25,
+   "qty": 306,
+   "trigger": "Buy-stop 136.65 tomorrow (above today's high); cancel if not filled",
+   "ltp": 133.09,
+   "pct": 0.1,
+   "d30": 9.18,
+   "reasons": []
   },
   {
    "sym": "NAVA",
@@ -530,400 +1207,42 @@
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 60,
-   "entry": 568.1,
-   "stop": 510.5,
-   "target": 683.3,
-   "qty": 86,
-   "trigger": "Buy-stop 568.10 tomorrow (above today's high); cancel if not filled",
-   "ltp": 551.5,
-   "pct": 0.25,
-   "d30": 16.19,
-   "reasons": [
-    "+10 relative strength top 27%"
-   ]
-  },
-  {
-   "sym": "TMCV",
-   "sector": "Capital Goods & Defence",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
    "score": 50,
-   "entry": 465.4,
-   "stop": 420.85,
-   "target": 554.5,
-   "qty": 112,
-   "trigger": "Buy-stop 465.40 tomorrow (above today's high); cancel if not filled",
-   "ltp": 441.6,
-   "pct": -2.69,
-   "d30": 11.52,
-   "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
-   ]
-  },
-  {
-   "sym": "BRIGADE",
-   "sector": "Realty",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 622.85,
-   "stop": 525.4,
-   "target": 817.75,
-   "qty": 51,
-   "trigger": "Buy-stop 622.85 tomorrow (above today's high); cancel if not filled",
-   "ltp": 586.85,
-   "pct": 0.89,
-   "d30": 7.17,
-   "reasons": [
-    "+10 volume 12.9× average",
-    "-10 bearish candle: shooting star, weak close"
-   ]
-  },
-  {
-   "sym": "PERSISTENT",
-   "sector": "IT",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 6439.75,
-   "stop": 5747.7,
-   "target": 7823.85,
-   "qty": 7,
-   "trigger": "Buy-stop 6,439.75 tomorrow (above today's high); cancel if not filled",
-   "ltp": 6120,
-   "pct": -2.59,
-   "d30": 6.85,
+   "entry": 562,
+   "stop": 510.55,
+   "target": 664.9,
+   "qty": 97,
+   "trigger": "Buy-stop 562.00 tomorrow (above today's high); cancel if not filled",
+   "ltp": 545.8,
+   "pct": -0.93,
+   "d30": 15,
    "reasons": [
     "+10 price > 20-day > 50-day average",
     "-10 bearish candle: bearish engulfing, weak close"
    ]
   },
   {
-   "sym": "IRFC",
-   "sector": "NBFC & Finance",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 83,
-   "stop": 79.05,
-   "target": 90.9,
-   "qty": 1265,
-   "trigger": "Buy-stop 83.00 tomorrow (above today's high); cancel if not filled",
-   "ltp": 81.05,
-   "pct": 0.31,
-   "d30": 8.87,
-   "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
-   ]
-  },
-  {
-   "sym": "FRACTAL",
-   "sector": "IT",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 842.2,
-   "stop": 772.7,
-   "target": 981.2,
-   "qty": 71,
-   "trigger": "Buy-stop 842.20 tomorrow (above today's high); cancel if not filled",
-   "ltp": 793.1,
-   "pct": -2.01,
-   "d30": 8.88,
-   "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
-   ]
-  },
-  {
-   "sym": "IRCON",
-   "sector": "Capital Goods & Defence",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 111.05,
-   "stop": 102.85,
-   "target": 127.45,
-   "qty": 609,
-   "trigger": "Buy-stop 111.05 tomorrow (above today's high); cancel if not filled",
-   "ltp": 107.15,
-   "pct": -0.63,
-   "d30": 9.76,
-   "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: shooting star, weak close"
-   ]
-  },
-  {
-   "sym": "GLAXO",
-   "sector": "Pharma",
-   "kind": "act",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 50,
-   "entry": 2784.95,
-   "stop": 2554.9,
-   "target": 3245.05,
-   "qty": 21,
-   "trigger": "Buy-stop 2,784.95 tomorrow (above today's high); cancel if not filled",
-   "ltp": 2724.7,
-   "pct": 0.87,
-   "d30": 13.31,
-   "reasons": []
-  },
-  {
-   "sym": "VIJAYA",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": 23,
-   "score": 85,
-   "entry": 1641.9,
-   "stop": 1509.05,
-   "target": 1907.6,
-   "qty": 37,
-   "trigger": "Close above 1,637.00",
-   "ltp": 1629.1,
-   "pct": 3.59,
-   "d30": 17.25,
-   "reasons": [
-    "+10 relative strength top 27%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 4.0× average",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "LAURUSLABS",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": 2,
-   "score": 75,
-   "entry": 2495.45,
-   "stop": 2331.85,
-   "target": 2822.65,
-   "qty": 30,
-   "trigger": "Close above 2,488.00",
-   "ltp": 2460,
-   "pct": 3.77,
-   "d30": 24.87,
-   "reasons": [
-    "+10 relative strength top 22%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: hammer, strong close"
-   ]
-  },
-  {
-   "sym": "APOLLOHOSP",
-   "sector": "Pharma",
+   "sym": "PRESTIGE",
+   "sector": "Realty",
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 75,
-   "entry": 9438.25,
-   "stop": 9021.55,
-   "target": 10271.65,
-   "qty": 11,
-   "trigger": "Close above 9,410.00",
-   "ltp": 9300,
-   "pct": 0.46,
-   "d30": 20.31,
-   "reasons": [
-    "+10 relative strength top 9%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: hammer"
-   ]
-  },
-  {
-   "sym": "AUROPHARMA",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": 1865.5,
-   "stop": 1780.6,
-   "target": 2035.3,
-   "qty": 58,
-   "trigger": "Close above 1,859.90",
-   "ltp": 1843,
-   "pct": 2.59,
-   "d30": 17.26,
-   "reasons": [
-    "+10 relative strength top 25%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "TVSMOTOR",
-   "sector": "Auto",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": 4650,
-   "stop": 4418.05,
-   "target": 5113.9,
-   "qty": 21,
-   "trigger": "Close above 4,636.10",
-   "ltp": 4610,
-   "pct": 1.81,
-   "d30": 15.82,
-   "reasons": [
-    "+10 relative strength top 27%",
-    "+10 price > 20-day > 50-day average",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "RADICO",
-   "sector": "FMCG",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": 25,
-   "score": 75,
-   "entry": 4761.25,
-   "stop": 4523.3,
-   "target": 5237.15,
-   "qty": 21,
-   "trigger": "Close above 4,747.00",
-   "ltp": 4699,
-   "pct": 1.35,
-   "d30": 13.03,
-   "reasons": [
-    "+15 leading sector",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "ICICIBANK",
-   "sector": "Banks",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 1649.95,
-   "stop": 1571.1,
-   "target": 1807.65,
-   "qty": 63,
-   "trigger": "Close above 1,645.00",
-   "ltp": 1640,
-   "pct": 3.44,
-   "d30": 17.63,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 12%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 78 — extended"
-   ]
-  },
-  {
-   "sym": "ETERNAL",
-   "sector": "Consumer & Retail",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 379.15,
-   "stop": 360.2,
-   "target": 417.05,
-   "qty": 263,
-   "trigger": "Close above 378.00",
-   "ltp": 371.7,
-   "pct": 2.65,
-   "d30": 17.11,
-   "reasons": [
-    "+10 relative strength top 29%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "DRREDDY",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 1419.15,
-   "stop": 1373.5,
-   "target": 1510.45,
-   "qty": 88,
-   "trigger": "Close above 1,414.90",
-   "ltp": 1398,
-   "pct": 1.3,
-   "d30": 13.7,
-   "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.7× average"
-   ]
-  },
-  {
-   "sym": "LGEINDIA",
-   "sector": "Durables & Building",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": 1841.5,
-   "stop": 1719.8,
-   "target": 2084.9,
+   "score": 100,
+   "entry": 1746.7,
+   "stop": 1624.85,
+   "target": 1990.4,
    "qty": 41,
-   "trigger": "Close above 1,836.00",
-   "ltp": 1799.4,
-   "pct": 1.23,
-   "d30": 11.72,
+   "trigger": "Extended 5.2% above 1,741.50 — wait for a retest",
+   "ltp": 1832.1,
+   "pct": 8.72,
+   "d30": 31.18,
    "reasons": [
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 2.4× average"
-   ]
-  },
-  {
-   "sym": "WELSPUNLIV",
-   "sector": "Textiles",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": 10,
-   "score": 70,
-   "entry": 279.85,
-   "stop": 253.15,
-   "target": 333.25,
-   "qty": 187,
-   "trigger": "Close above 278.99",
-   "ltp": 276,
-   "pct": 1.94,
-   "d30": 31.48,
-   "reasons": [
+    "+15 leading sector",
     "+10 relative strength top 0%",
-    "+10 price > 20-day > 50-day average"
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 8.5× average",
+    "+5 bullish candle: strong close"
    ]
   },
   {
@@ -933,59 +1252,40 @@
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 70,
+   "score": 95,
    "entry": 2332,
-   "stop": 2188.75,
-   "target": 2618.5,
+   "stop": 2187.95,
+   "target": 2620.1,
    "qty": 34,
    "trigger": "Close above 2,325.00",
-   "ltp": 2285.5,
-   "pct": 0.41,
-   "d30": 22.07,
-   "reasons": [
-    "+10 relative strength top 8%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "INDHOTEL",
-   "sector": "Aviation & Hotels",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
-   "score": 65,
-   "entry": 920.6,
-   "stop": 873.9,
-   "target": 1014,
-   "qty": 107,
-   "trigger": "Close above 917.85",
-   "ltp": 903.85,
-   "pct": -0.24,
-   "d30": 15.62,
+   "ltp": 2291,
+   "pct": 0.24,
+   "d30": 20.96,
    "reasons": [
     "+15 leading sector",
+    "+10 relative strength top 7%",
     "+10 price > 20-day > 50-day average",
-    "-10 bearish candle: weak close"
+    "+10 volume 1.5× average"
    ]
   },
   {
-   "sym": "MANKIND",
-   "sector": "Pharma",
+   "sym": "UNOMINDA",
+   "sector": "Auto Ancillary",
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 65,
-   "entry": 2713.1,
-   "stop": 2591.2,
-   "target": 2956.9,
-   "qty": 41,
-   "trigger": "Close above 2,705.00",
-   "ltp": 2685,
-   "pct": 2.67,
-   "d30": 21.35,
+   "score": 75,
+   "entry": 1413.95,
+   "stop": 1331.5,
+   "target": 1578.85,
+   "qty": 60,
+   "trigger": "Close above 1,409.70",
+   "ltp": 1390,
+   "pct": 1.09,
+   "d30": 29.99,
    "reasons": [
+    "+10 relative strength top 1%",
     "+10 price > 20-day > 50-day average",
     "+5 bullish candle: strong close"
    ]
@@ -997,15 +1297,99 @@
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 65,
+   "score": 70,
    "entry": 2417.25,
-   "stop": 2350.85,
-   "target": 2550.05,
+   "stop": 2357.05,
+   "target": 2537.65,
    "qty": 51,
    "trigger": "Close above 2,410.00",
-   "ltp": 2380,
-   "pct": 1.02,
-   "d30": 6.49,
+   "ltp": 2410,
+   "pct": 1.26,
+   "d30": 8.07,
+   "reasons": [
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 3.2× average"
+   ]
+  },
+  {
+   "sym": "ANTHEM",
+   "sector": "Pharma",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": 992.05,
+   "stop": 939.8,
+   "target": 1096.55,
+   "qty": 95,
+   "trigger": "Close above 989.10",
+   "ltp": 972.2,
+   "pct": 0.41,
+   "d30": 18.24,
+   "reasons": [
+    "+10 relative strength top 14%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "TECHM",
+   "sector": "IT",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 65,
+   "entry": 1865.6,
+   "stop": 1783.1,
+   "target": 2030.6,
+   "qty": 60,
+   "trigger": "Close above 1,860.00",
+   "ltp": 1854.7,
+   "pct": 2.97,
+   "d30": 3.33,
+   "reasons": [
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "CRAFTSMAN",
+   "sector": "Auto",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 21,
+   "score": 65,
+   "entry": 12246.65,
+   "stop": 11350.1,
+   "target": 14039.75,
+   "qty": 5,
+   "trigger": "Close above 12,210.00",
+   "ltp": 12055,
+   "pct": 2.43,
+   "d30": 12.39,
+   "reasons": [
+    "+10 price > 20-day > 50-day average",
+    "+5 bullish candle: strong close"
+   ]
+  },
+  {
+   "sym": "GLAND",
+   "sector": "Pharma",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 7,
+   "score": 65,
+   "entry": 3439.3,
+   "stop": 3238.35,
+   "target": 3841.2,
+   "qty": 24,
+   "trigger": "Close above 3,429.00",
+   "ltp": 3365,
+   "pct": 0.5,
+   "d30": 18.32,
    "reasons": [
     "+10 price > 20-day > 50-day average",
     "+5 bullish candle: strong close"
@@ -1017,68 +1401,125 @@
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
-   "momRank": 15,
+   "momRank": 17,
    "score": 60,
    "entry": 11859.45,
-   "stop": 11091.45,
-   "target": 13395.45,
+   "stop": 11102.5,
+   "target": 13373.35,
    "qty": 6,
    "trigger": "Close above 11,824.00",
-   "ltp": 11716.5,
-   "pct": 4.58,
-   "d30": 30.91,
+   "ltp": 11631,
+   "pct": -0.73,
+   "d30": 28.52,
    "reasons": [
-    "+10 relative strength top 4%",
+    "+10 relative strength top 5%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: weak close"
+   ]
+  },
+  {
+   "sym": "NAVINFLUOR",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 60,
+   "entry": 10391.1,
+   "stop": 9717.65,
+   "target": 11738,
+   "qty": 7,
+   "trigger": "Close above 10,360.00",
+   "ltp": 10270,
+   "pct": 3.15,
+   "d30": 34.04,
+   "reasons": [
+    "+10 relative strength top 7%",
     "+10 price > 20-day > 50-day average",
     "-15 RSI 77 — extended",
     "+5 bullish candle: strong close"
    ]
   },
   {
-   "sym": "DLF",
-   "sector": "Realty",
+   "sym": "ACUTAAS",
+   "sector": "Pharma",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 13,
+   "score": 60,
+   "entry": 4142.4,
+   "stop": 3840.2,
+   "target": 4746.8,
+   "qty": 16,
+   "trigger": "Close above 4,130.00",
+   "ltp": 4079.9,
+   "pct": 2.18,
+   "d30": 21.83,
+   "reasons": [
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "RADICO",
+   "sector": "FMCG",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": 30,
+   "score": 60,
+   "entry": 4761.25,
+   "stop": 4531.1,
+   "target": 5221.55,
+   "qty": 21,
+   "trigger": "Close above 4,747.00",
+   "ltp": 4671,
+   "pct": -0.6,
+   "d30": 11.21,
+   "reasons": [
+    "+10 relative strength top 24%",
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: bearish engulfing, inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "DRREDDY",
+   "sector": "Pharma",
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
    "score": 60,
-   "entry": 798.35,
-   "stop": 760.6,
-   "target": 873.85,
-   "qty": 132,
-   "trigger": "Close above 795.95",
-   "ltp": 795,
-   "pct": 0.11,
-   "d30": 21,
+   "entry": 1419.15,
+   "stop": 1374.7,
+   "target": 1508.05,
+   "qty": 88,
+   "trigger": "Close above 1,414.90",
+   "ltp": 1392,
+   "pct": -0.43,
+   "d30": 6.19,
    "reasons": [
-    "+10 relative strength top 11%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 76 — extended",
-    "+5 bullish candle: hammer"
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
-   "sym": "HONASA",
-   "sector": "FMCG",
+   "sym": "MANKIND",
+   "sector": "Pharma",
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
-   "momRank": 27,
+   "momRank": null,
    "score": 60,
-   "entry": 544.65,
-   "stop": 505.15,
-   "target": 623.65,
-   "qty": 126,
-   "trigger": "Close above 543.00",
-   "ltp": 534.75,
-   "pct": -0.93,
-   "d30": 23.84,
+   "entry": 2713.1,
+   "stop": 2595.85,
+   "target": 2947.6,
+   "qty": 42,
+   "trigger": "Close above 2,705.00",
+   "ltp": 2685,
+   "pct": 0,
+   "d30": 16.13,
    "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 10%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 79 — extended",
-    "-10 bearish candle: weak close"
+    "+10 price > 20-day > 50-day average"
    ]
   },
   {
@@ -1088,249 +1529,107 @@
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 60,
-   "entry": 1202.6,
-   "stop": 1128.65,
-   "target": 1350.5,
-   "qty": 67,
-   "trigger": "Close above 1,199.00",
-   "ltp": 1195.8,
-   "pct": 1.47,
-   "d30": 33.71,
-   "reasons": [
-    "+10 relative strength top 0%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 91 — extended",
-    "+5 bullish candle: strong close"
-   ]
-  },
-  {
-   "sym": "MAHABANK",
-   "sector": "Financial Services",
-   "kind": "alert",
-   "setup": "52W breakout",
-   "tag": null,
-   "momRank": null,
    "score": 55,
-   "entry": 101,
-   "stop": 94.95,
-   "target": 113.1,
-   "qty": 826,
-   "trigger": "Close above 100.70",
-   "ltp": 98.71,
-   "pct": 1.18,
-   "d30": 31.05,
+   "entry": 1203.6,
+   "stop": 1132.9,
+   "target": 1345,
+   "qty": 70,
+   "trigger": "Close above 1,200.00",
+   "ltp": 1194.95,
+   "pct": -0.03,
+   "d30": 31.81,
    "reasons": [
-    "+10 relative strength top 3%",
+    "+10 relative strength top 1%",
     "+10 price > 20-day > 50-day average",
     "-15 RSI 89 — extended"
    ]
   },
   {
-   "sym": "MEDANTA",
+   "sym": "TVSMOTOR",
+   "sector": "Auto",
+   "kind": "alert",
+   "setup": "52W breakout",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": 4650,
+   "stop": 4430.05,
+   "target": 5089.9,
+   "qty": 22,
+   "trigger": "Close above 4,636.10",
+   "ltp": 4550.1,
+   "pct": -1.3,
+   "d30": 13.87,
+   "reasons": [
+    "+10 price > 20-day > 50-day average",
+    "-10 bearish candle: inside bar, weak close"
+   ]
+  },
+  {
+   "sym": "APOLLOHOSP",
    "sector": "Pharma",
    "kind": "alert",
    "setup": "52W breakout",
    "tag": null,
    "momRank": null,
-   "score": 55,
-   "entry": 1548.65,
-   "stop": 1470.7,
-   "target": 1704.55,
-   "qty": 64,
-   "trigger": "Close above 1,544.00",
-   "ltp": 1524,
-   "pct": 1.59,
-   "d30": 28.61,
-   "reasons": [
-    "+10 relative strength top 6%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 79 — extended"
-   ]
-  },
-  {
-   "sym": "MAXHEALTH",
-   "sector": "Pharma",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
    "score": 45,
-   "entry": 1102.95,
-   "stop": 1035.75,
-   "target": 1237.35,
-   "qty": 74,
-   "trigger": "Buy-stop 1,102.95 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1076.3,
-   "pct": -1.22,
-   "d30": 32.06,
+   "entry": 9438.25,
+   "stop": 9072.25,
+   "target": 10170.25,
+   "qty": 13,
+   "trigger": "Close above 9,410.00",
+   "ltp": 9222.5,
+   "pct": -0.83,
+   "d30": 17.57,
    "reasons": [
-    "+10 relative strength top 1%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 82 — extended",
-    "-10 bearish candle: bearish engulfing, weak close",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "BANKINDIA",
-   "sector": "Financial Services",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 45,
-   "entry": 165,
-   "stop": 150.6,
-   "target": 193.8,
-   "qty": 347,
-   "trigger": "Buy-stop 165.00 tomorrow (above today's high); cancel if not filled",
-   "ltp": 159.89,
-   "pct": 0.55,
-   "d30": 22.05,
-   "reasons": [
-    "+10 relative strength top 5%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 80 — extended",
-    "-10 bearish candle: inside bar, weak close",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "POONAWALLA",
-   "sector": "NBFC & Finance",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 45,
-   "entry": 533.9,
-   "stop": 481.1,
-   "target": 639.5,
-   "qty": 94,
-   "trigger": "Buy-stop 533.90 tomorrow (above today's high); cancel if not filled",
-   "ltp": 512,
-   "pct": -1.04,
-   "d30": 23.97,
-   "reasons": [
-    "+10 relative strength top 1%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 77 — extended",
-    "-10 bearish candle: weak close",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "DEEPAKFERT",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 45,
-   "entry": 1433.2,
-   "stop": 1317.6,
-   "target": 1664.4,
-   "qty": 43,
-   "trigger": "Buy-stop 1,433.20 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1385.8,
-   "pct": -2.17,
-   "d30": 21.94,
-   "reasons": [
-    "+10 relative strength top 16%",
-    "-15 RSI 76 — extended",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "CENTRALBK",
-   "sector": "Financial Services",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 45,
-   "entry": 34.3,
-   "stop": 31.85,
-   "target": 39.2,
-   "qty": 2040,
-   "trigger": "Buy-stop 34.30 tomorrow (above today's high); cancel if not filled",
-   "ltp": 33.3,
-   "pct": -0.3,
-   "d30": 15.5,
-   "reasons": [
-    "+10 relative strength top 21%",
+    "+10 relative strength top 23%",
     "+10 price > 20-day > 50-day average",
     "-15 RSI 78 — extended",
-    "-10 bearish candle: weak close",
-    "downgraded: score below 50"
+    "-10 bearish candle: inside bar, weak close"
    ]
   },
   {
-   "sym": "SIGNATURE",
-   "sector": "Realty",
+   "sym": "BLUESTARCO",
+   "sector": "Durables & Building",
    "kind": "alert",
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
    "score": 45,
-   "entry": 871.6,
-   "stop": 746.6,
-   "target": 1121.6,
-   "qty": 40,
-   "trigger": "Buy-stop 871.60 tomorrow (above today's high); cancel if not filled",
-   "ltp": 850,
-   "pct": -1.15,
-   "d30": 19.59,
+   "entry": 1840.1,
+   "stop": 1591.6,
+   "target": 2337.1,
+   "qty": 20,
+   "trigger": "Buy-stop 1,840.10 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1780.2,
+   "pct": -2.27,
+   "d30": 18.33,
    "reasons": [
-    "+10 relative strength top 7%",
+    "+10 relative strength top 29%",
     "+10 price > 20-day > 50-day average",
-    "-15 RSI 76 — extended",
-    "-10 bearish candle: bearish engulfing",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "ADANIENT",
-   "sector": "Conglomerate",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": 2741.3,
-   "stop": 2615.05,
-   "target": 2993.8,
-   "qty": 39,
-   "trigger": "Buy-stop 2,741.30 tomorrow (above today's high); cancel if not filled",
-   "ltp": 2668.5,
-   "pct": -0.35,
-   "d30": 7.73,
-   "reasons": [
-    "-10 below both moving averages",
-    "+10 volume 1.7× average",
-    "-10 bearish candle: weak close",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "PWL",
-   "sector": "Consumer Services",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": 141.2,
-   "stop": 127.35,
-   "target": 168.9,
-   "qty": 361,
-   "trigger": "Buy-stop 141.20 tomorrow (above today's high); cancel if not filled",
-   "ltp": 135.65,
-   "pct": -2.94,
-   "d30": 13.09,
-   "reasons": [
+    "-15 RSI 78 — extended",
     "-10 bearish candle: bearish engulfing, weak close",
+    "downgraded: score below 50"
+   ]
+  },
+  {
+   "sym": "AMBER",
+   "sector": "Durables & Building",
+   "kind": "alert",
+   "setup": "Pullback buy",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": 7027,
+   "stop": 6084.55,
+   "target": 8911.9,
+   "qty": 5,
+   "trigger": "Buy-stop 7,027.00 tomorrow (above today's high); cancel if not filled",
+   "ltp": 6826,
+   "pct": -1.64,
+   "d30": 15.54,
+   "reasons": [
+    "-10 bearish candle: weak close",
     "downgraded: score below 50"
    ]
   },
@@ -1342,37 +1641,16 @@
    "tag": null,
    "momRank": null,
    "score": 40,
-   "entry": 224.45,
+   "entry": 220.35,
    "stop": 203.65,
-   "target": 266.05,
-   "qty": 240,
-   "trigger": "Buy-stop 224.45 tomorrow (above today's high); cancel if not filled",
-   "ltp": 219.5,
-   "pct": 0.23,
-   "d30": 12.46,
+   "target": 253.75,
+   "qty": 299,
+   "trigger": "Buy-stop 220.35 tomorrow (above today's high); cancel if not filled",
+   "ltp": 215.6,
+   "pct": -1.78,
+   "d30": 11.16,
    "reasons": [
-    "-10 bearish candle: shooting star, inside bar",
-    "downgraded: score below 50"
-   ]
-  },
-  {
-   "sym": "TATATECH",
-   "sector": "IT",
-   "kind": "alert",
-   "setup": "Pullback buy",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": 723.15,
-   "stop": 635.75,
-   "target": 897.95,
-   "qty": 57,
-   "trigger": "Buy-stop 723.15 tomorrow (above today's high); cancel if not filled",
-   "ltp": 691.9,
-   "pct": -2.26,
-   "d30": 5.26,
-   "reasons": [
-    "-10 bearish candle: weak close",
+    "-10 bearish candle: bearish engulfing",
     "downgraded: score below 50"
    ]
   },
@@ -1383,46 +1661,46 @@
    "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 35,
-   "entry": 1230,
-   "stop": 1122.55,
-   "target": 1444.9,
-   "qty": 46,
-   "trigger": "Buy-stop 1,230.00 tomorrow (above today's high); cancel if not filled",
-   "ltp": 1183.3,
-   "pct": 0.26,
-   "d30": 8.65,
+   "score": 40,
+   "entry": 1201.6,
+   "stop": 1122.85,
+   "target": 1359.1,
+   "qty": 63,
+   "trigger": "Buy-stop 1,201.60 tomorrow (above today's high); cancel if not filled",
+   "ltp": 1171,
+   "pct": -1.04,
+   "d30": 7.83,
    "reasons": [
-    "-15 RSI 77 — extended",
+    "-10 bearish candle: bearish engulfing, weak close",
     "downgraded: score below 50"
    ]
   },
   {
-   "sym": "HINDUNILVR",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
+   "sym": "TITAGARH",
+   "sector": "Capital Goods & Defence",
+   "kind": "alert",
+   "setup": "Pullback buy",
    "tag": null,
    "momRank": null,
-   "score": 95,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 2,019.10–2,027.00 on light volume",
-   "ltp": 2141.8,
-   "pct": 6.08,
-   "d30": 18.03,
+   "score": 35,
+   "entry": 789.15,
+   "stop": 709.85,
+   "target": 947.75,
+   "qty": 63,
+   "trigger": "Buy-stop 789.15 tomorrow (above today's high); cancel if not filled",
+   "ltp": 748.8,
+   "pct": 0.51,
+   "d30": 15.28,
    "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 13%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 3.1× average"
+    "+10 volume 2.9× average",
+    "-15 RSI 77 — extended",
+    "-10 bearish candle: weak close",
+    "downgraded: score below 50"
    ]
   },
   {
-   "sym": "INDIGO",
-   "sector": "Aviation & Hotels",
+   "sym": "BSE",
+   "sector": "Capital Markets",
    "kind": "watch",
    "setup": "Momentum — wait",
    "tag": null,
@@ -1432,20 +1710,20 @@
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback toward 5,523.00–5,600.00 on light volume",
-   "ltp": 5720,
-   "pct": 3.57,
-   "d30": 25.74,
+   "trigger": "Pullback toward 3,775.20–3,808.90 on light volume",
+   "ltp": 3990.4,
+   "pct": 5.7,
+   "d30": 18.8,
    "reasons": [
     "+15 leading sector",
-    "+10 relative strength top 2%",
+    "+10 relative strength top 19%",
     "+10 price > 20-day > 50-day average",
     "+10 volume 1.8× average"
    ]
   },
   {
-   "sym": "DABUR",
-   "sector": "FMCG",
+   "sym": "KFINTECH",
+   "sector": "Capital Markets",
    "kind": "watch",
    "setup": "Momentum — wait",
    "tag": null,
@@ -1455,649 +1733,309 @@
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback toward 399.00–401.45 on light volume",
-   "ltp": 430,
-   "pct": 7.77,
-   "d30": 18.46,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 8%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 8.4× average"
-   ]
-  },
-  {
-   "sym": "ITCHOTELS",
-   "sector": "Aviation & Hotels",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 95,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 185.10",
-   "ltp": 186.2,
-   "pct": 1.13,
-   "d30": 19.17,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 29%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.9× average"
-   ]
-  },
-  {
-   "sym": "CANBK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 132.17",
-   "ltp": 133.46,
-   "pct": -0.22,
-   "d30": 14.89,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 26%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "CUPID",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": 1,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 358.15",
-   "ltp": 365.45,
-   "pct": 0.91,
-   "d30": 19.25,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 19%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "KARURVYSYA",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 373.75",
-   "ltp": 378.75,
-   "pct": -1.39,
-   "d30": 12.62,
-   "reasons": [
-    "+15 leading sector",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 2.1× average"
-   ]
-  },
-  {
-   "sym": "PATANJALI",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 400.45",
-   "ltp": 407.05,
-   "pct": 0.01,
-   "d30": 16.38,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 16%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "INDUSINDBK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 963.00",
-   "ltp": 973.7,
-   "pct": 1.11,
-   "d30": 16.61,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 16%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "UNITDSPR",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,478.00–1,480.00 on light volume",
-   "ltp": 1514.3,
-   "pct": 2.46,
-   "d30": 20.95,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 9%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "COLPAL",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,755.50–1,763.30 on light volume",
-   "ltp": 1825,
-   "pct": 3.96,
-   "d30": 13.71,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 23%",
-    "+10 volume 2.2× average"
-   ]
-  },
-  {
-   "sym": "LEMONTREE",
-   "sector": "Aviation & Hotels",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 124.10",
-   "ltp": 124.6,
-   "pct": -2.37,
-   "d30": 14.37,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 16%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "UBL",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 85,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 1,253.40",
-   "ltp": 1278,
-   "pct": 1.89,
-   "d30": 11.85,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 28%",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "ITC",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 80,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 300.50–301.00 on light volume",
-   "ltp": 309.25,
-   "pct": 2.74,
-   "d30": 19.91,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 10%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.8× average",
-    "-15 RSI 79 — extended"
-   ]
-  },
-  {
-   "sym": "TATACONSUM",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 80,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,133.00–1,153.40 on light volume",
-   "ltp": 1185.8,
-   "pct": 4.66,
-   "d30": 23.02,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 11%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.9× average",
-    "-15 RSI 77 — extended"
-   ]
-  },
-  {
-   "sym": "GODREJCP",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 80,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 911.95–912.30 on light volume",
-   "ltp": 963,
-   "pct": 5.56,
-   "d30": 12.45,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 19%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 2.5× average",
-    "-15 RSI 80 — extended"
-   ]
-  },
-  {
-   "sym": "EMAMILTD",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 80,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 416.70–420.00 on light volume",
-   "ltp": 427.7,
-   "pct": 2.64,
-   "d30": 14.62,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 18%",
-    "+10 price > 20-day > 50-day average",
-    "+10 volume 1.8× average",
-    "-15 RSI 81 — extended"
-   ]
-  },
-  {
-   "sym": "BRITANNIA",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 4,830.70–4,850.90 on light volume",
-   "ltp": 5076.2,
-   "pct": 5.08,
-   "d30": 11.86,
-   "reasons": [
-    "+15 leading sector",
-    "+10 volume 2.2× average"
-   ]
-  },
-  {
-   "sym": "NESTLEIND",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,305.90–1,307.30 on light volume",
-   "ltp": 1358.5,
-   "pct": 4.03,
-   "d30": 15.62,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 21%"
-   ]
-  },
-  {
-   "sym": "INDIANB",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 920.15",
-   "ltp": 930,
-   "pct": -0.32,
-   "d30": 11.09,
-   "reasons": [
-    "+15 leading sector",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "BANDHANBNK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 169.10",
-   "ltp": 171.69,
-   "pct": -0.41,
-   "d30": 14.54,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 26%"
-   ]
-  },
-  {
-   "sym": "RBLBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 386.00",
-   "ltp": 390.45,
-   "pct": -0.78,
-   "d30": 12.96,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 30%"
-   ]
-  },
-  {
-   "sym": "LTFOODS",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 75,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 416.90",
-   "ltp": 422,
-   "pct": -0.46,
-   "d30": 11.1,
-   "reasons": [
-    "+15 leading sector",
-    "+10 price > 20-day > 50-day average"
-   ]
-  },
-  {
-   "sym": "HDFCBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 817.80–831.55 on light volume",
-   "ltp": 846.2,
-   "pct": 3.47,
-   "d30": 22.14,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 3%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 76 — extended"
-   ]
-  },
-  {
-   "sym": "AXISBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 1,388.60–1,406.40 on light volume",
-   "ltp": 1418.1,
-   "pct": 2.12,
-   "d30": 16.48,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 14%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 75 — extended"
-   ]
-  },
-  {
-   "sym": "SBIN",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 1,132.00",
-   "ltp": 1138.15,
-   "pct": 0.49,
-   "d30": 18.73,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 7%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 83 — extended"
-   ]
-  },
-  {
-   "sym": "KOTAKBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 504.50",
-   "ltp": 509,
-   "pct": 1.22,
-   "d30": 18.23,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 21%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 79 — extended"
-   ]
-  },
-  {
-   "sym": "AUBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 975.95–983.50 on light volume",
-   "ltp": 1006.05,
-   "pct": 2.29,
-   "d30": 7.84,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 11%",
-    "+10 volume 1.7× average",
-    "-15 RSI 77 — extended"
-   ]
-  },
-  {
-   "sym": "IDFCFIRSTB",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 85.40–86.28 on light volume",
-   "ltp": 87.47,
-   "pct": 2.42,
-   "d30": 20.98,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 4%",
-    "+10 volume 1.7× average",
-    "-15 RSI 78 — extended"
-   ]
-  },
-  {
-   "sym": "UNIONBANK",
-   "sector": "Banks",
-   "kind": "watch",
-   "setup": "Momentum — wait",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback toward 208.20–209.71 on light volume",
-   "ltp": 213.5,
-   "pct": 2.55,
-   "d30": 19.34,
-   "reasons": [
-    "+15 leading sector",
-    "+10 relative strength top 19%",
-    "+10 price > 20-day > 50-day average",
-    "-15 RSI 76 — extended"
-   ]
-  },
-  {
-   "sym": "ABDL",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
-   "tag": null,
-   "momRank": null,
-   "score": 70,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": "Pullback that holds 792.60",
-   "ltp": 810.3,
-   "pct": 0.93,
-   "d30": 20.46,
+   "trigger": "Pullback toward 934.00–934.00 on light volume",
+   "ltp": 995,
+   "pct": 6.53,
+   "d30": 20.02,
    "reasons": [
     "+15 leading sector",
     "+10 relative strength top 15%",
     "+10 price > 20-day > 50-day average",
-    "-15 RSI 86 — extended"
+    "+10 volume 4.5× average"
    ]
   },
   {
-   "sym": "DOMS",
-   "sector": "FMCG",
+   "sym": "LODHA",
+   "sector": "Realty",
    "kind": "watch",
    "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 95,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,198.90–1,202.00 on light volume",
+   "ltp": 1261.2,
+   "pct": 4.93,
+   "d30": 28.69,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 3%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 2.0× average"
+   ]
+  },
+  {
+   "sym": "360ONE",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 95,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,165.20–1,170.75 on light volume",
+   "ltp": 1210,
+   "pct": 3.84,
+   "d30": 24.1,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 4%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.7× average"
+   ]
+  },
+  {
+   "sym": "OBEROIRLTY",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 95,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 1,858.30",
+   "ltp": 1905.2,
+   "pct": 1.96,
+   "d30": 20.43,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 9%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.7× average"
+   ]
+  },
+  {
+   "sym": "SIGNATURE",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 95,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 793.00",
+   "ltp": 860,
+   "pct": 1.52,
+   "d30": 22.32,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 5%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 1.5× average"
+   ]
+  },
+  {
+   "sym": "SOBHA",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 95,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,236.70–1,244.40 on light volume",
+   "ltp": 1288.1,
+   "pct": 3.51,
+   "d30": 12.48,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 29%",
+    "+10 price > 20-day > 50-day average",
+    "+10 volume 2.5× average"
+   ]
+  },
+  {
+   "sym": "ANGELONE",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 85,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 347.10–349.15 on light volume",
+   "ltp": 358,
+   "pct": 2.53,
+   "d30": 26.68,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 4%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "CDSL",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 85,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 1,417.20",
+   "ltp": 1441,
+   "pct": 1.98,
+   "d30": 20.48,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 13%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "GODREJPROP",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 85,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,907.20–1,920.00 on light volume",
+   "ltp": 2004.3,
+   "pct": 4.39,
+   "d30": 31.41,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 2%",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "BRIGADE",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 85,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 577.30–589.70 on light volume",
+   "ltp": 630.55,
+   "pct": 6.93,
+   "d30": 15.67,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 14%",
+    "+10 volume 4.3× average"
+   ]
+  },
+  {
+   "sym": "IIFL",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 591.45",
+   "ltp": 593,
+   "pct": -2.87,
+   "d30": 12.06,
+   "reasons": [
+    "+15 leading sector",
+    "+10 volume 1.6× average"
+   ]
+  },
+  {
+   "sym": "CAMS",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 716.65–717.50 on light volume",
+   "ltp": 745.9,
+   "pct": 3.96,
+   "d30": 12.76,
+   "reasons": [
+    "+15 leading sector",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "KPRMILL",
+   "sector": "Textiles",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 1,172.60",
+   "ltp": 1187,
+   "pct": 1.19,
+   "d30": 17.49,
+   "reasons": [
+    "+15 leading sector",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "NUVAMA",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Momentum — wait",
+   "tag": null,
+   "momRank": null,
+   "score": 75,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback toward 1,788.20–1,795.40 on light volume",
+   "ltp": 1857.1,
+   "pct": 3.44,
+   "d30": 11.94,
+   "reasons": [
+    "+15 leading sector",
+    "+10 price > 20-day > 50-day average"
+   ]
+  },
+  {
+   "sym": "MOTILALOFS",
+   "sector": "Capital Markets",
+   "kind": "watch",
+   "setup": "Sector leader",
    "tag": null,
    "momRank": null,
    "score": 70,
@@ -2105,20 +2043,43 @@
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback toward 2,110.10–2,131.00 on light volume",
-   "ltp": 2195.2,
-   "pct": 3.01,
-   "d30": 17.13,
+   "trigger": "Pullback that holds 1,215.25",
+   "ltp": 1215.25,
+   "pct": -1.21,
+   "d30": 30.2,
    "reasons": [
     "+15 leading sector",
-    "+10 relative strength top 13%",
-    "+10 volume 1.7× average",
-    "-15 RSI 75 — extended"
+    "+10 relative strength top 2%",
+    "+10 price > 20-day > 50-day average",
+    "-15 RSI 76 — extended"
    ]
   },
   {
-   "sym": "YESBANK",
-   "sector": "Banks",
+   "sym": "ABREL",
+   "sector": "Realty",
+   "kind": "watch",
+   "setup": "Sector leader",
+   "tag": null,
+   "momRank": null,
+   "score": 70,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": "Pullback that holds 1,268.20",
+   "ltp": 1282.1,
+   "pct": -0.06,
+   "d30": 18.99,
+   "reasons": [
+    "+15 leading sector",
+    "+10 relative strength top 5%",
+    "+10 price > 20-day > 50-day average",
+    "-15 RSI 79 — extended"
+   ]
+  },
+  {
+   "sym": "TRIDENT",
+   "sector": "Textiles",
    "kind": "watch",
    "setup": "Sector leader",
    "tag": null,
@@ -2128,19 +2089,19 @@
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback that holds 17.54",
-   "ltp": 17.71,
-   "pct": -0.11,
-   "d30": 12.09,
+   "trigger": "Pullback that holds 22.66",
+   "ltp": 22.78,
+   "pct": -0.52,
+   "d30": 10.42,
    "reasons": [
     "+15 leading sector"
    ]
   },
   {
-   "sym": "VBL",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Momentum — wait",
+   "sym": "EMBASSY",
+   "sector": "Realty",
+   "kind": "avoid",
+   "setup": "Downtrend",
    "tag": null,
    "momRank": null,
    "score": 65,
@@ -2148,38 +2109,35 @@
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback toward 424.20–427.15 on light volume",
-   "ltp": 437.1,
-   "pct": 2.33,
-   "d30": 10.63,
+   "trigger": null,
+   "ltp": 422.6,
+   "pct": 1.67,
+   "d30": 1.26,
    "reasons": [
     "+15 leading sector"
    ]
   },
   {
-   "sym": "GODFRYPHLP",
-   "sector": "FMCG",
-   "kind": "watch",
-   "setup": "Sector leader",
+   "sym": "CARTRADE",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
    "tag": null,
-   "momRank": null,
-   "score": 55,
+   "momRank": 10,
+   "score": 50,
    "entry": null,
    "stop": null,
    "target": null,
    "qty": null,
-   "trigger": "Pullback that holds 1,746.90",
-   "ltp": 1761.5,
-   "pct": 0.84,
-   "d30": 5.54,
-   "reasons": [
-    "+15 leading sector",
-    "-10 below both moving averages"
-   ]
+   "trigger": null,
+   "ltp": 2584,
+   "pct": 2.8,
+   "d30": -8.44,
+   "reasons": []
   },
   {
-   "sym": "CREDITACC",
-   "sector": "Financial Services",
+   "sym": "HEXT",
+   "sector": "IT",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2190,17 +2148,35 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1016,
-   "pct": 3.27,
-   "d30": -1.11,
+   "ltp": 503,
+   "pct": 2.77,
+   "d30": -15.13,
    "reasons": [
-    "-10 below both moving averages",
-    "+10 volume 5.0× average"
+    "-10 weak relative strength",
+    "+10 volume 2.5× average"
    ]
   },
   {
-   "sym": "AWL",
-   "sector": "FMCG",
+   "sym": "IRCTC",
+   "sector": "Internet & Media",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 50,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 454,
+   "pct": 2.75,
+   "d30": 3.5,
+   "reasons": []
+  },
+  {
+   "sym": "ANANTRAJ",
+   "sector": "Realty",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2211,9 +2187,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 165.9,
-   "pct": -1.13,
-   "d30": -4.16,
+   "ltp": 446,
+   "pct": 0.37,
+   "d30": -2.8,
    "reasons": [
     "+15 leading sector",
     "-10 weak relative strength",
@@ -2221,8 +2197,8 @@
    ]
   },
   {
-   "sym": "BALRAMCHIN",
-   "sector": "FMCG",
+   "sym": "BAGMANE",
+   "sector": "Realty",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2233,9 +2209,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 611.95,
-   "pct": -1.18,
-   "d30": -4.37,
+   "ltp": 105.39,
+   "pct": -0.21,
+   "d30": 0.68,
    "reasons": [
     "+15 leading sector",
     "-10 weak relative strength",
@@ -2243,73 +2219,7 @@
    ]
   },
   {
-   "sym": "ZYDUSWELL",
-   "sector": "FMCG",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 45,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 461.4,
-   "pct": -0.96,
-   "d30": -0.42,
-   "reasons": [
-    "+15 leading sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "TATAPOWER",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 323,
-   "pct": -1.52,
-   "d30": -7.21,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 1.6× average"
-   ]
-  },
-  {
-   "sym": "OFSS",
-   "sector": "IT",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 9275,
-   "pct": -4.13,
-   "d30": -4.15,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 2.1× average"
-   ]
-  },
-  {
-   "sym": "RVNL",
+   "sym": "CARBORUNIV",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -2321,16 +2231,18 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 185.09,
-   "pct": -0.01,
-   "d30": 2.08,
+   "ltp": 975,
+   "pct": -0.24,
+   "d30": -13.66,
    "reasons": [
-    "-10 below both moving averages"
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 16.1× average"
    ]
   },
   {
-   "sym": "TORNTPOWER",
-   "sector": "Power",
+   "sym": "KEI",
+   "sector": "Durables & Building",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2341,13 +2253,75 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1163,
-   "pct": -2.95,
-   "d30": -0.51,
+   "ltp": 3646,
+   "pct": -0.16,
+   "d30": -6.5,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages",
-    "+10 volume 3.6× average"
+    "+10 volume 1.9× average"
+   ]
+  },
+  {
+   "sym": "CONCOR",
+   "sector": "Ports & Logistics",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 421,
+   "pct": -1.13,
+   "d30": 2.28,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.5× average"
+   ]
+  },
+  {
+   "sym": "CHENNPETRO",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": 15,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1368.4,
+   "pct": 0.13,
+   "d30": -10.06,
+   "reasons": [
+    "-10 weak relative strength"
+   ]
+  },
+  {
+   "sym": "MRPL",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 167,
+   "pct": 1.41,
+   "d30": -8.55,
+   "reasons": [
+    "-10 weak relative strength"
    ]
   },
   {
@@ -2363,57 +2337,15 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1799,
-   "pct": -0.11,
-   "d30": -3.28,
+   "ltp": 1817,
+   "pct": 1,
+   "d30": -3.09,
    "reasons": [
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "HEXT",
-   "sector": "IT",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 492.1,
-   "pct": 1.86,
-   "d30": -16.71,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 2.5× average"
-   ]
-  },
-  {
-   "sym": "NATCOPHARM",
-   "sector": "Pharma",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 803.5,
-   "pct": -0.38,
-   "d30": 1.47,
-   "reasons": [
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "RHIM",
+   "sym": "KSB",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -2425,13 +2357,79 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 345.3,
-   "pct": -2.6,
-   "d30": -1.71,
+   "ltp": 643.5,
+   "pct": -0.29,
+   "d30": -2.93,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages",
-    "+10 volume 2.4× average"
+    "+10 volume 5.3× average"
+   ]
+  },
+  {
+   "sym": "IKS",
+   "sector": "IT",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1575,
+   "pct": -4.25,
+   "d30": -5.11,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.4× average"
+   ]
+  },
+  {
+   "sym": "CRISIL",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3979.1,
+   "pct": -0.34,
+   "d30": -16.72,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.3× average"
+   ]
+  },
+  {
+   "sym": "HOMEFIRST",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 40,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1008,
+   "pct": -1.01,
+   "d30": -0.4,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.7× average"
    ]
   },
   {
@@ -2447,16 +2445,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 126.09,
-   "pct": 0.13,
-   "d30": 1.04,
+   "ltp": 126,
+   "pct": 0.1,
+   "d30": 1,
    "reasons": [
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "CHAMBLFERT",
-   "sector": "Chemicals & Fertilisers",
+   "sym": "TBOTEK",
+   "sector": "Consumer Services",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2467,16 +2465,18 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 366.1,
-   "pct": -0.95,
-   "d30": 0.59,
+   "ltp": 1483,
+   "pct": -4.11,
+   "d30": -2.1,
    "reasons": [
-    "-10 below both moving averages"
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.8× average"
    ]
   },
   {
-   "sym": "KIRLOSBROS",
-   "sector": "Capital Goods & Defence",
+   "sym": "ESCORTS",
+   "sector": "Auto",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2487,31 +2487,11 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1568.5,
-   "pct": -0.13,
-   "d30": -1.82,
+   "ltp": 2464.8,
+   "pct": 1.13,
+   "d30": -4.31,
    "reasons": [
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "BAGMANE",
-   "sector": "Realty",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 40,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 105.55,
-   "pct": 0.23,
-   "d30": 0.31,
-   "reasons": [
-    "-10 below both moving averages"
+    "-10 weak relative strength"
    ]
   },
   {
@@ -2527,79 +2507,14 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1476,
-   "pct": -11.62,
-   "d30": -27.42,
+   "ltp": 1481.5,
+   "pct": 0.37,
+   "d30": -28.7,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
     "-10 below both moving averages",
-    "+10 volume 20.9× average"
-   ]
-  },
-  {
-   "sym": "TATASTEEL",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 159.3,
-   "pct": -2.27,
-   "d30": -4.99,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 4.3× average"
-   ]
-  },
-  {
-   "sym": "KAYNES",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2698,
-   "pct": -3.95,
-   "d30": -15.37,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "ONGC",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 222,
-   "pct": -0.38,
-   "d30": -2.42,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
+    "+10 volume 2.2× average"
    ]
   },
   {
@@ -2615,95 +2530,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 7379,
-   "pct": -0.69,
-   "d30": -0.82,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "NETWEB",
-   "sector": "IT",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 3992,
-   "pct": -0.46,
-   "d30": -7.93,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "STLTECH",
-   "sector": "Telecom",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 574,
-   "pct": -2.84,
-   "d30": -30.56,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 2.8× average"
-   ]
-  },
-  {
-   "sym": "TMPV",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 262.1,
-   "pct": 1.2,
-   "d30": -0.94,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SWIGGY",
-   "sector": "Consumer & Retail",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 177.07,
-   "pct": 0.06,
-   "d30": 0.61,
+   "ltp": 7350,
+   "pct": -0.39,
+   "d30": -5.03,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -2722,17 +2551,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 586.7,
-   "pct": -3.07,
-   "d30": -8.26,
+   "ltp": 617.55,
+   "pct": 5.2,
+   "d30": -10.29,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "CGPOWER",
-   "sector": "Capital Goods & Defence",
+   "sym": "SWIGGY",
+   "sector": "Consumer & Retail",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -2743,58 +2572,12 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 778.9,
-   "pct": -1.48,
-   "d30": -4.24,
+   "ltp": 182.93,
+   "pct": 3.31,
+   "d30": -1.52,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "NATIONALUM",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 287.8,
-   "pct": -3.63,
-   "d30": -4.62,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 1.5× average"
-   ]
-  },
-  {
-   "sym": "HFCL",
-   "sector": "Telecom",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 169.67,
-   "pct": -5,
-   "d30": -29.32,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 2.0× average"
    ]
   },
   {
@@ -2810,74 +2593,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2122.9,
-   "pct": -1.39,
-   "d30": -11.13,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "LLOYDSME",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1606.9,
-   "pct": -5.48,
-   "d30": -9.8,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages",
-    "+10 volume 4.2× average"
-   ]
-  },
-  {
-   "sym": "MANAPPURAM",
-   "sector": "NBFC & Finance",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 267.5,
-   "pct": -1.29,
-   "d30": -6.5,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "COCHINSHIP",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1082,
-   "pct": -0.73,
-   "d30": -5.08,
+   "ltp": 2238,
+   "pct": 5.69,
+   "d30": -4.47,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -2896,79 +2614,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 4067,
-   "pct": 0.35,
-   "d30": -6.38,
+   "ltp": 4100.9,
+   "pct": 0.83,
+   "d30": -6.49,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "KEI",
-   "sector": "Durables & Building",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 3652,
-   "pct": -3.91,
-   "d30": -1.96,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "PAGEIND",
-   "sector": "Consumer & Retail",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 30805,
-   "pct": 2.34,
-   "d30": -8.94,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SUZLON",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 36.13,
-   "pct": 0.75,
-   "d30": -3.4,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SOLARINDS",
+   "sym": "KAYNES",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -2980,9 +2635,204 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 18088,
-   "pct": -0.5,
-   "d30": -1.51,
+   "ltp": 2703.3,
+   "pct": 0.2,
+   "d30": -18.25,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "HFCL",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 161.46,
+   "pct": -5,
+   "d30": -34,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.9× average"
+   ]
+  },
+  {
+   "sym": "ONGC",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 222.88,
+   "pct": 0.4,
+   "d30": -2.43,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NETWEB",
+   "sector": "IT",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 4055,
+   "pct": 1.1,
+   "d30": -5.39,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "STLTECH",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 584.9,
+   "pct": 0.86,
+   "d30": -32.58,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 1.5× average"
+   ]
+  },
+  {
+   "sym": "CGPOWER",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 782,
+   "pct": 0.4,
+   "d30": -6.15,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "LLOYDSME",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1538.5,
+   "pct": -4.2,
+   "d30": -13.92,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages",
+    "+10 volume 3.6× average"
+   ]
+  },
+  {
+   "sym": "OFSS",
+   "sector": "IT",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 9291,
+   "pct": 0.17,
+   "d30": -6.27,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATAPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 323.5,
+   "pct": 0.15,
+   "d30": -4.43,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TMPV",
+   "sector": "Auto",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 262,
+   "pct": -0.04,
+   "d30": -0.64,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3001,9 +2851,93 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 14250,
-   "pct": 0.47,
-   "d30": -0.9,
+   "ltp": 14200,
+   "pct": -0.35,
+   "d30": -4.06,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SUZLON",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 36.29,
+   "pct": 0.44,
+   "d30": -2.24,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "MANAPPURAM",
+   "sector": "NBFC & Finance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 270,
+   "pct": 0.93,
+   "d30": -6.09,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SYRMA",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": 14,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1479,
+   "pct": 3.14,
+   "d30": -1.1,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SOLARINDS",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 18250,
+   "pct": 0.9,
+   "d30": -2.32,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3022,177 +2956,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2355,
-   "pct": 2.85,
-   "d30": -4.99,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "MTARTECH",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 5624,
-   "pct": -0.62,
-   "d30": -12.94,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "CARTRADE",
-   "sector": "Consumer Services",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2519,
-   "pct": -3.62,
-   "d30": -10.68,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "PFOCUS",
-   "sector": "Internet & Media",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 239,
-   "pct": 0.99,
-   "d30": -12.41,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "INOXWIND",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 52.36,
-   "pct": -2.5,
-   "d30": -11.15,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "AEGISLOG",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1181,
-   "pct": 1.93,
-   "d30": -5.31,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "OIL",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 425,
-   "pct": 0.59,
-   "d30": -5.1,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "PIIND",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1576,
-   "pct": 0.32,
-   "d30": -23.16,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "RRKABEL",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1810.8,
-   "pct": -0.65,
-   "d30": -15.38,
+   "ltp": 2330,
+   "pct": -1.09,
+   "d30": -8.55,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3211,37 +2977,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 815.25,
-   "pct": 0.67,
-   "d30": -4.46,
+   "ltp": 803.5,
+   "pct": -1.44,
+   "d30": -4.41,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "IFCI",
-   "sector": "Financial Services",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 57.47,
-   "pct": -2.21,
-   "d30": -3.05,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "IRCTC",
+   "sym": "PFOCUS",
    "sector": "Internet & Media",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3253,17 +2998,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 442,
-   "pct": -1.16,
-   "d30": 0.14,
+   "ltp": 236,
+   "pct": -1.4,
+   "d30": -13.98,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "CASTROLIND",
-   "sector": "Oil & Gas",
+   "sym": "MTARTECH",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3274,17 +3019,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 190.27,
-   "pct": -0.04,
-   "d30": -2.25,
+   "ltp": 5658,
+   "pct": 0.2,
+   "d30": -14.04,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "KEC",
-   "sector": "Construction",
+   "sym": "PAGEIND",
+   "sector": "Consumer & Retail",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3295,9 +3040,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 297.3,
-   "pct": 0.69,
-   "d30": -9.29,
+   "ltp": 30860,
+   "pct": 0.18,
+   "d30": -8.99,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3316,58 +3061,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1246.2,
-   "pct": 1.73,
-   "d30": -8.17,
+   "ltp": 1258.3,
+   "pct": 0.97,
+   "d30": -6.72,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "AAVAS",
-   "sector": "Financial Services",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1080.5,
-   "pct": -0.98,
-   "d30": -3.02,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "THANGAMAYL",
-   "sector": "Durables & Building",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 3828.2,
-   "pct": 1.49,
-   "d30": -18.38,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SUPREMEIND",
+   "sym": "COCHINSHIP",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3379,16 +3082,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 3176,
-   "pct": 0.63,
-   "d30": -6.31,
+   "ltp": 1103,
+   "pct": 1.94,
+   "d30": -2.73,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "JPPOWER",
+   "sym": "INOXWIND",
    "sector": "Power",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3400,142 +3103,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 13.06,
-   "pct": -1.36,
-   "d30": 3.08,
+   "ltp": 53,
+   "pct": 1.22,
+   "d30": -9.25,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "THERMAX",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2654.1,
-   "pct": -1.9,
-   "d30": -14.27,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "EMBASSY",
-   "sector": "Realty",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 416.76,
-   "pct": -0.76,
-   "d30": -1.23,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "NLCINDIA",
-   "sector": "Power",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 225.3,
-   "pct": -0.82,
-   "d30": -1.4,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "ANANTRAJ",
-   "sector": "Realty",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 443,
-   "pct": 0.24,
-   "d30": -3.78,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SCHNEIDER",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1017,
-   "pct": 0.81,
-   "d30": -8.72,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "KIRLOSENG",
-   "sector": "Capital Goods & Defence",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1700,
-   "pct": -1.1,
-   "d30": -4.75,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "PCBL",
+   "sym": "PIIND",
    "sector": "Chemicals & Fertilisers",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3547,38 +3124,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 263.05,
-   "pct": -1.16,
-   "d30": -4.29,
+   "ltp": 1591.2,
+   "pct": 0.96,
+   "d30": -21.23,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "IPCALAB",
-   "sector": "Pharma",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": 29,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1840,
-   "pct": 1.33,
-   "d30": -5.8,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "CAPLIPOINT",
-   "sector": "Pharma",
+   "sym": "RRKABEL",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3589,9 +3145,30 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 2014,
-   "pct": -0.95,
-   "d30": -9.36,
+   "ltp": 1811,
+   "pct": 0.55,
+   "d30": -17,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IFCI",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 57.37,
+   "pct": -0.52,
+   "d30": -4.13,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3610,17 +3187,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 33.19,
-   "pct": -4.35,
-   "d30": -11.92,
+   "ltp": 32.19,
+   "pct": -3.97,
+   "d30": -22.49,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength"
    ]
   },
   {
-   "sym": "AADHARHFC",
-   "sector": "Financial Services",
+   "sym": "OIL",
+   "sector": "Oil & Gas",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3631,142 +3208,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 426.15,
-   "pct": 2.64,
-   "d30": -3.17,
+   "ltp": 427.1,
+   "pct": 0.49,
+   "d30": -6.11,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "SWANCORP",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 230.24,
-   "pct": 0.19,
-   "d30": -4.01,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "ESCORTS",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2434.3,
-   "pct": -0.64,
-   "d30": -7.34,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "CRISIL",
-   "sector": "Financial Services",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 3987,
-   "pct": -1.18,
-   "d30": -16.08,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "SHRIPISTON",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 4269.6,
-   "pct": 0.17,
-   "d30": -1.5,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "ZFCVINDIA",
-   "sector": "Auto",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 2125,
-   "pct": -1.6,
-   "d30": -0.36,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "JUBLINGREA",
-   "sector": "Chemicals & Fertilisers",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 553.2,
-   "pct": -1.07,
-   "d30": -8.09,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "CARBORUNIV",
+   "sym": "SUPREMEIND",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3778,9 +3229,282 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 975.1,
-   "pct": -0.2,
-   "d30": -5.22,
+   "ltp": 3160,
+   "pct": -0.5,
+   "d30": -2.77,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FIVESTAR",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 411.85,
+   "pct": -2.99,
+   "d30": -0.72,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JPPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 13.07,
+   "pct": 0.15,
+   "d30": 0.38,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "THERMAX",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2676.9,
+   "pct": 0.51,
+   "d30": -16.01,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TORNTPOWER",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1150.1,
+   "pct": -1.09,
+   "d30": -0.65,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CAPLIPOINT",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 2000.1,
+   "pct": -1.22,
+   "d30": -12.04,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "FIRSTCRY",
+   "sector": "Consumer Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 161.49,
+   "pct": -2.21,
+   "d30": -1.54,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CASTROLIND",
+   "sector": "Oil & Gas",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 190.01,
+   "pct": -0.13,
+   "d30": -0.4,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IPCALAB",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1795,
+   "pct": -1.94,
+   "d30": -7.41,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "THANGAMAYL",
+   "sector": "Durables & Building",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 3945,
+   "pct": 2.66,
+   "d30": -14.88,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "WHIRLPOOL",
+   "sector": "Durables & Building",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 792.1,
+   "pct": 0.13,
+   "d30": -1.4,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "APTUS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 186,
+   "pct": -1.15,
+   "d30": -6.03,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "KEC",
+   "sector": "Construction",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 297,
+   "pct": -0.22,
+   "d30": -11.82,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NLCINDIA",
+   "sector": "Power",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 227.95,
+   "pct": 0.82,
+   "d30": -0.61,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3799,9 +3523,156 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 81.95,
-   "pct": -0.43,
-   "d30": 0.91,
+   "ltp": 82.42,
+   "pct": 0.88,
+   "d30": 0.83,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "CONCORDBIO",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 532.3,
+   "pct": -3.02,
+   "d30": -18.81,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NATCOPHARM",
+   "sector": "Pharma",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 800,
+   "pct": -0.11,
+   "d30": 1.24,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TEGA",
+   "sector": "Capital Goods & Defence",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1512.7,
+   "pct": -1.35,
+   "d30": -10.88,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AWL",
+   "sector": "FMCG",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 165.58,
+   "pct": -0.16,
+   "d30": -4.16,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "AAVAS",
+   "sector": "Financial Services",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 1100,
+   "pct": 1.74,
+   "d30": -2.32,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "SWANCORP",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 226.7,
+   "pct": -0.73,
+   "d30": -3.82,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NIACL",
+   "sector": "Insurance",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 146.5,
+   "pct": -1.91,
+   "d30": -9.23,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3820,17 +3691,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 446.6,
-   "pct": -1.62,
-   "d30": -2.92,
+   "ltp": 462,
+   "pct": 2.87,
+   "d30": -0.68,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "HONAUT",
-   "sector": "Capital Goods & Defence",
+   "sym": "SHRIPISTON",
+   "sector": "Auto",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3841,17 +3712,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 29200,
-   "pct": -1.73,
-   "d30": -7.21,
+   "ltp": 4188.7,
+   "pct": -1.42,
+   "d30": -2.56,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "RITES",
-   "sector": "Construction",
+   "sym": "PCBL",
+   "sector": "Chemicals & Fertilisers",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3862,9 +3733,51 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 185.45,
-   "pct": -0.27,
-   "d30": -2.09,
+   "ltp": 260,
+   "pct": -1.16,
+   "d30": -5.61,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JUBLINGREA",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 559,
+   "pct": 1.21,
+   "d30": -7.76,
+   "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "ATUL",
+   "sector": "Chemicals & Fertilisers",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 30,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 5095,
+   "pct": 0.16,
+   "d30": -4.84,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3884,15 +3797,15 @@
    "qty": null,
    "trigger": null,
    "ltp": 470,
-   "pct": -1.54,
-   "d30": -3.52,
+   "pct": 0.09,
+   "d30": -3.11,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "TRITURBINE",
+   "sym": "SCHNEIDER",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3904,16 +3817,16 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 446,
-   "pct": -1.92,
-   "d30": 0.21,
+   "ltp": 1026.3,
+   "pct": 0.86,
+   "d30": -9.75,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "TEGA",
+   "sym": "HONAUT",
    "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -3925,17 +3838,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1536.9,
-   "pct": -0.18,
-   "d30": -10.83,
+   "ltp": 29100,
+   "pct": -0.53,
+   "d30": -6.88,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "ATUL",
-   "sector": "Chemicals & Fertilisers",
+   "sym": "RITES",
+   "sector": "Construction",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3946,17 +3859,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 5076,
-   "pct": 0.82,
-   "d30": -8.97,
+   "ltp": 186,
+   "pct": 0.24,
+   "d30": -1.78,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "CONCORDBIO",
-   "sector": "Pharma",
+   "sym": "AADHARHFC",
+   "sector": "Financial Services",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -3967,9 +3880,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 546.2,
-   "pct": -0.15,
-   "d30": -11.14,
+   "ltp": 427,
+   "pct": 0.47,
+   "d30": -3.22,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -3988,17 +3901,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 689.95,
-   "pct": 0.09,
-   "d30": -3.3,
+   "ltp": 681.2,
+   "pct": -1.48,
+   "d30": -7.6,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "INDIAMART",
-   "sector": "Internet & Media",
+   "sym": "RHIM",
+   "sector": "Capital Goods & Defence",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -4009,17 +3922,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 1519,
-   "pct": -1.81,
-   "d30": -3.42,
+   "ltp": 345,
+   "pct": -0.46,
+   "d30": -1.23,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "NIACL",
-   "sector": "Insurance",
+   "sym": "ZYDUSWELL",
+   "sector": "FMCG",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -4030,30 +3943,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 149.2,
-   "pct": -0.09,
-   "d30": -6.63,
-   "reasons": [
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "BHARATCOAL",
-   "sector": "Oil & Gas",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 30,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 30.09,
-   "pct": 0.23,
-   "d30": 1.11,
+   "ltp": 456,
+   "pct": -1.44,
+   "d30": -3.82,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
@@ -4072,17 +3964,17 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 330,
-   "pct": -1.52,
-   "d30": -8.49,
+   "ltp": 333.8,
+   "pct": 1,
+   "d30": -5.79,
    "reasons": [
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
   },
   {
-   "sym": "KSB",
-   "sector": "Capital Goods & Defence",
+   "sym": "INDIAMART",
+   "sector": "Internet & Media",
    "kind": "avoid",
    "setup": "Downtrend",
    "tag": null,
@@ -4093,10 +3985,76 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 647.7,
-   "pct": 0.12,
-   "d30": -4.99,
+   "ltp": 1538.9,
+   "pct": 1.22,
+   "d30": -1.48,
    "reasons": [
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "TATASTEEL",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 163.54,
+   "pct": 2.66,
+   "d30": -3.77,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "IDEA",
+   "sector": "Telecom",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 11.6,
+   "pct": -0.77,
+   "d30": -2.93,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NATIONALUM",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 294.95,
+   "pct": 2.48,
+   "d30": -5.59,
+   "reasons": [
+    "-10 lagging sector",
     "-10 weak relative strength",
     "-10 below both moving averages"
    ]
@@ -4114,53 +4072,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 385,
-   "pct": 0.79,
-   "d30": -3.13,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "VAML",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 20,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 350.15,
-   "pct": -3.25,
-   "d30": 1.68,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "HINDCOPPER",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 20,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 399,
-   "pct": -2.98,
-   "d30": -0.01,
+   "ltp": 388.9,
+   "pct": 1.01,
+   "d30": -3.98,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4180,31 +4094,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 161.1,
-   "pct": -0.56,
-   "d30": -1.97,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "NMDC",
-   "sector": "Metals & Mining",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 20,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 66.69,
-   "pct": -1.05,
-   "d30": 0.51,
+   "ltp": 160.96,
+   "pct": -0.09,
+   "d30": -5.21,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4224,9 +4116,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 325.35,
-   "pct": -1.8,
-   "d30": -9.4,
+   "ltp": 329.9,
+   "pct": 1.59,
+   "d30": -10.05,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4234,29 +4126,7 @@
    ]
   },
   {
-   "sym": "ECLERX",
-   "sector": "Services",
-   "kind": "avoid",
-   "setup": "Downtrend",
-   "tag": null,
-   "momRank": null,
-   "score": 20,
-   "entry": null,
-   "stop": null,
-   "target": null,
-   "qty": null,
-   "trigger": null,
-   "ltp": 1464.4,
-   "pct": -3.11,
-   "d30": -22.59,
-   "reasons": [
-    "-10 lagging sector",
-    "-10 weak relative strength",
-    "-10 below both moving averages"
-   ]
-  },
-  {
-   "sym": "JAINREC",
+   "sym": "NMDC",
    "sector": "Metals & Mining",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -4268,9 +4138,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 279.7,
-   "pct": 0.36,
-   "d30": -3.28,
+   "ltp": 67.24,
+   "pct": 0.82,
+   "d30": 1.13,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4290,9 +4160,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 402.9,
-   "pct": 0.64,
-   "d30": -1.08,
+   "ltp": 398.75,
+   "pct": -1.16,
+   "d30": -1.34,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4312,9 +4182,9 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 23.22,
-   "pct": -0.34,
-   "d30": -11.44,
+   "ltp": 23.78,
+   "pct": 2.54,
+   "d30": -10.67,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4322,7 +4192,7 @@
    ]
   },
   {
-   "sym": "CMPDI",
+   "sym": "ECLERX",
    "sector": "Services",
    "kind": "avoid",
    "setup": "Downtrend",
@@ -4334,9 +4204,31 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 181.19,
-   "pct": -1.5,
-   "d30": -1.51,
+   "ltp": 1491.6,
+   "pct": 1.76,
+   "d30": -20.52,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "JAINREC",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 279.75,
+   "pct": -0.04,
+   "d30": -1.04,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4356,9 +4248,31 @@
    "target": null,
    "qty": null,
    "trigger": null,
-   "ltp": 50.84,
-   "pct": 0.06,
-   "d30": 0.53,
+   "ltp": 50.94,
+   "pct": 0.08,
+   "d30": 0.55,
+   "reasons": [
+    "-10 lagging sector",
+    "-10 weak relative strength",
+    "-10 below both moving averages"
+   ]
+  },
+  {
+   "sym": "NSLNISP",
+   "sector": "Metals & Mining",
+   "kind": "avoid",
+   "setup": "Downtrend",
+   "tag": null,
+   "momRank": null,
+   "score": 20,
+   "entry": null,
+   "stop": null,
+   "target": null,
+   "qty": null,
+   "trigger": null,
+   "ltp": 38.24,
+   "pct": 0.47,
+   "d30": -0.83,
    "reasons": [
     "-10 lagging sector",
     "-10 weak relative strength",
@@ -4367,13 +4281,13 @@
   }
  ],
  "momentum": {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "gate": {
    "open": true,
-   "index": 25819.25,
-   "sma": 23999.42975,
+   "index": 25884.5,
+   "sma": 24000.2145,
    "n": 200,
-   "asOf": "2026-11-25",
+   "asOf": "2026-11-26",
    "source": "index"
   },
   "params": {
@@ -4404,166 +4318,166 @@
     "rank": 1,
     "sym": "CUPID",
     "sector": "FMCG",
-    "ltp": 365.45,
-    "ret": 1.7742420224520465,
-    "ret1": 0.16440974988051615,
-    "ret6": 1.9308685540139545,
-    "ret12": 4.825575463878084,
-    "offHigh": 5.201037613488978
+    "ltp": 371.2,
+    "ret": 1.7942346803430893,
+    "ret1": 0.1746835443037975,
+    "ret6": 1.903629536921151,
+    "ret12": 4.604372376724945,
+    "offHigh": 3.709468223086903
    },
    {
     "rank": 2,
     "sym": "LAURUSLABS",
     "sector": "Pharma",
-    "ltp": 2460,
-    "ret": 0.8236492471213464,
-    "ret1": 0.1948127640973334,
-    "ret6": 0.8137580181375803,
-    "ret12": 1.4431423180057603,
+    "ltp": 2505,
+    "ret": 0.9237505051865822,
+    "ret1": 0.169467787114846,
+    "ret6": 0.8232768032607902,
+    "ret12": 1.5367088607594939,
     "offHigh": 0
    },
    {
     "rank": 3,
     "sym": "ATHERENERG",
     "sector": "Auto",
-    "ltp": 1871.9,
-    "ret": 0.753019088430074,
-    "ret1": 0.1885079365079365,
-    "ret6": 1.031582374647276,
-    "ret12": 1.8003590395691527,
-    "offHigh": 5.4213823767178635
+    "ltp": 1906,
+    "ret": 0.8958097395243487,
+    "ret1": 0.1385902031063322,
+    "ret6": 1.0050494424573952,
+    "ret12": 1.7824817518248177,
+    "offHigh": 3.69846402586904
    },
    {
     "rank": 4,
-    "sym": "CPPLUS",
-    "sector": "Capital Goods & Defence",
-    "ltp": 4210.1,
-    "ret": 0.7083278225984215,
-    "ret1": 0.08647741935483877,
-    "ret6": 0.6470795352294514,
-    "ret12": 1.5049681680252278,
-    "offHigh": 5.184334391820368
+    "sym": "CEMPRO",
+    "sector": "Construction",
+    "ltp": 1425,
+    "ret": 0.8456675917360468,
+    "ret1": 0.1903767437975108,
+    "ret6": 0.5106540867168452,
+    "ret12": 0.7461095453988482,
+    "offHigh": 13.088558184923146
    },
    {
     "rank": 5,
-    "sym": "CEMPRO",
-    "sector": "Construction",
-    "ltp": 1405.1,
-    "ret": 0.707809322991189,
-    "ret1": 0.23917453038186776,
-    "ret6": 0.5967952724586623,
-    "ret12": 0.752759932638932,
-    "offHigh": 14.302268846060015
+    "sym": "CPPLUS",
+    "sector": "Capital Goods & Defence",
+    "ltp": 4223,
+    "ret": 0.7464367411578392,
+    "ret1": 0.06372795969773293,
+    "ret6": 0.5943670479858045,
+    "ret12": 1.4525233753411926,
+    "offHigh": 4.893813481071103
    },
    {
     "rank": 6,
-    "sym": "SANSERA",
-    "sector": "Auto",
-    "ltp": 4690,
-    "ret": 0.6333399326865967,
-    "ret1": 0.13696969696969696,
-    "ret6": 0.6143466886961311,
-    "ret12": 2.0318701919968967,
-    "offHigh": 2.2916666666666665
+    "sym": "COFORGE",
+    "sector": "IT",
+    "ltp": 2000,
+    "ret": 0.7351637848640193,
+    "ret1": 0.001502253380070151,
+    "ret6": 0.40567894292943496,
+    "ret12": 0.07631040792164456,
+    "offHigh": 6.6423936890258215
    },
    {
     "rank": 7,
-    "sym": "COFORGE",
-    "sector": "IT",
-    "ltp": 2060,
-    "ret": 0.6328035392429954,
-    "ret1": 0.03361766181635728,
-    "ret6": 0.4735336194563662,
-    "ret12": 0.1545143753853051,
-    "offHigh": 3.8416654996965964
+    "sym": "GLAND",
+    "sector": "Pharma",
+    "ltp": 3365,
+    "ret": 0.7226145316603443,
+    "ret1": 0.14002100484466595,
+    "ret6": 0.45803544347675373,
+    "ret12": 0.9013447847214375,
+    "offHigh": 0.8836524300441826
    },
    {
     "rank": 8,
-    "sym": "RUBICON",
-    "sector": "Pharma",
-    "ltp": 1710.9,
-    "ret": 0.6063611859838276,
-    "ret1": 0.14833210282569298,
-    "ret6": 0.8113387327298716,
-    "ret12": 1.3618166758696852,
-    "offHigh": 8.045791680103182
+    "sym": "SANSERA",
+    "sector": "Auto",
+    "ltp": 4649.9,
+    "ret": 0.6951831509068638,
+    "ret1": 0.08389277389277372,
+    "ret6": 0.6146607403291893,
+    "ret12": 1.9435335823257578,
+    "offHigh": 3.1270833333333408
    },
    {
     "rank": 9,
-    "sym": "GLAND",
-    "sector": "Pharma",
-    "ltp": 3333,
-    "ret": 0.5912888492814972,
-    "ret1": 0.1666083304165209,
-    "ret6": 0.4281429428400034,
-    "ret12": 0.8619071560248033,
-    "offHigh": 1.826215022091311
+    "sym": "AEGISLOG",
+    "sector": "Oil & Gas",
+    "ltp": 1205.4,
+    "ret": 0.6796361091672496,
+    "ret1": 0.004416298641779948,
+    "ret6": 0.6856383722556287,
+    "ret12": 0.5290162998668104,
+    "offHigh": 19.05177624068228
    },
    {
     "rank": 10,
-    "sym": "WELSPUNLIV",
-    "sector": "Textiles",
-    "ltp": 276,
-    "ret": 0.5692883895131087,
-    "ret1": 0.3174224343675418,
-    "ret6": 0.9910546818640888,
-    "ret12": 0.958558047118933,
-    "offHigh": 0
+    "sym": "CARTRADE",
+    "sector": "Consumer Services",
+    "ltp": 2584,
+    "ret": 0.6660567786106357,
+    "ret1": -0.08459685418733176,
+    "ret6": 0.5196424370736297,
+    "ret12": -0.1668010189275465,
+    "offHigh": 19.02986243850469
    },
    {
     "rank": 11,
-    "sym": "SYRMA",
-    "sector": "Capital Goods & Defence",
-    "ltp": 1434,
-    "ret": 0.5216065073716318,
-    "ret1": -0.04176411627129972,
-    "ret6": 0.35634901868053914,
-    "ret12": 0.6381082933516107,
-    "offHigh": 19.569241124011448
+    "sym": "WELSPUNLIV",
+    "sector": "Textiles",
+    "ltp": 280,
+    "ret": 0.6518131530424094,
+    "ret1": 0.30232558139534893,
+    "ret6": 1.017145738779627,
+    "ret12": 1.0494803103498755,
+    "offHigh": 0
    },
    {
     "rank": 12,
-    "sym": "PTCIL",
-    "sector": "Capital Goods & Defence",
-    "ltp": 24310,
-    "ret": 0.4441527595474717,
-    "ret1": 0.05215321359013192,
-    "ret6": 0.4933349714355919,
-    "ret12": 0.4105837298363699,
-    "offHigh": 5.463737118413378
+    "sym": "RUBICON",
+    "sector": "Pharma",
+    "ltp": 1845,
+    "ret": 0.5873015873015872,
+    "ret1": 0.23825503355704702,
+    "ret6": 0.8869854257223218,
+    "ret12": 1.654485288828142,
+    "offHigh": 0.8384392131570414
    },
    {
     "rank": 13,
-    "sym": "PAYTM",
-    "sector": "Internet & Media",
-    "ltp": 1719,
-    "ret": 0.42701910223793726,
-    "ret1": 0.03885900767510719,
-    "ret6": 0.5664297430289775,
-    "ret12": 0.3269008104978772,
-    "offHigh": 11.38718490643848
+    "sym": "ACUTAAS",
+    "sector": "Pharma",
+    "ltp": 4079.9,
+    "ret": 0.5849686847599165,
+    "ret1": 0.07478925184404628,
+    "ret6": 0.3443719520231976,
+    "ret12": 1.3720348837209304,
+    "offHigh": 0
    },
    {
     "rank": 14,
-    "sym": "CHENNPETRO",
-    "sector": "Oil & Gas",
-    "ltp": 1360,
-    "ret": 0.42616665108014584,
-    "ret1": -0.1081967213114754,
-    "ret6": 0.3196196390452164,
-    "ret12": 0.2402535224111988,
-    "offHigh": 16.37973438268569
+    "sym": "SYRMA",
+    "sector": "Capital Goods & Defence",
+    "ltp": 1479,
+    "ret": 0.5625,
+    "ret1": -0.023762376237623783,
+    "ret6": 0.398846117469025,
+    "ret12": 0.6878744650499287,
+    "offHigh": 17.04526333501599
    },
    {
     "rank": 15,
-    "sym": "DIVISLAB",
-    "sector": "Pharma",
-    "ltp": 11716.5,
-    "ret": 0.4188288782629144,
-    "ret1": 0.29464088397790045,
-    "ret6": 0.7341078961000518,
-    "ret12": 0.8099173553719008,
-    "offHigh": 0
+    "sym": "CHENNPETRO",
+    "sector": "Oil & Gas",
+    "ltp": 1368.4,
+    "ret": 0.5119806763285024,
+    "ret1": -0.12556712889002486,
+    "ret6": 0.34183173171210046,
+    "ret12": 0.2904564315352698,
+    "offHigh": 15.863256271519921
    }
   ]
  },
@@ -4571,280 +4485,280 @@
   "membersAsOf": "2026-11-12",
   "membersStale": false,
   "from": "2026-11-13",
-  "to": "2026-11-25",
-  "days": 8,
+  "to": "2026-11-26",
+  "days": 9,
   "capital": 500000,
-  "value": 496463,
-  "ret": -0.007074000000000025,
+  "value": 499957,
+  "ret": -0.0000860000000000305,
   "maxDrawdown": 0.013045183809401818,
-  "invested": 231619,
-  "investedShare": 0.466538291876736,
+  "invested": 235113,
+  "investedShare": 0.4702664429140906,
   "positions": [
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "AEGISLOG",
     "sector": "Oil & Gas",
     "entryDate": "2026-11-13",
     "entry": 1226.84,
     "qty": 13,
-    "last": 1181,
+    "last": 1205.4,
     "peak": 1232,
     "stop": 985.6,
-    "ret": -3.74,
-    "bars": 7,
+    "ret": -1.75,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 2,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "AZAD",
     "sector": "Capital Goods & Defence",
     "entryDate": "2026-11-13",
     "entry": 2459.68,
     "qty": 6,
-    "last": 2355,
+    "last": 2330,
     "peak": 2456,
     "stop": 1964.8,
-    "ret": -4.26,
-    "bars": 7,
+    "ret": -5.27,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 16,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "BBOX",
     "sector": "IT",
     "entryDate": "2026-11-13",
     "entry": 903.25,
     "qty": 18,
-    "last": 853,
+    "last": 854,
     "peak": 909.75,
     "stop": 727.8,
-    "ret": -5.56,
-    "bars": 7,
+    "ret": -5.45,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 10,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "CARTRADE",
     "sector": "Consumer Services",
     "entryDate": "2026-11-13",
     "entry": 2685.02,
     "qty": 6,
-    "last": 2519,
+    "last": 2584,
     "peak": 2681,
     "stop": 2144.8,
-    "ret": -6.18,
-    "bars": 7,
+    "ret": -3.76,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 13,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "CEMPRO",
     "sector": "Construction",
     "entryDate": "2026-11-13",
     "entry": 1313.87,
     "qty": 12,
-    "last": 1405.1,
+    "last": 1425,
     "peak": 1450,
     "stop": 1160,
-    "ret": 6.94,
-    "bars": 7,
+    "ret": 8.46,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 7,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "CPPLUS",
     "sector": "Capital Goods & Defence",
     "entryDate": "2026-11-13",
     "entry": 4131.19,
     "qty": 4,
-    "last": 4210.1,
-    "peak": 4210.1,
-    "stop": 3368.08,
-    "ret": 1.91,
-    "bars": 7,
+    "last": 4223,
+    "peak": 4223,
+    "stop": 3378.4,
+    "ret": 2.22,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 3,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "CUPID",
     "sector": "FMCG",
     "entryDate": "2026-11-13",
     "entry": 376.56,
     "qty": 44,
-    "last": 365.45,
+    "last": 371.2,
     "peak": 376,
     "stop": 300.8,
-    "ret": -2.95,
-    "bars": 7,
+    "ret": -1.42,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 1,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "FINCABLES",
     "sector": "Capital Goods & Defence",
     "entryDate": "2026-11-13",
     "entry": 1270.9,
     "qty": 13,
-    "last": 1157.3,
+    "last": 1151,
     "peak": 1269,
     "stop": 1015.2,
-    "ret": -8.94,
-    "bars": 7,
+    "ret": -9.43,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 14,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "GLAND",
     "sector": "Pharma",
     "entryDate": "2026-11-13",
     "entry": 3345.01,
     "qty": 4,
-    "last": 3333,
+    "last": 3365,
     "peak": 3395,
     "stop": 2716,
-    "ret": -0.36,
-    "bars": 7,
+    "ret": 0.6,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 12,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "LAURUSLABS",
     "sector": "Pharma",
     "entryDate": "2026-11-13",
     "entry": 2427.64,
     "qty": 6,
-    "last": 2460,
-    "peak": 2460,
-    "stop": 1968,
-    "ret": 1.33,
-    "bars": 7,
+    "last": 2505,
+    "peak": 2505,
+    "stop": 2004,
+    "ret": 3.19,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 5,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "REDINGTON",
     "sector": "Services",
     "entryDate": "2026-11-13",
     "entry": 350.52,
     "qty": 47,
-    "last": 325.35,
+    "last": 329.9,
     "peak": 350,
     "stop": 280,
-    "ret": -7.18,
-    "bars": 7,
+    "ret": -5.88,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 9,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "RUBICON",
     "sector": "Pharma",
     "entryDate": "2026-11-13",
     "entry": 1677.51,
     "qty": 9,
-    "last": 1710.9,
-    "peak": 1727,
-    "stop": 1381.6,
-    "ret": 1.99,
-    "bars": 7,
+    "last": 1845,
+    "peak": 1845,
+    "stop": 1476,
+    "ret": 9.98,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 8,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "SANSERA",
     "sector": "Auto",
     "entryDate": "2026-11-13",
     "entry": 4727.08,
     "qty": 3,
-    "last": 4690,
+    "last": 4649.9,
     "peak": 4800,
     "stop": 3840,
-    "ret": -0.78,
-    "bars": 7,
+    "ret": -1.63,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 11,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "SYRMA",
     "sector": "Capital Goods & Defence",
     "entryDate": "2026-11-13",
     "entry": 1506.36,
     "qty": 11,
-    "last": 1434,
+    "last": 1479,
     "peak": 1517,
     "stop": 1213.6,
-    "ret": -4.8,
-    "bars": 7,
+    "ret": -1.82,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 4,
     "series": "EQ"
    },
    {
-    "lastBar": "2026-11-25",
+    "lastBar": "2026-11-26",
     "noBar": false,
     "sym": "WELSPUNLIV",
     "sector": "Textiles",
     "entryDate": "2026-11-13",
     "entry": 248.92,
     "qty": 66,
-    "last": 276,
-    "peak": 276,
-    "stop": 220.8,
-    "ret": 10.88,
-    "bars": 7,
+    "last": 280,
+    "peak": 280,
+    "stop": 224,
+    "ret": 12.49,
+    "bars": 8,
     "fill": "rebalance",
     "size": "half",
     "rankIn": 6,
@@ -4854,29 +4768,29 @@
   "buys": [],
   "sells": [],
   "t2t": {
-   "days": 8,
-   "known": 8,
+   "days": 9,
+   "known": 9,
    "from": "2026-11-13",
    "today": true,
    "held": [],
    "fills": [],
    "doubtful": 0,
    "pnl": 0,
-   "profit": -3537,
+   "profit": -43,
    "share": null
   },
   "gate": {
    "open": true,
-   "index": 25819.25,
-   "sma": 23999.42975,
+   "index": 25884.5,
+   "sma": 24000.2145,
    "n": 200,
-   "asOf": "2026-11-25",
+   "asOf": "2026-11-26",
    "source": "index"
   },
   "volHigh": true,
-  "slot": 33098,
+  "slot": 33330,
   "halfSize": true,
-  "nextRebalanceIn": 14,
+  "nextRebalanceIn": 13,
   "trades": 0,
   "params": {
    "lookback": 126,
@@ -4906,17 +4820,17 @@
     "name": "NIFTY 50",
     "from": "2026-11-13",
     "fromValue": 25144.3,
-    "value": 25819.25,
-    "ret": 0.026843061847019012,
+    "value": 25884.5,
+    "ret": 0.02943808338271503,
     "kind": "price index"
    },
    {
     "name": "NIFTY500 MOMENTUM 50",
     "from": "2026-11-13",
     "fromValue": 54985.15,
-    "asOf": "2026-11-25",
-    "value": 53302.3,
-    "ret": -0.030605536222052643,
+    "asOf": "2026-11-26",
+    "value": 54045.3,
+    "ret": -0.017092796873337646,
     "kind": "price index",
     "stale": false
    },
@@ -4924,9 +4838,9 @@
     "name": "NIFTY200 MOMENTUM 30",
     "from": "2026-11-13",
     "fromValue": 30728.4,
-    "asOf": "2026-11-25",
-    "value": 29575.05,
-    "ret": -0.03753368219627451,
+    "asOf": "2026-11-26",
+    "value": 30000,
+    "ret": -0.023704455812863734,
     "kind": "price index",
     "stale": false
    }
@@ -4979,16 +4893,22 @@
     "value": 496463,
     "invested": 231619,
     "positions": 15
+   },
+   {
+    "date": "2026-11-26",
+    "value": 499957,
+    "invested": 235113,
+    "positions": 15
    }
   ]
  },
  "paperBooks": {
   "n": 21,
-  "started": 8,
-  "pending": 13,
+  "started": 9,
+  "pending": 12,
   "frozen": false,
   "from": "2026-11-13",
-  "to": "2026-11-25",
+  "to": "2026-11-26",
   "starts": [
    "2026-11-13",
    "2026-11-16",
@@ -4997,89 +4917,90 @@
    "2026-11-19",
    "2026-11-20",
    "2026-11-23",
-   "2026-11-25"
+   "2026-11-25",
+   "2026-11-26"
   ],
   "fund": "NIFTY500 MOMENTUM 50",
   "rows": [
    {
     "k": 1,
     "from": "2026-11-13",
-    "days": 8,
-    "value": 496463,
-    "ret": -0.007074000000000025,
+    "days": 9,
+    "value": 499957,
+    "ret": -0.0000860000000000305,
     "maxDrawdown": 0.013045183809401818,
     "names": 15,
-    "investedShare": 0.466538291876736,
+    "investedShare": 0.4702664429140906,
     "trades": 0,
-    "nextRebalanceIn": 14,
-    "fundRet": -0.030605536222052643,
+    "nextRebalanceIn": 13,
+    "fundRet": -0.017092796873337646,
     "fundFrom": "2026-11-13",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.023531536222052618,
+    "gap": 0.017006796873337615,
     "ahead": true,
     "fundDrawdown": 0.030605536222052653,
     "ddGap": 0.017560352412650835,
     "holdings": [
      {
       "sym": "AEGISLOG",
-      "ret": -3.74
+      "ret": -1.75
      },
      {
       "sym": "AZAD",
-      "ret": -4.26
+      "ret": -5.27
      },
      {
       "sym": "BBOX",
-      "ret": -5.56
+      "ret": -5.45
      },
      {
       "sym": "CARTRADE",
-      "ret": -6.18
+      "ret": -3.76
      },
      {
       "sym": "CEMPRO",
-      "ret": 6.94
+      "ret": 8.46
      },
      {
       "sym": "CPPLUS",
-      "ret": 1.91
+      "ret": 2.22
      },
      {
       "sym": "CUPID",
-      "ret": -2.95
+      "ret": -1.42
      },
      {
       "sym": "FINCABLES",
-      "ret": -8.94
+      "ret": -9.43
      },
      {
       "sym": "GLAND",
-      "ret": -0.36
+      "ret": 0.6
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 1.33
+      "ret": 3.19
      },
      {
       "sym": "REDINGTON",
-      "ret": -7.18
+      "ret": -5.88
      },
      {
       "sym": "RUBICON",
-      "ret": 1.99
+      "ret": 9.98
      },
      {
       "sym": "SANSERA",
-      "ret": -0.78
+      "ret": -1.63
      },
      {
       "sym": "SYRMA",
-      "ret": -4.8
+      "ret": -1.82
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 10.88
+      "ret": 12.49
      }
     ],
     "t2t": [],
@@ -5089,252 +5010,252 @@
    {
     "k": 2,
     "from": "2026-11-16",
-    "days": 7,
-    "value": 499597,
-    "ret": -0.0008059999999999734,
+    "days": 8,
+    "value": 503385,
+    "ret": 0.006769999999999943,
     "maxDrawdown": 0.005701128823507054,
     "names": 15,
-    "investedShare": 0.47005486422056175,
+    "investedShare": 0.47404074416202313,
     "trades": 0,
-    "nextRebalanceIn": 15,
-    "fundRet": -0.015411015837714093,
+    "nextRebalanceIn": 14,
+    "fundRet": -0.0016864745846616458,
     "fundFrom": "2026-11-16",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.01460501583771412,
+    "gap": 0.008456474584661589,
     "ahead": true,
     "fundDrawdown": 0.015411015837714146,
     "ddGap": 0.009709887014207092,
     "holdings": [
      {
       "sym": "AEGISLOG",
-      "ret": -4.28
+      "ret": -2.31
      },
      {
       "sym": "ATHERENERG",
-      "ret": -3.63
+      "ret": -1.88
      },
      {
       "sym": "BBOX",
-      "ret": -5.15
+      "ret": -5.04
      },
      {
       "sym": "CARTRADE",
-      "ret": -4.91
+      "ret": -2.45
      },
      {
       "sym": "CPPLUS",
-      "ret": 6.14
+      "ret": 6.47
      },
      {
       "sym": "CUPID",
-      "ret": 0.75
+      "ret": 2.33
      },
      {
       "sym": "FINCABLES",
-      "ret": -7.67
+      "ret": -8.17
      },
      {
       "sym": "GLAND",
-      "ret": -1.97
+      "ret": -1.03
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 10.64
+      "ret": 12.67
      },
      {
       "sym": "RADICO",
-      "ret": 0.58
+      "ret": -0.02
      },
      {
       "sym": "REDINGTON",
-      "ret": -4.48
+      "ret": -3.14
      },
      {
       "sym": "RUBICON",
-      "ret": 2.76
+      "ret": 10.81
      },
      {
       "sym": "SANSERA",
-      "ret": -1.82
+      "ret": -2.66
      },
      {
       "sym": "SYRMA",
-      "ret": -1.59
+      "ret": 1.5
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 11.7
+      "ret": 13.31
      }
     ],
     "t2t": [],
     "bandFills": 0,
-    "t2tShare": null
+    "t2tShare": 0
    },
    {
     "k": 3,
     "from": "2026-11-17",
-    "days": 6,
-    "value": 499310,
-    "ret": -0.0013800000000000479,
+    "days": 7,
+    "value": 503714,
+    "ret": 0.00742799999999999,
     "maxDrawdown": 0.0063205128461721665,
     "names": 15,
-    "investedShare": 0.47583665458332497,
+    "investedShare": 0.48041944436724016,
     "trades": 0,
-    "nextRebalanceIn": 16,
-    "fundRet": -0.015394647155204333,
+    "nextRebalanceIn": 15,
+    "fundRet": -0.001669877733177838,
     "fundFrom": "2026-11-17",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.014014647155204285,
+    "gap": 0.009097877733177828,
     "ahead": true,
     "fundDrawdown": 0.015394647155204316,
     "ddGap": 0.009074134309032148,
     "holdings": [
      {
       "sym": "AEGISLOG",
-      "ret": -2.7
+      "ret": -0.69
      },
      {
       "sym": "ATHERENERG",
-      "ret": -2.07
+      "ret": -0.29
      },
      {
       "sym": "BBOX",
-      "ret": -4.19
+      "ret": -4.08
      },
      {
       "sym": "CEMPRO",
-      "ret": 3.77
+      "ret": 5.24
      },
      {
       "sym": "CPPLUS",
-      "ret": 5.09
+      "ret": 5.42
      },
      {
       "sym": "CUPID",
-      "ret": -0.19
+      "ret": 1.38
      },
      {
       "sym": "FINCABLES",
-      "ret": -5.67
+      "ret": -6.18
      },
      {
       "sym": "GLAND",
-      "ret": 2.72
+      "ret": 3.7
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 5.06
+      "ret": 6.98
      },
      {
       "sym": "REDINGTON",
-      "ret": -5.43
+      "ret": -4.1
      },
      {
       "sym": "RUBICON",
-      "ret": 1.32
+      "ret": 9.27
      },
      {
       "sym": "SANSERA",
-      "ret": 1.48
+      "ret": 0.62
      },
      {
       "sym": "SYRMA",
-      "ret": -0.14
+      "ret": 2.99
      },
      {
       "sym": "WELCORP",
-      "ret": -7.03
+      "ret": -1.98
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 3.6
+      "ret": 5.11
      }
     ],
     "t2t": [],
     "bandFills": 0,
-    "t2tShare": null
+    "t2tShare": 0
    },
    {
     "k": 4,
     "from": "2026-11-18",
-    "days": 5,
-    "value": 503668,
-    "ret": 0.007336000000000009,
+    "days": 6,
+    "value": 506670,
+    "ret": 0.013339999999999907,
     "maxDrawdown": 0.0018193132587903747,
     "names": 15,
-    "investedShare": 0.48289150789805985,
+    "investedShare": 0.48595535555687136,
     "trades": 0,
-    "nextRebalanceIn": 17,
-    "fundRet": -0.004376445272953333,
+    "nextRebalanceIn": 16,
+    "fundRet": 0.009501910842302452,
     "fundFrom": "2026-11-18",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.011712445272953342,
+    "gap": 0.003838089157697455,
     "ahead": true,
     "fundDrawdown": 0.013435576236113626,
     "ddGap": 0.011616262977323252,
     "holdings": [
      {
       "sym": "ATHERENERG",
-      "ret": -1.68
-     },
-     {
-      "sym": "BBOX",
-      "ret": -3.32
-     },
-     {
-      "sym": "CEMPRO",
-      "ret": 3.62
-     },
-     {
-      "sym": "COFORGE",
-      "ret": 0.39
-     },
-     {
-      "sym": "CPPLUS",
-      "ret": 6.61
-     },
-     {
-      "sym": "CUPID",
       "ret": 0.11
      },
      {
+      "sym": "BBOX",
+      "ret": -3.21
+     },
+     {
+      "sym": "CEMPRO",
+      "ret": 5.09
+     },
+     {
+      "sym": "COFORGE",
+      "ret": -2.54
+     },
+     {
+      "sym": "CPPLUS",
+      "ret": 6.94
+     },
+     {
+      "sym": "CUPID",
+      "ret": 1.68
+     },
+     {
       "sym": "GABRIEL",
-      "ret": 0.19
+      "ret": 3.19
      },
      {
       "sym": "GLAND",
-      "ret": 3.13
+      "ret": 4.12
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 5.76
+      "ret": 7.7
      },
      {
       "sym": "PVRINOX",
-      "ret": -0.13
+      "ret": -3.52
      },
      {
       "sym": "REDINGTON",
-      "ret": -4.17
+      "ret": -2.83
      },
      {
       "sym": "RUBICON",
-      "ret": 3.14
+      "ret": 11.23
      },
      {
       "sym": "SANSERA",
-      "ret": 5.54
+      "ret": 4.64
      },
      {
       "sym": "SYRMA",
-      "ret": -2.93
+      "ret": 0.12
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 7.23
+      "ret": 8.78
      }
     ],
     "t2t": [],
@@ -5344,280 +5265,377 @@
    {
     "k": 5,
     "from": "2026-11-19",
-    "days": 4,
-    "value": 499681,
-    "ret": -0.0006380000000000274,
+    "days": 5,
+    "value": 502399,
+    "ret": 0.00479800000000008,
     "maxDrawdown": 0.0018417788147494121,
     "names": 15,
-    "investedShare": 0.47768876543234584,
+    "investedShare": 0.4805144914699273,
     "trades": 0,
-    "nextRebalanceIn": 18,
-    "fundRet": -0.013435576236113578,
+    "nextRebalanceIn": 17,
+    "fundRet": 0.0003165013826114116,
     "fundFrom": "2026-11-19",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.01279757623611355,
+    "gap": 0.004481498617388668,
     "ahead": true,
     "fundDrawdown": 0.013435576236113626,
     "ddGap": 0.011593797421364214,
     "holdings": [
      {
       "sym": "ATHERENERG",
-      "ret": -2.9
+      "ret": -1.13
      },
      {
       "sym": "BBOX",
-      "ret": -6.38
+      "ret": -6.27
      },
      {
       "sym": "CARTRADE",
-      "ret": -4.44
+      "ret": -1.97
      },
      {
       "sym": "CEMPRO",
-      "ret": 1.36
+      "ret": 2.8
      },
      {
       "sym": "COFORGE",
-      "ret": 0.78
+      "ret": -2.16
      },
      {
       "sym": "CPPLUS",
-      "ret": 4.38
+      "ret": 4.7
      },
      {
       "sym": "CUPID",
-      "ret": -0.29
+      "ret": 1.28
      },
      {
       "sym": "GLAND",
-      "ret": 1
+      "ret": 1.97
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 6.52
+      "ret": 8.47
      },
      {
       "sym": "PVRINOX",
-      "ret": 1.03
+      "ret": -2.4
      },
      {
       "sym": "REDINGTON",
-      "ret": -4.68
+      "ret": -3.34
      },
      {
       "sym": "RUBICON",
-      "ret": -1.08
+      "ret": 6.67
      },
      {
       "sym": "SANSERA",
-      "ret": -1.29
+      "ret": -2.13
      },
      {
       "sym": "SYRMA",
-      "ret": -5.61
+      "ret": -2.65
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 8.84
+      "ret": 10.41
      }
     ],
     "t2t": [],
     "bandFills": 0,
-    "t2tShare": null
+    "t2tShare": 0
    },
    {
     "k": 6,
     "from": "2026-11-20",
-    "days": 3,
-    "value": 498839,
-    "ret": -0.0023220000000000462,
+    "days": 4,
+    "value": 501508,
+    "ret": 0.0030159999999999076,
     "maxDrawdown": 0.0016531075820799936,
     "names": 15,
-    "investedShare": 0.4684898333931389,
+    "investedShare": 0.4713185033937644,
     "trades": 0,
-    "nextRebalanceIn": 19,
-    "fundRet": -0.010055948926291247,
+    "nextRebalanceIn": 18,
+    "fundRet": 0.0037432385374347454,
     "fundFrom": "2026-11-20",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.007733948926291201,
-    "ahead": true,
+    "gap": -0.0007272385374348378,
+    "ahead": false,
     "fundDrawdown": 0.010055948926291297,
     "ddGap": 0.008402841344211303,
     "holdings": [
      {
       "sym": "ATHERENERG",
-      "ret": -3.43
+      "ret": -1.67
      },
      {
       "sym": "BBOX",
-      "ret": -5.15
+      "ret": -5.04
      },
      {
       "sym": "CARTRADE",
-      "ret": -5.23
+      "ret": -2.78
      },
      {
       "sym": "CEMPRO",
-      "ret": -1.03
+      "ret": 0.37
      },
      {
       "sym": "COFORGE",
-      "ret": -1.43
+      "ret": -4.3
      },
      {
       "sym": "CPPLUS",
-      "ret": 3.75
+      "ret": 4.07
      },
      {
       "sym": "CUPID",
-      "ret": -0.16
+      "ret": 1.41
      },
      {
       "sym": "GLAND",
-      "ret": -0.06
+      "ret": 0.9
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 7.05
+      "ret": 9.01
      },
      {
       "sym": "PVRINOX",
-      "ret": 3.97
+      "ret": 0.44
      },
      {
       "sym": "REDINGTON",
-      "ret": -2.15
+      "ret": -0.78
      },
      {
       "sym": "RUBICON",
-      "ret": -0.96
+      "ret": 6.8
      },
      {
       "sym": "SANSERA",
-      "ret": -2.44
+      "ret": -3.27
      },
      {
       "sym": "SYRMA",
-      "ret": -5.53
+      "ret": -2.56
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 4.47
+      "ret": 5.98
      }
     ],
     "t2t": [],
     "bandFills": 0,
-    "t2tShare": null
+    "t2tShare": 0
    },
    {
     "k": 7,
     "from": "2026-11-23",
-    "days": 2,
-    "value": 499306,
-    "ret": -0.0013879999999999448,
+    "days": 3,
+    "value": 502004,
+    "ret": 0.0040080000000000116,
     "maxDrawdown": 0.0006884819373561493,
     "names": 15,
-    "investedShare": 0.46651952910639966,
+    "investedShare": 0.4693866981139593,
     "trades": 0,
-    "nextRebalanceIn": 20,
-    "fundRet": -0.005088203617738873,
+    "nextRebalanceIn": 19,
+    "fundRet": 0.008780231041028541,
     "fundFrom": "2026-11-23",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": 0.0037002036177389286,
-    "ahead": true,
+    "gap": -0.00477223104102853,
+    "ahead": false,
     "fundDrawdown": 0.005088203617738877,
     "ddGap": 0.004399721680382727,
     "holdings": [
      {
       "sym": "ATHERENERG",
-      "ret": -5.56
+      "ret": -3.84
      },
      {
       "sym": "CARTRADE",
-      "ret": -3.68
+      "ret": -1.2
      },
      {
       "sym": "CEMPRO",
-      "ret": -3.24
+      "ret": -1.87
      },
      {
       "sym": "COFORGE",
-      "ret": -3.99
+      "ret": -6.78
      },
      {
       "sym": "CPPLUS",
-      "ret": 3.03
+      "ret": 3.35
      },
      {
       "sym": "CUPID",
-      "ret": 1.22
+      "ret": 2.81
      },
      {
       "sym": "DIVISLAB",
-      "ret": 4.43
+      "ret": 3.66
      },
      {
       "sym": "GLAND",
-      "ret": 0.39
+      "ret": 1.36
      },
      {
       "sym": "LAURUSLABS",
-      "ret": 3.61
+      "ret": 5.51
      },
      {
       "sym": "PVRINOX",
-      "ret": 0.49
+      "ret": -2.92
      },
      {
       "sym": "REDINGTON",
-      "ret": -1.86
+      "ret": -0.48
      },
      {
       "sym": "RUBICON",
-      "ret": 1.99
+      "ret": 9.98
      },
      {
       "sym": "SANSERA",
-      "ret": 1.69
+      "ret": 0.82
      },
      {
       "sym": "SYRMA",
-      "ret": -3.97
+      "ret": -0.96
      },
      {
       "sym": "WELSPUNLIV",
-      "ret": 2.26
+      "ret": 3.74
      }
     ],
     "t2t": [],
     "bandFills": 0,
-    "t2tShare": null
+    "t2tShare": 0
    },
    {
     "k": 8,
     "from": "2026-11-25",
-    "days": 1,
-    "value": 499661,
-    "ret": -0.0006779999999999564,
+    "days": 2,
+    "value": 503148,
+    "ret": 0.006296000000000079,
     "maxDrawdown": 0,
     "names": 15,
-    "investedShare": 0.45197243731249787,
+    "investedShare": 0.4557724566131635,
     "trades": 0,
-    "nextRebalanceIn": 0,
-    "fundRet": 0,
+    "nextRebalanceIn": 20,
+    "fundRet": 0.013939360965661951,
     "fundFrom": "2026-11-25",
-    "fundAsOf": "2026-11-25",
+    "fundAsOf": "2026-11-26",
     "fundExact": true,
-    "gap": -0.0006779999999999564,
+    "gap": -0.007643360965661872,
     "ahead": false,
     "fundDrawdown": 0,
     "ddGap": 0,
     "holdings": [
      {
       "sym": "ATHERENERG",
+      "ret": 1.67
+     },
+     {
+      "sym": "CEMPRO",
+      "ret": 1.26
+     },
+     {
+      "sym": "CHENNPETRO",
+      "ret": 0.47
+     },
+     {
+      "sym": "COFORGE",
+      "ret": -3.06
+     },
+     {
+      "sym": "CPPLUS",
+      "ret": 0.16
+     },
+     {
+      "sym": "CUPID",
+      "ret": 1.42
+     },
+     {
+      "sym": "DIVISLAB",
+      "ret": -0.88
+     },
+     {
+      "sym": "GABRIEL",
+      "ret": 2.85
+     },
+     {
+      "sym": "GLAND",
+      "ret": 0.81
+     },
+     {
+      "sym": "LAURUSLABS",
+      "ret": 1.68
+     },
+     {
+      "sym": "PAYTM",
+      "ret": 2.75
+     },
+     {
+      "sym": "RUBICON",
+      "ret": 7.68
+     },
+     {
+      "sym": "SANSERA",
+      "ret": -1
+     },
+     {
+      "sym": "SYRMA",
+      "ret": 2.98
+     },
+     {
+      "sym": "WELSPUNLIV",
+      "ret": 1.3
+     }
+    ],
+    "t2t": [],
+    "bandFills": 0,
+    "t2tShare": 0
+   },
+   {
+    "k": 9,
+    "from": "2026-11-26",
+    "days": 1,
+    "value": 499652,
+    "ret": -0.0006960000000000299,
+    "maxDrawdown": 0,
+    "names": 15,
+    "investedShare": 0.46366871342454347,
+    "trades": 0,
+    "nextRebalanceIn": 0,
+    "fundRet": 0,
+    "fundFrom": "2026-11-26",
+    "fundAsOf": "2026-11-26",
+    "fundExact": true,
+    "gap": -0.0006960000000000299,
+    "ahead": false,
+    "fundDrawdown": 0,
+    "ddGap": 0,
+    "holdings": [
+     {
+      "sym": "ACUTAAS",
+      "ret": -0.15
+     },
+     {
+      "sym": "AEGISLOG",
+      "ret": -0.15
+     },
+     {
+      "sym": "ATHERENERG",
+      "ret": -0.15
+     },
+     {
+      "sym": "CARTRADE",
       "ret": -0.15
      },
      {
@@ -5641,23 +5659,11 @@
       "ret": -0.15
      },
      {
-      "sym": "DIVISLAB",
-      "ret": -0.15
-     },
-     {
-      "sym": "GABRIEL",
-      "ret": -0.15
-     },
-     {
       "sym": "GLAND",
       "ret": -0.15
      },
      {
       "sym": "LAURUSLABS",
-      "ret": -0.15
-     },
-     {
-      "sym": "PAYTM",
       "ret": -0.15
      },
      {
@@ -5683,37 +5689,36 @@
    }
   ],
   "ret": {
-   "median": -0.0010930000000000106,
-   "min": -0.007074000000000025,
-   "max": 0.007336000000000009
+   "median": 0.00479800000000008,
+   "min": -0.0006960000000000299,
+   "max": 0.013339999999999907
   },
-  "measured": 8,
-  "G": 0.012255010754533446,
+  "measured": 9,
+  "G": 0.003838089157697455,
   "gap": {
-   "min": -0.0006779999999999564,
-   "max": 0.023531536222052618
+   "min": -0.007643360965661872,
+   "max": 0.017006796873337615
   },
-  "A": 7,
-  "D": 0.00939201066161962,
+  "A": 5,
+  "D": 0.009074134309032148,
   "L": 7,
   "inexact": [],
   "readingFrom": null,
   "due": false,
   "reading": null,
   "t2t": {
-   "days": 8,
-   "known": 8,
+   "days": 9,
+   "known": 9,
    "from": "2026-11-13",
    "today": true,
    "held": [],
    "fills": [],
    "doubtful": 0,
    "medianBooks": [
-    3,
-    2
+    5
    ],
-   "share": null
+   "share": 0
   }
  },
- "digest": "Nifty Swing Desk — 2026-11-25 16:00\nTape: Mixed · breadth 264▲/236▼ · NIFTY 50 25,819.25 (+1.85%) · history 248/250 bars\nLeading sectors: Aviation & Hotels, Banks, FMCG\n\nMOMENTUM (126-bar, skip 21, top 15) — gate OPEN (Nifty 25,819.25 vs 200-day 23,999.43)\n• rules: top 15 equal-weight; a free slot is refilled at the close; 20% trailing stop; out at the monthly rebalance if below rank 30 or off the list; half-size buys while Nifty volatility is high\n• #1 CUPID — 6m 193%, 1m 16%, 5% off high\n• #2 LAURUSLABS — 6m 81%, 1m 19%, 0% off high\n• #3 ATHERENERG — 6m 103%, 1m 19%, 5% off high\n• #4 CPPLUS — 6m 65%, 1m 9%, 5% off high\n• #5 CEMPRO — 6m 60%, 1m 24%, 14% off high\n• #6 SANSERA — 6m 61%, 1m 14%, 2% off high\n• #7 COFORGE — 6m 47%, 1m 3%, 4% off high\n• #8 RUBICON — 6m 81%, 1m 15%, 8% off high\n• #9 GLAND — 6m 43%, 1m 17%, 2% off high\n• #10 WELSPUNLIV — 6m 99%, 1m 32%, 0% off high\n• #11 SYRMA — 6m 36%, 1m -4%, 20% off high\n• #12 PTCIL — 6m 49%, 1m 5%, 5% off high\n• #13 PAYTM — 6m 57%, 1m 4%, 11% off high\n• #14 CHENNPETRO — 6m 32%, 1m -11%, 16% off high\n• #15 DIVISLAB — 6m 73%, 1m 29%, 0% off high\n\nPAPER BOOK — the engine's rules run forward since 2026-11-13, reinvested, beside the index fund: ₹5,00,000 → ₹4,96,463 (-0.7%) after 8 days · NIFTY 50 +2.7% · NIFTY500 MOMENTUM 50 -3.1% · NIFTY200 MOMENTUM 30 -3.8% · max drawdown 1.3% · 15 of 15 names, 47% invested\n• 21 BOOKS (8 started, one a day): median -0.1%, -0.7% to +0.7% · ahead of NIFTY500 MOMENTUM 50, own days: 7 of 8, median gap +1.2 pts\n• gate OPEN · Nifty 20-day volatility above its 1-year median → new buys at HALF size · slot ₹33,098 (₹16,549 today) · next rebalance in 14 bars\n• no trades today\n• holding — name, return, stop (hold unless a close is below the stop): AEGISLOG -3.7% / 985.60 · AZAD -4.3% / 1,964.80 · BBOX -5.6% / 727.80 · CARTRADE -6.2% / 2,144.80 · CEMPRO +6.9% / 1,160.00 · CPPLUS +1.9% / 3,368.08 · CUPID -3.0% / 300.80 · FINCABLES -8.9% / 1,015.20 · GLAND -0.4% / 2,716.00 · LAURUSLABS +1.3% / 1,968.00 · REDINGTON -7.2% / 280.00 · RUBICON +2.0% / 1,381.60 · SANSERA -0.8% / 3,840.00 · SYRMA -4.8% / 1,213.60 · WELSPUNLIV +10.9% / 220.80\n\nMOMENTUM PULLBACKS (3) — paper trades, not orders: +0.06R over 616 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-23-adjusted-members.md); log as \"Momentum pullback\"\n• PVRINOX [75] momentum #18 — buy-stop 1,722.15 tomorrow, stop 1,624.60, 2R at 1,917.25, paper qty 51\n• CEMPRO [60] momentum #5 — buy-stop 1,461.55 tomorrow, stop 1,255.30, 2R at 1,874.05, paper qty 24\n• GABRIEL [60] momentum #17 — buy-stop 1,527.55 tomorrow, stop 1,433.50, 2R at 1,715.65, paper qty 53\n  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)\n\nOTHER SWING SETUPS (28) — levels to watch, not orders: no edge over ten years (−0.03R, 891 trades, full membership); top 2 here, all 28 on the site\n• MARICO [90] — 52W breakout: trigger 927.75, invalid below 895.05, 2R at 993.15\n• BANKBARODA [85] — Pullback buy: trigger 280.35, invalid below 268.35, 2R at 304.35\n\nALERTS (32) — on the site\n\nWATCH (35) — on the site\n\nAvoid list: 103 names. [score] = 0–100 setup quality (no edge in the backtest).\n\nDESK CHECKS DUE\n• 2026-11-25 — A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work (19 and 20 Nov: 19:16 and 19:00 IST). If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping). Note the week's times under A16; the decision is at the 8 Dec reading.\n\nRules engine output, not advice. Momentum is the only list with a positive ten-year record and the paper book is its live test; swing levels are for watching. Full lists on the site."
+ "digest": "Nifty Swing Desk — 2026-11-26 16:00\nTape: Mixed · breadth 258▲/239▼ · NIFTY 50 25,884.50 (+0.25%) · history 248/250 bars\nLeading sectors: Capital Markets, Realty, Textiles\n\nMOMENTUM (126-bar, skip 21, top 15) — gate OPEN (Nifty 25,884.50 vs 200-day 24,000.21)\n• rules: top 15 equal-weight; a free slot is refilled at the close; 20% trailing stop; out at the monthly rebalance if below rank 30 or off the list; half-size buys while Nifty volatility is high\n• #1 CUPID — 6m 190%, 1m 17%, 4% off high\n• #2 LAURUSLABS — 6m 82%, 1m 17%, 0% off high\n• #3 ATHERENERG — 6m 101%, 1m 14%, 4% off high\n• #4 CEMPRO — 6m 51%, 1m 19%, 13% off high\n• #5 CPPLUS — 6m 59%, 1m 6%, 5% off high\n• #6 COFORGE — 6m 41%, 1m 0%, 7% off high\n• #7 GLAND — 6m 46%, 1m 14%, 1% off high\n• #8 SANSERA — 6m 61%, 1m 8%, 3% off high\n• #9 AEGISLOG — 6m 69%, 1m 0%, 19% off high\n• #10 CARTRADE — 6m 52%, 1m -8%, 19% off high\n• #11 WELSPUNLIV — 6m 102%, 1m 30%, 0% off high\n• #12 RUBICON — 6m 89%, 1m 24%, 1% off high\n• #13 ACUTAAS — 6m 34%, 1m 7%, 0% off high\n• #14 SYRMA — 6m 40%, 1m -2%, 17% off high\n• #15 CHENNPETRO — 6m 34%, 1m -13%, 16% off high\n\nPAPER BOOK — the engine's rules run forward since 2026-11-13, reinvested, beside the index fund: ₹5,00,000 → ₹4,99,957 (-0.0%) after 9 days · NIFTY 50 +2.9% · NIFTY500 MOMENTUM 50 -1.7% · NIFTY200 MOMENTUM 30 -2.4% · max drawdown 1.3% · 15 of 15 names, 47% invested\n• 21 BOOKS (9 started, one a day): median +0.5%, -0.1% to +1.3% · ahead of NIFTY500 MOMENTUM 50, own days: 5 of 9, median gap +0.4 pts\n• gate OPEN · Nifty 20-day volatility above its 1-year median → new buys at HALF size · slot ₹33,330 (₹16,665 today) · next rebalance in 13 bars\n• no trades today\n• holding — name, return, stop (hold unless a close is below the stop): AEGISLOG -1.8% / 985.60 · AZAD -5.3% / 1,964.80 · BBOX -5.5% / 727.80 · CARTRADE -3.8% / 2,144.80 · CEMPRO +8.5% / 1,160.00 · CPPLUS +2.2% / 3,378.40 · CUPID -1.4% / 300.80 · FINCABLES -9.4% / 1,015.20 · GLAND +0.6% / 2,716.00 · LAURUSLABS +3.2% / 2,004.00 · REDINGTON -5.9% / 280.00 · RUBICON +10.0% / 1,476.00 · SANSERA -1.6% / 3,840.00 · SYRMA -1.8% / 1,213.60 · WELSPUNLIV +12.5% / 224.00\n\nMOMENTUM PULLBACKS (3) — paper trades, not orders: +0.06R over 616 trades on the full membership, under the +0.1R bar (reports/swing-membership-2026-11-23-adjusted-members.md); log as \"Momentum pullback\"\n• CPPLUS [60] momentum #5 — buy-stop 4,271.20 tomorrow, stop 4,010.95, 2R at 4,791.70, paper qty 19\n• SANSERA [50] momentum #8 — buy-stop 4,732.15 tomorrow, stop 4,386.00, 2R at 5,424.45, paper qty 14\n• VIJAYA [50] momentum #29 — buy-stop 1,633.90 tomorrow, stop 1,423.70, 2R at 2,054.30, paper qty 23\n  (as backtested: ≤4 open, one per sector, score order; stop to breakeven at +1R; out after 15 bars)\n\nOTHER SWING SETUPS (53) — levels to watch, not orders: no edge over ten years (−0.03R, 891 trades, full membership); top 2 here, all 53 on the site\n• MCX [100] — 52W breakout: trigger 3,785.30, invalid below 3,503.00, 2R at 4,349.90\n• DLF [90] — 52W breakout: trigger 800.40, invalid below 763.80, 2R at 873.60\n\nALERTS (22) — on the site\n\nWATCH (18) — on the site\n\nAvoid list: 103 names. [score] = 0–100 setup quality (no edge in the backtest).\n\nDESK CHECKS DUE\n• 2026-11-25 — A week on the slot ladder (18 Nov): is the digest arriving between 18:00 and 19:00 IST, as one message on a day without trades, with both momentum indices in the PAPER BOOK line? Actions → Daily NSE snapshot shows which slot did the work (19 and 20 Nov: 19:16 and 19:00 IST). If it is still hours late, set up the outside clock (README, 'When the digest is late'; checklist item under Housekeeping). Note the week's times under A16; the decision is at the 8 Dec reading.\n\nRules engine output, not advice. Momentum is the only list with a positive ten-year record and the paper book is its live test; swing levels are for watching. Full lists on the site."
 }
